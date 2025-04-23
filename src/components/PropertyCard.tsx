@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { MapPin, Bed, Bath, SquareFoot } from "lucide-react";
+import { MapPin, Bed, Bath, Square } from "lucide-react";
 import { Property } from "@/types/property";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/lib/utils";
@@ -67,7 +67,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
               </div>
             )}
             <div className="flex items-center">
-              <SquareFoot size={18} className="mr-1 text-estate-neutral-500" />
+              <Square size={18} className="mr-1 text-estate-neutral-500" />
               <span className="text-sm">
                 {property.propertyType === "land" 
                   ? `${(property.sqft / 43560).toFixed(2)} acres` 

@@ -6,12 +6,13 @@ import {
   Bed, 
   Bath, 
   Calendar, 
-  SquareFoot, 
+  Square, 
   Check, 
   Phone, 
   Mail, 
   ChevronLeft,
-  Heart
+  Heart,
+  User
 } from "lucide-react";
 import { getPropertyById } from "@/data/properties";
 import { Badge } from "@/components/ui/badge";
@@ -139,7 +140,7 @@ const PropertyDetail = () => {
                   )}
                   
                   <div className="flex flex-col items-center p-4 border rounded-lg">
-                    <SquareFoot size={24} className="text-teal-500 mb-2" />
+                    <Square size={24} className="text-teal-500 mb-2" />
                     <p className="text-lg font-semibold">
                       {property.propertyType === "land" 
                         ? `${(property.sqft / 43560).toFixed(2)} acres`
