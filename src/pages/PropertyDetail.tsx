@@ -8,6 +8,7 @@ import PropertyHeader from "@/components/property/PropertyHeader";
 import PropertyGallery from "@/components/property/PropertyGallery";
 import PropertySpecs from "@/components/property/PropertySpecs";
 import PropertyFeatures from "@/components/property/PropertyFeatures";
+import PropertyAdditionalFeatures from "@/components/property/PropertyAdditionalFeatures";
 import AgentContact from "@/components/property/AgentContact";
 
 const PropertyDetail = () => {
@@ -38,6 +39,7 @@ const PropertyDetail = () => {
             <PropertyGallery property={property} />
             <PropertySpecs property={property} />
             <PropertyFeatures property={property} />
+            <PropertyAdditionalFeatures property={property} />
           </div>
           
           <div>

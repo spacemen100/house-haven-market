@@ -3,45 +3,56 @@ export type PropertyType = 'house' | 'apartment' | 'land' | 'commercial';
 export type ListingType = 'sale' | 'rent' | 'rent_by_day';
 export type PropertyCondition = 'new' | 'good' | 'needs_renovation';
 export type KitchenType = 'american' | 'open' | 'closed';
+export type PropertyStatus = 'free' | 'under_caution' | 'under_construction';
 
 export interface Property {
+  // Basic Information
   id: string;
   title: string;
   description: string;
   price: number;
+  phoneNumber?: string;
+  cadastralCode?: string;
+  
+  // Location
   address: {
     street: string;
     city: string;
     state: string;
     zip: string;
+    district?: string;
+    coordinates?: {
+      lat: number;
+      lng: number;
+    };
   };
-  images: string[];
+  
+  // Property Details
+  propertyType: PropertyType;
+  listingType: ListingType;
+  status?: PropertyStatus;
+  condition?: PropertyCondition;
+  plan?: string;
+  
+  // Specifications
   beds: number;
   baths: number;
   sqft: number;
-  propertyType: PropertyType;
-  listingType: ListingType;
-  featured?: boolean;
-  yearBuilt: number;
-  agentName?: string;
-  agentPhone?: string;
-  amenities?: string[];
-  
-  // New fields from sell form
-  plan?: string;
-  cadastralCode?: string;
-  status?: string;
-  condition?: PropertyCondition;
+  rooms?: number;
   terraceArea?: number;
   kitchenType?: KitchenType;
   ceilingHeight?: number;
-  hasElevator?: boolean;
-  hasVentilation?: boolean;
   floorLevel?: number;
   totalFloors?: number;
-  projectName?: string;
+  yearBuilt: number;
   
-  // Equipment and services
+  // Features and Amenities
+  featured?: boolean;
+  hasElevator?: boolean;
+  hasVentilation?: boolean;
+  hasAirConditioning?: boolean;
+  
+  // Equipment and Services
   equipment?: string[];
   internetTV?: string[];
   storage?: string[];
@@ -51,4 +62,12 @@ export interface Property {
   // Environment
   nearbyPlaces?: string[];
   onlineServices?: string[];
+  
+  // Media
+  images: string[];
+  
+  // Agent Information
+  agentName?: string;
+  agentPhone?: string;
+  projectName?: string;
 }

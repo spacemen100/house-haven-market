@@ -1,6 +1,7 @@
 
 import { Property } from "@/types/property";
-import { MapPin, Bed, Bath, Square, Calendar } from "lucide-react";
+import { MapPin, Bed, Bath, Square, Calendar, Building, ArrowUp } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 interface PropertySpecsProps {
   property: Property;
@@ -12,7 +13,8 @@ const PropertySpecs = ({ property }: PropertySpecsProps) => {
       <div className="flex items-center text-estate-neutral-600 mb-4">
         <MapPin size={18} className="mr-2" />
         <p className="text-lg">
-          {property.address.street}, {property.address.city}, {property.address.state} {property.address.zip}
+          {property.address.street}, {property.address.district && `${property.address.district}, `}
+          {property.address.city}, {property.address.state} {property.address.zip}
         </p>
       </div>
 
@@ -51,6 +53,58 @@ const PropertySpecs = ({ property }: PropertySpecsProps) => {
               <Calendar size={24} className="text-teal-500 mb-2" />
               <p className="text-lg font-semibold">{property.yearBuilt}</p>
               <p className="text-estate-neutral-500">Year Built</p>
+            </div>
+          )}
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          {property.condition && (
+            <div className="p-4 border rounded-lg">
+              <h3 className="font-medium mb-2">Condition</h3>
+              <Badge variant="secondary">
+                {property.condition.replace('_', ' ').toUpperCase()}
+              </Badge>
+            </div>
+          )}
+
+          {property.status && (
+            <div className="p-4 border rounded-lg">
+              <h3 className="font-medium mb-2">Status</h3>
+              <Badge variant="secondary">
+                {property.status.replace('_', ' ').toUpperCase()}
+              </Badge>
+            </div>
+          )}
+
+          {property.kitchenType && (
+            <div className="p-4 border rounded-lg">
+              <h3 className="font-medium mb-2">Kitchen Type</h3>
+              <Badge variant="secondary">
+                {property.kitchenType.toUpperCase()}
+              </Badge>
+            </div>
+          )}
+
+          {(property.floorLevel !== undefined || property.totalFloors !== undefined) && (
+            <div className="p-4 border rounded-lg">
+              <h3 className="font-medium mb-2">Floor Information</h3>
+              <div className="flex items-center gap-2">
+                <Building size={18} className="text-teal-500" />
+                <span>
+                  {property.floorLevel !== undefined && `Floor ${property.floorLevel}`}
+                  {property.totalFloors !== undefined && ` of ${property.totalFloors}`}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {property.ceilingHeight && (
+            <div className="p-4 border rounded-lg">
+              <h3 className="font-medium mb-2">Ceiling Height</h3>
+              <div className="flex items-center gap-2">
+                <ArrowUp size={18} className="text-teal-500" />
+                <span>{property.ceilingHeight}m</span>
+              </div>
             </div>
           )}
         </div>
