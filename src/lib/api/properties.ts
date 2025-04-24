@@ -1,5 +1,5 @@
-
 import { supabase } from "@/integrations/supabase/client";
+import { Property } from "@/types/property";
 import { toast } from "sonner";
 
 export interface CreatePropertyInput {
@@ -156,5 +156,168 @@ export const createProperty = async (input: CreatePropertyInput) => {
     console.error('Error creating property:', error);
     toast.error("Failed to create property listing. Please try again.");
     throw error;
+  }
+};
+
+export const getProperties = async (type: 'sale' | 'rent' = 'sale'): Promise<Property[]> => {
+  try {
+    // Fetch properties and related data
+    const { data: properties, error } = await supabase
+      .from('properties')
+      .select(`
+        *,
+        property_amenities (amenity),
+        property_equipment (equipment),
+        property_images (image_url, is_primary),
+        property_internet_tv (option_name),
+        property_storage (storage_type),
+        property_security (security_feature),
+        property_nearby_places (place_name),
+        property_online_services (service_name)
+      `)
+      .eq('listing_type', type);
+
+    if (error) throw error;
+
+    // Transform the data to match the Property type
+    const transformedProperties: Property[] = properties.map(property => ({
+      id: property.id,
+      title: property.title,
+      description: property.description || '',
+      price: property.price,
+      phoneNumber: property.phone_number,
+      cadastralCode: property.cadastral_code,
+      address: {
+        street: property.address_street || '',
+        city: property.address_city,
+        state: property.address_state || '',
+        zip: property.address_zip || '',
+        district: property.address_district || '',
+        coordinates: {
+          lat: property.lat || 0,
+          lng: property.lng || 0
+        }
+      },
+      propertyType: property.property_type,
+      listingType: property.listing_type,
+      status: property.status || 'free',
+      condition: property.condition || 'good',
+      plan: property.plan,
+      beds: property.beds,
+      baths: property.baths,
+      sqft: property.sqft,
+      rooms: property.rooms || 0,
+      terraceArea: property.terrace_area || 0,
+      kitchenType: property.kitchen_type || 'open',
+      ceilingHeight: property.ceiling_height || 0,
+      floorLevel: property.floor_level || 0,
+      totalFloors: property.total_floors || 1,
+      yearBuilt: property.year_built || 0,
+      featured: property.featured || false,
+      amenities: property.property_amenities?.map(a => a.amenity) || [],
+      hasElevator: property.has_elevator || false,
+      hasVentilation: property.has_ventilation || false,
+      hasAirConditioning: property.has_air_conditioning || false,
+      equipment: property.property_equipment?.map(e => e.equipment) || [],
+      internetTV: property.property_internet_tv?.map(i => i.option_name) || [],
+      storage: property.property_storage?.map(s => s.storage_type) || [],
+      security: property.property_security?.map(s => s.security_feature) || [],
+      isAccessible: property.is_accessible || false,
+      nearbyPlaces: property.property_nearby_places?.map(p => p.place_name) || [],
+      onlineServices: property.property_online_services?.map(s => s.service_name) || [],
+      images: property.property_images?.map(i => i.image_url) || [],
+      agentName: property.agent_name || '',
+      agentPhone: property.agent_phone || '',
+      projectName: property.project_name || ''
+    }));
+
+    return transformedProperties;
+  } catch (error) {
+    console.error('Error fetching properties:', error);
+    toast.error("Failed to fetch properties. Please try again.");
+    return [];
+  }
+};
+
+export const getPropertiesByType = async (listingType: 'sale' | 'rent'): Promise<Property[]> => {
+  return getProperties(listingType);
+};
+
+export const getFeaturedProperties = async (): Promise<Property[]> => {
+  try {
+    const { data: properties, error } = await supabase
+      .from('properties')
+      .select(`
+        *,
+        property_amenities (amenity),
+        property_equipment (equipment),
+        property_images (image_url, is_primary),
+        property_internet_tv (option_name),
+        property_storage (storage_type),
+        property_security (security_feature),
+        property_nearby_places (place_name),
+        property_online_services (service_name)
+      `)
+      .eq('featured', true);
+
+    if (error) throw error;
+
+    // Use the same transformation logic as getProperties
+    const transformedProperties: Property[] = properties.map(property => ({
+      id: property.id,
+      title: property.title,
+      description: property.description || '',
+      price: property.price,
+      phoneNumber: property.phone_number,
+      cadastralCode: property.cadastral_code,
+      address: {
+        street: property.address_street || '',
+        city: property.address_city,
+        state: property.address_state || '',
+        zip: property.address_zip || '',
+        district: property.address_district || '',
+        coordinates: {
+          lat: property.lat || 0,
+          lng: property.lng || 0
+        }
+      },
+      propertyType: property.property_type,
+      listingType: property.listing_type,
+      status: property.status || 'free',
+      condition: property.condition || 'good',
+      plan: property.plan,
+      beds: property.beds,
+      baths: property.baths,
+      sqft: property.sqft,
+      rooms: property.rooms || 0,
+      terraceArea: property.terrace_area || 0,
+      kitchenType: property.kitchen_type || 'open',
+      ceilingHeight: property.ceiling_height || 0,
+      floorLevel: property.floor_level || 0,
+      totalFloors: property.total_floors || 1,
+      yearBuilt: property.year_built || 0,
+      featured: property.featured || false,
+      amenities: property.property_amenities?.map(a => a.amenity) || [],
+      hasElevator: property.has_elevator || false,
+      hasVentilation: property.has_ventilation || false,
+      hasAirConditioning: property.has_air_conditioning || false,
+      equipment: property.property_equipment?.map(e => e.equipment) || [],
+      internetTV: property.property_internet_tv?.map(i => i.option_name) || [],
+      storage: property.property_storage?.map(s => s.storage_type) || [],
+      security: property.property_security?.map(s => s.security_feature) || [],
+      isAccessible: property.is_accessible || false,
+      nearbyPlaces: property.property_nearby_places?.map(p => p.place_name) || [],
+      onlineServices: property.property_online_services?.map(s => s.service_name) || [],
+      images: property.property_images?.map(i => i.image_url) || [],
+      agentName: property.agent_name || '',
+      agentPhone: property.agent_phone || '',
+      projectName: property.project_name || ''
+    }));
+
+    return transformedProperties;
+  } catch (error) {
+    console.error('Error fetching featured properties:', error);
+    toast.error("Failed to fetch featured properties. Please try again.");
+    return [];
   }
 };

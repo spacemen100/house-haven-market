@@ -1,15 +1,6 @@
-
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { 
-  Search, 
-  Filter, 
-  MapPin, 
-  SlidersHorizontal, 
-  X,
-  ChevronDown
-} from "lucide-react";
-import { properties } from "@/data/properties";
+import { Search, Filter, MapPin, SlidersHorizontal, X } from "lucide-react";
 import { Property, PropertyType, ListingType } from "@/types/property";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
@@ -17,6 +8,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import PropertyCard from "@/components/PropertyCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { getPropertiesByType } from "@/lib/api/properties";
+import { useQuery } from "@tanstack/react-query";
 
 const Properties = () => {
   const location = useLocation();
@@ -34,14 +27,14 @@ const Properties = () => {
   const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   
-  // Filter properties based on criteria
+  const { data: properties = [], isLoading } = useQuery({
+    queryKey: ['properties', listingType],
+    queryFn: () => getPropertiesByType(listingType),
+  });
+  
   useEffect(() => {
     let filtered = [...properties];
     
-    // Filter by listing type
-    filtered = filtered.filter(property => property.listingType === listingType);
-    
-    // Filter by search query (address or title)
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(property => 
@@ -53,27 +46,27 @@ const Properties = () => {
       );
     }
     
-    // Filter by property types
     if (propertyTypes.length > 0) {
       filtered = filtered.filter(property => 
         propertyTypes.includes(property.propertyType)
       );
     }
     
-    // Filter by price
-    filtered = filtered.filter(property => 
-      property.price >= minPrice && property.price <= maxPrice
-    );
+    if (minPrice > 0) {
+      filtered = filtered.filter(property => property.price >= minPrice);
+    }
     
-    // Filter by beds
+    if (maxPrice < 5000000) {
+      filtered = filtered.filter(property => property.price <= maxPrice);
+    }
+    
     if (minBeds > 0) {
       filtered = filtered.filter(property => property.beds >= minBeds);
     }
     
     setFilteredProperties(filtered);
-  }, [searchQuery, listingType, propertyTypes, minPrice, maxPrice, minBeds]);
+  }, [searchQuery, listingType, propertyTypes, minPrice, maxPrice, minBeds, properties]);
   
-  // Update URL when listing type changes
   useEffect(() => {
     const params = new URLSearchParams();
     params.set("type", listingType);
@@ -124,7 +117,6 @@ const Properties = () => {
       
       <div className="container py-8">
         <div className="flex flex-col-reverse lg:flex-row gap-8">
-          {/* Filters - Mobile */}
           <div className="lg:hidden flex justify-between items-center mb-4">
             <div className="text-lg font-semibold">
               {filteredProperties.length} Properties Found
@@ -139,188 +131,177 @@ const Properties = () => {
             </Button>
           </div>
           
-          {/* Filters - Mobile Drawer */}
-          {isFilterOpen && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden">
-              <div className="absolute right-0 top-0 bottom-0 w-full max-w-sm bg-white p-6 overflow-y-auto animate-slide-up">
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-semibold">Filters</h2>
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    className="text-estate-neutral-500"
-                    onClick={() => setIsFilterOpen(false)}
-                  >
-                    <X size={24} />
-                  </Button>
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden">
+            <div className="absolute right-0 top-0 bottom-0 w-full max-w-sm bg-white p-6 overflow-y-auto animate-slide-up">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-semibold">Filters</h2>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="text-estate-neutral-500"
+                  onClick={() => setIsFilterOpen(false)}
+                >
+                  <X size={24} />
+                </Button>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="space-y-3">
+                  <h3 className="font-medium">Listing Type</h3>
+                  <div className="flex gap-3">
+                    <Button 
+                      variant={listingType === "sale" ? "default" : "outline"}
+                      className={listingType === "sale" ? "bg-teal-500 hover:bg-teal-600" : ""}
+                      onClick={() => setListingType("sale")}
+                    >
+                      For Sale
+                    </Button>
+                    <Button 
+                      variant={listingType === "rent" ? "default" : "outline"}
+                      className={listingType === "rent" ? "bg-teal-500 hover:bg-teal-600" : ""}
+                      onClick={() => setListingType("rent")}
+                    >
+                      For Rent
+                    </Button>
+                  </div>
                 </div>
                 
-                <div className="space-y-6">
-                  {/* Same filter contents as desktop but mobile optimized */}
-                  {/* Listing Type */}
-                  <div className="space-y-3">
-                    <h3 className="font-medium">Listing Type</h3>
-                    <div className="flex gap-3">
-                      <Button 
-                        variant={listingType === "sale" ? "default" : "outline"}
-                        className={listingType === "sale" ? "bg-teal-500 hover:bg-teal-600" : ""}
-                        onClick={() => setListingType("sale")}
-                      >
-                        For Sale
-                      </Button>
-                      <Button 
-                        variant={listingType === "rent" ? "default" : "outline"}
-                        className={listingType === "rent" ? "bg-teal-500 hover:bg-teal-600" : ""}
-                        onClick={() => setListingType("rent")}
-                      >
-                        For Rent
-                      </Button>
-                    </div>
-                  </div>
-                  
-                  {/* Property Type */}
-                  <div className="space-y-3">
-                    <h3 className="font-medium">Property Type</h3>
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Checkbox 
-                          id="house-mobile" 
-                          checked={propertyTypes.includes("house")}
-                          onCheckedChange={() => handlePropertyTypeChange("house")}
-                        />
-                        <label htmlFor="house-mobile" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                          Houses
-                        </label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox 
-                          id="apartment-mobile" 
-                          checked={propertyTypes.includes("apartment")}
-                          onCheckedChange={() => handlePropertyTypeChange("apartment")}
-                        />
-                        <label htmlFor="apartment-mobile" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                          Apartments
-                        </label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox 
-                          id="land-mobile" 
-                          checked={propertyTypes.includes("land")}
-                          onCheckedChange={() => handlePropertyTypeChange("land")}
-                        />
-                        <label htmlFor="land-mobile" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                          Land
-                        </label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox 
-                          id="commercial-mobile" 
-                          checked={propertyTypes.includes("commercial")}
-                          onCheckedChange={() => handlePropertyTypeChange("commercial")}
-                        />
-                        <label htmlFor="commercial-mobile" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                          Commercial
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Price Range */}
-                  <div className="space-y-3">
-                    <h3 className="font-medium">Price Range</h3>
-                    <div className="px-2">
-                      <Slider 
-                        defaultValue={[minPrice, maxPrice]}
-                        max={5000000}
-                        step={100000}
-                        onValueChange={(values) => {
-                          setMinPrice(values[0]);
-                          setMaxPrice(values[1]);
-                        }}
+                <div className="space-y-3">
+                  <h3 className="font-medium">Property Type</h3>
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="house-mobile" 
+                        checked={propertyTypes.includes("house")}
+                        onCheckedChange={() => handlePropertyTypeChange("house")}
                       />
+                      <label htmlFor="house-mobile" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        Houses
+                      </label>
                     </div>
-                    <div className="flex justify-between text-sm mt-2">
-                      <span>${(minPrice/1000).toLocaleString()}k</span>
-                      <span>${(maxPrice/1000).toLocaleString()}k</span>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="apartment-mobile" 
+                        checked={propertyTypes.includes("apartment")}
+                        onCheckedChange={() => handlePropertyTypeChange("apartment")}
+                      />
+                      <label htmlFor="apartment-mobile" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        Apartments
+                      </label>
                     </div>
-                  </div>
-                  
-                  {/* Bedrooms */}
-                  <div className="space-y-3">
-                    <h3 className="font-medium">Bedrooms</h3>
-                    <div className="flex flex-wrap gap-2">
-                      <Button 
-                        variant={minBeds === 0 ? "default" : "outline"}
-                        className={minBeds === 0 ? "bg-teal-500 hover:bg-teal-600" : ""}
-                        size="sm"
-                        onClick={() => setMinBeds(0)}
-                      >
-                        Any
-                      </Button>
-                      <Button 
-                        variant={minBeds === 1 ? "default" : "outline"}
-                        className={minBeds === 1 ? "bg-teal-500 hover:bg-teal-600" : ""}
-                        size="sm"
-                        onClick={() => setMinBeds(1)}
-                      >
-                        1+
-                      </Button>
-                      <Button 
-                        variant={minBeds === 2 ? "default" : "outline"}
-                        className={minBeds === 2 ? "bg-teal-500 hover:bg-teal-600" : ""}
-                        size="sm"
-                        onClick={() => setMinBeds(2)}
-                      >
-                        2+
-                      </Button>
-                      <Button 
-                        variant={minBeds === 3 ? "default" : "outline"}
-                        className={minBeds === 3 ? "bg-teal-500 hover:bg-teal-600" : ""}
-                        size="sm"
-                        onClick={() => setMinBeds(3)}
-                      >
-                        3+
-                      </Button>
-                      <Button 
-                        variant={minBeds === 4 ? "default" : "outline"}
-                        className={minBeds === 4 ? "bg-teal-500 hover:bg-teal-600" : ""}
-                        size="sm"
-                        onClick={() => setMinBeds(4)}
-                      >
-                        4+
-                      </Button>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="land-mobile" 
+                        checked={propertyTypes.includes("land")}
+                        onCheckedChange={() => handlePropertyTypeChange("land")}
+                      />
+                      <label htmlFor="land-mobile" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        Land
+                      </label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="commercial-mobile" 
+                        checked={propertyTypes.includes("commercial")}
+                        onCheckedChange={() => handlePropertyTypeChange("commercial")}
+                      />
+                      <label htmlFor="commercial-mobile" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        Commercial
+                      </label>
                     </div>
                   </div>
-                  
-                  {/* Action Buttons */}
-                  <div className="flex gap-3 pt-4">
+                </div>
+                
+                <div className="space-y-3">
+                  <h3 className="font-medium">Price Range</h3>
+                  <div className="px-2">
+                    <Slider 
+                      defaultValue={[minPrice, maxPrice]}
+                      max={5000000}
+                      step={100000}
+                      onValueChange={(values) => {
+                        setMinPrice(values[0]);
+                        setMaxPrice(values[1]);
+                      }}
+                    />
+                  </div>
+                  <div className="flex justify-between text-sm mt-2">
+                    <span>${(minPrice/1000).toLocaleString()}k</span>
+                    <span>${(maxPrice/1000).toLocaleString()}k</span>
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  <h3 className="font-medium">Bedrooms</h3>
+                  <div className="flex flex-wrap gap-2">
                     <Button 
-                      variant="outline"
-                      className="flex-1"
-                      onClick={handleClearFilters}
+                      variant={minBeds === 0 ? "default" : "outline"}
+                      className={minBeds === 0 ? "bg-teal-500 hover:bg-teal-600" : ""}
+                      size="sm"
+                      onClick={() => setMinBeds(0)}
                     >
-                      Clear All
+                      Any
                     </Button>
                     <Button 
-                      className="flex-1 bg-teal-500 hover:bg-teal-600"
-                      onClick={() => setIsFilterOpen(false)}
+                      variant={minBeds === 1 ? "default" : "outline"}
+                      className={minBeds === 1 ? "bg-teal-500 hover:bg-teal-600" : ""}
+                      size="sm"
+                      onClick={() => setMinBeds(1)}
                     >
-                      Show Results
+                      1+
+                    </Button>
+                    <Button 
+                      variant={minBeds === 2 ? "default" : "outline"}
+                      className={minBeds === 2 ? "bg-teal-500 hover:bg-teal-600" : ""}
+                      size="sm"
+                      onClick={() => setMinBeds(2)}
+                    >
+                      2+
+                    </Button>
+                    <Button 
+                      variant={minBeds === 3 ? "default" : "outline"}
+                      className={minBeds === 3 ? "bg-teal-500 hover:bg-teal-600" : ""}
+                      size="sm"
+                      onClick={() => setMinBeds(3)}
+                    >
+                      3+
+                    </Button>
+                    <Button 
+                      variant={minBeds === 4 ? "default" : "outline"}
+                      className={minBeds === 4 ? "bg-teal-500 hover:bg-teal-600" : ""}
+                      size="sm"
+                      onClick={() => setMinBeds(4)}
+                    >
+                      4+
                     </Button>
                   </div>
+                </div>
+                
+                <div className="flex gap-3 pt-4">
+                  <Button 
+                    variant="outline"
+                    className="flex-1"
+                    onClick={handleClearFilters}
+                  >
+                    Clear All
+                  </Button>
+                  <Button 
+                    className="flex-1 bg-teal-500 hover:bg-teal-600"
+                    onClick={() => setIsFilterOpen(false)}
+                  >
+                    Show Results
+                  </Button>
                 </div>
               </div>
             </div>
-          )}
+          </div>
           
-          {/* Filters - Desktop */}
           <div className="hidden lg:block w-72 h-fit bg-white rounded-lg p-6 shadow-sm border border-estate-neutral-100 space-y-6">
             <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
               <Filter size={20} />
               <span>Filters</span>
             </h3>
             
-            {/* Listing Type */}
             <div className="space-y-3">
               <h4 className="font-medium">Listing Type</h4>
               <div className="flex gap-3">
@@ -343,7 +324,6 @@ const Properties = () => {
             
             <hr />
             
-            {/* Property Type */}
             <div className="space-y-3">
               <h4 className="font-medium">Property Type</h4>
               <div className="space-y-2">
@@ -392,7 +372,6 @@ const Properties = () => {
             
             <hr />
             
-            {/* Price Range */}
             <div className="space-y-3">
               <h4 className="font-medium">Price Range</h4>
               <div className="px-2">
@@ -414,7 +393,6 @@ const Properties = () => {
             
             <hr />
             
-            {/* Bedrooms */}
             <div className="space-y-3">
               <h4 className="font-medium">Bedrooms</h4>
               <div className="flex flex-wrap gap-2">
@@ -472,17 +450,26 @@ const Properties = () => {
             </Button>
           </div>
           
-          {/* Property Results */}
           <div className="flex-1">
-            {/* Results Summary */}
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-semibold">
-                {filteredProperties.length} Properties Found
+                {isLoading ? "Loading..." : `${filteredProperties.length} Properties Found`}
               </h2>
             </div>
             
-            {/* Properties Grid */}
-            {filteredProperties.length > 0 ? (
+            {isLoading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                {[1, 2, 3, 4, 5, 6].map((n) => (
+                  <div key={n} className="animate-pulse">
+                    <div className="bg-gray-200 h-56 rounded-lg mb-4"></div>
+                    <div className="space-y-3">
+                      <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                      <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : filteredProperties.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                 {filteredProperties.map((property) => (
                   <PropertyCard key={property.id} property={property} />
@@ -494,10 +481,7 @@ const Properties = () => {
                 <p className="text-estate-neutral-600 mb-4">
                   Try adjusting your search criteria to find more properties.
                 </p>
-                <Button 
-                  variant="outline" 
-                  onClick={handleClearFilters}
-                >
+                <Button variant="outline" onClick={handleClearFilters}>
                   Clear Filters
                 </Button>
               </div>
