@@ -9,7 +9,340 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      properties: {
+        Row: {
+          address_city: string
+          address_district: string | null
+          address_state: string | null
+          address_street: string | null
+          address_zip: string | null
+          agent_name: string | null
+          agent_phone: string | null
+          baths: number
+          beds: number
+          cadastral_code: string | null
+          ceiling_height: number | null
+          condition: Database["public"]["Enums"]["property_condition"] | null
+          created_at: string | null
+          description: string | null
+          featured: boolean | null
+          floor_level: number | null
+          has_air_conditioning: boolean | null
+          has_elevator: boolean | null
+          has_ventilation: boolean | null
+          id: string
+          is_accessible: boolean | null
+          kitchen_type: Database["public"]["Enums"]["kitchen_type"] | null
+          lat: number | null
+          listing_type: Database["public"]["Enums"]["listing_type"]
+          lng: number | null
+          phone_number: string | null
+          plan: string | null
+          price: number
+          project_name: string | null
+          property_type: Database["public"]["Enums"]["property_type"]
+          rooms: number | null
+          sqft: number
+          status: Database["public"]["Enums"]["property_status"] | null
+          terrace_area: number | null
+          title: string
+          total_floors: number | null
+          updated_at: string | null
+          year_built: number | null
+        }
+        Insert: {
+          address_city: string
+          address_district?: string | null
+          address_state?: string | null
+          address_street?: string | null
+          address_zip?: string | null
+          agent_name?: string | null
+          agent_phone?: string | null
+          baths?: number
+          beds?: number
+          cadastral_code?: string | null
+          ceiling_height?: number | null
+          condition?: Database["public"]["Enums"]["property_condition"] | null
+          created_at?: string | null
+          description?: string | null
+          featured?: boolean | null
+          floor_level?: number | null
+          has_air_conditioning?: boolean | null
+          has_elevator?: boolean | null
+          has_ventilation?: boolean | null
+          id?: string
+          is_accessible?: boolean | null
+          kitchen_type?: Database["public"]["Enums"]["kitchen_type"] | null
+          lat?: number | null
+          listing_type: Database["public"]["Enums"]["listing_type"]
+          lng?: number | null
+          phone_number?: string | null
+          plan?: string | null
+          price: number
+          project_name?: string | null
+          property_type: Database["public"]["Enums"]["property_type"]
+          rooms?: number | null
+          sqft?: number
+          status?: Database["public"]["Enums"]["property_status"] | null
+          terrace_area?: number | null
+          title: string
+          total_floors?: number | null
+          updated_at?: string | null
+          year_built?: number | null
+        }
+        Update: {
+          address_city?: string
+          address_district?: string | null
+          address_state?: string | null
+          address_street?: string | null
+          address_zip?: string | null
+          agent_name?: string | null
+          agent_phone?: string | null
+          baths?: number
+          beds?: number
+          cadastral_code?: string | null
+          ceiling_height?: number | null
+          condition?: Database["public"]["Enums"]["property_condition"] | null
+          created_at?: string | null
+          description?: string | null
+          featured?: boolean | null
+          floor_level?: number | null
+          has_air_conditioning?: boolean | null
+          has_elevator?: boolean | null
+          has_ventilation?: boolean | null
+          id?: string
+          is_accessible?: boolean | null
+          kitchen_type?: Database["public"]["Enums"]["kitchen_type"] | null
+          lat?: number | null
+          listing_type?: Database["public"]["Enums"]["listing_type"]
+          lng?: number | null
+          phone_number?: string | null
+          plan?: string | null
+          price?: number
+          project_name?: string | null
+          property_type?: Database["public"]["Enums"]["property_type"]
+          rooms?: number | null
+          sqft?: number
+          status?: Database["public"]["Enums"]["property_status"] | null
+          terrace_area?: number | null
+          title?: string
+          total_floors?: number | null
+          updated_at?: string | null
+          year_built?: number | null
+        }
+        Relationships: []
+      }
+      property_amenities: {
+        Row: {
+          amenity: string
+          id: string
+          property_id: string | null
+        }
+        Insert: {
+          amenity: string
+          id?: string
+          property_id?: string | null
+        }
+        Update: {
+          amenity?: string
+          id?: string
+          property_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_amenities_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      property_equipment: {
+        Row: {
+          equipment: string
+          id: string
+          property_id: string | null
+        }
+        Insert: {
+          equipment: string
+          id?: string
+          property_id?: string | null
+        }
+        Update: {
+          equipment?: string
+          id?: string
+          property_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_equipment_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      property_images: {
+        Row: {
+          id: string
+          image_url: string
+          is_primary: boolean | null
+          property_id: string | null
+        }
+        Insert: {
+          id?: string
+          image_url: string
+          is_primary?: boolean | null
+          property_id?: string | null
+        }
+        Update: {
+          id?: string
+          image_url?: string
+          is_primary?: boolean | null
+          property_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_images_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      property_internet_tv: {
+        Row: {
+          id: string
+          option_name: string
+          property_id: string | null
+        }
+        Insert: {
+          id?: string
+          option_name: string
+          property_id?: string | null
+        }
+        Update: {
+          id?: string
+          option_name?: string
+          property_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_internet_tv_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      property_nearby_places: {
+        Row: {
+          id: string
+          place_name: string
+          property_id: string | null
+        }
+        Insert: {
+          id?: string
+          place_name: string
+          property_id?: string | null
+        }
+        Update: {
+          id?: string
+          place_name?: string
+          property_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_nearby_places_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      property_online_services: {
+        Row: {
+          id: string
+          property_id: string | null
+          service_name: string
+        }
+        Insert: {
+          id?: string
+          property_id?: string | null
+          service_name: string
+        }
+        Update: {
+          id?: string
+          property_id?: string | null
+          service_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_online_services_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      property_security: {
+        Row: {
+          id: string
+          property_id: string | null
+          security_feature: string
+        }
+        Insert: {
+          id?: string
+          property_id?: string | null
+          security_feature: string
+        }
+        Update: {
+          id?: string
+          property_id?: string | null
+          security_feature?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_security_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      property_storage: {
+        Row: {
+          id: string
+          property_id: string | null
+          storage_type: string
+        }
+        Insert: {
+          id?: string
+          property_id?: string | null
+          storage_type: string
+        }
+        Update: {
+          id?: string
+          property_id?: string | null
+          storage_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_storage_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +351,11 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      kitchen_type: "american" | "open" | "closed"
+      listing_type: "sale" | "rent" | "rent_by_day"
+      property_condition: "new" | "good" | "needs_renovation"
+      property_status: "free" | "under_caution" | "under_construction"
+      property_type: "house" | "apartment" | "land" | "commercial"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +470,12 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      kitchen_type: ["american", "open", "closed"],
+      listing_type: ["sale", "rent", "rent_by_day"],
+      property_condition: ["new", "good", "needs_renovation"],
+      property_status: ["free", "under_caution", "under_construction"],
+      property_type: ["house", "apartment", "land", "commercial"],
+    },
   },
 } as const
