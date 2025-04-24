@@ -48,6 +48,7 @@ export interface Property {
   
   // Features and Amenities
   featured?: boolean;
+  amenities?: string[];
   hasElevator?: boolean;
   hasVentilation?: boolean;
   hasAirConditioning?: boolean;
