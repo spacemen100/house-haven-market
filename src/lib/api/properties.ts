@@ -159,10 +159,10 @@ export const createProperty = async (input: CreatePropertyInput) => {
   }
 };
 
-export const getProperties = async (type: 'sale' | 'rent' = 'sale'): Promise<Property[]> => {
+export const getProperties = async (type?: 'sale' | 'rent' | 'rent_by_day'): Promise<Property[]> => {
   try {
-    // Fetch properties and related data
-    const { data: properties, error } = await supabase
+    // Build query
+    let query = supabase
       .from('properties')
       .select(`
         *,
@@ -174,8 +174,14 @@ export const getProperties = async (type: 'sale' | 'rent' = 'sale'): Promise<Pro
         property_security (security_feature),
         property_nearby_places (place_name),
         property_online_services (service_name)
-      `)
-      .eq('listing_type', type);
+      `);
+      
+    // Apply listing type filter if provided
+    if (type) {
+      query = query.eq('listing_type', type);
+    }
+
+    const { data: properties, error } = await query;
 
     if (error) throw error;
 
@@ -239,7 +245,7 @@ export const getProperties = async (type: 'sale' | 'rent' = 'sale'): Promise<Pro
   }
 };
 
-export const getPropertiesByType = async (listingType: 'sale' | 'rent'): Promise<Property[]> => {
+export const getPropertiesByType = async (listingType: 'sale' | 'rent' | 'rent_by_day'): Promise<Property[]> => {
   return getProperties(listingType);
 };
 
