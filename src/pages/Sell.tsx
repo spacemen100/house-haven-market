@@ -1,8 +1,5 @@
 
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import AddPropertyStep1 from "@/components/property/add/AddPropertyStep1";
@@ -10,17 +7,18 @@ import AddPropertyStep2 from "@/components/property/add/AddPropertyStep2";
 import AddPropertyStep3 from "@/components/property/add/AddPropertyStep3";
 import AddPropertyStep4 from "@/components/property/add/AddPropertyStep4";
 import StepsIndicator from "@/components/property/add/StepsIndicator";
-import { createProperty } from "@/lib/api/properties";
+import { CreatePropertyInput, createProperty } from "@/lib/api/properties";
 
 const Sell = () => {
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<Partial<CreatePropertyInput>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleFinalSubmit = async () => {
     try {
       setIsSubmitting(true);
-      await createProperty(formData);
+      // Type assertion here since we know by step 4 we have all required fields
+      await createProperty(formData as CreatePropertyInput);
       // Reset form
       setFormData({});
       setStep(1);
