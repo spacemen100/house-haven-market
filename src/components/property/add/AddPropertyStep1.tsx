@@ -1,115 +1,161 @@
 
-import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { 
+  Form, 
+  FormControl, 
+  FormField, 
+  FormItem, 
+  FormLabel, 
+  FormMessage 
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { CreatePropertyInput } from '@/lib/api/properties';
 
-const formSchema = z.object({
-  propertyType: z.enum(["house", "apartment", "land", "commercial"], {
-    required_error: "Please select a property type",
-  }),
-  listingType: z.enum(["sale", "rent", "rent_by_day"], {
-    required_error: "Please select a listing type",
-  }),
+// Define validation schema
+const propertyStep1Schema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().optional(),
+  price: z.coerce.number().min(0, "Price must be positive"),
+  
+  // Add new optional fields for contact and social media
+  contactEmail: z.string().email("Invalid email address").optional(),
+  instagramHandle: z.string().optional(),
+  facebookUrl: z.string().url("Invalid URL").optional(),
+  twitterHandle: z.string().optional(),
 });
 
-type FormValues = z.infer<typeof formSchema>;
-
 interface AddPropertyStep1Props {
-  onNext: (data: FormValues) => void;
+  onNext: (data: Partial<CreatePropertyInput>) => void;
 }
 
-const AddPropertyStep1 = ({ onNext }: AddPropertyStep1Props) => {
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext }) => {
+  const form = useForm<z.infer<typeof propertyStep1Schema>>({
+    resolver: zodResolver(propertyStep1Schema),
     defaultValues: {
-      propertyType: "house",
-      listingType: "sale",
-    },
+      title: '',
+      description: '',
+      price: 0,
+      contactEmail: '',
+      instagramHandle: '',
+      facebookUrl: '',
+      twitterHandle: '',
+    }
   });
 
-  const onSubmit = (data: FormValues) => {
-    onNext(data);
+  const onSubmit = (values: z.infer<typeof propertyStep1Schema>) => {
+    onNext(values);
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <div className="space-y-6">
-          <div className="mb-8 text-center">
-            <h2 className="text-2xl font-bold">What kind of property are you listing?</h2>
-            <p className="text-muted-foreground mt-2">
-              Select the property type and listing purpose
-            </p>
-          </div>
-
-          <FormField
-            control={form.control}
-            name="propertyType"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Property Type</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select property type" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="house">House</SelectItem>
-                    <SelectItem value="apartment">Apartment</SelectItem>
-                    <SelectItem value="land">Land</SelectItem>
-                    <SelectItem value="commercial">Commercial</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="listingType"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Listing Type</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select listing type" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="sale">For Sale</SelectItem>
-                    <SelectItem value="rent">For Rent</SelectItem>
-                    <SelectItem value="rent_by_day">For Rent (Daily)</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="flex justify-end">
-          <Button type="submit">Next Step</Button>
-        </div>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Property Title</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter property title" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter property description" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
+        <FormField
+          control={form.control}
+          name="price"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Price</FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="Enter property price" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
+        <h3 className="text-lg font-semibold mt-6">Contact Information</h3>
+        
+        <FormField
+          control={form.control}
+          name="contactEmail"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Contact Email</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter contact email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
+        <h3 className="text-lg font-semibold mt-6">Social Media</h3>
+        
+        <FormField
+          control={form.control}
+          name="instagramHandle"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Instagram Handle</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter Instagram handle" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
+        <FormField
+          control={form.control}
+          name="facebookUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Facebook URL</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter Facebook profile/page URL" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
+        <FormField
+          control={form.control}
+          name="twitterHandle"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Twitter Handle</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter Twitter handle" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
+        <Button type="submit" className="w-full mt-6">Next Step</Button>
       </form>
     </Form>
   );

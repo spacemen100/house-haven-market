@@ -45,11 +45,16 @@ export interface CreatePropertyInput {
   
   // Images
   images?: File[];
+  
+  // Contact and Social Media
+  contactEmail?: string;
+  instagramHandle?: string;
+  facebookUrl?: string;
+  twitterHandle?: string;
 }
 
 export const createProperty = async (input: CreatePropertyInput) => {
   try {
-    // First, create the main property record
     const { data: property, error: propertyError } = await supabase
       .from('properties')
       .insert({
@@ -75,14 +80,17 @@ export const createProperty = async (input: CreatePropertyInput) => {
         has_elevator: input.hasElevator,
         has_ventilation: input.hasVentilation,
         has_air_conditioning: input.hasAirConditioning,
-        is_accessible: input.isAccessible
+        is_accessible: input.isAccessible,
+        contact_email: input.contactEmail,
+        instagram_handle: input.instagramHandle,
+        facebook_url: input.facebookUrl,
+        twitter_handle: input.twitterHandle
       })
       .select()
       .single();
 
     if (propertyError) throw propertyError;
     
-    // Upload images if any
     if (input.images?.length) {
       const imagePromises = input.images.map(async (file) => {
         const fileExt = file.name.split('.').pop();
@@ -110,39 +118,31 @@ export const createProperty = async (input: CreatePropertyInput) => {
       await Promise.all(imagePromises);
     }
     
-    // Insert related data in parallel
     const relatedDataPromises = [
-      // Amenities
       ...(input.amenities?.map(amenity => 
         supabase.from('property_amenities').insert({ property_id: property.id, amenity })
       ) || []),
       
-      // Equipment
       ...(input.equipment?.map(equipment => 
         supabase.from('property_equipment').insert({ property_id: property.id, equipment })
       ) || []),
       
-      // Internet/TV
       ...(input.internetTv?.map(option => 
         supabase.from('property_internet_tv').insert({ property_id: property.id, option_name: option })
       ) || []),
       
-      // Storage
       ...(input.storage?.map(storage => 
         supabase.from('property_storage').insert({ property_id: property.id, storage_type: storage })
       ) || []),
       
-      // Security
       ...(input.security?.map(security => 
         supabase.from('property_security').insert({ property_id: property.id, security_feature: security })
       ) || []),
       
-      // Nearby Places
       ...(input.nearbyPlaces?.map(place => 
         supabase.from('property_nearby_places').insert({ property_id: property.id, place_name: place })
       ) || []),
       
-      // Online Services
       ...(input.onlineServices?.map(service => 
         supabase.from('property_online_services').insert({ property_id: property.id, service_name: service })
       ) || [])
@@ -161,7 +161,6 @@ export const createProperty = async (input: CreatePropertyInput) => {
 
 export const getProperties = async (type?: 'sale' | 'rent' | 'rent_by_day'): Promise<Property[]> => {
   try {
-    // Build query
     let query = supabase
       .from('properties')
       .select(`
@@ -176,7 +175,6 @@ export const getProperties = async (type?: 'sale' | 'rent' | 'rent_by_day'): Pro
         property_online_services (service_name)
       `);
       
-    // Apply listing type filter if provided
     if (type) {
       query = query.eq('listing_type', type);
     }
@@ -185,7 +183,6 @@ export const getProperties = async (type?: 'sale' | 'rent' | 'rent_by_day'): Pro
 
     if (error) throw error;
 
-    // Transform the data to match the Property type
     const transformedProperties: Property[] = properties.map(property => ({
       id: property.id,
       title: property.title,
@@ -268,7 +265,6 @@ export const getFeaturedProperties = async (): Promise<Property[]> => {
 
     if (error) throw error;
 
-    // Use the same transformation logic as getProperties
     const transformedProperties: Property[] = properties.map(property => ({
       id: property.id,
       title: property.title,

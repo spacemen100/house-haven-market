@@ -23,14 +23,17 @@ export type Database = {
           cadastral_code: string | null
           ceiling_height: number | null
           condition: Database["public"]["Enums"]["property_condition"] | null
+          contact_email: string | null
           created_at: string | null
           description: string | null
+          facebook_url: string | null
           featured: boolean | null
           floor_level: number | null
           has_air_conditioning: boolean | null
           has_elevator: boolean | null
           has_ventilation: boolean | null
           id: string
+          instagram_handle: string | null
           is_accessible: boolean | null
           kitchen_type: Database["public"]["Enums"]["kitchen_type"] | null
           lat: number | null
@@ -47,6 +50,7 @@ export type Database = {
           terrace_area: number | null
           title: string
           total_floors: number | null
+          twitter_handle: string | null
           updated_at: string | null
           year_built: number | null
         }
@@ -63,14 +67,17 @@ export type Database = {
           cadastral_code?: string | null
           ceiling_height?: number | null
           condition?: Database["public"]["Enums"]["property_condition"] | null
+          contact_email?: string | null
           created_at?: string | null
           description?: string | null
+          facebook_url?: string | null
           featured?: boolean | null
           floor_level?: number | null
           has_air_conditioning?: boolean | null
           has_elevator?: boolean | null
           has_ventilation?: boolean | null
           id?: string
+          instagram_handle?: string | null
           is_accessible?: boolean | null
           kitchen_type?: Database["public"]["Enums"]["kitchen_type"] | null
           lat?: number | null
@@ -87,6 +94,7 @@ export type Database = {
           terrace_area?: number | null
           title: string
           total_floors?: number | null
+          twitter_handle?: string | null
           updated_at?: string | null
           year_built?: number | null
         }
@@ -103,14 +111,17 @@ export type Database = {
           cadastral_code?: string | null
           ceiling_height?: number | null
           condition?: Database["public"]["Enums"]["property_condition"] | null
+          contact_email?: string | null
           created_at?: string | null
           description?: string | null
+          facebook_url?: string | null
           featured?: boolean | null
           floor_level?: number | null
           has_air_conditioning?: boolean | null
           has_elevator?: boolean | null
           has_ventilation?: boolean | null
           id?: string
+          instagram_handle?: string | null
           is_accessible?: boolean | null
           kitchen_type?: Database["public"]["Enums"]["kitchen_type"] | null
           lat?: number | null
@@ -127,6 +138,7 @@ export type Database = {
           terrace_area?: number | null
           title?: string
           total_floors?: number | null
+          twitter_handle?: string | null
           updated_at?: string | null
           year_built?: number | null
         }
