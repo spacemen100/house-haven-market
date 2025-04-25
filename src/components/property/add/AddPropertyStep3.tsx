@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,11 +13,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import LocationMap from "./LocationMap";
 
 const formSchema = z.object({
   addressStreet: z.string().optional(),
   addressCity: z.string().min(2, "City is required"),
   addressDistrict: z.string().optional(),
+  lat: z.number().default(41.7151),
+  lng: z.number().default(44.8271),
   hasElevator: z.boolean().default(false),
   hasVentilation: z.boolean().default(false),
   hasAirConditioning: z.boolean().default(false),
@@ -51,6 +53,8 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
       addressStreet: "",
       addressCity: "",
       addressDistrict: "",
+      lat: 41.7151,
+      lng: 44.8271,
       hasElevator: false,
       hasVentilation: false,
       hasAirConditioning: false,
@@ -76,6 +80,19 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
 
           <div className="space-y-4">
             <h3 className="text-lg font-medium">Location</h3>
+            
+            <div className="mb-6">
+              <FormLabel>Property Location</FormLabel>
+              <LocationMap
+                initialLat={form.getValues("lat")}
+                initialLng={form.getValues("lng")}
+                onLocationSelect={(lat, lng) => {
+                  form.setValue("lat", lat);
+                  form.setValue("lng", lng);
+                }}
+              />
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
