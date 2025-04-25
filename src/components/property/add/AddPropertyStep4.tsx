@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2 } from "lucide-react";
+import { Loader2, Gallery } from "lucide-react";
 import { CreatePropertyInput } from "@/lib/api/properties";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 interface AddPropertyStep4Props {
   onBack: () => void;
@@ -14,42 +15,67 @@ interface AddPropertyStep4Props {
   onSubmit: () => void;
 }
 
+const MAX_IMAGES = 5;
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+
 const AddPropertyStep4 = ({ onBack, formData, isSubmitting, onSubmit }: AddPropertyStep4Props) => {
   const [images, setImages] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [previewDialogOpen, setPreviewDialogOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
 
+  const validateFile = (file: File): string | null => {
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      return "Type de fichier non supporté. Utilisez JPG, PNG ou WebP.";
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      return "L'image ne doit pas dépasser 5MB.";
+    }
+    return null;
+  };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
       
-      // Store the files for submission
-      setImages([...images, ...filesArray]);
+      if (images.length + filesArray.length > MAX_IMAGES) {
+        toast.error(`Vous ne pouvez pas ajouter plus de ${MAX_IMAGES} images.`);
+        return;
+      }
+
+      // Validate each file
+      const validFiles: File[] = [];
+      const validPreviewUrls: string[] = [];
+
+      filesArray.forEach(file => {
+        const error = validateFile(file);
+        if (error) {
+          toast.error(error);
+        } else {
+          validFiles.push(file);
+          validPreviewUrls.push(URL.createObjectURL(file));
+        }
+      });
       
-      // Create preview URLs
-      const newPreviewUrls = filesArray.map(file => URL.createObjectURL(file));
-      setPreviewUrls([...previewUrls, ...newPreviewUrls]);
+      setImages([...images, ...validFiles]);
+      setPreviewUrls([...previewUrls, ...validPreviewUrls]);
     }
   };
 
   const removeImage = (index: number) => {
-    // Remove from preview
     URL.revokeObjectURL(previewUrls[index]);
     const newPreviewUrls = [...previewUrls];
     newPreviewUrls.splice(index, 1);
     setPreviewUrls(newPreviewUrls);
     
-    // Remove from files array
     const newImages = [...images];
     newImages.splice(index, 1);
     setImages(newImages);
   };
 
   const handleSubmit = () => {
-    // Add the images to the form data before submitting
     if (images.length > 0) {
-      // In a real implementation, we would need to handle the file uploads
       Object.assign(formData, { images });
     }
     onSubmit();
@@ -63,32 +89,51 @@ const AddPropertyStep4 = ({ onBack, formData, isSubmitting, onSubmit }: AddPrope
   return (
     <div className="space-y-8">
       <div className="mb-8 text-center">
-        <h2 className="text-2xl font-bold">Final Steps</h2>
+        <h2 className="text-2xl font-bold">Dernières étapes</h2>
         <p className="text-muted-foreground mt-2">
-          Upload photos and review your listing
+          Téléchargez jusqu'à 5 photos et vérifiez votre annonce
         </p>
       </div>
 
       <div className="space-y-6">
-        <h3 className="text-lg font-medium">Upload Photos</h3>
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-medium">Photos de la propriété</h3>
+          <span className="text-sm text-muted-foreground">
+            {images.length}/{MAX_IMAGES} images
+          </span>
+        </div>
+        
         <div className="space-y-4">
-          <Label htmlFor="images">Property Images</Label>
-          <Input
-            id="images"
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleImageChange}
-          />
+          <div className="flex items-center gap-4">
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              onClick={() => document.getElementById('images')?.click()}
+              disabled={images.length >= MAX_IMAGES}
+            >
+              <Gallery className="mr-2 h-4 w-4" />
+              Ajouter des photos
+            </Button>
+            <Input
+              id="images"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              multiple
+              className="hidden"
+              onChange={handleImageChange}
+              disabled={images.length >= MAX_IMAGES}
+            />
+          </div>
           
           {previewUrls.length > 0 && (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
               {previewUrls.map((url, index) => (
-                <div key={index} className="relative group">
+                <div key={index} className="relative group aspect-square">
                   <img
                     src={url}
-                    alt={`Property image ${index + 1}`}
-                    className="h-24 w-full object-cover rounded-md cursor-pointer"
+                    alt={`Photo de la propriété ${index + 1}`}
+                    className="h-full w-full object-cover rounded-md cursor-pointer"
                     onClick={() => openPreview(url)}
                   />
                   <Button
@@ -189,10 +234,10 @@ const AddPropertyStep4 = ({ onBack, formData, isSubmitting, onSubmit }: AddPrope
       <Dialog open={previewDialogOpen} onOpenChange={setPreviewDialogOpen}>
         <DialogContent className="sm:max-w-xl">
           <DialogHeader>
-            <DialogTitle>Property Image</DialogTitle>
+            <DialogTitle>Aperçu de l'image</DialogTitle>
           </DialogHeader>
           <div className="flex justify-center">
-            <img src={previewImage} alt="Property preview" className="max-h-[70vh] object-contain" />
+            <img src={previewImage} alt="Aperçu" className="max-h-[70vh] object-contain" />
           </div>
         </DialogContent>
       </Dialog>
