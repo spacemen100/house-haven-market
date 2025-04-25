@@ -1,9 +1,8 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Gallery } from "lucide-react";
+import { Loader2, Images } from "lucide-react";
 import { CreatePropertyInput } from "@/lib/api/properties";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "sonner";
@@ -112,7 +111,7 @@ const AddPropertyStep4 = ({ onBack, formData, isSubmitting, onSubmit }: AddPrope
               onClick={() => document.getElementById('images')?.click()}
               disabled={images.length >= MAX_IMAGES}
             >
-              <Gallery className="mr-2 h-4 w-4" />
+              <Images className="mr-2 h-4 w-4" />
               Ajouter des photos
             </Button>
             <Input
