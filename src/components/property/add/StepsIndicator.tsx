@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Check } from "lucide-react";
 
@@ -8,10 +7,11 @@ interface StepsIndicatorProps {
 
 const StepsIndicator = ({ currentStep }: StepsIndicatorProps) => {
   const steps = [
-    { number: 1, label: "Property Type" },
-    { number: 2, label: "Basic Info" },
-    { number: 3, label: "Features" },
-    { number: 4, label: "Publish" }
+    { number: 1, label: "Authentication" },
+    { number: 2, label: "Property Type" },
+    { number: 3, label: "Basic Info" },
+    { number: 4, label: "Features" },
+    { number: 5, label: "Publish" }
   ];
 
   return (

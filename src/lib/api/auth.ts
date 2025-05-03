@@ -40,6 +40,25 @@ export const signOut = async () => {
   return true;
 };
 
+// src/lib/api/auth.ts
+export const signUpWithEmail = async (email: string, password: string) => {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: window.location.origin + '/account'
+      }
+    });
+  
+    if (error) {
+      toast.error("Sign up failed: " + error.message);
+      return false;
+    }
+    
+    toast.success("Sign up successful! Please check your email to confirm your account.");
+    return true;
+  };
+
 export const getCurrentUser = async () => {
   const { data: { user }, error } = await supabase.auth.getUser();
   if (error) {

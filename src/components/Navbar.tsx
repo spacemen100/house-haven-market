@@ -7,6 +7,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,7 +16,8 @@ import { toast } from "sonner";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -45,8 +47,26 @@ const Navbar = () => {
       toast.error("Login failed: " + error.message);
     } else {
       setIsLoggedIn(true);
-      setIsLoginOpen(false);
+      setIsAuthDialogOpen(false);
       toast.success("Logged in successfully");
+    }
+  };
+
+  const handleEmailSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: window.location.origin + '/account'
+      }
+    });
+
+    if (error) {
+      toast.error("Sign up failed: " + error.message);
+    } else {
+      toast.success("Sign up successful! Please check your email to confirm your account.");
+      setAuthMode("login");
     }
   };
 
@@ -102,14 +122,28 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Button 
-                variant="outline" 
-                className="flex gap-2"
-                onClick={() => setIsLoginOpen(true)}
-              >
-                <User size={18} />
-                <span>Sign In</span>
-              </Button>
+              <Dialog open={isAuthDialogOpen} onOpenChange={setIsAuthDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className="flex gap-2"
+                    onClick={() => setAuthMode("login")}
+                  >
+                    <User size={18} />
+                    <span>Sign In</span>
+                  </Button>
+                </DialogTrigger>
+                <Button 
+                  variant="ghost" 
+                  className="text-teal-600 hover:text-teal-700"
+                  onClick={() => {
+                    setIsAuthDialogOpen(true);
+                    setAuthMode("signup");
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </Dialog>
               <Button asChild className="bg-teal-500 hover:bg-teal-600">
                 <Link to="/sell">Get Started</Link>
               </Button>
@@ -185,12 +219,24 @@ const Navbar = () => {
                     variant="outline" 
                     className="flex gap-2 justify-center" 
                     onClick={() => {
-                      setIsLoginOpen(true);
+                      setIsAuthDialogOpen(true);
+                      setAuthMode("login");
                       setIsMenuOpen(false);
                     }}
                   >
                     <User size={18} />
                     <span>Sign In</span>
+                  </Button>
+                  <Button 
+                    variant="ghost" 
+                    className="text-teal-600 hover:text-teal-700"
+                    onClick={() => {
+                      setIsAuthDialogOpen(true);
+                      setAuthMode("signup");
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    Sign Up
                   </Button>
                   <Button asChild className="bg-teal-500 hover:bg-teal-600">
                     <Link to="/sell" onClick={() => setIsMenuOpen(false)}>Get Started</Link>
@@ -202,12 +248,12 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* Login Modal */}
-      <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
+      {/* Auth Dialog */}
+      <Dialog open={isAuthDialogOpen} onOpenChange={setIsAuthDialogOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-estate-800">
-              Sign In
+              {authMode === "login" ? "Sign In" : "Create an Account"}
             </DialogTitle>
           </DialogHeader>
           
@@ -227,12 +273,12 @@ const Navbar = () => {
               </div>
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-background px-2 text-muted-foreground">
-                  Or sign in with email
+                  Or {authMode === "login" ? "sign in" : "sign up"} with email
                 </span>
               </div>
             </div>
 
-            <form onSubmit={handleEmailLogin} className="space-y-4">
+            <form onSubmit={authMode === "login" ? handleEmailLogin : handleEmailSignUp} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -256,9 +302,35 @@ const Navbar = () => {
                 />
               </div>
               <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600">
-                Sign In
+                {authMode === "login" ? "Sign In" : "Sign Up"}
               </Button>
             </form>
+
+            <div className="text-center text-sm">
+              {authMode === "login" ? (
+                <>
+                  Don't have an account?{" "}
+                  <button 
+                    type="button" 
+                    className="text-teal-600 hover:underline"
+                    onClick={() => setAuthMode("signup")}
+                  >
+                    Sign up
+                  </button>
+                </>
+              ) : (
+                <>
+                  Already have an account?{" "}
+                  <button 
+                    type="button" 
+                    className="text-teal-600 hover:underline"
+                    onClick={() => setAuthMode("login")}
+                  >
+                    Sign in
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </DialogContent>
       </Dialog>
