@@ -74,8 +74,13 @@ const Navbar = () => {
 
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Signup initiated with:', { email, password });
+  
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/signup`, {
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+      console.log('Using API base URL:', API_BASE_URL);
+  
+      const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,17 +88,31 @@ const Navbar = () => {
         body: JSON.stringify({ email, password }),
       });
   
+      console.log('Response status:', response.status);
+      
+      // Vérifiez d'abord le content-type avant de parser
+      const contentType = response.headers.get('content-type');
+      console.log('Content-Type:', contentType);
+  
+      if (!contentType || !contentType.includes('application/json')) {
+        const text = await response.text();
+        console.error('Non-JSON response:', text);
+        throw new Error(text || 'Invalid server response');
+      }
+  
       const data = await response.json();
+      console.log('Response data:', data);
   
       if (!response.ok) {
-        throw new Error(data.error || 'Sign up failed');
+        console.error('Signup failed:', data);
+        throw new Error(data.message || 'Sign up failed');
       }
   
       toast.success("Sign up successful! Please check your email to confirm your account.");
       setAuthMode("login");
     } catch (error) {
-      toast.error(error.message || "Sign up failed");
-      console.error(error);
+      console.error('Signup error:', error);
+      toast.error(error instanceof Error ? error.message : "Sign up failed");
     }
   };
 
