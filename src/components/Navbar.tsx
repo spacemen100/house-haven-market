@@ -16,12 +16,20 @@ const Navbar = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // État de connexion
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Ajoutez ici la logique de connexion
+    // Ajoutez ici la logique de connexion réelle
     console.log("Email:", email, "Password:", password);
+    
+    // Pour l'exemple, on simule une connexion réussie
+    setIsLoggedIn(true);
     setIsLoginOpen(false);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
   };
 
   return (
@@ -50,13 +58,33 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-4">
-          <Button variant="outline" className="flex gap-2" onClick={() => setIsLoginOpen(true)}>
-            <User size={18} />
-            <span>Sign In</span>
-          </Button>
-          <Button asChild className="bg-teal-500 hover:bg-teal-600">
-            <Link to="/sell">Get Started</Link>
-          </Button>
+          {isLoggedIn ? (
+            <>
+              <Button asChild variant="outline" className="flex gap-2">
+                <Link to="/account">
+                  <User size={18} />
+                  <span>My Account</span>
+                </Link>
+              </Button>
+              <Button 
+                variant="outline" 
+                className="text-red-500 border-red-500 hover:bg-red-50"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="outline" className="flex gap-2" onClick={() => setIsLoginOpen(true)}>
+                <User size={18} />
+                <span>Sign In</span>
+              </Button>
+              <Button asChild className="bg-teal-500 hover:bg-teal-600">
+                <Link to="/sell">Get Started</Link>
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -102,16 +130,43 @@ const Navbar = () => {
             </Link>
             <hr className="my-2" />
             <div className="flex flex-col gap-2">
-              <Button variant="outline" className="flex gap-2 justify-center" onClick={() => {
-                setIsLoginOpen(true);
-                setIsMenuOpen(false);
-              }}>
-                <User size={18} />
-                <span>Sign In</span>
-              </Button>
-              <Button asChild className="bg-teal-500 hover:bg-teal-600">
-                <Link to="/sell" onClick={() => setIsMenuOpen(false)}>Get Started</Link>
-              </Button>
+              {isLoggedIn ? (
+                <>
+                  <Button asChild variant="outline" className="flex gap-2 justify-center">
+                    <Link to="/account" onClick={() => setIsMenuOpen(false)}>
+                      <User size={18} />
+                      <span>My Account</span>
+                    </Link>
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="text-red-500 border-red-500 hover:bg-red-50"
+                    onClick={() => {
+                      handleLogout();
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button 
+                    variant="outline" 
+                    className="flex gap-2 justify-center" 
+                    onClick={() => {
+                      setIsLoginOpen(true);
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    <User size={18} />
+                    <span>Sign In</span>
+                  </Button>
+                  <Button asChild className="bg-teal-500 hover:bg-teal-600">
+                    <Link to="/sell" onClick={() => setIsMenuOpen(false)}>Get Started</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>

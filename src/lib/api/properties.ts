@@ -1,30 +1,24 @@
+// src/lib/api/properties.ts
 import { supabase } from "@/integrations/supabase/client";
 import { Property } from "@/types/property";
 import { toast } from "sonner";
 
 export interface CreatePropertyInput {
-  // Basic Information
   title: string;
   description?: string;
   price: number;
   phoneNumber?: string;
   cadastralCode?: string;
-  
-  // Property Details
   propertyType: 'house' | 'apartment' | 'land' | 'commercial';
   listingType: 'sale' | 'rent' | 'rent_by_day';
   status?: 'free' | 'under_caution' | 'under_construction';
   condition?: 'new' | 'good' | 'needs_renovation';
   plan?: string;
-  
-  // Location
   addressStreet?: string;
   addressCity: string;
   addressDistrict?: string;
   lat?: number;
   lng?: number;
-  
-  // Specifications
   beds: number;
   baths: number;
   sqft: number;
@@ -33,8 +27,6 @@ export interface CreatePropertyInput {
   hasVentilation?: boolean;
   hasAirConditioning?: boolean;
   isAccessible?: boolean;
-  
-  // Arrays of related data
   amenities?: string[];
   equipment?: string[];
   internetTv?: string[];
@@ -42,19 +34,70 @@ export interface CreatePropertyInput {
   security?: string[];
   nearbyPlaces?: string[];
   onlineServices?: string[];
-  
-  // Images
   images?: File[];
-  
-  // Contact and Social Media
   contactEmail?: string;
   instagramHandle?: string;
   facebookUrl?: string;
   twitterHandle?: string;
 }
 
+const transformProperty = (property: any): Property => ({
+  id: property.id,
+  title: property.title,
+  description: property.description || '',
+  price: property.price,
+  phoneNumber: property.phone_number,
+  cadastralCode: property.cadastral_code,
+  address: {
+    street: property.address_street || '',
+    city: property.address_city,
+    state: property.address_state || '',
+    zip: property.address_zip || '',
+    district: property.address_district || '',
+    coordinates: {
+      lat: property.lat || 0,
+      lng: property.lng || 0
+    }
+  },
+  propertyType: property.property_type,
+  listingType: property.listing_type,
+  status: property.status || 'free',
+  condition: property.condition || 'good',
+  plan: property.plan,
+  beds: property.beds,
+  baths: property.baths,
+  sqft: property.sqft,
+  rooms: property.rooms || 0,
+  terraceArea: property.terrace_area || 0,
+  kitchenType: property.kitchen_type || 'open',
+  ceilingHeight: property.ceiling_height || 0,
+  floorLevel: property.floor_level || 0,
+  totalFloors: property.total_floors || 1,
+  yearBuilt: property.year_built || 0,
+  featured: property.featured || false,
+  amenities: property.property_amenities?.map((a: any) => a.amenity) || [],
+  hasElevator: property.has_elevator || false,
+  hasVentilation: property.has_ventilation || false,
+  hasAirConditioning: property.has_air_conditioning || false,
+  equipment: property.property_equipment?.map((e: any) => e.equipment) || [],
+  internetTV: property.property_internet_tv?.map((i: any) => i.option_name) || [],
+  storage: property.property_storage?.map((s: any) => s.storage_type) || [],
+  security: property.property_security?.map((s: any) => s.security_feature) || [],
+  isAccessible: property.is_accessible || false,
+  nearbyPlaces: property.property_nearby_places?.map((p: any) => p.place_name) || [],
+  onlineServices: property.property_online_services?.map((s: any) => s.service_name) || [],
+  images: property.property_images?.map((i: any) => i.image_url) || [],
+  agentName: property.agent_name || '',
+  agentPhone: property.agent_phone || '',
+  projectName: property.project_name || '',
+  createdAt: property.created_at
+});
+
 export const createProperty = async (input: CreatePropertyInput) => {
   try {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) throw new Error("User not authenticated");
+
     const { data: property, error: propertyError } = await supabase
       .from('properties')
       .insert({
@@ -84,7 +127,8 @@ export const createProperty = async (input: CreatePropertyInput) => {
         contact_email: input.contactEmail,
         instagram_handle: input.instagramHandle,
         facebook_url: input.facebookUrl,
-        twitter_handle: input.twitterHandle
+        twitter_handle: input.twitterHandle,
+        user_id: user.id
       })
       .select()
       .single();
@@ -122,27 +166,21 @@ export const createProperty = async (input: CreatePropertyInput) => {
       ...(input.amenities?.map(amenity => 
         supabase.from('property_amenities').insert({ property_id: property.id, amenity })
       ) || []),
-      
       ...(input.equipment?.map(equipment => 
         supabase.from('property_equipment').insert({ property_id: property.id, equipment })
       ) || []),
-      
       ...(input.internetTv?.map(option => 
         supabase.from('property_internet_tv').insert({ property_id: property.id, option_name: option })
       ) || []),
-      
       ...(input.storage?.map(storage => 
         supabase.from('property_storage').insert({ property_id: property.id, storage_type: storage })
       ) || []),
-      
       ...(input.security?.map(security => 
         supabase.from('property_security').insert({ property_id: property.id, security_feature: security })
       ) || []),
-      
       ...(input.nearbyPlaces?.map(place => 
         supabase.from('property_nearby_places').insert({ property_id: property.id, place_name: place })
       ) || []),
-      
       ...(input.onlineServices?.map(service => 
         supabase.from('property_online_services').insert({ property_id: property.id, service_name: service })
       ) || [])
@@ -159,6 +197,7 @@ export const createProperty = async (input: CreatePropertyInput) => {
   }
 };
 
+// ... (autres fonctions getProperties, getPropertiesByType, etc. utilisant transformProperty)
 export const getProperties = async (type?: 'sale' | 'rent' | 'rent_by_day'): Promise<Property[]> => {
   try {
     let query = supabase
@@ -322,4 +361,42 @@ export const getFeaturedProperties = async (): Promise<Property[]> => {
     toast.error("Failed to fetch featured properties. Please try again.");
     return [];
   }
+};
+
+export const handleGitHubLogin = async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'github',
+    options: {
+      redirectTo: `${window.location.origin}/account`
+    }
+  });
+
+  if (error) {
+    toast.error(error.message);
+    throw error;
+  }
+};
+
+export const getSession = async () => {
+  const { data, error } = await supabase.auth.getSession();
+  if (error) throw error;
+  return data.session;
+};
+
+export const signOut = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) throw error;
+};
+
+// Exporter toutes les fonctions nécessaires
+export {
+  getProperties,
+  getPropertiesByType,
+  getFeaturedProperties,
+  getMyProperties,
+  getLikedProperties,
+  likeProperty,
+  unlikeProperty,
+  checkIfLiked,
+  deleteProperty
 };
