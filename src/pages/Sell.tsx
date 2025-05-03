@@ -8,6 +8,8 @@ import AddPropertyStep3 from "@/components/property/add/AddPropertyStep3";
 import AddPropertyStep4 from "@/components/property/add/AddPropertyStep4";
 import StepsIndicator from "@/components/property/add/StepsIndicator";
 import { CreatePropertyInput, createProperty } from "@/lib/api/properties";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const Sell = () => {
   const [step, setStep] = useState(1);
@@ -30,6 +32,7 @@ const Sell = () => {
   };
 
   return (
+    <div><Navbar />
     <div className="min-h-screen bg-background">
       <section className="relative py-16 bg-estate-800">
         <div className="container text-center text-white">
@@ -95,6 +98,8 @@ const Sell = () => {
           </div>
         </div>
       </section>
+    </div>
+    <Footer />
     </div>
   );
 };
