@@ -1,4 +1,3 @@
-// src/pages/Account.tsx
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -6,15 +5,23 @@ import PropertyCard from "@/components/PropertyCard";
 import { useQuery } from "@tanstack/react-query";
 import { getMyProperties, getLikedProperties } from "@/lib/api/properties";
 import { Property } from "@/types/property";
+import { supabase } from "@/lib/supabaseClient";
+import { toast } from "sonner";
 
 const Account = () => {
-  // Récupérer les propriétés publiées par l'utilisateur
+  const { data: user } = useQuery({
+    queryKey: ['user'],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      return user;
+    }
+  });
+
   const { data: myProperties = [], isLoading: loadingMyProperties } = useQuery({
     queryKey: ['my-properties'],
     queryFn: getMyProperties,
   });
 
-  // Récupérer les propriétés likées par l'utilisateur
   const { data: likedProperties = [], isLoading: loadingLikedProperties } = useQuery({
     queryKey: ['liked-properties'],
     queryFn: getLikedProperties,
@@ -25,7 +32,27 @@ const Account = () => {
       <Navbar />
       
       <div className="container py-8">
-        <h1 className="text-3xl font-bold text-estate-800 mb-6">Mon Espace</h1>
+        <div className="flex items-center gap-4 mb-8">
+          {user?.user_metadata?.avatar_url ? (
+            <img 
+              src={user.user_metadata.avatar_url} 
+              alt="Profile" 
+              className="w-16 h-16 rounded-full"
+            />
+          ) : (
+            <div className="w-16 h-16 rounded-full bg-estate-800 flex items-center justify-center text-white text-2xl">
+              {user?.email?.charAt(0).toUpperCase()}
+            </div>
+          )}
+          <div>
+            <h1 className="text-3xl font-bold text-estate-800">
+              {user?.user_metadata?.full_name || 'My Account'}
+            </h1>
+            <p className="text-estate-neutral-600">
+              {user?.email}
+            </p>
+          </div>
+        </div>
         
         <Tabs defaultValue="published" className="w-full">
           <TabsList className="grid w-full grid-cols-2">

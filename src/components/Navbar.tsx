@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Menu, X, User, Search } from "lucide-react";
+import { Menu, X, User, Search, Github } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,26 +10,52 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { supabase } from "@/lib/supabaseClient";
+import { toast } from "sonner";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // État de connexion
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Ajoutez ici la logique de connexion réelle
-    console.log("Email:", email, "Password:", password);
-    
-    // Pour l'exemple, on simule une connexion réussie
-    setIsLoggedIn(true);
-    setIsLoginOpen(false);
+  const handleGitHubLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
+      options: {
+        redirectTo: window.location.origin + '/account',
+        scopes: 'user:email'
+      }
+    });
+
+    if (error) {
+      toast.error("GitHub login failed: " + error.message);
+    }
   };
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
+  const handleEmailLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      toast.error("Login failed: " + error.message);
+    } else {
+      setIsLoggedIn(true);
+      setIsLoginOpen(false);
+      toast.success("Logged in successfully");
+    }
+  };
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (!error) {
+      setIsLoggedIn(false);
+      toast.success("Logged out successfully");
+    }
   };
 
   return (
@@ -76,7 +102,11 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Button variant="outline" className="flex gap-2" onClick={() => setIsLoginOpen(true)}>
+              <Button 
+                variant="outline" 
+                className="flex gap-2"
+                onClick={() => setIsLoginOpen(true)}
+              >
                 <User size={18} />
                 <span>Sign In</span>
               </Button>
@@ -176,35 +206,60 @@ const Navbar = () => {
       <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-estate-800">Sign In</DialogTitle>
-          </DialogHeader>
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600">
+            <DialogTitle className="text-2xl font-bold text-estate-800">
               Sign In
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            <Button 
+              variant="outline" 
+              className="w-full flex gap-2"
+              onClick={handleGitHubLogin}
+            >
+              <Github size={18} />
+              Continue with GitHub
             </Button>
-          </form>
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  Or sign in with email
+                </span>
+              </div>
+            </div>
+
+            <form onSubmit={handleEmailLogin} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600">
+                Sign In
+              </Button>
+            </form>
+          </div>
         </DialogContent>
       </Dialog>
     </nav>
