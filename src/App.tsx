@@ -11,6 +11,7 @@ import Sell from "./pages/Sell";
 import Account from "./pages/Account";
 import { supabase } from "@/lib/api/supabaseClient";
 import { useEffect, useState } from "react";
+import AuthGitHubCallback from "./pages/AuthGitHubCallback";
 
 const queryClient = new QueryClient();
 
@@ -44,9 +45,10 @@ const App = () => {
             <Route path="/property/:id" element={<PropertyDetail />} />
             <Route path="/properties" element={<Properties />} />
             <Route path="/sell" element={<Sell />} />
-            <Route 
-              path="/account" 
-              element={user ? <Account /> : <Navigate to="/" replace />} 
+            <Route path="/auth/github/callback" element={<AuthGitHubCallback />} />
+            <Route
+              path="/account"
+              element={user ? <Account /> : <Navigate to="/" replace />}
             />
             <Route path="*" element={<NotFound />} />
           </Routes>

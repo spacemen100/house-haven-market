@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Menu, X, User, Search, Github } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { supabase } from "@/lib/api/supabaseClient";
 import { toast } from "sonner";
+import { initiateGitHubLogin, checkGitHubAuth, githubLogout } from "@/lib/auth/githubAuth";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,61 +21,89 @@ const Navbar = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const token = localStorage.getItem('authToken');
+      const githubAuth = checkGitHubAuth();
+      const email = localStorage.getItem('userEmail') || '';
+      
+      setIsLoggedIn(!!token || githubAuth);
+      setUserEmail(email);
+    };
+    
+    checkAuth();
+    
+    window.addEventListener('storage', checkAuth);
+    return () => window.removeEventListener('storage', checkAuth);
+  }, []);
 
   const handleGitHubLogin = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'github',
-      options: {
-        redirectTo: window.location.origin + '/account',
-        scopes: 'user:email'
-      }
-    });
-
-    if (error) {
-      toast.error("GitHub login failed: " + error.message);
+    try {
+      await initiateGitHubLogin();
+    } catch (error) {
+      toast.error("GitHub login failed");
+      console.error(error);
     }
   };
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (error) {
-      toast.error("Login failed: " + error.message);
-    } else {
+      if (!response.ok) throw new Error('Login failed');
+
+      const data = await response.json();
+      localStorage.setItem('authToken', data.token);
+      localStorage.setItem('userEmail', data.email);
       setIsLoggedIn(true);
+      setUserEmail(data.email);
       setIsAuthDialogOpen(false);
       toast.success("Logged in successfully");
+    } catch (error) {
+      toast.error("Login failed");
+      console.error(error);
     }
   };
 
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: window.location.origin + '/account'
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(data.error || 'Sign up failed');
       }
-    });
-
-    if (error) {
-      toast.error("Sign up failed: " + error.message);
-    } else {
+  
       toast.success("Sign up successful! Please check your email to confirm your account.");
       setAuthMode("login");
+    } catch (error) {
+      toast.error(error.message || "Sign up failed");
+      console.error(error);
     }
   };
 
-  const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (!error) {
-      setIsLoggedIn(false);
-      toast.success("Logged out successfully");
-    }
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userEmail');
+    githubLogout();
+    setIsLoggedIn(false);
+    setUserEmail("");
+    toast.success("Logged out successfully");
   };
 
   return (
@@ -109,7 +137,7 @@ const Navbar = () => {
               <Button asChild variant="outline" className="flex gap-2">
                 <Link to="/account">
                   <User size={18} />
-                  <span>My Account</span>
+                  <span>{userEmail || "My Account"}</span>
                 </Link>
               </Button>
               <Button 
@@ -199,7 +227,7 @@ const Navbar = () => {
                   <Button asChild variant="outline" className="flex gap-2 justify-center">
                     <Link to="/account" onClick={() => setIsMenuOpen(false)}>
                       <User size={18} />
-                      <span>My Account</span>
+                      <span>{userEmail || "My Account"}</span>
                     </Link>
                   </Button>
                   <Button 
