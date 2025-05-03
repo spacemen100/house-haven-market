@@ -197,7 +197,6 @@ export const createProperty = async (input: CreatePropertyInput) => {
   }
 };
 
-// ... (autres fonctions getProperties, getPropertiesByType, etc. utilisant transformProperty)
 export const getProperties = async (type?: 'sale' | 'rent' | 'rent_by_day'): Promise<Property[]> => {
   try {
     let query = supabase
@@ -221,59 +220,7 @@ export const getProperties = async (type?: 'sale' | 'rent' | 'rent_by_day'): Pro
     const { data: properties, error } = await query;
 
     if (error) throw error;
-
-    const transformedProperties: Property[] = properties.map(property => ({
-      id: property.id,
-      title: property.title,
-      description: property.description || '',
-      price: property.price,
-      phoneNumber: property.phone_number,
-      cadastralCode: property.cadastral_code,
-      address: {
-        street: property.address_street || '',
-        city: property.address_city,
-        state: property.address_state || '',
-        zip: property.address_zip || '',
-        district: property.address_district || '',
-        coordinates: {
-          lat: property.lat || 0,
-          lng: property.lng || 0
-        }
-      },
-      propertyType: property.property_type,
-      listingType: property.listing_type,
-      status: property.status || 'free',
-      condition: property.condition || 'good',
-      plan: property.plan,
-      beds: property.beds,
-      baths: property.baths,
-      sqft: property.sqft,
-      rooms: property.rooms || 0,
-      terraceArea: property.terrace_area || 0,
-      kitchenType: property.kitchen_type || 'open',
-      ceilingHeight: property.ceiling_height || 0,
-      floorLevel: property.floor_level || 0,
-      totalFloors: property.total_floors || 1,
-      yearBuilt: property.year_built || 0,
-      featured: property.featured || false,
-      amenities: property.property_amenities?.map(a => a.amenity) || [],
-      hasElevator: property.has_elevator || false,
-      hasVentilation: property.has_ventilation || false,
-      hasAirConditioning: property.has_air_conditioning || false,
-      equipment: property.property_equipment?.map(e => e.equipment) || [],
-      internetTV: property.property_internet_tv?.map(i => i.option_name) || [],
-      storage: property.property_storage?.map(s => s.storage_type) || [],
-      security: property.property_security?.map(s => s.security_feature) || [],
-      isAccessible: property.is_accessible || false,
-      nearbyPlaces: property.property_nearby_places?.map(p => p.place_name) || [],
-      onlineServices: property.property_online_services?.map(s => s.service_name) || [],
-      images: property.property_images?.map(i => i.image_url) || [],
-      agentName: property.agent_name || '',
-      agentPhone: property.agent_phone || '',
-      projectName: property.project_name || ''
-    }));
-
-    return transformedProperties;
+    return properties.map(transformProperty);
   } catch (error) {
     console.error('Error fetching properties:', error);
     toast.error("Failed to fetch properties. Please try again.");
@@ -303,59 +250,7 @@ export const getFeaturedProperties = async (): Promise<Property[]> => {
       .eq('featured', true);
 
     if (error) throw error;
-
-    const transformedProperties: Property[] = properties.map(property => ({
-      id: property.id,
-      title: property.title,
-      description: property.description || '',
-      price: property.price,
-      phoneNumber: property.phone_number,
-      cadastralCode: property.cadastral_code,
-      address: {
-        street: property.address_street || '',
-        city: property.address_city,
-        state: property.address_state || '',
-        zip: property.address_zip || '',
-        district: property.address_district || '',
-        coordinates: {
-          lat: property.lat || 0,
-          lng: property.lng || 0
-        }
-      },
-      propertyType: property.property_type,
-      listingType: property.listing_type,
-      status: property.status || 'free',
-      condition: property.condition || 'good',
-      plan: property.plan,
-      beds: property.beds,
-      baths: property.baths,
-      sqft: property.sqft,
-      rooms: property.rooms || 0,
-      terraceArea: property.terrace_area || 0,
-      kitchenType: property.kitchen_type || 'open',
-      ceilingHeight: property.ceiling_height || 0,
-      floorLevel: property.floor_level || 0,
-      totalFloors: property.total_floors || 1,
-      yearBuilt: property.year_built || 0,
-      featured: property.featured || false,
-      amenities: property.property_amenities?.map(a => a.amenity) || [],
-      hasElevator: property.has_elevator || false,
-      hasVentilation: property.has_ventilation || false,
-      hasAirConditioning: property.has_air_conditioning || false,
-      equipment: property.property_equipment?.map(e => e.equipment) || [],
-      internetTV: property.property_internet_tv?.map(i => i.option_name) || [],
-      storage: property.property_storage?.map(s => s.storage_type) || [],
-      security: property.property_security?.map(s => s.security_feature) || [],
-      isAccessible: property.is_accessible || false,
-      nearbyPlaces: property.property_nearby_places?.map(p => p.place_name) || [],
-      onlineServices: property.property_online_services?.map(s => s.service_name) || [],
-      images: property.property_images?.map(i => i.image_url) || [],
-      agentName: property.agent_name || '',
-      agentPhone: property.agent_phone || '',
-      projectName: property.project_name || ''
-    }));
-
-    return transformedProperties;
+    return properties.map(transformProperty);
   } catch (error) {
     console.error('Error fetching featured properties:', error);
     toast.error("Failed to fetch featured properties. Please try again.");
@@ -363,11 +258,186 @@ export const getFeaturedProperties = async (): Promise<Property[]> => {
   }
 };
 
+export const getMyProperties = async (): Promise<Property[]> => {
+  try {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) throw new Error("User not authenticated");
+
+    const { data: properties, error } = await supabase
+      .from('properties')
+      .select(`
+        *,
+        property_amenities (amenity),
+        property_equipment (equipment),
+        property_images (image_url, is_primary),
+        property_internet_tv (option_name),
+        property_storage (storage_type),
+        property_security (security_feature),
+        property_nearby_places (place_name),
+        property_online_services (service_name)
+      `)
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return properties.map(transformProperty);
+  } catch (error) {
+    console.error('Error fetching user properties:', error);
+    toast.error("Failed to fetch your properties. Please try again.");
+    return [];
+  }
+};
+
+export const getLikedProperties = async (): Promise<Property[]> => {
+  try {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) throw new Error("User not authenticated");
+
+    const { data: likes, error: likesError } = await supabase
+      .from('user_likes')
+      .select('property_id')
+      .eq('user_id', user.id);
+
+    if (likesError) throw likesError;
+    if (!likes.length) return [];
+
+    const propertyIds = likes.map(like => like.property_id);
+
+    const { data: properties, error: propertiesError } = await supabase
+      .from('properties')
+      .select(`
+        *,
+        property_amenities (amenity),
+        property_equipment (equipment),
+        property_images (image_url, is_primary),
+        property_internet_tv (option_name),
+        property_storage (storage_type),
+        property_security (security_feature),
+        property_nearby_places (place_name),
+        property_online_services (service_name)
+      `)
+      .in('id', propertyIds);
+
+    if (propertiesError) throw propertiesError;
+    return properties.map(transformProperty);
+  } catch (error) {
+    console.error('Error fetching liked properties:', error);
+    toast.error("Failed to fetch your favorite properties. Please try again.");
+    return [];
+  }
+};
+
+export const likeProperty = async (propertyId: string) => {
+  try {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) throw new Error("User not authenticated");
+
+    const { error } = await supabase
+      .from('user_likes')
+      .insert({
+        user_id: user.id,
+        property_id: propertyId
+      });
+
+    if (error) throw error;
+
+    toast.success("Property added to favorites");
+    return true;
+  } catch (error) {
+    console.error('Error liking property:', error);
+    toast.error("Failed to add property to favorites");
+    return false;
+  }
+};
+
+export const unlikeProperty = async (propertyId: string) => {
+  try {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) throw new Error("User not authenticated");
+
+    const { error } = await supabase
+      .from('user_likes')
+      .delete()
+      .eq('user_id', user.id)
+      .eq('property_id', propertyId);
+
+    if (error) throw error;
+
+    toast.success("Property removed from favorites");
+    return true;
+  } catch (error) {
+    console.error('Error unliking property:', error);
+    toast.error("Failed to remove property from favorites");
+    return false;
+  }
+};
+
+export const checkIfLiked = async (propertyId: string): Promise<boolean> => {
+  try {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) return false;
+
+    const { data, error } = await supabase
+      .from('user_likes')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('property_id', propertyId)
+      .maybeSingle();
+
+    if (error) throw error;
+    return !!data;
+  } catch (error) {
+    console.error('Error checking like status:', error);
+    return false;
+  }
+};
+
+export const deleteProperty = async (propertyId: string) => {
+  try {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) throw new Error("User not authenticated");
+
+    // First delete all related data
+    const relatedTables = [
+      'property_amenities',
+      'property_equipment',
+      'property_images',
+      'property_internet_tv',
+      'property_storage',
+      'property_security',
+      'property_nearby_places',
+      'property_online_services',
+      'user_likes'
+    ];
+
+    await Promise.all(relatedTables.map(table => 
+      supabase.from(table).delete().eq('property_id', propertyId)
+    ));
+
+    // Then delete the property
+    const { error } = await supabase
+      .from('properties')
+      .delete()
+      .eq('id', propertyId)
+      .eq('user_id', user.id);
+
+    if (error) throw error;
+
+    toast.success("Property deleted successfully");
+    return true;
+  } catch (error) {
+    console.error('Error deleting property:', error);
+    toast.error("Failed to delete property");
+    return false;
+  }
+};
+
 export const handleGitHubLogin = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
     options: {
-      redirectTo: `${window.location.origin}/account`
+      redirectTo: window.location.origin + '/account',
+      scopes: 'user:email'
     }
   });
 
@@ -386,17 +456,4 @@ export const getSession = async () => {
 export const signOut = async () => {
   const { error } = await supabase.auth.signOut();
   if (error) throw error;
-};
-
-// Exporter toutes les fonctions nécessaires
-export {
-  getProperties,
-  getPropertiesByType,
-  getFeaturedProperties,
-  getMyProperties,
-  getLikedProperties,
-  likeProperty,
-  unlikeProperty,
-  checkIfLiked,
-  deleteProperty
 };

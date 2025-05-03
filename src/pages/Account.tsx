@@ -5,7 +5,7 @@ import PropertyCard from "@/components/PropertyCard";
 import { useQuery } from "@tanstack/react-query";
 import { getMyProperties, getLikedProperties } from "@/lib/api/properties";
 import { Property } from "@/types/property";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/lib/api/supabaseClient";
 import { toast } from "sonner";
 
 const Account = () => {
