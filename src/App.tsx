@@ -10,6 +10,7 @@ import Properties from "./pages/Properties";
 import NotFound from "./pages/NotFound";
 import Sell from "./pages/Sell";
 import Account from "./pages/Account";
+import VerificationError from "./pages/VerificationError";
 import { supabase } from "@/lib/api/supabaseClient";
 import { useEffect, useState } from "react";
 
@@ -19,12 +20,12 @@ const App = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Vérifier l'état d'authentification au chargement
+    // Check authentication state on load
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
     });
 
-    // Écouter les changements d'authentification
+    // Listen for authentication changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
         setUser(session?.user ?? null);
@@ -49,6 +50,7 @@ const App = () => {
               path="/account"
               element={user ? <Account /> : <Navigate to="/" replace />}
             />
+            <Route path="/verification-error" element={<VerificationError />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

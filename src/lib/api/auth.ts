@@ -10,7 +10,7 @@ export const signInWithEmail = async (email: string, password: string) => {
   });
 
   if (error) {
-    toast.error("Échec de la connexion: " + error.message);
+    toast.error("Login failed: " + error.message);
     return false;
   }
   return true;
@@ -21,23 +21,26 @@ export const signUpWithEmail = async (email: string, password: string) => {
     email,
     password,
     options: {
-      emailRedirectTo: window.location.origin + '/account'
+      emailRedirectTo: window.location.origin + '/account',
+      data: {
+        email_confirmed_at: new Date().toISOString(),
+      }
     }
   });
 
   if (error) {
-    toast.error("Échec de l'inscription: " + error.message);
+    toast.error("Registration failed: " + error.message);
     return false;
   }
   
-  toast.success("Inscription réussie! Veuillez vérifier votre email pour confirmer votre compte.");
+  toast.success("Registration successful! Please check your email to verify your account.");
   return true;
 };
 
 export const signOut = async () => {
   const { error } = await supabase.auth.signOut();
   if (error) {
-    toast.error("Échec de la déconnexion: " + error.message);
+    toast.error("Sign out failed: " + error.message);
     return false;
   }
   return true;
@@ -46,8 +49,23 @@ export const signOut = async () => {
 export const getCurrentUser = async () => {
   const { data: { user }, error } = await supabase.auth.getUser();
   if (error) {
-    console.error("Erreur lors de la récupération de l'utilisateur:", error);
+    console.error("Error retrieving user:", error);
     return null;
   }
   return user;
+};
+
+// Handle authentication errors
+export const handleAuthError = (hash: string) => {
+  if (hash && hash.includes('error=')) {
+    const params = new URLSearchParams(hash.substring(1));
+    const error = params.get('error');
+    const errorDescription = params.get('error_description');
+    
+    if (error === 'access_denied' && errorDescription?.includes('expired')) {
+      window.location.href = '/verification-error' + hash;
+      return true;
+    }
+  }
+  return false;
 };

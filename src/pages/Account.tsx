@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -7,8 +8,19 @@ import { getMyProperties, getLikedProperties } from "@/lib/api/properties";
 import { Property } from "@/types/property";
 import { supabase } from "@/lib/api/supabaseClient";
 import { toast } from "sonner";
+import { handleAuthError } from "@/lib/api/auth";
+import { useLocation } from "react-router-dom";
 
 const Account = () => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    // Check for auth errors in hash
+    if (location.hash) {
+      handleAuthError(location.hash);
+    }
+  }, [location]);
+
   const { data: user } = useQuery({
     queryKey: ['user'],
     queryFn: async () => {
@@ -56,17 +68,17 @@ const Account = () => {
         
         <Tabs defaultValue="published" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="published">Mes Annonces</TabsTrigger>
-            <TabsTrigger value="liked">Favoris</TabsTrigger>
+            <TabsTrigger value="published">My Listings</TabsTrigger>
+            <TabsTrigger value="liked">Favorites</TabsTrigger>
           </TabsList>
           
           <TabsContent value="published">
             <div className="py-4">
-              <h2 className="text-xl font-semibold mb-4">Mes annonces publiées</h2>
+              <h2 className="text-xl font-semibold mb-4">My published listings</h2>
               
               {loadingMyProperties ? (
                 <div className="flex justify-center py-8">
-                  <p>Chargement...</p>
+                  <p>Loading...</p>
                 </div>
               ) : myProperties.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -77,13 +89,13 @@ const Account = () => {
               ) : (
                 <div className="bg-white rounded-lg p-8 text-center border border-estate-neutral-200">
                   <p className="text-estate-neutral-600">
-                    Vous n'avez pas encore publié d'annonces.
+                    You haven't published any listings yet.
                   </p>
                   <a 
                     href="/sell" 
                     className="text-teal-500 hover:text-teal-600 font-medium mt-2 inline-block"
                   >
-                    Publier une annonce
+                    Publish a listing
                   </a>
                 </div>
               )}
@@ -92,11 +104,11 @@ const Account = () => {
           
           <TabsContent value="liked">
             <div className="py-4">
-              <h2 className="text-xl font-semibold mb-4">Mes favoris</h2>
+              <h2 className="text-xl font-semibold mb-4">My favorites</h2>
               
               {loadingLikedProperties ? (
                 <div className="flex justify-center py-8">
-                  <p>Chargement...</p>
+                  <p>Loading...</p>
                 </div>
               ) : likedProperties.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -107,13 +119,13 @@ const Account = () => {
               ) : (
                 <div className="bg-white rounded-lg p-8 text-center border border-estate-neutral-200">
                   <p className="text-estate-neutral-600">
-                    Vous n'avez pas encore de favoris.
+                    You don't have any favorites yet.
                   </p>
                   <a 
                     href="/properties" 
                     className="text-teal-500 hover:text-teal-600 font-medium mt-2 inline-block"
                   >
-                    Explorer les propriétés
+                    Explore properties
                   </a>
                 </div>
               )}
