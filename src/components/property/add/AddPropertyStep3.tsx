@@ -15,70 +15,70 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 
 const amenities = [
-  { id: "has_elevator", label: "Ascenseur" },
+  { id: "has_elevator", label: "Elevator" },
   { id: "has_ventilation", label: "Ventilation" },
-  { id: "has_air_conditioning", label: "Climatisation" },
-  { id: "is_accessible", label: "Accès handicapé" },
-  { id: "has_gas", label: "Gaz" },
+  { id: "has_air_conditioning", label: "Air Conditioning" },
+  { id: "is_accessible", label: "Accessible" },
+  { id: "has_gas", label: "Gas" },
   { id: "has_loggia", label: "Loggia" },
-  { id: "has_fireplace", label: "Cheminée" },
+  { id: "has_fireplace", label: "Fireplace" },
   { id: "has_internet", label: "Internet" },
-  { id: "has_cable_tv", label: "Câble TV" },
+  { id: "has_cable_tv", label: "Cable TV" },
 ];
 
 const kitchenAppliances = [
-  { id: "has_dishwasher", label: "Lave-vaisselle" },
-  { id: "has_gas_stove", label: "Cuisinière à gaz" },
-  { id: "has_electric_kettle", label: "Bouilloire électrique" },
-  { id: "has_induction_oven", label: "Four à induction" },
-  { id: "has_microwave", label: "Micro-ondes" },
-  { id: "has_electric_oven", label: "Four électrique" },
+  { id: "has_dishwasher", label: "Dishwasher" },
+  { id: "has_gas_stove", label: "Gas Stove" },
+  { id: "has_electric_kettle", label: "Electric Kettle" },
+  { id: "has_induction_oven", label: "Induction Oven" },
+  { id: "has_microwave", label: "Microwave" },
+  { id: "has_electric_oven", label: "Electric Oven" },
 ];
 
 const otherAppliances = [
-  { id: "has_washing_machine", label: "Lave-linge" },
-  { id: "has_tv", label: "Télévision" },
-  { id: "has_coffee_machine", label: "Machine à café" },
-  { id: "has_audio_system", label: "Système audio" },
-  { id: "has_heater", label: "Chauffage" },
-  { id: "has_hair_dryer", label: "Sèche-cheveux" },
-  { id: "has_refrigerator", label: "Réfrigérateur" },
-  { id: "has_vacuum_cleaner", label: "Aspirateur" },
-  { id: "has_dryer", label: "Sèche-linge" },
-  { id: "has_iron", label: "Fer à repasser" },
+  { id: "has_washing_machine", label: "Washing Machine" },
+  { id: "has_tv", label: "TV" },
+  { id: "has_coffee_machine", label: "Coffee Machine" },
+  { id: "has_audio_system", label: "Audio System" },
+  { id: "has_heater", label: "Heater" },
+  { id: "has_hair_dryer", label: "Hair Dryer" },
+  { id: "has_refrigerator", label: "Refrigerator" },
+  { id: "has_vacuum_cleaner", label: "Vacuum Cleaner" },
+  { id: "has_dryer", label: "Dryer" },
+  { id: "has_iron", label: "Iron" },
 ];
 
 const securityFeatures = [
-  { id: "has_co_detector", label: "Détecteur CO" },
-  { id: "has_smoke_detector", label: "Détecteur fumée" },
-  { id: "has_evacuation_ladder", label: "Échelle évacuation" },
-  { id: "has_fire_fighting_system", label: "Système incendie" },
-  { id: "has_perimeter_cameras", label: "Caméras périmètre" },
-  { id: "has_alarm", label: "Alarme" },
-  { id: "has_live_protection", label: "Protection 24/7" },
-  { id: "has_locked_entrance", label: "Entrée sécurisée" },
-  { id: "has_locked_yard", label: "Cour fermée" },
+  { id: "has_co_detector", label: "CO Detector" },
+  { id: "has_smoke_detector", label: "Smoke Detector" },
+  { id: "has_evacuation_ladder", label: "Evacuation Ladder" },
+  { id: "has_fire_fighting_system", label: "Fire Fighting System" },
+  { id: "has_perimeter_cameras", label: "Perimeter Cameras" },
+  { id: "has_alarm", label: "Alarm" },
+  { id: "has_live_protection", label: "Live Protection" },
+  { id: "has_locked_entrance", label: "Locked Entrance" },
+  { id: "has_locked_yard", label: "Locked Yard" },
 ];
 
 const nearbyFacilities = [
-  { id: "near_bus_stop", label: "Arrêt de bus" },
-  { id: "near_bank", label: "Banque" },
-  { id: "near_subway", label: "Métro" },
-  { id: "near_supermarket", label: "Supermarché" },
-  { id: "near_kindergarten", label: "École maternelle" },
-  { id: "near_city_center", label: "Centre ville" },
-  { id: "near_pharmacy", label: "Pharmacie" },
-  { id: "near_greenery", label: "Espaces verts" },
-  { id: "near_park", label: "Parc" },
-  { id: "near_shopping_centre", label: "Centre commercial" },
-  { id: "near_school", label: "École" },
-  { id: "near_old_district", label: "Quartier historique" },
+  { id: "near_bus_stop", label: "Bus Stop" },
+  { id: "near_bank", label: "Bank" },
+  { id: "near_subway", label: "Subway" },
+  { id: "near_supermarket", label: "Supermarket" },
+  { id: "near_kindergarten", label: "Kindergarten" },
+  { id: "near_city_center", label: "City Center" },
+  { id: "near_pharmacy", label: "Pharmacy" },
+  { id: "near_greenery", label: "Greenery" },
+  { id: "near_park", label: "Park" },
+  { id: "near_shopping_centre", label: "Shopping Centre" },
+  { id: "near_school", label: "School" },
+  { id: "near_old_district", label: "Old District" },
 ];
 
 const rules = [
-  { id: "allows_pets", label: "Animaux autorisés" },
-  { id: "allows_parties", label: "Fêtes autorisées" },
-  { id: "allows_smoking", label: "Fumer autorisé" },
+  { id: "allows_pets", label: "Pets Allowed" },
+  { id: "allows_parties", label: "Parties Allowed" },
+  { id: "allows_smoking", label: "Smoking Allowed" },
 ];
 
 const formSchema = z.object({
@@ -92,7 +92,7 @@ const formSchema = z.object({
   has_fireplace: z.boolean().default(false),
   has_internet: z.boolean().default(false),
   has_cable_tv: z.boolean().default(false),
-  
+
   // Kitchen
   has_dishwasher: z.boolean().default(false),
   has_gas_stove: z.boolean().default(false),
@@ -100,7 +100,7 @@ const formSchema = z.object({
   has_induction_oven: z.boolean().default(false),
   has_microwave: z.boolean().default(false),
   has_electric_oven: z.boolean().default(false),
-  
+
   // Appliances
   has_washing_machine: z.boolean().default(false),
   has_tv: z.boolean().default(false),
@@ -112,7 +112,7 @@ const formSchema = z.object({
   has_vacuum_cleaner: z.boolean().default(false),
   has_dryer: z.boolean().default(false),
   has_iron: z.boolean().default(false),
-  
+
   // Security
   has_co_detector: z.boolean().default(false),
   has_smoke_detector: z.boolean().default(false),
@@ -123,7 +123,7 @@ const formSchema = z.object({
   has_live_protection: z.boolean().default(false),
   has_locked_entrance: z.boolean().default(false),
   has_locked_yard: z.boolean().default(false),
-  
+
   // Nearby
   near_bus_stop: z.boolean().default(false),
   near_bank: z.boolean().default(false),
@@ -137,16 +137,19 @@ const formSchema = z.object({
   near_shopping_centre: z.boolean().default(false),
   near_school: z.boolean().default(false),
   near_old_district: z.boolean().default(false),
-  
+
   // Rules
   allows_pets: z.boolean().default(false),
   allows_parties: z.boolean().default(false),
   allows_smoking: z.boolean().default(false),
-  
+
   // Systems
   heating_type: z.enum(["central", "electric", "gas", "wood", "solar", "none"]).optional(),
   hot_water_type: z.enum(["central", "electric", "gas", "solar", "none"]).optional(),
   parking_type: z.enum(["street", "garage", "underground", "none"]).optional(),
+
+  // New Fields
+  building_material: z.enum(["brick", "concrete", "wood", "combined"]).optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -162,7 +165,54 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
     defaultValues: {
       has_elevator: false,
       has_ventilation: false,
-      // ... (tous les autres champs booléens initialisés à false)
+      has_air_conditioning: false,
+      is_accessible: false,
+      has_gas: false,
+      has_loggia: false,
+      has_fireplace: false,
+      has_internet: false,
+      has_cable_tv: false,
+      has_dishwasher: false,
+      has_gas_stove: false,
+      has_electric_kettle: false,
+      has_induction_oven: false,
+      has_microwave: false,
+      has_electric_oven: false,
+      has_washing_machine: false,
+      has_tv: false,
+      has_coffee_machine: false,
+      has_audio_system: false,
+      has_heater: false,
+      has_hair_dryer: false,
+      has_refrigerator: false,
+      has_vacuum_cleaner: false,
+      has_dryer: false,
+      has_iron: false,
+      has_co_detector: false,
+      has_smoke_detector: false,
+      has_evacuation_ladder: false,
+      has_fire_fighting_system: false,
+      has_perimeter_cameras: false,
+      has_alarm: false,
+      has_live_protection: false,
+      has_locked_entrance: false,
+      has_locked_yard: false,
+      near_bus_stop: false,
+      near_bank: false,
+      near_subway: false,
+      near_supermarket: false,
+      near_kindergarten: false,
+      near_city_center: false,
+      near_pharmacy: false,
+      near_greenery: false,
+      near_park: false,
+      near_shopping_centre: false,
+      near_school: false,
+      near_old_district: false,
+      allows_pets: false,
+      allows_parties: false,
+      allows_smoking: false,
+      building_material: undefined,
     },
   });
 
@@ -201,45 +251,45 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="space-y-6">
           <div className="mb-8 text-center">
-            <h2 className="text-2xl font-bold">Équipements et services</h2>
+            <h2 className="text-2xl font-bold">Amenities and Services</h2>
             <p className="text-muted-foreground mt-2">
-              Sélectionnez les équipements disponibles et les services à proximité
+              Select the available amenities and nearby facilities
             </p>
           </div>
 
-          {renderCheckboxGroup("Équipements principaux", amenities)}
-          
-          {renderCheckboxGroup("Équipements cuisine", kitchenAppliances)}
-          
-          {renderCheckboxGroup("Autres équipements", otherAppliances)}
-          
-          {renderCheckboxGroup("Sécurité", securityFeatures)}
-          
-          {renderCheckboxGroup("À proximité", nearbyFacilities)}
-          
-          {renderCheckboxGroup("Règles", rules)}
+          {renderCheckboxGroup("Main Amenities", amenities)}
+
+          {renderCheckboxGroup("Kitchen Appliances", kitchenAppliances)}
+
+          {renderCheckboxGroup("Other Appliances", otherAppliances)}
+
+          {renderCheckboxGroup("Security", securityFeatures)}
+
+          {renderCheckboxGroup("Nearby Facilities", nearbyFacilities)}
+
+          {renderCheckboxGroup("Rules", rules)}
 
           <div className="space-y-4">
-            <h3 className="text-lg font-medium">Systèmes</h3>
+            <h3 className="text-lg font-medium">Systems</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <FormField
                 control={form.control}
                 name="heating_type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Type de chauffage</FormLabel>
+                    <FormLabel>Heating Type</FormLabel>
                     <FormControl>
                       <select
                         {...field}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <option value="">Sélectionnez...</option>
+                        <option value="">Select...</option>
                         <option value="central">Central</option>
-                        <option value="electric">Électrique</option>
-                        <option value="gas">Gaz</option>
-                        <option value="wood">Bois</option>
-                        <option value="solar">Solaire</option>
-                        <option value="none">Aucun</option>
+                        <option value="electric">Electric</option>
+                        <option value="gas">Gas</option>
+                        <option value="wood">Wood</option>
+                        <option value="solar">Solar</option>
+                        <option value="none">None</option>
                       </select>
                     </FormControl>
                     <FormMessage />
@@ -252,18 +302,18 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
                 name="hot_water_type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Eau chaude</FormLabel>
+                    <FormLabel>Hot Water Type</FormLabel>
                     <FormControl>
                       <select
                         {...field}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <option value="">Sélectionnez...</option>
+                        <option value="">Select...</option>
                         <option value="central">Central</option>
-                        <option value="electric">Électrique</option>
-                        <option value="gas">Gaz</option>
-                        <option value="solar">Solaire</option>
-                        <option value="none">Aucun</option>
+                        <option value="electric">Electric</option>
+                        <option value="gas">Gas</option>
+                        <option value="solar">Solar</option>
+                        <option value="none">None</option>
                       </select>
                     </FormControl>
                     <FormMessage />
@@ -276,17 +326,40 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
                 name="parking_type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Parking</FormLabel>
+                    <FormLabel>Parking Type</FormLabel>
                     <FormControl>
                       <select
                         {...field}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <option value="">Sélectionnez...</option>
-                        <option value="street">Rue</option>
+                        <option value="">Select...</option>
+                        <option value="street">Street</option>
                         <option value="garage">Garage</option>
-                        <option value="underground">Souterrain</option>
-                        <option value="none">Aucun</option>
+                        <option value="underground">Underground</option>
+                        <option value="none">None</option>
+                      </select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="building_material"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Building Material</FormLabel>
+                    <FormControl>
+                      <select
+                        {...field}
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        <option value="">Select...</option>
+                        <option value="brick">Brick</option>
+                        <option value="concrete">Concrete</option>
+                        <option value="wood">Wood</option>
+                        <option value="combined">Combined</option>
                       </select>
                     </FormControl>
                     <FormMessage />
@@ -299,9 +372,9 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
 
         <div className="flex justify-between">
           <Button type="button" variant="outline" onClick={onBack}>
-            Retour
+            Back
           </Button>
-          <Button type="submit">Suivant</Button>
+          <Button type="submit">Next Step</Button>
         </div>
       </form>
     </Form>

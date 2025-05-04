@@ -23,8 +23,10 @@ const formSchema = z.object({
   sqft: z.coerce.number().positive("Area must be a positive number"),
   yearBuilt: z.coerce.number().int().min(1800, "Year must be 1800 or later").max(new Date().getFullYear(), "Year cannot be in the future"),
   cadastral_code: z.string().optional(),
-  condition: z.enum(["new", "good", "needs_renovation", "old"]),
-  status: z.enum(["available", "pending", "sold"]).default("available"),
+  condition: z.enum(["newly_renovated", "under_renovation", "white_frame", "green_frame", "not_renovated", "black_frame", "old_renovation"]),
+  status: z.enum(["available", "pending", "sold", "new_building_under_construction", "old_building"]).default("available"),
+  kitchen_type: z.enum(["isolated", "outside", "studio"]).optional(),
+  ceiling_height: z.coerce.number().min(2, "Ceiling height must be at least 2 meters").max(7, "Ceiling height must be at most 7 meters").step(0.05).optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -46,8 +48,10 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
       sqft: 0,
       yearBuilt: new Date().getFullYear(),
       cadastral_code: "",
-      condition: "good",
+      condition: "newly_renovated",
       status: "available",
+      kitchen_type: undefined,
+      ceiling_height: undefined,
     },
   });
 
@@ -178,9 +182,9 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
               name="cadastral_code"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Code cadastral</FormLabel>
+                  <FormLabel>Cadastral Code</FormLabel>
                   <FormControl>
-                    <Input placeholder="Code cadastral (optionnel)" {...field} />
+                    <Input placeholder="Cadastral code (optional)" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -192,16 +196,19 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
               name="condition"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>État du bien</FormLabel>
+                  <FormLabel>Condition</FormLabel>
                   <FormControl>
                     <select
                       {...field}
                       className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                      <option value="new">Neuf</option>
-                      <option value="good">Bon état</option>
-                      <option value="needs_renovation">À rénover</option>
-                      <option value="old">Ancien</option>
+                      <option value="newly_renovated">Newly Renovated</option>
+                      <option value="under_renovation">Under Renovation</option>
+                      <option value="white_frame">White Frame</option>
+                      <option value="green_frame">Green Frame</option>
+                      <option value="not_renovated">Not Renovated</option>
+                      <option value="black_frame">Black Frame</option>
+                      <option value="old_renovation">Old Renovation</option>
                     </select>
                   </FormControl>
                   <FormMessage />
@@ -214,16 +221,54 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
               name="status"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Statut</FormLabel>
+                  <FormLabel>Status</FormLabel>
                   <FormControl>
                     <select
                       {...field}
                       className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                      <option value="available">Disponible</option>
-                      <option value="pending">En cours</option>
-                      <option value="sold">Vendu/Loué</option>
+                      <option value="available">Available</option>
+                      <option value="pending">Pending</option>
+                      <option value="sold">Sold/Rented</option>
+                      <option value="new_building_under_construction">New Building Under Construction</option>
+                      <option value="old_building">Old Building</option>
                     </select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="kitchen_type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Kitchen Type</FormLabel>
+                  <FormControl>
+                    <select
+                      {...field}
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      <option value="">Select...</option>
+                      <option value="isolated">Isolated</option>
+                      <option value="outside">Outside</option>
+                      <option value="studio">Studio</option>
+                    </select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="ceiling_height"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Ceiling Height (m)</FormLabel>
+                  <FormControl>
+                    <Input type="number" step="0.05" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
