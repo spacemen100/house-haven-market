@@ -37,7 +37,7 @@ const Navbar = () => {
       setIsLoggedIn(!!user);
       setUserEmail(user?.email || "");
     };
-    
+
     checkAuth();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
@@ -56,11 +56,11 @@ const Navbar = () => {
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const success = await signInWithEmail(formData.email, formData.password);
-    
+
     if (success) {
       setIsAuthDialogOpen(false);
       resetForm();
-      toast.success("Connecté avec succès");
+      toast.success("Logged in successfully");
     }
   };
 
@@ -68,18 +68,18 @@ const Navbar = () => {
     e.preventDefault();
     const { email, password, ...profileData } = formData;
     const success = await signUpWithEmail(email, password, profileData);
-    
+
     if (success) {
       setIsAuthDialogOpen(false);
       resetForm();
-      toast.success("Inscription réussie !");
+      toast.success("Account created successfully!");
     }
   };
 
   const handleLogout = async () => {
     const success = await signOut();
     if (success) {
-      toast.success("Déconnecté avec succès");
+      toast.success("Logged out successfully");
     }
   };
 
@@ -111,13 +111,13 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-8">
           <div className="flex gap-8">
             <Link to="/properties?type=sale" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
-              Acheter
+              Buy
             </Link>
             <Link to="/properties?type=rent" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
-              Louer
+              Rent
             </Link>
             <Link to="/sell" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
-              Vendre
+              Sell
             </Link>
             <Link to="/agents" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
               Agents
@@ -131,43 +131,43 @@ const Navbar = () => {
               <Button asChild variant="outline" className="flex gap-2">
                 <Link to="/account">
                   <User size={18} />
-                  <span>{userEmail || "Mon compte"}</span>
+                  <span>{userEmail || "My Account"}</span>
                 </Link>
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="text-red-500 border-red-500 hover:bg-red-50"
                 onClick={handleLogout}
               >
-                Déconnexion
+                Logout
               </Button>
             </>
           ) : (
             <>
               <Dialog open={isAuthDialogOpen} onOpenChange={setIsAuthDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     className="flex gap-2"
                     onClick={() => setAuthMode("login")}
                   >
                     <User size={18} />
-                    <span>Connexion</span>
+                    <span>Log In</span>
                   </Button>
                 </DialogTrigger>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   className="text-teal-600 hover:text-teal-700"
                   onClick={() => {
                     setIsAuthDialogOpen(true);
                     setAuthMode("signup");
                   }}
                 >
-                  Inscription
+                  Sign Up
                 </Button>
               </Dialog>
               <Button asChild className="bg-teal-500 hover:bg-teal-600">
-                <Link to="/sell">Commencer</Link>
+                <Link to="/sell">Get Started</Link>
               </Button>
             </>
           )}
@@ -192,21 +192,21 @@ const Navbar = () => {
               className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              Acheter
+              Buy
             </Link>
             <Link
               to="/properties?type=rent"
               className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              Louer
+              Rent
             </Link>
             <Link
               to="/sell"
               className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              Vendre
+              Sell
             </Link>
             <Link
               to="/agents"
@@ -222,25 +222,25 @@ const Navbar = () => {
                   <Button asChild variant="outline" className="flex gap-2 justify-center">
                     <Link to="/account" onClick={() => setIsMenuOpen(false)}>
                       <User size={18} />
-                      <span>{userEmail || "Mon compte"}</span>
+                      <span>{userEmail || "My Account"}</span>
                     </Link>
                   </Button>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     className="text-red-500 border-red-500 hover:bg-red-50"
                     onClick={() => {
                       handleLogout();
                       setIsMenuOpen(false);
                     }}
                   >
-                    Déconnexion
+                    Logout
                   </Button>
                 </>
               ) : (
                 <>
-                  <Button 
-                    variant="outline" 
-                    className="flex gap-2 justify-center" 
+                  <Button
+                    variant="outline"
+                    className="flex gap-2 justify-center"
                     onClick={() => {
                       setIsAuthDialogOpen(true);
                       setAuthMode("login");
@@ -248,10 +248,10 @@ const Navbar = () => {
                     }}
                   >
                     <User size={18} />
-                    <span>Connexion</span>
+                    <span>Log In</span>
                   </Button>
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     className="text-teal-600 hover:text-teal-700"
                     onClick={() => {
                       setIsAuthDialogOpen(true);
@@ -259,10 +259,10 @@ const Navbar = () => {
                       setIsMenuOpen(false);
                     }}
                   >
-                    Inscription
+                    Sign Up
                   </Button>
                   <Button asChild className="bg-teal-500 hover:bg-teal-600">
-                    <Link to="/sell" onClick={() => setIsMenuOpen(false)}>Commencer</Link>
+                    <Link to="/sell" onClick={() => setIsMenuOpen(false)}>Get Started</Link>
                   </Button>
                 </>
               )}
@@ -276,10 +276,10 @@ const Navbar = () => {
         <DialogContent className="max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-estate-800">
-              {authMode === "login" ? "Connexion" : "Créer un compte"}
+              {authMode === "login" ? "Log In" : "Create Account"}
             </DialogTitle>
           </DialogHeader>
-          
+
           <div className="space-y-4">
             <form onSubmit={authMode === "login" ? handleEmailLogin : handleEmailSignUp} className="space-y-4">
               <div className="space-y-2">
@@ -287,43 +287,43 @@ const Navbar = () => {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="Entrez votre email"
+                  placeholder="Enter your email"
                   value={formData.email}
                   onChange={handleInputChange}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Mot de passe</Label>
+                <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Entrez votre mot de passe"
+                  placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleInputChange}
                   required
                 />
               </div>
 
-              {/* Champs supplémentaires pour l'inscription */}
+              {/* Additional fields for signup */}
               {authMode === "signup" && (
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Téléphone</Label>
+                    <Label htmlFor="phone">Phone</Label>
                     <Input
                       id="phone"
                       type="tel"
-                      placeholder="Entrez votre numéro de téléphone"
+                      placeholder="Enter your phone number"
                       value={formData.phone}
                       onChange={handleInputChange}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="address">Adresse</Label>
+                    <Label htmlFor="address">Address</Label>
                     <Input
                       id="address"
                       type="text"
-                      placeholder="Entrez votre adresse"
+                      placeholder="Enter your address"
                       value={formData.address}
                       onChange={handleInputChange}
                     />
@@ -333,7 +333,7 @@ const Navbar = () => {
                     <Input
                       id="instagram"
                       type="text"
-                      placeholder="@votrepseudo"
+                      placeholder="@yourusername"
                       value={formData.instagram}
                       onChange={handleInputChange}
                     />
@@ -343,7 +343,7 @@ const Navbar = () => {
                     <Input
                       id="twitter"
                       type="text"
-                      placeholder="@votrepseudo"
+                      placeholder="@yourusername"
                       value={formData.twitter}
                       onChange={handleInputChange}
                     />
@@ -353,7 +353,7 @@ const Navbar = () => {
                     <Input
                       id="facebook"
                       type="text"
-                      placeholder="Lien vers votre profil"
+                      placeholder="Link to your profile"
                       value={formData.facebook}
                       onChange={handleInputChange}
                     />
@@ -362,31 +362,31 @@ const Navbar = () => {
               )}
 
               <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600">
-                {authMode === "login" ? "Se connecter" : "S'inscrire"}
+                {authMode === "login" ? "Log In" : "Sign Up"}
               </Button>
             </form>
 
             <div className="text-center text-sm">
               {authMode === "login" ? (
                 <>
-                  Vous n'avez pas de compte ?{" "}
-                  <button 
-                    type="button" 
+                  Don't have an account?{" "}
+                  <button
+                    type="button"
                     className="text-teal-600 hover:underline"
                     onClick={toggleAuthMode}
                   >
-                    Inscrivez-vous
+                    Sign Up
                   </button>
                 </>
               ) : (
                 <>
-                  Vous avez déjà un compte ?{" "}
-                  <button 
-                    type="button" 
+                  Already have an account?{" "}
+                  <button
+                    type="button"
                     className="text-teal-600 hover:underline"
                     onClick={toggleAuthMode}
                   >
-                    Connectez-vous
+                    Log In
                   </button>
                 </>
               )}

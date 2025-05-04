@@ -24,12 +24,12 @@ import { signInWithEmail, signUpWithEmail } from "@/lib/api/auth";
 
 const Sell = () => {
   const steps = [
-    { number: 1, label: "Authentification" },
-    { number: 2, label: "Type d'annonce" },
-    { number: 3, label: "Informations de base" },
-    { number: 4, label: "Caractéristiques" },
-    { number: 5, label: "Localisation" },
-    { number: 6, label: "Publication" }
+    { number: 1, label: "Authentication" },
+    { number: 2, label: "Ad Type" },
+    { number: 3, label: "Basic Information" },
+    { number: 4, label: "Features" },
+    { number: 5, label: "Location" },
+    { number: 6, label: "Publish" }
   ];
 
   const [step, setStep] = useState(1);
@@ -53,7 +53,7 @@ const Sell = () => {
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
     };
-    
+
     checkAuth();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
@@ -71,7 +71,7 @@ const Sell = () => {
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const success = await signInWithEmail(authFormData.email, authFormData.password);
-    
+
     if (success) {
       setIsAuthDialogOpen(false);
       setAuthFormData({
@@ -83,7 +83,7 @@ const Sell = () => {
         twitter: "",
         facebook: ""
       });
-      toast.success("Connecté avec succès");
+      toast.success("Logged in successfully");
     }
   };
 
@@ -91,10 +91,10 @@ const Sell = () => {
     e.preventDefault();
     const { email, password, ...profileData } = authFormData;
     const success = await signUpWithEmail(email, password, profileData);
-    
+
     if (success) {
       const { data: { user } } = await supabase.auth.getUser();
-      
+
       if (user) {
         await supabase
           .from('profiles')
@@ -108,7 +108,7 @@ const Sell = () => {
           })
           .eq('user_id', user.id);
       }
-      
+
       setIsAuthDialogOpen(false);
       setAuthFormData({
         email: "",
@@ -119,7 +119,7 @@ const Sell = () => {
         twitter: "",
         facebook: ""
       });
-      toast.success("Compte créé avec succès");
+      toast.success("Account created successfully");
     }
   };
 
@@ -129,10 +129,10 @@ const Sell = () => {
       await createProperty(formData as CreatePropertyInput);
       setFormData({});
       setStep(1);
-      toast.success("Annonce publiée avec succès");
+      toast.success("Ad published successfully");
     } catch (error) {
       console.error('Error submitting form:', error);
-      toast.error("Erreur lors de la publication de l'annonce");
+      toast.error("Error publishing the ad");
     } finally {
       setIsSubmitting(false);
     }
@@ -140,21 +140,21 @@ const Sell = () => {
 
   const renderAuthStep = () => (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-center">Commencer</h2>
+      <h2 className="text-2xl font-bold text-center">Get Started</h2>
       <p className="text-center text-gray-600">
-        {user 
-          ? "Vous êtes prêt à publier votre propriété!"
-          : "Veuillez vous connecter ou créer un compte pour publier votre propriété"}
+        {user
+          ? "You are ready to publish your property!"
+          : "Please log in or create an account to publish your property"}
       </p>
-      
+
       {user ? (
         <div className="space-y-4">
-          <p className="text-center">Bienvenue, {user.email || "Utilisateur"}!</p>
-          <Button 
+          <p className="text-center">Welcome, {user.email || "User"}!</p>
+          <Button
             className="w-full bg-teal-500 hover:bg-teal-600"
             onClick={() => setStep(2)}
           >
-            Continuer vers les détails de la propriété
+            Continue to Property Details
           </Button>
         </div>
       ) : (
@@ -165,31 +165,31 @@ const Sell = () => {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background px-2 text-muted-foreground">
-                Connectez-vous avec votre email
+                Log in with your email
               </span>
             </div>
           </div>
-          
-          <Button 
-            variant="outline" 
+
+          <Button
+            variant="outline"
             className="w-full"
             onClick={() => {
               setAuthMode("login");
               setIsAuthDialogOpen(true);
             }}
           >
-            Se connecter
+            Log In
           </Button>
-          
-          <Button 
-            variant="ghost" 
+
+          <Button
+            variant="ghost"
             className="w-full text-teal-600 hover:text-teal-700"
             onClick={() => {
               setAuthMode("signup");
               setIsAuthDialogOpen(true);
             }}
           >
-            Créer un compte
+            Create Account
           </Button>
         </div>
       )}
@@ -203,10 +203,10 @@ const Sell = () => {
         <section className="relative py-16 bg-estate-800">
           <div className="container text-center text-white">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif mb-4">
-              Publiez votre annonce immobilière
+              Publish Your Real Estate Ad
             </h1>
             <p className="text-lg md:text-xl max-w-2xl mx-auto text-slate-200">
-              Remplissez les informations ci-dessous pour créer votre annonce immobilière
+              Fill in the information below to create your real estate ad
             </p>
           </div>
         </section>
@@ -223,9 +223,9 @@ const Sell = () => {
               <Card className="shadow-md">
                 <CardContent className="p-6 md:p-8">
                   {step === 1 && renderAuthStep()}
-                  
+
                   {step === 2 && (
-                    <PropertyTypeStep 
+                    <PropertyTypeStep
                       onBack={user ? () => setStep(1) : undefined}
                       onNext={(data) => {
                         setFormData({ ...formData, ...data });
@@ -233,9 +233,9 @@ const Sell = () => {
                       }}
                     />
                   )}
-                  
+
                   {step === 3 && (
-                    <AddPropertyStep1 
+                    <AddPropertyStep1
                       onBack={() => setStep(2)}
                       onNext={(data) => {
                         setFormData({ ...formData, ...data });
@@ -243,7 +243,7 @@ const Sell = () => {
                       }}
                     />
                   )}
-                  
+
                   {step === 4 && (
                     <AddPropertyStep2
                       onBack={() => setStep(3)}
@@ -253,7 +253,7 @@ const Sell = () => {
                       }}
                     />
                   )}
-                  
+
                   {step === 5 && (
                     <AddPropertyStep3
                       onBack={() => setStep(4)}
@@ -263,7 +263,7 @@ const Sell = () => {
                       }}
                     />
                   )}
-                  
+
                   {step === 6 && (
                     <AddPropertyStep4
                       onBack={() => setStep(5)}
@@ -285,10 +285,10 @@ const Sell = () => {
         <DialogContent className="max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-estate-800">
-              {authMode === "login" ? "Connexion" : "Créer un compte"}
+              {authMode === "login" ? "Log In" : "Create Account"}
             </DialogTitle>
           </DialogHeader>
-          
+
           <div className="space-y-4">
             <form onSubmit={authMode === "login" ? handleEmailLogin : handleEmailSignUp} className="space-y-4">
               <div className="space-y-2">
@@ -296,18 +296,18 @@ const Sell = () => {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="Entrez votre email"
+                  placeholder="Enter your email"
                   value={authFormData.email}
                   onChange={handleAuthInputChange}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Mot de passe</Label>
+                <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Entrez votre mot de passe"
+                  placeholder="Enter your password"
                   value={authFormData.password}
                   onChange={handleAuthInputChange}
                   required
@@ -317,21 +317,21 @@ const Sell = () => {
               {authMode === "signup" && (
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Téléphone</Label>
+                    <Label htmlFor="phone">Phone</Label>
                     <Input
                       id="phone"
                       type="tel"
-                      placeholder="Entrez votre numéro de téléphone"
+                      placeholder="Enter your phone number"
                       value={authFormData.phone}
                       onChange={handleAuthInputChange}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="address">Adresse</Label>
+                    <Label htmlFor="address">Address</Label>
                     <Input
                       id="address"
                       type="text"
-                      placeholder="Entrez votre adresse"
+                      placeholder="Enter your address"
                       value={authFormData.address}
                       onChange={handleAuthInputChange}
                     />
@@ -341,7 +341,7 @@ const Sell = () => {
                     <Input
                       id="instagram"
                       type="text"
-                      placeholder="@votrepseudo"
+                      placeholder="@yourusername"
                       value={authFormData.instagram}
                       onChange={handleAuthInputChange}
                     />
@@ -351,7 +351,7 @@ const Sell = () => {
                     <Input
                       id="twitter"
                       type="text"
-                      placeholder="@votrepseudo"
+                      placeholder="@yourusername"
                       value={authFormData.twitter}
                       onChange={handleAuthInputChange}
                     />
@@ -361,7 +361,7 @@ const Sell = () => {
                     <Input
                       id="facebook"
                       type="text"
-                      placeholder="Lien vers votre profil"
+                      placeholder="Link to your profile"
                       value={authFormData.facebook}
                       onChange={handleAuthInputChange}
                     />
@@ -370,31 +370,31 @@ const Sell = () => {
               )}
 
               <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600">
-                {authMode === "login" ? "Se connecter" : "S'inscrire"}
+                {authMode === "login" ? "Log In" : "Sign Up"}
               </Button>
             </form>
 
             <div className="text-center text-sm">
               {authMode === "login" ? (
                 <>
-                  Vous n'avez pas de compte ?{" "}
-                  <button 
-                    type="button" 
+                  Don't have an account?{" "}
+                  <button
+                    type="button"
                     className="text-teal-600 hover:underline"
                     onClick={() => setAuthMode("signup")}
                   >
-                    Inscrivez-vous
+                    Sign Up
                   </button>
                 </>
               ) : (
                 <>
-                  Vous avez déjà un compte ?{" "}
-                  <button 
-                    type="button" 
+                  Already have an account?{" "}
+                  <button
+                    type="button"
                     className="text-teal-600 hover:underline"
                     onClick={() => setAuthMode("login")}
                   >
-                    Connectez-vous
+                    Log In
                   </button>
                 </>
               )}
