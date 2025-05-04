@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -14,6 +14,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import LocationMap from "./LocationMap";
+import { GEORGIAN_CITIES, GeorgianCity } from "@/data/georgianCities";
+import { getDistrictsForCity } from "@/data/georgianDistricts";
+import { getStreetsForDistrict } from "@/data/georgianStreets";
 
 const formSchema = z.object({
   addressStreet: z.string().optional(),
@@ -63,6 +66,43 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
     },
   });
 
+  const [availableDistricts, setAvailableDistricts] = useState<string[]>([]);
+  const [availableStreets, setAvailableStreets] = useState<string[]>([]);
+  
+  const selectedCity = form.watch("addressCity");
+  const selectedDistrict = form.watch("addressDistrict");
+
+  useEffect(() => {
+    if (selectedCity) {
+      const districts = getDistrictsForCity(selectedCity as GeorgianCity);
+      setAvailableDistricts(districts);
+      if (!districts.includes(form.getValues("addressDistrict"))) {
+        form.setValue("addressDistrict", "");
+        form.setValue("addressStreet", "");
+      }
+    } else {
+      setAvailableDistricts([]);
+      form.setValue("addressDistrict", "");
+      form.setValue("addressStreet", "");
+    }
+  }, [selectedCity, form]);
+
+  useEffect(() => {
+    if (selectedCity && selectedDistrict) {
+      const streets = getStreetsForDistrict(
+        selectedCity as GeorgianCity,
+        selectedDistrict
+      );
+      setAvailableStreets(streets);
+      if (!streets.includes(form.getValues("addressStreet"))) {
+        form.setValue("addressStreet", "");
+      }
+    } else {
+      setAvailableStreets([]);
+      form.setValue("addressStreet", "");
+    }
+  }, [selectedCity, selectedDistrict, form]);
+
   const onSubmit = (data: FormValues) => {
     onNext(data);
   };
@@ -93,21 +133,7 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="addressStreet"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Street Address</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Street address" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <FormField
                 control={form.control}
                 name="addressCity"
@@ -115,7 +141,17 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
                   <FormItem>
                     <FormLabel>City*</FormLabel>
                     <FormControl>
-                      <Input placeholder="City" {...field} />
+                      <select
+                        {...field}
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        <option value="">Select a city</option>
+                        {GEORGIAN_CITIES.map((city) => (
+                          <option key={city} value={city}>
+                            {city}
+                          </option>
+                        ))}
+                      </select>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -129,7 +165,43 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
                   <FormItem>
                     <FormLabel>District/Neighborhood</FormLabel>
                     <FormControl>
-                      <Input placeholder="District or Neighborhood" {...field} />
+                      <select
+                        {...field}
+                        disabled={!selectedCity}
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        <option value="">Select a district</option>
+                        {availableDistricts.map((district) => (
+                          <option key={district} value={district}>
+                            {district}
+                          </option>
+                        ))}
+                      </select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="addressStreet"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Street</FormLabel>
+                    <FormControl>
+                      <select
+                        {...field}
+                        disabled={!selectedDistrict}
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        <option value="">Select a street</option>
+                        {availableStreets.map((street) => (
+                          <option key={street} value={street}>
+                            {street}
+                          </option>
+                        ))}
+                      </select>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
