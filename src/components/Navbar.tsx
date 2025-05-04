@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, User, Globe } from 'lucide-react';
+import { Menu, X, User, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -9,10 +9,10 @@ import { toast } from 'sonner';
 import { signInWithEmail, signUpWithEmail, signOut } from '@/lib/api/auth';
 import { supabase } from '@/lib/api/supabaseClient';
 import { useTranslation } from 'react-i18next';
-import i18n from './../i18n'; // Ensure this path is correct
+import i18n from './i18n';
 
 const Navbar = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [authMode, setAuthMode] = useState('login');
@@ -27,6 +27,7 @@ const Navbar = () => {
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -99,6 +100,8 @@ const Navbar = () => {
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
+    setSelectedLanguage(lng);
+    setIsMenuOpen(false); // Close the menu after selecting a language
   };
 
   return (
@@ -124,16 +127,32 @@ const Navbar = () => {
               {t('agents')}
             </Link>
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" onClick={() => changeLanguage('en')} className="text-gray-600 hover:text-gray-800">
-              EN
+          <div className="relative">
+            <Button variant="ghost" className="flex items-center gap-1 text-gray-600 hover:text-gray-800" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              {t('language')} <ChevronDown size={16} />
             </Button>
-            <Button variant="ghost" onClick={() => changeLanguage('ru')} className="text-gray-600 hover:text-gray-800">
-              RU
-            </Button>
-            <Button variant="ghost" onClick={() => changeLanguage('ka')} className="text-gray-600 hover:text-gray-800">
-              KA
-            </Button>
+            {isMenuOpen && (
+              <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg z-50">
+                <button
+                  className="block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-200"
+                  onClick={() => changeLanguage('en')}
+                >
+                  English
+                </button>
+                <button
+                  className="block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-200"
+                  onClick={() => changeLanguage('ru')}
+                >
+                  Русский
+                </button>
+                <button
+                  className="block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-200"
+                  onClick={() => changeLanguage('ka')}
+                >
+                  ქართული
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -228,16 +247,32 @@ const Navbar = () => {
               {t('agents')}
             </Link>
             <hr className="my-2" />
-            <div className="flex flex-col gap-2">
-              <Button variant="ghost" onClick={() => changeLanguage('en')} className="text-gray-600 hover:text-gray-800">
-                EN
+            <div className="relative">
+              <Button variant="ghost" className="flex items-center gap-1 text-gray-600 hover:text-gray-800 w-full text-left" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                {t('language')} <ChevronDown size={16} />
               </Button>
-              <Button variant="ghost" onClick={() => changeLanguage('ru')} className="text-gray-600 hover:text-gray-800">
-                RU
-              </Button>
-              <Button variant="ghost" onClick={() => changeLanguage('ka')} className="text-gray-600 hover:text-gray-800">
-                KA
-              </Button>
+              {isMenuOpen && (
+                <div className="mt-2 w-full bg-white border border-gray-200 rounded shadow-lg z-50">
+                  <button
+                    className="block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-200"
+                    onClick={() => changeLanguage('en')}
+                  >
+                    English
+                  </button>
+                  <button
+                    className="block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-200"
+                    onClick={() => changeLanguage('ru')}
+                  >
+                    Русский
+                  </button>
+                  <button
+                    className="block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-200"
+                    onClick={() => changeLanguage('ka')}
+                  >
+                    ქართული
+                  </button>
+                </div>
+              )}
             </div>
             <hr className="my-2" />
             <div className="flex flex-col gap-2">
