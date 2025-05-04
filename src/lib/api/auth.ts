@@ -28,13 +28,17 @@ export const signInWithEmail = async (email: string, password: string) => {
  * Crée un nouveau compte utilisateur avec email et mot de passe
  * et crée automatiquement un profil associé
  */
-export const signUpWithEmail = async (email: string, password: string, profileData?: {
-  phone?: string;
-  address?: string;
-  instagram?: string;
-  twitter?: string;
-  facebook?: string;
-}) => {
+export const signUpWithEmail = async (
+  email: string, 
+  password: string, 
+  profileData?: {
+    phone?: string;
+    address?: string;
+    instagram?: string;
+    twitter?: string;
+    facebook?: string;
+  }
+) => {
   try {
     // Étape 1: Création du compte d'authentification
     const { data: authData, error: authError } = await supabase.auth.signUp({
@@ -50,23 +54,21 @@ export const signUpWithEmail = async (email: string, password: string, profileDa
 
     if (authError) throw authError;
 
-    // Étape 2: Création du profil utilisateur
+    // Étape 2: Création ou mise à jour du profil utilisateur
     if (authData.user) {
       const { error: profileError } = await supabase
         .from('profiles')
-        .insert([
-          { 
-            user_id: authData.user.id,
-            email: authData.user.email,
-            phone: profileData?.phone || null,
-            address: profileData?.address || null,
-            instagram: profileData?.instagram || null,
-            twitter: profileData?.twitter || null,
-            facebook: profileData?.facebook || null,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString()
-          }
-        ]);
+        .upsert({
+          user_id: authData.user.id,
+          email: authData.user.email,
+          phone: profileData?.phone || null,
+          address: profileData?.address || null,
+          instagram: profileData?.instagram || null,
+          twitter: profileData?.twitter || null,
+          facebook: profileData?.facebook || null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        });
 
       if (profileError) throw profileError;
     }
@@ -75,7 +77,13 @@ export const signUpWithEmail = async (email: string, password: string, profileDa
     return true;
   } catch (error) {
     console.error("Error signing up:", error);
-    toast.error("Échec de l'inscription : " + (error instanceof Error ? error.message : "Une erreur est survenue"));
+    
+    let errorMessage = "Échec de l'inscription";
+    if (error instanceof Error) {
+      errorMessage += ` : ${error.message}`;
+    }
+    
+    toast.error(errorMessage);
     return false;
   }
 };

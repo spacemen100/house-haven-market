@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -28,12 +27,18 @@ const Sell = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [authFormData, setAuthFormData] = useState({
+    email: "",
+    password: "",
+    phone: "",
+    address: "",
+    instagram: "",
+    twitter: "",
+    facebook: ""
+  });
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
 
   useEffect(() => {
-    // Check auth state
     const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
@@ -41,7 +46,6 @@ const Sell = () => {
     
     checkAuth();
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
     });
@@ -49,19 +53,34 @@ const Sell = () => {
     return () => subscription.unsubscribe();
   }, []);
 
+  const handleAuthInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setAuthFormData(prev => ({ ...prev, [id]: value }));
+  };
+
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = await signInWithEmail(email, password);
+    const success = await signInWithEmail(authFormData.email, authFormData.password);
     
     if (success) {
       setIsAuthDialogOpen(false);
+      setAuthFormData({
+        email: "",
+        password: "",
+        phone: "",
+        address: "",
+        instagram: "",
+        twitter: "",
+        facebook: ""
+      });
       toast.success("Connecté avec succès");
     }
   };
 
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = await signUpWithEmail(email, password);
+    const { email, password, ...profileData } = authFormData;
+    const success = await signUpWithEmail(email, password, profileData);
     
     if (success) {
       // Maintenant que l'utilisateur est créé, nous pouvons ajouter des infos supplémentaires
@@ -82,6 +101,15 @@ const Sell = () => {
       }
       
       setIsAuthDialogOpen(false);
+      setAuthFormData({
+        email: "",
+        password: "",
+        phone: "",
+        address: "",
+        instagram: "",
+        twitter: "",
+        facebook: ""
+      });
       toast.success("Compte créé avec succès");
     }
   };
@@ -91,9 +119,11 @@ const Sell = () => {
       setIsSubmitting(true);
       await createProperty(formData as CreatePropertyInput);
       setFormData({});
-      setStep(user ? 1 : 2); // Reset to appropriate step based on auth
+      setStep(user ? 1 : 2);
+      toast.success("Annonce publiée avec succès");
     } catch (error) {
       console.error('Error submitting form:', error);
+      toast.error("Erreur lors de la publication de l'annonce");
     } finally {
       setIsSubmitting(false);
     }
@@ -233,7 +263,7 @@ const Sell = () => {
 
       {/* Auth Dialog */}
       <Dialog open={isAuthDialogOpen} onOpenChange={setIsAuthDialogOpen}>
-        <DialogContent>
+        <DialogContent className="max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-estate-800">
               {authMode === "login" ? "Connexion" : "Créer un compte"}
@@ -248,8 +278,8 @@ const Sell = () => {
                   id="email"
                   type="email"
                   placeholder="Entrez votre email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={authFormData.email}
+                  onChange={handleAuthInputChange}
                   required
                 />
               </div>
@@ -259,11 +289,67 @@ const Sell = () => {
                   id="password"
                   type="password"
                   placeholder="Entrez votre mot de passe"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={authFormData.password}
+                  onChange={handleAuthInputChange}
                   required
                 />
               </div>
+
+              {authMode === "signup" && (
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="phone">Téléphone</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="Entrez votre numéro de téléphone"
+                      value={authFormData.phone}
+                      onChange={handleAuthInputChange}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="address">Adresse</Label>
+                    <Input
+                      id="address"
+                      type="text"
+                      placeholder="Entrez votre adresse"
+                      value={authFormData.address}
+                      onChange={handleAuthInputChange}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="instagram">Instagram</Label>
+                    <Input
+                      id="instagram"
+                      type="text"
+                      placeholder="@votrepseudo"
+                      value={authFormData.instagram}
+                      onChange={handleAuthInputChange}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="twitter">Twitter</Label>
+                    <Input
+                      id="twitter"
+                      type="text"
+                      placeholder="@votrepseudo"
+                      value={authFormData.twitter}
+                      onChange={handleAuthInputChange}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="facebook">Facebook</Label>
+                    <Input
+                      id="facebook"
+                      type="text"
+                      placeholder="Lien vers votre profil"
+                      value={authFormData.facebook}
+                      onChange={handleAuthInputChange}
+                    />
+                  </div>
+                </div>
+              )}
+
               <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600">
                 {authMode === "login" ? "Se connecter" : "S'inscrire"}
               </Button>
