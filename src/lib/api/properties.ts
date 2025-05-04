@@ -1,7 +1,6 @@
-
 // src/lib/api/properties.ts
 import { supabase } from "@/lib/api/supabaseClient";
-import { Property } from "@/types/property";
+import { Property, PropertyType, ListingType, PropertyStatus, PropertyCondition } from "@/types/property";
 import { toast } from "sonner";
 
 export interface CreatePropertyInput {
@@ -10,10 +9,10 @@ export interface CreatePropertyInput {
   price: number;
   phoneNumber?: string;
   cadastralCode?: string;
-  propertyType: 'house' | 'apartment' | 'land' | 'commercial';
-  listingType: 'sale' | 'rent' | 'rent_by_day';
-  status?: 'free' | 'under_caution' | 'under_construction';
-  condition?: 'new' | 'good' | 'needs_renovation';
+  propertyType: PropertyType;
+  listingType: ListingType;
+  status?: PropertyStatus;
+  condition?: PropertyCondition;
   plan?: string;
   addressStreet?: string;
   addressCity: string;
@@ -294,26 +293,23 @@ export const getMyProperties = async (): Promise<Property[]> => {
   }
 };
 
-// Temporarily removing favorite property functions until we create a user_likes table in Supabase
+// Temporarily disabling the user_likes related functions 
+// since the table doesn't exist in the database yet
 export const getLikedProperties = async (): Promise<Property[]> => {
-  // This will be implemented when we create a user_likes table
-  return [];
+  return []; // Return empty array for now
 };
 
 export const likeProperty = async (propertyId: string) => {
-  // This will be implemented when we create a user_likes table
   toast.success("Property added to favorites");
   return true;
 };
 
 export const unlikeProperty = async (propertyId: string) => {
-  // This will be implemented when we create a user_likes table
   toast.success("Property removed from favorites");
   return true;
 };
 
 export const checkIfLiked = async (propertyId: string): Promise<boolean> => {
-  // This will be implemented when we create a user_likes table
   return false;
 };
 

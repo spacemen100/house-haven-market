@@ -63,9 +63,9 @@ const AddPropertyStep4 = ({
   const form = useForm<AddressFormValues>({
     resolver: zodResolver(addressSchema),
     defaultValues: {
-      addressStreet: formData.address_street || "",
-      addressCity: formData.address_city || "",
-      addressDistrict: formData.address_district || "",
+      addressStreet: formData.addressStreet || "",
+      addressCity: formData.addressCity || "",
+      addressDistrict: formData.addressDistrict || "",
       lat: formData.lat || 41.7151,
       lng: formData.lng || 44.8271,
     },
@@ -162,9 +162,9 @@ const AddPropertyStep4 = ({
     // Mettre à jour formData avec les images et l'adresse
     Object.assign(formData, {
       images,
-      address_street: data.addressStreet,
-      address_city: data.addressCity,
-      address_district: data.addressDistrict,
+      addressStreet: data.addressStreet,
+      addressCity: data.addressCity,
+      addressDistrict: data.addressDistrict,
       lat: data.lat,
       lng: data.lng
     });

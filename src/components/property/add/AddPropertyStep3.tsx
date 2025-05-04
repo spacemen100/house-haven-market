@@ -147,8 +147,6 @@ const formSchema = z.object({
   heating_type: z.enum(["central", "electric", "gas", "wood", "solar", "none"]).optional(),
   hot_water_type: z.enum(["central", "electric", "gas", "solar", "none"]).optional(),
   parking_type: z.enum(["street", "garage", "underground", "none"]).optional(),
-
-  // New Fields
   building_material: z.enum(["brick", "concrete", "wood", "combined"]).optional(),
 });
 
@@ -212,6 +210,9 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
       allows_pets: false,
       allows_parties: false,
       allows_smoking: false,
+      heating_type: undefined,
+      hot_water_type: undefined,
+      parking_type: undefined,
       building_material: undefined,
     },
   });
@@ -281,6 +282,7 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
                     <FormControl>
                       <select
                         {...field}
+                        value={field.value || ""}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         <option value="">Select...</option>
@@ -306,6 +308,7 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
                     <FormControl>
                       <select
                         {...field}
+                        value={field.value || ""}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         <option value="">Select...</option>
@@ -330,6 +333,7 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
                     <FormControl>
                       <select
                         {...field}
+                        value={field.value || ""}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         <option value="">Select...</option>
@@ -353,6 +357,7 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
                     <FormControl>
                       <select
                         {...field}
+                        value={field.value || ""}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         <option value="">Select...</option>

@@ -228,7 +228,14 @@ const Sell = () => {
                     <PropertyTypeStep
                       onBack={user ? () => setStep(1) : undefined}
                       onNext={(data) => {
-                        setFormData({ ...formData, ...data });
+                        // Ensure data conforms to CreatePropertyInput type
+                        const typedData: Partial<CreatePropertyInput> = {
+                          ...data,
+                          propertyType: data.propertyType as PropertyType,
+                          listingType: data.listingType as ListingType,
+                          status: data.status as PropertyStatus,
+                        };
+                        setFormData({ ...formData, ...typedData });
                         setStep(3);
                       }}
                     />

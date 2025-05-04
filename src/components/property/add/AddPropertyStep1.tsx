@@ -27,7 +27,7 @@ const propertyStep1Schema = z.object({
 
 interface AddPropertyStep1Props {
   onNext: (data: Partial<CreatePropertyInput>) => void;
-  onBack?: () => void;
+  onBack?: () => void; // Made optional to match usage
 }
 
 const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) => {
@@ -59,13 +59,13 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
   }, [form]);
 
   const onSubmit = (values: z.infer<typeof propertyStep1Schema>) => {
-    const mappedData = {
-      phone_number: values.phone_number,
-      contact_email: values.contactEmail,
-      instagram_handle: values.instagramHandle,
-      facebook_url: values.facebookUrl,
-      twitter_handle: values.twitterHandle,
-      reference_number: values.reference_number,
+    const mappedData: Partial<CreatePropertyInput> = {
+      phoneNumber: values.phone_number,
+      contactEmail: values.contactEmail,
+      instagramHandle: values.instagramHandle,
+      facebookUrl: values.facebookUrl,
+      twitterHandle: values.twitterHandle,
+      // Reference number will be added later
     };
     onNext(mappedData);
   };

@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import { signInWithEmail, signUpWithEmail, signOut } from '@/lib/api/auth';
 import { supabase } from '@/lib/api/supabaseClient';
 import { useTranslation } from 'react-i18next';
-import i18n from './i18n';
+import i18n from '@/i18n'; // Fixed import path
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();
