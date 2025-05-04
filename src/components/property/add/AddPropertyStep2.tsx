@@ -26,7 +26,7 @@ const formSchema = z.object({
   condition: z.enum(["newly_renovated", "under_renovation", "white_frame", "green_frame", "not_renovated", "black_frame", "old_renovation"]),
   status: z.enum(["available", "pending", "sold", "new_building_under_construction", "old_building"]).default("available"),
   kitchen_type: z.enum(["isolated", "outside", "studio"]).optional(),
-  ceiling_height: z.coerce.number().min(2, "Ceiling height must be at least 2 meters").max(7, "Ceiling height must be at most 7 meters").step(0.05).optional(),
+  ceiling_height: z.coerce.number().min(2, "Ceiling height must be at least 2 meters").max(7, "Ceiling height must be at most 7 meters").optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -268,7 +268,25 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
                 <FormItem>
                   <FormLabel>Ceiling Height (m)</FormLabel>
                   <FormControl>
-                    <Input type="number" step="0.05" min="2" max="7" {...field} />
+                    <Input
+                      type="number"
+                      step="0.05"
+                      min="2"
+                      max="7"
+                      {...field}
+                      onChange={(e) => {
+                        const value = parseFloat(e.target.value);
+                        if (value < 2 || value > 7) {
+                          form.setError("ceiling_height", {
+                            type: "manual",
+                            message: "Ceiling height must be between 2 and 7 meters.",
+                          });
+                        } else {
+                          form.clearErrors("ceiling_height");
+                        }
+                        field.onChange(e);
+                      }}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
