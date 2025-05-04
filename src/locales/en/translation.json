@@ -47,5 +47,8 @@
   "bath": "Bath",
   "baths": "Baths",
   "acres": "acres",
-  "sqft": "sqft"
+  "sqft": "sqft",
+  "loading": "Loading",
+  "fetchError": "Error loading properties",
+  "noPropertiesAvailable": "No properties available at the moment"
 }

@@ -366,3 +366,42 @@ export const signOut = async () => {
   const { error } = await supabase.auth.signOut();
   if (error) throw error;
 };
+
+export const getNewestProperties = async (): Promise<Property[]> => {
+  try {
+    const { data: properties, error } = await supabase
+      .from('properties')
+      .select(`
+        id,
+        title,
+        description,
+        price,
+        beds,
+        baths,
+        sqft,
+        property_type,
+        listing_type,
+        created_at,
+        featured,
+        address_street,
+        address_city,
+        address_state,
+        property_images (image_url),
+        property_amenities (amenity),
+        property_equipment (equipment)
+        // ... autres relations nécessaires ...
+      `)
+      .order('created_at', { ascending: false })
+      .limit(3);
+
+    if (error) throw error;
+    
+    console.log('Raw properties data:', properties); // Debug
+    
+    return properties.map(transformProperty);
+  } catch (error) {
+    console.error('Error fetching newest properties:', error);
+    toast.error("Failed to fetch newest properties. Please try again.");
+    return [];
+  }
+};

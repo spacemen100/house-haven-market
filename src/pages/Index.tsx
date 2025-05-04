@@ -1,6 +1,6 @@
 
 import Hero from "@/components/Hero";
-import FeaturedProperties from "@/components/FeaturedProperties";
+import FeaturedProperties from "@/components/NewestProperties";
 import CategorySection from "@/components/CategorySection";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
