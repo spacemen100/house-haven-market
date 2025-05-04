@@ -5,12 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Heart, ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { formatCurrency } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface PropertyHeaderProps {
   property: Property;
 }
 
 const PropertyHeader = ({ property }: PropertyHeaderProps) => {
+  const { t } = useTranslation();
+  
   return (
     <>
       <div className="mb-6">
@@ -19,7 +22,7 @@ const PropertyHeader = ({ property }: PropertyHeaderProps) => {
           className="flex items-center text-estate-neutral-600 hover:text-estate-800 transition-colors"
         >
           <ChevronLeft size={20} />
-          <span>Back to Properties</span>
+          <span>{t("backToProperties")}</span>
         </Link>
       </div>
       
@@ -37,7 +40,7 @@ const PropertyHeader = ({ property }: PropertyHeaderProps) => {
         
         <div className="flex flex-wrap gap-2 mb-4">
           <Badge className="bg-teal-500 hover:bg-teal-500">
-            {property.listingType === "sale" ? "For Sale" : "For Rent"}
+            {property.listingType === "sale" ? t("forSale") : t("forRent")}
           </Badge>
           <Badge className="bg-estate-neutral-700 hover:bg-estate-neutral-700">
             {property.propertyType === "house" && "House"}

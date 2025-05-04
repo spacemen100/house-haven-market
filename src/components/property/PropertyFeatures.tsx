@@ -2,16 +2,19 @@
 import { Property } from "@/types/property";
 import { Check } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from "react-i18next";
 
 interface PropertyFeaturesProps {
   property: Property;
 }
 
 const PropertyFeatures = ({ property }: PropertyFeaturesProps) => {
+  const { t } = useTranslation();
+  
   return (
     <>
       <div className="mb-8">
-        <h2 className="text-2xl font-semibold text-estate-800 mb-4">Description</h2>
+        <h2 className="text-2xl font-semibold text-estate-800 mb-4">{t("description")}</h2>
         <div className="bg-white rounded-lg p-6 shadow-sm border border-estate-neutral-100">
           <p className="text-estate-neutral-700 leading-relaxed">
             {property.description}
@@ -21,16 +24,16 @@ const PropertyFeatures = ({ property }: PropertyFeaturesProps) => {
 
       {property.cadastralCode && (
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-estate-800 mb-4">Legal Information</h2>
+          <h2 className="text-2xl font-semibold text-estate-800 mb-4">{t("legalInformation")}</h2>
           <div className="bg-white rounded-lg p-6 shadow-sm border border-estate-neutral-100">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="text-sm text-estate-neutral-500">Cadastral Code</p>
+                <p className="text-sm text-estate-neutral-500">{t("cadastralCode")}</p>
                 <p className="font-medium">{property.cadastralCode}</p>
               </div>
               {property.status && (
                 <div>
-                  <p className="text-sm text-estate-neutral-500">Status</p>
+                  <p className="text-sm text-estate-neutral-500">{t("status")}</p>
                   <Badge variant="secondary" className="mt-1">
                     {property.status.replace('_', ' ')}
                   </Badge>
@@ -43,7 +46,7 @@ const PropertyFeatures = ({ property }: PropertyFeaturesProps) => {
       
       {property.amenities && property.amenities.length > 0 && (
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-estate-800 mb-4">Amenities</h2>
+          <h2 className="text-2xl font-semibold text-estate-800 mb-4">{t("amenities")}</h2>
           <div className="bg-white rounded-lg p-6 shadow-sm border border-estate-neutral-100">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {property.amenities.map((amenity, index) => (
@@ -59,7 +62,7 @@ const PropertyFeatures = ({ property }: PropertyFeaturesProps) => {
 
       {property.equipment && property.equipment.length > 0 && (
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-estate-800 mb-4">Equipment</h2>
+          <h2 className="text-2xl font-semibold text-estate-800 mb-4">{t("equipment")}</h2>
           <div className="bg-white rounded-lg p-6 shadow-sm border border-estate-neutral-100">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {property.equipment.map((item, index) => (
@@ -75,7 +78,7 @@ const PropertyFeatures = ({ property }: PropertyFeaturesProps) => {
 
       {property.nearbyPlaces && property.nearbyPlaces.length > 0 && (
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-estate-800 mb-4">Nearby Places</h2>
+          <h2 className="text-2xl font-semibold text-estate-800 mb-4">{t("nearbyPlaces")}</h2>
           <div className="bg-white rounded-lg p-6 shadow-sm border border-estate-neutral-100">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {property.nearbyPlaces.map((place, index) => (

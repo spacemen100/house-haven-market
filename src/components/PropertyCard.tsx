@@ -4,12 +4,15 @@ import { MapPin, Bed, Bath, Square } from "lucide-react";
 import { Property } from "@/types/property";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface PropertyCardProps {
   property: Property;
 }
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
+  const { t } = useTranslation();
+  
   return (
     <Link to={`/property/${property.id}`} className="block">
       <div className="property-card bg-white rounded-lg overflow-hidden shadow-md">
@@ -21,11 +24,11 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             className="w-full h-full object-cover"
           />
           <Badge className="absolute top-3 left-3 bg-teal-500 hover:bg-teal-500">
-            {property.listingType === "sale" ? "For Sale" : "For Rent"}
+            {property.listingType === "sale" ? t("forSale") : t("forRent")}
           </Badge>
           {property.featured && (
             <Badge className="absolute top-3 right-3 bg-estate-800 hover:bg-estate-800">
-              Featured
+              {t("featured")}
             </Badge>
           )}
         </div>
@@ -55,14 +58,14 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             {property.beds > 0 && (
               <div className="flex items-center">
                 <Bed size={18} className="mr-1 text-estate-neutral-500" />
-                <span className="text-sm">{property.beds} Beds</span>
+                <span className="text-sm">{property.beds} {property.beds === 1 ? t("bed") : t("beds")}</span>
               </div>
             )}
             {property.baths > 0 && (
               <div className="flex items-center">
                 <Bath size={18} className="mr-1 text-estate-neutral-500" />
                 <span className="text-sm">
-                  {property.baths} {property.baths === 1 ? "Bath" : "Baths"}
+                  {property.baths} {property.baths === 1 ? t("bath") : t("baths")}
                 </span>
               </div>
             )}
@@ -70,8 +73,8 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
               <Square size={18} className="mr-1 text-estate-neutral-500" />
               <span className="text-sm">
                 {property.propertyType === "land" 
-                  ? `${(property.sqft / 43560).toFixed(2)} acres` 
-                  : `${property.sqft} sqft`}
+                  ? `${(property.sqft / 43560).toFixed(2)} ${t("acres")}` 
+                  : `${property.sqft} ${t("sqft")}`}
               </span>
             </div>
           </div>
