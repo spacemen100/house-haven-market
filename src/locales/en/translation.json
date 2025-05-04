@@ -1,0 +1,28 @@
+{
+    "welcome": "Welcome",
+    "login": "Log In",
+    "signup": "Sign Up",
+    "logout": "Logout",
+    "buy": "Buy",
+    "rent": "Rent",
+    "sell": "Sell",
+    "agents": "Agents",
+    "myAccount": "My Account",
+    "getStarted": "Get Started",
+    "email": "Email",
+    "password": "Password",
+    "enterEmail": "Enter your email",
+    "enterPassword": "Enter your password",
+    "phone": "Phone",
+    "enterPhone": "Enter your phone number",
+    "address": "Address",
+    "enterAddress": "Enter your address",
+    "loginSuccess": "Logged in successfully",
+    "signupSuccess": "Account created successfully!",
+    "logoutSuccess": "Logged out successfully",
+    "instagram": "Instagram",
+    "twitter": "Twitter",
+    "facebook": "Facebook",
+    "linkToProfile": "Link to your profile"
+  }
+  

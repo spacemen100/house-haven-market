@@ -1,0 +1,28 @@
+{
+    "welcome": "Добро пожаловать",
+    "login": "Войти",
+    "signup": "Зарегистрироваться",
+    "logout": "Выйти",
+    "buy": "Купить",
+    "rent": "Арендовать",
+    "sell": "Продать",
+    "agents": "Агенты",
+    "myAccount": "Мой аккаунт",
+    "getStarted": "Начать",
+    "email": "Электронная почта",
+    "password": "Пароль",
+    "enterEmail": "Введите вашу электронную почту",
+    "enterPassword": "Введите ваш пароль",
+    "phone": "Телефон",
+    "enterPhone": "Введите ваш номер телефона",
+    "address": "Адрес",
+    "enterAddress": "Введите ваш адрес",
+    "loginSuccess": "Успешный вход",
+    "signupSuccess": "Аккаунт успешно создан!",
+    "logoutSuccess": "Выход выполнен успешно",
+    "instagram": "Instagram",
+    "twitter": "Twitter",
+    "facebook": "Facebook",
+    "linkToProfile": "Ссылка на ваш профиль"
+  }
+  

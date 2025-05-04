@@ -1,0 +1,28 @@
+{
+    "welcome": "კეთილი იყოს თქვენი მობრძანება",
+    "login": "შესვლა",
+    "signup": "რეგისტრაცია",
+    "logout": "გამოსვლა",
+    "buy": "ყიდვა",
+    "rent": "ქირავნა",
+    "sell": "გაყიდვა",
+    "agents": "აგენტები",
+    "myAccount": "ჩემი ანგარიში",
+    "getStarted": "დაიწყეთ",
+    "email": "ელ-ფოსტა",
+    "password": "პაროლი",
+    "enterEmail": "შეიყვანეთ თქვენი ელ-ფოსტა",
+    "enterPassword": "შეიყვანეთ თქვენი პაროლი",
+    "phone": "ტელეფონი",
+    "enterPhone": "შეიყვანეთ თქვენი ტელეფონის ნომერი",
+    "address": "მისამართი",
+    "enterAddress": "შეიყვანეთ თქვენი მისამართი",
+    "loginSuccess": "წარმატებით შესვლა",
+    "signupSuccess": "ანგარიში წარმატებით შეიქმნა!",
+    "logoutSuccess": "გამოსვლა წარმატებით შესრულდა",
+    "instagram": "Instagram",
+    "twitter": "Twitter",
+    "facebook": "Facebook",
+    "linkToProfile": "ბმული თქვენ პროფილზე"
+  }
+  

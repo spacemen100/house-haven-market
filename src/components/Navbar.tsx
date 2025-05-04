@@ -1,70 +1,67 @@
-import { Link } from "react-router-dom";
-import { Menu, X, User } from "lucide-react";
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
-import { signInWithEmail, signUpWithEmail, signOut } from "@/lib/api/auth";
-import { supabase } from "@/lib/api/supabaseClient";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Menu, X, User, Globe } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { toast } from 'sonner';
+import { signInWithEmail, signUpWithEmail, signOut } from '@/lib/api/auth';
+import { supabase } from '@/lib/api/supabaseClient';
+import { useTranslation } from 'react-i18next';
+import i18n from './../i18n'; // Ensure this path is correct
 
 const Navbar = () => {
+  const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
-  const [authMode, setAuthMode] = useState<"login" | "signup">("login");
+  const [authMode, setAuthMode] = useState('login');
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    phone: "",
-    address: "",
-    instagram: "",
-    twitter: "",
-    facebook: ""
+    email: '',
+    password: '',
+    phone: '',
+    address: '',
+    instagram: '',
+    twitter: '',
+    facebook: ''
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
+  const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       setIsLoggedIn(!!user);
-      setUserEmail(user?.email || "");
+      setUserEmail(user?.email || '');
     };
 
     checkAuth();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setIsLoggedIn(!!session?.user);
-      setUserEmail(session?.user?.email || "");
+      setUserEmail(session?.user?.email || '');
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData(prev => ({ ...prev, [id]: value }));
   };
 
-  const handleEmailLogin = async (e: React.FormEvent) => {
+  const handleEmailLogin = async (e) => {
     e.preventDefault();
     const success = await signInWithEmail(formData.email, formData.password);
 
     if (success) {
       setIsAuthDialogOpen(false);
       resetForm();
-      toast.success("Logged in successfully");
+      toast.success(t('loginSuccess'));
     }
   };
 
-  const handleEmailSignUp = async (e: React.FormEvent) => {
+  const handleEmailSignUp = async (e) => {
     e.preventDefault();
     const { email, password, ...profileData } = formData;
     const success = await signUpWithEmail(email, password, profileData);
@@ -72,32 +69,36 @@ const Navbar = () => {
     if (success) {
       setIsAuthDialogOpen(false);
       resetForm();
-      toast.success("Account created successfully!");
+      toast.success(t('signupSuccess'));
     }
   };
 
   const handleLogout = async () => {
     const success = await signOut();
     if (success) {
-      toast.success("Logged out successfully");
+      toast.success(t('logoutSuccess'));
     }
   };
 
   const resetForm = () => {
     setFormData({
-      email: "",
-      password: "",
-      phone: "",
-      address: "",
-      instagram: "",
-      twitter: "",
-      facebook: ""
+      email: '',
+      password: '',
+      phone: '',
+      address: '',
+      instagram: '',
+      twitter: '',
+      facebook: ''
     });
   };
 
   const toggleAuthMode = () => {
-    setAuthMode(prev => prev === "login" ? "signup" : "login");
+    setAuthMode(prev => prev === 'login' ? 'signup' : 'login');
     resetForm();
+  };
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
   };
 
   return (
@@ -111,17 +112,28 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-8">
           <div className="flex gap-8">
             <Link to="/properties?type=sale" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
-              Buy
+              {t('buy')}
             </Link>
             <Link to="/properties?type=rent" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
-              Rent
+              {t('rent')}
             </Link>
             <Link to="/sell" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
-              Sell
+              {t('sell')}
             </Link>
             <Link to="/agents" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
-              Agents
+              {t('agents')}
             </Link>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" onClick={() => changeLanguage('en')} className="text-gray-600 hover:text-gray-800">
+              EN
+            </Button>
+            <Button variant="ghost" onClick={() => changeLanguage('ru')} className="text-gray-600 hover:text-gray-800">
+              RU
+            </Button>
+            <Button variant="ghost" onClick={() => changeLanguage('ka')} className="text-gray-600 hover:text-gray-800">
+              KA
+            </Button>
           </div>
         </div>
 
@@ -131,7 +143,7 @@ const Navbar = () => {
               <Button asChild variant="outline" className="flex gap-2">
                 <Link to="/account">
                   <User size={18} />
-                  <span>{userEmail || "My Account"}</span>
+                  <span>{userEmail || t('myAccount')}</span>
                 </Link>
               </Button>
               <Button
@@ -139,7 +151,7 @@ const Navbar = () => {
                 className="text-red-500 border-red-500 hover:bg-red-50"
                 onClick={handleLogout}
               >
-                Logout
+                {t('logout')}
               </Button>
             </>
           ) : (
@@ -149,10 +161,10 @@ const Navbar = () => {
                   <Button
                     variant="outline"
                     className="flex gap-2"
-                    onClick={() => setAuthMode("login")}
+                    onClick={() => setAuthMode('login')}
                   >
                     <User size={18} />
-                    <span>Log In</span>
+                    <span>{t('login')}</span>
                   </Button>
                 </DialogTrigger>
                 <Button
@@ -160,14 +172,14 @@ const Navbar = () => {
                   className="text-teal-600 hover:text-teal-700"
                   onClick={() => {
                     setIsAuthDialogOpen(true);
-                    setAuthMode("signup");
+                    setAuthMode('signup');
                   }}
                 >
-                  Sign Up
+                  {t('signup')}
                 </Button>
               </Dialog>
               <Button asChild className="bg-teal-500 hover:bg-teal-600">
-                <Link to="/sell">Get Started</Link>
+                <Link to="/sell">{t('getStarted')}</Link>
               </Button>
             </>
           )}
@@ -192,29 +204,41 @@ const Navbar = () => {
               className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              Buy
+              {t('buy')}
             </Link>
             <Link
               to="/properties?type=rent"
               className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              Rent
+              {t('rent')}
             </Link>
             <Link
               to="/sell"
               className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              Sell
+              {t('sell')}
             </Link>
             <Link
               to="/agents"
               className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              Agents
+              {t('agents')}
             </Link>
+            <hr className="my-2" />
+            <div className="flex flex-col gap-2">
+              <Button variant="ghost" onClick={() => changeLanguage('en')} className="text-gray-600 hover:text-gray-800">
+                EN
+              </Button>
+              <Button variant="ghost" onClick={() => changeLanguage('ru')} className="text-gray-600 hover:text-gray-800">
+                RU
+              </Button>
+              <Button variant="ghost" onClick={() => changeLanguage('ka')} className="text-gray-600 hover:text-gray-800">
+                KA
+              </Button>
+            </div>
             <hr className="my-2" />
             <div className="flex flex-col gap-2">
               {isLoggedIn ? (
@@ -222,7 +246,7 @@ const Navbar = () => {
                   <Button asChild variant="outline" className="flex gap-2 justify-center">
                     <Link to="/account" onClick={() => setIsMenuOpen(false)}>
                       <User size={18} />
-                      <span>{userEmail || "My Account"}</span>
+                      <span>{userEmail || t('myAccount')}</span>
                     </Link>
                   </Button>
                   <Button
@@ -233,7 +257,7 @@ const Navbar = () => {
                       setIsMenuOpen(false);
                     }}
                   >
-                    Logout
+                    {t('logout')}
                   </Button>
                 </>
               ) : (
@@ -243,26 +267,26 @@ const Navbar = () => {
                     className="flex gap-2 justify-center"
                     onClick={() => {
                       setIsAuthDialogOpen(true);
-                      setAuthMode("login");
+                      setAuthMode('login');
                       setIsMenuOpen(false);
                     }}
                   >
                     <User size={18} />
-                    <span>Log In</span>
+                    <span>{t('login')}</span>
                   </Button>
                   <Button
                     variant="ghost"
                     className="text-teal-600 hover:text-teal-700"
                     onClick={() => {
                       setIsAuthDialogOpen(true);
-                      setAuthMode("signup");
+                      setAuthMode('signup');
                       setIsMenuOpen(false);
                     }}
                   >
-                    Sign Up
+                    {t('signup')}
                   </Button>
                   <Button asChild className="bg-teal-500 hover:bg-teal-600">
-                    <Link to="/sell" onClick={() => setIsMenuOpen(false)}>Get Started</Link>
+                    <Link to="/sell" onClick={() => setIsMenuOpen(false)}>{t('getStarted')}</Link>
                   </Button>
                 </>
               )}
@@ -276,54 +300,53 @@ const Navbar = () => {
         <DialogContent className="max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-estate-800">
-              {authMode === "login" ? "Log In" : "Create Account"}
+              {authMode === 'login' ? t('login') : t('signup')}
             </DialogTitle>
           </DialogHeader>
 
           <div className="space-y-4">
-            <form onSubmit={authMode === "login" ? handleEmailLogin : handleEmailSignUp} className="space-y-4">
+            <form onSubmit={authMode === 'login' ? handleEmailLogin : handleEmailSignUp} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t('email')}</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder={t('enterEmail')}
                   value={formData.email}
                   onChange={handleInputChange}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t('password')}</Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder={t('enterPassword')}
                   value={formData.password}
                   onChange={handleInputChange}
                   required
                 />
               </div>
 
-              {/* Additional fields for signup */}
-              {authMode === "signup" && (
+              {authMode === 'signup' && (
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Phone</Label>
+                    <Label htmlFor="phone">{t('phone')}</Label>
                     <Input
                       id="phone"
                       type="tel"
-                      placeholder="Enter your phone number"
+                      placeholder={t('enterPhone')}
                       value={formData.phone}
                       onChange={handleInputChange}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="address">Address</Label>
+                    <Label htmlFor="address">{t('address')}</Label>
                     <Input
                       id="address"
                       type="text"
-                      placeholder="Enter your address"
+                      placeholder={t('enterAddress')}
                       value={formData.address}
                       onChange={handleInputChange}
                     />
@@ -353,7 +376,7 @@ const Navbar = () => {
                     <Input
                       id="facebook"
                       type="text"
-                      placeholder="Link to your profile"
+                      placeholder={t('linkToProfile')}
                       value={formData.facebook}
                       onChange={handleInputChange}
                     />
@@ -362,31 +385,31 @@ const Navbar = () => {
               )}
 
               <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600">
-                {authMode === "login" ? "Log In" : "Sign Up"}
+                {authMode === 'login' ? t('login') : t('signup')}
               </Button>
             </form>
 
             <div className="text-center text-sm">
-              {authMode === "login" ? (
+              {authMode === 'login' ? (
                 <>
-                  Don't have an account?{" "}
+                  {t('noAccount')}{' '}
                   <button
                     type="button"
                     className="text-teal-600 hover:underline"
                     onClick={toggleAuthMode}
                   >
-                    Sign Up
+                    {t('signup')}
                   </button>
                 </>
               ) : (
                 <>
-                  Already have an account?{" "}
+                  {t('haveAccount')}{' '}
                   <button
                     type="button"
                     className="text-teal-600 hover:underline"
                     onClick={toggleAuthMode}
                   >
-                    Log In
+                    {t('login')}
                   </button>
                 </>
               )}
