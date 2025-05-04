@@ -268,7 +268,7 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
                 <FormItem>
                   <FormLabel>Ceiling Height (m)</FormLabel>
                   <FormControl>
-                    <Input type="number" step="0.05" {...field} />
+                    <Input type="number" step="0.05" min="2" max="7" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
