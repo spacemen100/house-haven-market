@@ -3,17 +3,10 @@ import { Check } from "lucide-react";
 
 interface StepsIndicatorProps {
   currentStep: number;
+  steps: { number: number; label: string }[];
 }
 
-const StepsIndicator = ({ currentStep }: StepsIndicatorProps) => {
-  const steps = [
-    { number: 1, label: "Authentication" },
-    { number: 2, label: "Property Type" },
-    { number: 3, label: "Basic Info" },
-    { number: 4, label: "Features" },
-    { number: 5, label: "Publish" }
-  ];
-
+const StepsIndicator = ({ currentStep, steps }: StepsIndicatorProps) => {
   return (
     <div className="flex justify-between items-center max-w-3xl mx-auto">
       {steps.map((step, index) => (

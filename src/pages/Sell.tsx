@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import PropertyTypeStep from "@/components/property/add/PropertyTypeStep";
 import AddPropertyStep1 from "@/components/property/add/AddPropertyStep1";
 import AddPropertyStep2 from "@/components/property/add/AddPropertyStep2";
 import AddPropertyStep3 from "@/components/property/add/AddPropertyStep3";
@@ -22,6 +23,15 @@ import { Label } from "@/components/ui/label";
 import { signInWithEmail, signUpWithEmail } from "@/lib/api/auth";
 
 const Sell = () => {
+  const steps = [
+    { number: 1, label: "Authentification" },
+    { number: 2, label: "Type d'annonce" },
+    { number: 3, label: "Informations de base" },
+    { number: 4, label: "Caractéristiques" },
+    { number: 5, label: "Localisation" },
+    { number: 6, label: "Publication" }
+  ];
+
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<Partial<CreatePropertyInput>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -83,18 +93,17 @@ const Sell = () => {
     const success = await signUpWithEmail(email, password, profileData);
     
     if (success) {
-      // Maintenant que l'utilisateur est créé, nous pouvons ajouter des infos supplémentaires
       const { data: { user } } = await supabase.auth.getUser();
       
       if (user) {
         await supabase
           .from('profiles')
           .update({
-            phone: '', // Vous pouvez ajouter un champ dans votre formulaire pour cela
-            address: '',
-            instagram: '',
-            twitter: '',
-            facebook: '',
+            phone: authFormData.phone,
+            address: authFormData.address,
+            instagram: authFormData.instagram,
+            twitter: authFormData.twitter,
+            facebook: authFormData.facebook,
             updated_at: new Date().toISOString()
           })
           .eq('user_id', user.id);
@@ -119,7 +128,7 @@ const Sell = () => {
       setIsSubmitting(true);
       await createProperty(formData as CreatePropertyInput);
       setFormData({});
-      setStep(user ? 1 : 2);
+      setStep(1);
       toast.success("Annonce publiée avec succès");
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -204,7 +213,7 @@ const Sell = () => {
 
         <section className="py-8 bg-white border-b">
           <div className="container">
-            <StepsIndicator currentStep={step} />
+            <StepsIndicator currentStep={step} steps={steps} />
           </div>
         </section>
 
@@ -216,7 +225,7 @@ const Sell = () => {
                   {step === 1 && renderAuthStep()}
                   
                   {step === 2 && (
-                    <AddPropertyStep1 
+                    <PropertyTypeStep 
                       onBack={user ? () => setStep(1) : undefined}
                       onNext={(data) => {
                         setFormData({ ...formData, ...data });
@@ -226,7 +235,7 @@ const Sell = () => {
                   )}
                   
                   {step === 3 && (
-                    <AddPropertyStep2
+                    <AddPropertyStep1 
                       onBack={() => setStep(2)}
                       onNext={(data) => {
                         setFormData({ ...formData, ...data });
@@ -236,7 +245,7 @@ const Sell = () => {
                   )}
                   
                   {step === 4 && (
-                    <AddPropertyStep3
+                    <AddPropertyStep2
                       onBack={() => setStep(3)}
                       onNext={(data) => {
                         setFormData({ ...formData, ...data });
@@ -246,8 +255,18 @@ const Sell = () => {
                   )}
                   
                   {step === 5 && (
-                    <AddPropertyStep4
+                    <AddPropertyStep3
                       onBack={() => setStep(4)}
+                      onNext={(data) => {
+                        setFormData({ ...formData, ...data });
+                        setStep(6);
+                      }}
+                    />
+                  )}
+                  
+                  {step === 6 && (
+                    <AddPropertyStep4
+                      onBack={() => setStep(5)}
                       formData={formData}
                       isSubmitting={isSubmitting}
                       onSubmit={handleFinalSubmit}
