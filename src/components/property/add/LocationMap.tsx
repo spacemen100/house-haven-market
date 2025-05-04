@@ -1,102 +1,79 @@
-import React, { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import React, { useEffect, useRef } from 'react';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
-// Set mapbox access token (should ideally be in your env variables)
-mapboxgl.accessToken = 'pk.eyJ1IjoibG92YWJsZSIsImEiOiJjbHR6dmp5b28wYzFpMmptbGVnaXE0NnBtIn0.a9DiQy7Dq_-uVVHP6F8e7g';
+// Correction pour les icônes manquantes de Leaflet
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
 
 interface LocationMapProps {
-  onLocationSelect?: (lat: number, lng: number) => void;
+  onLocationSelect: (lat: number, lng: number) => void;
   initialLat?: number;
   initialLng?: number;
 }
 
-const LocationMap = ({ 
-  onLocationSelect, 
-  initialLat = 41.7151, 
-  initialLng = 44.8271 
-}: LocationMapProps) => {
-  const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
-  const marker = useRef<mapboxgl.Marker | null>(null);
-  const [mapLoaded, setMapLoaded] = useState(false);
+const LocationMap: React.FC<LocationMapProps> = ({
+  onLocationSelect,
+  initialLat = 41.7151,
+  initialLng = 44.8271,
+}) => {
+  const mapRef = useRef<L.Map | null>(null);
+  const markerRef = useRef<L.Marker | null>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!mapContainer.current || map.current) return;
+    if (!mapContainerRef.current || mapRef.current) return;
 
-    // Initialize map
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v11', // Changed to v11 which is more stable
-      center: [initialLng, initialLat],
-      zoom: 12,
-      attributionControl: false
-    });
+    // Initialiser la carte
+    mapRef.current = L.map(mapContainerRef.current).setView(
+      [initialLat, initialLng],
+      13
+    );
 
-    // Add marker
-    marker.current = new mapboxgl.Marker({
+    // Ajouter la couche OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(mapRef.current);
+
+    // Créer le marqueur
+    markerRef.current = L.marker([initialLat, initialLng], {
       draggable: true,
-      color: '#3b82f6' // Blue color for better visibility
-    })
-      .setLngLat([initialLng, initialLat])
-      .addTo(map.current);
+    }).addTo(mapRef.current);
 
-    // Add controls
-    map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
-    map.current.addControl(new mapboxgl.AttributionControl(), 'bottom-right');
-
-    // Handle map load
-    map.current.on('load', () => {
-      setMapLoaded(true);
-      // Add a subtle terrain layer for better context
-      map.current?.addLayer({
-        id: 'terrain-data',
-        type: 'hillshade',
-        source: {
-          type: 'raster-dem',
-          url: 'mapbox://mapbox.terrain-rgb'
-        }
-      });
-    });
-
-    // Handle map clicks
-    map.current.on('click', (e) => {
-      const { lng, lat } = e.lngLat;
-      marker.current?.setLngLat([lng, lat]);
-      onLocationSelect?.(lat, lng);
-    });
-
-    // Handle marker drag
-    marker.current.on('dragend', () => {
-      const lngLat = marker.current?.getLngLat();
-      if (lngLat) {
-        onLocationSelect?.(lngLat.lat, lngLat.lng);
-      }
-    });
-
-    // Cleanup
-    return () => {
-      if (marker.current) marker.current.remove();
-      if (map.current) {
-        map.current.remove();
-        map.current = null;
-      }
+    // Gestion des événements
+    const handleMapClick = (e: L.LeafletMouseEvent) => {
+      const { lat, lng } = e.latlng;
+      markerRef.current?.setLatLng([lat, lng]);
+      onLocationSelect(lat, lng);
     };
-  }, [initialLat, initialLng, onLocationSelect]);
+
+    const handleMarkerDrag = (e: L.LeafletEvent) => {
+      const { lat, lng } = markerRef.current?.getLatLng() as L.LatLng;
+      onLocationSelect(lat, lng);
+    };
+
+    mapRef.current.on('click', handleMapClick);
+    markerRef.current.on('dragend', handleMarkerDrag);
+
+    // Nettoyage
+    return () => {
+      mapRef.current?.off('click', handleMapClick);
+      markerRef.current?.off('dragend', handleMarkerDrag);
+      mapRef.current?.remove();
+      mapRef.current = null;
+    };
+  }, []);
 
   return (
-    <div className="w-full h-[400px] rounded-lg overflow-hidden border border-gray-200 bg-gray-50">
-      <div 
-        ref={mapContainer} 
-        className="w-full h-full"
-        style={{ minHeight: '400px' }}
-      />
-      {!mapLoaded && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <p>Loading map...</p>
-        </div>
-      )}
-    </div>
+    <div
+      ref={mapContainerRef}
+      className="w-full h-[400px] rounded-lg border border-gray-300"
+    />
   );
 };
 
