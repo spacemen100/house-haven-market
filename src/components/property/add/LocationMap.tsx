@@ -1,14 +1,24 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Correction pour les icônes manquantes de Leaflet
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-});
+// Configuration des constantes
+const INITIAL_LAT = 41.7151;
+const INITIAL_LNG = 44.7871; // Décalé de ~3km vers l'ouest (original: 44.8271)
+const INITIAL_ZOOM = 12; // Réduit de 1 par rapport au zoom original (13)
+
+// Correction pour les icônes Leaflet
+const createDefaultIcon = () => {
+  return L.icon({
+    iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+    iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+};
 
 interface LocationMapProps {
   onLocationSelect: (lat: number, lng: number) => void;
@@ -16,33 +26,37 @@ interface LocationMapProps {
   initialLng?: number;
 }
 
-const LocationMap: React.FC<LocationMapProps> = ({
+export default function LocationMapLeaflet({
   onLocationSelect,
-  initialLat = 41.7151,
-  initialLng = 44.8271,
-}) => {
+  initialLat = INITIAL_LAT,
+  initialLng = INITIAL_LNG,
+}: LocationMapProps) {
   const mapRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!mapContainerRef.current || mapRef.current) return;
+    if (mapRef.current || !mapContainerRef.current) return;
 
-    // Initialiser la carte
-    mapRef.current = L.map(mapContainerRef.current).setView(
-      [initialLat, initialLng],
-      13
-    );
+    // Initialisation de la carte avec les paramètres ajustés
+    mapRef.current = L.map(mapContainerRef.current, {
+      center: [initialLat, initialLng],
+      zoom: INITIAL_ZOOM,
+      preferCanvas: true
+    });
 
-    // Ajouter la couche OpenStreetMap
+    // Couche OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 19,
     }).addTo(mapRef.current);
 
-    // Créer le marqueur
+    // Configuration du marqueur
+    L.Marker.prototype.options.icon = createDefaultIcon();
+    
     markerRef.current = L.marker([initialLat, initialLng], {
       draggable: true,
+      autoPan: true,
     }).addTo(mapRef.current);
 
     // Gestion des événements
@@ -52,9 +66,12 @@ const LocationMap: React.FC<LocationMapProps> = ({
       onLocationSelect(lat, lng);
     };
 
-    const handleMarkerDrag = (e: L.LeafletEvent) => {
-      const { lat, lng } = markerRef.current?.getLatLng() as L.LatLng;
-      onLocationSelect(lat, lng);
+    const handleMarkerDrag = () => {
+      const position = markerRef.current?.getLatLng();
+      if (position) {
+        onLocationSelect(position.lat, position.lng);
+        mapRef.current?.panTo(position);
+      }
     };
 
     mapRef.current.on('click', handleMapClick);
@@ -72,9 +89,8 @@ const LocationMap: React.FC<LocationMapProps> = ({
   return (
     <div
       ref={mapContainerRef}
-      className="w-full h-[400px] rounded-lg border border-gray-300"
+      className="w-full h-[400px] rounded-lg border border-gray-300 z-0"
+      aria-label="Carte de localisation de la propriété"
     />
   );
-};
-
-export default LocationMap;
+}
