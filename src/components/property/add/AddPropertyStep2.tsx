@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,6 +22,9 @@ const formSchema = z.object({
   baths: z.coerce.number().int().min(0, "Baths must be 0 or more"),
   sqft: z.coerce.number().positive("Area must be a positive number"),
   yearBuilt: z.coerce.number().int().min(1800, "Year must be 1800 or later").max(new Date().getFullYear(), "Year cannot be in the future"),
+  cadastral_code: z.string().optional(),
+  condition: z.enum(["new", "good", "needs_renovation", "old"]),
+  status: z.enum(["available", "pending", "sold"]).default("available"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -43,6 +45,9 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
       baths: 0,
       sqft: 0,
       yearBuilt: new Date().getFullYear(),
+      cadastral_code: "",
+      condition: "good",
+      status: "available",
     },
   });
 
@@ -82,10 +87,10 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
               <FormItem>
                 <FormLabel>Property Description</FormLabel>
                 <FormControl>
-                  <Textarea 
-                    placeholder="Describe your property in detail..." 
-                    className="min-h-32" 
-                    {...field} 
+                  <Textarea
+                    placeholder="Describe your property in detail..."
+                    className="min-h-32"
+                    {...field}
                   />
                 </FormControl>
                 <FormMessage />
@@ -160,6 +165,65 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
                   <FormLabel>Area (sqft)</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="cadastral_code"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Code cadastral</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Code cadastral (optionnel)" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="condition"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>État du bien</FormLabel>
+                  <FormControl>
+                    <select
+                      {...field}
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      <option value="new">Neuf</option>
+                      <option value="good">Bon état</option>
+                      <option value="needs_renovation">À rénover</option>
+                      <option value="old">Ancien</option>
+                    </select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Statut</FormLabel>
+                  <FormControl>
+                    <select
+                      {...field}
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      <option value="available">Disponible</option>
+                      <option value="pending">En cours</option>
+                      <option value="sold">Vendu/Loué</option>
+                    </select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

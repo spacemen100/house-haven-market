@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { CreatePropertyInput } from '@/lib/api/properties';
 
 const propertyStep1Schema = z.object({
@@ -21,10 +20,7 @@ const propertyStep1Schema = z.object({
   instagramHandle: z.string().optional(),
   facebookUrl: z.string().url("Invalid URL").optional().or(z.literal('')),
   twitterHandle: z.string().optional(),
-  cadastral_code: z.string().optional(),
   reference_number: z.string().optional(),
-  condition: z.enum(["new", "good", "needs_renovation", "old"]),
-  status: z.enum(["available", "pending", "sold"]).default("available"),
 });
 
 interface AddPropertyStep1Props {
@@ -41,12 +37,23 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
       instagramHandle: '',
       facebookUrl: '',
       twitterHandle: '',
-      cadastral_code: '',
       reference_number: '',
-      condition: "good",
-      status: "available",
     }
   });
+
+  useEffect(() => {
+    // Generate a random alphanumeric reference number of length 7
+    const generateReferenceNumber = () => {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < 7; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return result;
+    };
+
+    form.setValue('reference_number', generateReferenceNumber());
+  }, [form]);
 
   const onSubmit = (values: z.infer<typeof propertyStep1Schema>) => {
     const mappedData = {
@@ -55,10 +62,7 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
       instagram_handle: values.instagramHandle,
       facebook_url: values.facebookUrl,
       twitter_handle: values.twitterHandle,
-      cadastral_code: values.cadastral_code,
       reference_number: values.reference_number,
-      condition: values.condition,
-      status: values.status,
     };
     onNext(mappedData);
   };
@@ -102,80 +106,19 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
             )}
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormField
-              control={form.control}
-              name="cadastral_code"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Code cadastral</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Code cadastral (optionnel)" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="reference_number"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Numéro de référence</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Référence interne (optionnel)" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormField
-              control={form.control}
-              name="condition"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>État du bien</FormLabel>
-                  <FormControl>
-                    <select
-                      {...field}
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                      <option value="new">Neuf</option>
-                      <option value="good">Bon état</option>
-                      <option value="needs_renovation">À rénover</option>
-                      <option value="old">Ancien</option>
-                    </select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="status"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Statut</FormLabel>
-                  <FormControl>
-                    <select
-                      {...field}
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                      <option value="available">Disponible</option>
-                      <option value="pending">En cours</option>
-                      <option value="sold">Vendu/Loué</option>
-                    </select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+          <FormField
+            control={form.control}
+            name="reference_number"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Numéro de référence</FormLabel>
+                <FormControl>
+                  <Input placeholder="Référence interne (généré automatiquement)" {...field} readOnly />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <h3 className="text-lg font-medium mt-6">Réseaux sociaux</h3>
 
