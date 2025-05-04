@@ -50,5 +50,22 @@
   "sqft": "sqft",
   "loading": "Loading",
   "fetchError": "Error loading properties",
-  "noPropertiesAvailable": "No properties available at the moment"
+  "noPropertiesAvailable": "No properties available at the moment",
+  "dateNotAvailable": "Date not available",
+  "priceRange": "Price Range",
+  "bedrooms": "Bedrooms",
+  "any": "Any",
+  "clearAll": "Clear All Filters",
+  "apply": "Apply Filters",
+  "home": "Home",
+  "about": "About Us",
+  "contact": "Contact",
+  "faq": "FAQ",
+  "copyright": "© {year} Real Estate. All rights reserved.",
+  "quickLinks": "Quick Links",
+  "subscribe": "Subscribe to our newsletter",
+  "newestProperties": {
+    "title": "Newest Properties",
+    "viewAll": "View all properties"
+  }
 }
