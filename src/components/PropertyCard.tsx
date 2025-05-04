@@ -1,31 +1,52 @@
-
 import { Link } from "react-router-dom";
-import { MapPin, Bed, Bath, Square } from "lucide-react";
+import { MapPin, Bed, Bath, Square, Calendar } from "lucide-react";
 import { Property } from "@/types/property";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
+import { format, parseISO } from "date-fns";
 
 interface PropertyCardProps {
   property: Property;
 }
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
+  const { t } = useTranslation();
+  
+  // Vérification et conversion de la date
+  const getFormattedDate = () => {
+    try {
+      // Si createdAt est une string ISO, on la parse
+      if (typeof property.createdAt === 'string') {
+        return format(parseISO(property.createdAt), 'MMM d, yyyy');
+      }
+      // Si c'est déjà un objet Date
+      if (property.createdAt instanceof Date) {
+        return format(property.createdAt, 'MMM d, yyyy');
+      }
+      return t('dateNotAvailable');
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return t('dateNotAvailable');
+    }
+  };
+
   return (
     <Link to={`/property/${property.id}`} className="block">
-      <div className="property-card bg-white rounded-lg overflow-hidden shadow-md">
+      <div className="property-card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
         {/* Property Image */}
         <div className="relative h-56 overflow-hidden">
           <img
             src={property.images[0]}
             alt={property.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform hover:scale-105"
           />
           <Badge className="absolute top-3 left-3 bg-teal-500 hover:bg-teal-500">
-            {property.listingType === "sale" ? "For Sale" : "For Rent"}
+            {property.listingType === "sale" ? t('forSale') : t('forRent')}
           </Badge>
           {property.featured && (
             <Badge className="absolute top-3 right-3 bg-estate-800 hover:bg-estate-800">
-              Featured
+              {t('featured')}
             </Badge>
           )}
         </div>
@@ -45,11 +66,17 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             </p>
           </div>
 
-          <p className="text-lg font-bold text-estate-800 mb-4">
-            {property.listingType === "rent"
-              ? `${formatCurrency(property.price)}/month`
-              : formatCurrency(property.price)}
-          </p>
+          <div className="flex justify-between items-center mb-2">
+            <p className="text-lg font-bold text-estate-800">
+              {property.listingType === "rent"
+                ? `${formatCurrency(property.price)}/month`
+                : formatCurrency(property.price)}
+            </p>
+            <div className="flex items-center text-sm text-estate-neutral-500">
+              <Calendar size={14} className="mr-1" />
+              {getFormattedDate()}
+            </div>
+          </div>
 
           <div className="flex justify-between border-t border-estate-neutral-100 pt-3">
             {property.beds > 0 && (

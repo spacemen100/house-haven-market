@@ -36,5 +36,16 @@
   "properties": "უძრავი ქონება",
   "happyCustomers": "კმაყოფილი კლიენტი",
   "awardsWon": "მიღებული ჯილდო",
-  "cities": "ქალაქი"
+  "cities": "ქალაქი",
+  "featuredProperties": "ახალი განცხადებები",
+  "featuredPropertiesSubtitle": "გაეცანით ჩვენს უახლეს შეთავაზებებს",
+  "viewAllProperties": "ყველა განცხადება",
+  "forSale": "იყიდება",
+  "forRent": "ქირავდება",
+  "featured": "რეკომენდირებული",
+  "beds": "საძინებელი",
+  "bath": "აბაზანა",
+  "baths": "აბაზანა",
+  "acres": "აკრი",
+  "sqft": "კვ.ფუტი"
 }

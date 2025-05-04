@@ -1,10 +1,11 @@
-
 import PropertyCard from "@/components/PropertyCard";
 import { getFeaturedProperties } from "@/data/properties";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const FeaturedProperties = () => {
+  const { t } = useTranslation();
   const featuredProperties = getFeaturedProperties();
 
   return (
@@ -13,16 +14,15 @@ const FeaturedProperties = () => {
         <div className="flex flex-col md:flex-row justify-between items-center mb-10">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-estate-800 mb-2">
-              Featured Properties
+              {t('featuredProperties')}
             </h2>
             <p className="text-estate-neutral-600 max-w-2xl">
-              Discover our handpicked selection of premium properties that stand out
-              for their exceptional features, locations, and value.
+              {t('featuredPropertiesSubtitle')}
             </p>
           </div>
           <Link to="/properties" className="mt-4 md:mt-0">
             <Button variant="outline" className="border-estate-800 text-estate-800 hover:bg-estate-800 hover:text-white">
-              View All Properties
+              {t('viewAllProperties')}
             </Button>
           </Link>
         </div>

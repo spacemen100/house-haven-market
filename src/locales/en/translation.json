@@ -36,5 +36,16 @@
   "properties": "Properties",
   "happyCustomers": "Happy Customers",
   "awardsWon": "Awards Won",
-  "cities": "Cities"
+  "cities": "Cities",
+  "featuredProperties": "Newest Properties",
+  "featuredPropertiesSubtitle": "Discover our most recently added premium properties",
+  "viewAllProperties": "View All Properties",
+  "forSale": "For Sale",
+  "forRent": "For Rent",
+  "featured": "Featured",
+  "beds": "Beds",
+  "bath": "Bath",
+  "baths": "Baths",
+  "acres": "acres",
+  "sqft": "sqft"
 }

@@ -36,5 +36,16 @@
   "properties": "Объекты",
   "happyCustomers": "Довольных клиентов",
   "awardsWon": "Наград получено",
-  "cities": "Городов"
+  "cities": "Городов",
+  "featuredProperties": "Новые объявления",
+  "featuredPropertiesSubtitle": "Откройте для себя наши самые свежие предложения",
+  "viewAllProperties": "Все объявления",
+  "forSale": "Продажа",
+  "forRent": "Аренда",
+  "featured": "Рекомендуем",
+  "beds": "Спальни",
+  "bath": "Ванная",
+  "baths": "Ванные",
+  "acres": "акров",
+  "sqft": "кв.футов"
 }
