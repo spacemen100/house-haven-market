@@ -64,7 +64,25 @@ const Sell = () => {
     const success = await signUpWithEmail(email, password);
     
     if (success) {
+      // Maintenant que l'utilisateur est créé, nous pouvons ajouter des infos supplémentaires
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (user) {
+        await supabase
+          .from('profiles')
+          .update({
+            phone: '', // Vous pouvez ajouter un champ dans votre formulaire pour cela
+            address: '',
+            instagram: '',
+            twitter: '',
+            facebook: '',
+            updated_at: new Date().toISOString()
+          })
+          .eq('user_id', user.id);
+      }
+      
       setIsAuthDialogOpen(false);
+      toast.success("Compte créé avec succès");
     }
   };
 

@@ -1,6 +1,5 @@
-
 import { Link } from "react-router-dom";
-import { Menu, X, User, Search } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,13 +19,19 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    phone: "",
+    address: "",
+    instagram: "",
+    twitter: "",
+    facebook: ""
+  });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
-    // Check auth state
     const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       setIsLoggedIn(!!user);
@@ -35,7 +40,6 @@ const Navbar = () => {
     
     checkAuth();
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setIsLoggedIn(!!session?.user);
       setUserEmail(session?.user?.email || "");
@@ -44,22 +48,31 @@ const Navbar = () => {
     return () => subscription.unsubscribe();
   }, []);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = await signInWithEmail(email, password);
+    const success = await signInWithEmail(formData.email, formData.password);
     
     if (success) {
       setIsAuthDialogOpen(false);
+      resetForm();
       toast.success("Connecté avec succès");
     }
   };
 
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = await signUpWithEmail(email, password);
+    const { email, password, ...profileData } = formData;
+    const success = await signUpWithEmail(email, password, profileData);
     
     if (success) {
       setIsAuthDialogOpen(false);
+      resetForm();
+      toast.success("Inscription réussie !");
     }
   };
 
@@ -68,6 +81,23 @@ const Navbar = () => {
     if (success) {
       toast.success("Déconnecté avec succès");
     }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      email: "",
+      password: "",
+      phone: "",
+      address: "",
+      instagram: "",
+      twitter: "",
+      facebook: ""
+    });
+  };
+
+  const toggleAuthMode = () => {
+    setAuthMode(prev => prev === "login" ? "signup" : "login");
+    resetForm();
   };
 
   return (
@@ -147,6 +177,7 @@ const Navbar = () => {
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="md:hidden text-estate-800"
+          aria-label="Toggle menu"
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -242,7 +273,7 @@ const Navbar = () => {
 
       {/* Auth Dialog */}
       <Dialog open={isAuthDialogOpen} onOpenChange={setIsAuthDialogOpen}>
-        <DialogContent>
+        <DialogContent className="max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-estate-800">
               {authMode === "login" ? "Connexion" : "Créer un compte"}
@@ -257,8 +288,8 @@ const Navbar = () => {
                   id="email"
                   type="email"
                   placeholder="Entrez votre email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={formData.email}
+                  onChange={handleInputChange}
                   required
                 />
               </div>
@@ -268,11 +299,68 @@ const Navbar = () => {
                   id="password"
                   type="password"
                   placeholder="Entrez votre mot de passe"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={formData.password}
+                  onChange={handleInputChange}
                   required
                 />
               </div>
+
+              {/* Champs supplémentaires pour l'inscription */}
+              {authMode === "signup" && (
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="phone">Téléphone</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="Entrez votre numéro de téléphone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="address">Adresse</Label>
+                    <Input
+                      id="address"
+                      type="text"
+                      placeholder="Entrez votre adresse"
+                      value={formData.address}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="instagram">Instagram</Label>
+                    <Input
+                      id="instagram"
+                      type="text"
+                      placeholder="@votrepseudo"
+                      value={formData.instagram}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="twitter">Twitter</Label>
+                    <Input
+                      id="twitter"
+                      type="text"
+                      placeholder="@votrepseudo"
+                      value={formData.twitter}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="facebook">Facebook</Label>
+                    <Input
+                      id="facebook"
+                      type="text"
+                      placeholder="Lien vers votre profil"
+                      value={formData.facebook}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+              )}
+
               <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600">
                 {authMode === "login" ? "Se connecter" : "S'inscrire"}
               </Button>
@@ -285,7 +373,7 @@ const Navbar = () => {
                   <button 
                     type="button" 
                     className="text-teal-600 hover:underline"
-                    onClick={() => setAuthMode("signup")}
+                    onClick={toggleAuthMode}
                   >
                     Inscrivez-vous
                   </button>
@@ -296,7 +384,7 @@ const Navbar = () => {
                   <button 
                     type="button" 
                     className="text-teal-600 hover:underline"
-                    onClick={() => setAuthMode("login")}
+                    onClick={toggleAuthMode}
                   >
                     Connectez-vous
                   </button>
