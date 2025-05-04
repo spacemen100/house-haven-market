@@ -9,13 +9,14 @@ import { toast } from 'sonner';
 import { signInWithEmail, signUpWithEmail, signOut } from '@/lib/api/auth';
 import { supabase } from '@/lib/api/supabaseClient';
 import { useTranslation } from 'react-i18next';
-import i18n from './i18n';
+import { useLanguage } from '@/LanguageContext';
 
 const Navbar = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const { language, changeLanguage } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
-  const [authMode, setAuthMode] = useState('login');
+  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -27,7 +28,6 @@ const Navbar = () => {
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState('');
-  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -46,12 +46,12 @@ const Navbar = () => {
     return () => subscription.unsubscribe();
   }, []);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData(prev => ({ ...prev, [id]: value }));
   };
 
-  const handleEmailLogin = async (e) => {
+  const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const success = await signInWithEmail(formData.email, formData.password);
 
@@ -62,7 +62,7 @@ const Navbar = () => {
     }
   };
 
-  const handleEmailSignUp = async (e) => {
+  const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     const { email, password, ...profileData } = formData;
     const success = await signUpWithEmail(email, password, profileData);
@@ -98,10 +98,9 @@ const Navbar = () => {
     resetForm();
   };
 
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    setSelectedLanguage(lng);
-    setIsMenuOpen(false); // Close the menu after selecting a language
+  const handleLanguageChange = (lng: string) => {
+    changeLanguage(lng);
+    setIsMenuOpen(false);
   };
 
   return (
@@ -128,31 +127,18 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="relative">
-            <Button variant="ghost" className="flex items-center gap-1 text-gray-600 hover:text-gray-800" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <Button variant="ghost" className="flex items-center gap-1 text-gray-600 hover:text-gray-800">
               {t('language')} <ChevronDown size={16} />
+              <select 
+                value={language}
+                onChange={(e) => handleLanguageChange(e.target.value)}
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              >
+                <option value="en">English</option>
+                <option value="ru">Русский</option>
+                <option value="ka">ქართული</option>
+              </select>
             </Button>
-            {isMenuOpen && (
-              <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg z-50">
-                <button
-                  className="block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-200"
-                  onClick={() => changeLanguage('en')}
-                >
-                  English
-                </button>
-                <button
-                  className="block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-200"
-                  onClick={() => changeLanguage('ru')}
-                >
-                  Русский
-                </button>
-                <button
-                  className="block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-200"
-                  onClick={() => changeLanguage('ka')}
-                >
-                  ქართული
-                </button>
-              </div>
-            )}
           </div>
         </div>
 
@@ -247,32 +233,20 @@ const Navbar = () => {
               {t('agents')}
             </Link>
             <hr className="my-2" />
-            <div className="relative">
-              <Button variant="ghost" className="flex items-center gap-1 text-gray-600 hover:text-gray-800 w-full text-left" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                {t('language')} <ChevronDown size={16} />
-              </Button>
-              {isMenuOpen && (
-                <div className="mt-2 w-full bg-white border border-gray-200 rounded shadow-lg z-50">
-                  <button
-                    className="block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-200"
-                    onClick={() => changeLanguage('en')}
-                  >
-                    English
-                  </button>
-                  <button
-                    className="block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-200"
-                    onClick={() => changeLanguage('ru')}
-                  >
-                    Русский
-                  </button>
-                  <button
-                    className="block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-200"
-                    onClick={() => changeLanguage('ka')}
-                  >
-                    ქართული
-                  </button>
-                </div>
-              )}
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-medium text-gray-700">{t('language')}</label>
+              <select 
+                value={language}
+                onChange={(e) => {
+                  handleLanguageChange(e.target.value);
+                  setIsMenuOpen(false);
+                }}
+                className="p-2 border rounded-md"
+              >
+                <option value="en">English</option>
+                <option value="ru">Русский</option>
+                <option value="ka">ქართული</option>
+              </select>
             </div>
             <hr className="my-2" />
             <div className="flex flex-col gap-2">
