@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -22,9 +21,12 @@ const propertyStep1Schema = z.object({
   price: z.coerce.number().min(0, "Price must be positive"),
   
   // Add new optional fields for contact and social media
-  contactEmail: z.string().email("Invalid email address").optional(),
+  contactEmail: z.string().email("Invalid email address").optional().or(z.literal('')),
   instagramHandle: z.string().optional(),
-  facebookUrl: z.string().url("Invalid URL").optional(),
+  facebookUrl: z.string()
+    .url("Invalid URL")
+    .optional()
+    .or(z.literal('')), // Allows empty string without URL validation
   twitterHandle: z.string().optional(),
 });
 
@@ -135,7 +137,7 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
             <FormItem>
               <FormLabel>Facebook URL</FormLabel>
               <FormControl>
-                <Input placeholder="Enter Facebook profile/page URL" {...field} />
+                <Input placeholder="Enter Facebook profile/page URL (optional)" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
