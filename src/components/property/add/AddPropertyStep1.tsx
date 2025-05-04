@@ -30,9 +30,10 @@ const propertyStep1Schema = z.object({
 
 interface AddPropertyStep1Props {
   onNext: (data: Partial<CreatePropertyInput>) => void;
+  onBack?: () => void;
 }
 
-const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext }) => {
+const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) => {
   const form = useForm<z.infer<typeof propertyStep1Schema>>({
     resolver: zodResolver(propertyStep1Schema),
     defaultValues: {
@@ -155,7 +156,18 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext }) => {
           )}
         />
         
-        <Button type="submit" className="w-full mt-6">Next Step</Button>
+        <div className="flex justify-between mt-6">
+          {onBack && (
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={onBack}
+            >
+              Back
+            </Button>
+          )}
+          <Button type="submit" className={onBack ? "" : "w-full"}>Next Step</Button>
+        </div>
       </form>
     </Form>
   );

@@ -1,3 +1,4 @@
+
 export type PropertyType = 'house' | 'apartment' | 'land' | 'commercial';
 export type ListingType = 'sale' | 'rent' | 'rent_by_day';
 export type PropertyCondition = 'new' | 'good' | 'needs_renovation';
@@ -71,9 +72,13 @@ export interface Property {
   agentPhone?: string;
   projectName?: string;
 
-  // Add new contact and social media fields
+  // Contact and social media fields
   contactEmail?: string;
   instagramHandle?: string;
   facebookUrl?: string;
   twitterHandle?: string;
+  
+  // Metadata
+  createdAt?: string;
+  userId?: string;
 }

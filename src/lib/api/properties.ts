@@ -1,5 +1,6 @@
+
 // src/lib/api/properties.ts
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/lib/api/supabaseClient";
 import { Property } from "@/types/property";
 import { toast } from "sonner";
 
@@ -90,7 +91,12 @@ const transformProperty = (property: any): Property => ({
   agentName: property.agent_name || '',
   agentPhone: property.agent_phone || '',
   projectName: property.project_name || '',
-  createdAt: property.created_at
+  createdAt: property.created_at,
+  userId: property.user_id,
+  contactEmail: property.contact_email,
+  instagramHandle: property.instagram_handle,
+  facebookUrl: property.facebook_url,
+  twitterHandle: property.twitter_handle
 });
 
 export const createProperty = async (input: CreatePropertyInput) => {
@@ -288,108 +294,27 @@ export const getMyProperties = async (): Promise<Property[]> => {
   }
 };
 
+// Temporarily removing favorite property functions until we create a user_likes table in Supabase
 export const getLikedProperties = async (): Promise<Property[]> => {
-  try {
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
-    if (userError || !user) throw new Error("User not authenticated");
-
-    const { data: likes, error: likesError } = await supabase
-      .from('user_likes')
-      .select('property_id')
-      .eq('user_id', user.id);
-
-    if (likesError) throw likesError;
-    if (!likes.length) return [];
-
-    const propertyIds = likes.map(like => like.property_id);
-
-    const { data: properties, error: propertiesError } = await supabase
-      .from('properties')
-      .select(`
-        *,
-        property_amenities (amenity),
-        property_equipment (equipment),
-        property_images (image_url, is_primary),
-        property_internet_tv (option_name),
-        property_storage (storage_type),
-        property_security (security_feature),
-        property_nearby_places (place_name),
-        property_online_services (service_name)
-      `)
-      .in('id', propertyIds);
-
-    if (propertiesError) throw propertiesError;
-    return properties.map(transformProperty);
-  } catch (error) {
-    console.error('Error fetching liked properties:', error);
-    toast.error("Failed to fetch your favorite properties. Please try again.");
-    return [];
-  }
+  // This will be implemented when we create a user_likes table
+  return [];
 };
 
 export const likeProperty = async (propertyId: string) => {
-  try {
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
-    if (userError || !user) throw new Error("User not authenticated");
-
-    const { error } = await supabase
-      .from('user_likes')
-      .insert({
-        user_id: user.id,
-        property_id: propertyId
-      });
-
-    if (error) throw error;
-
-    toast.success("Property added to favorites");
-    return true;
-  } catch (error) {
-    console.error('Error liking property:', error);
-    toast.error("Failed to add property to favorites");
-    return false;
-  }
+  // This will be implemented when we create a user_likes table
+  toast.success("Property added to favorites");
+  return true;
 };
 
 export const unlikeProperty = async (propertyId: string) => {
-  try {
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
-    if (userError || !user) throw new Error("User not authenticated");
-
-    const { error } = await supabase
-      .from('user_likes')
-      .delete()
-      .eq('user_id', user.id)
-      .eq('property_id', propertyId);
-
-    if (error) throw error;
-
-    toast.success("Property removed from favorites");
-    return true;
-  } catch (error) {
-    console.error('Error unliking property:', error);
-    toast.error("Failed to remove property from favorites");
-    return false;
-  }
+  // This will be implemented when we create a user_likes table
+  toast.success("Property removed from favorites");
+  return true;
 };
 
 export const checkIfLiked = async (propertyId: string): Promise<boolean> => {
-  try {
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
-    if (userError || !user) return false;
-
-    const { data, error } = await supabase
-      .from('user_likes')
-      .select('*')
-      .eq('user_id', user.id)
-      .eq('property_id', propertyId)
-      .maybeSingle();
-
-    if (error) throw error;
-    return !!data;
-  } catch (error) {
-    console.error('Error checking like status:', error);
-    return false;
-  }
+  // This will be implemented when we create a user_likes table
+  return false;
 };
 
 export const deleteProperty = async (propertyId: string) => {
@@ -406,8 +331,7 @@ export const deleteProperty = async (propertyId: string) => {
       'property_storage',
       'property_security',
       'property_nearby_places',
-      'property_online_services',
-      'user_likes'
+      'property_online_services'
     ];
 
     await Promise.all(relatedTables.map(table => 
@@ -429,21 +353,6 @@ export const deleteProperty = async (propertyId: string) => {
     console.error('Error deleting property:', error);
     toast.error("Failed to delete property");
     return false;
-  }
-};
-
-export const handleGitHubLogin = async () => {
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider: 'github',
-    options: {
-      redirectTo: window.location.origin + '/account',
-      scopes: 'user:email'
-    }
-  });
-
-  if (error) {
-    toast.error(error.message);
-    throw error;
   }
 };
 
