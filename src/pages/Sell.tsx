@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -19,7 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Github } from "lucide-react";
+import { signInWithEmail, signUpWithEmail } from "@/lib/api/auth";
 
 const Sell = () => {
   const [step, setStep] = useState(1);
@@ -48,76 +49,22 @@ const Sell = () => {
     return () => subscription.unsubscribe();
   }, []);
 
-  const handleGitHubLogin = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'github',
-      options: {
-        redirectTo: window.location.origin + '/account',
-        scopes: 'user:email'
-      }
-    });
-
-    if (error) {
-      toast.error("GitHub login failed: " + error.message);
-    }
-  };
-
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
-
-    if (error) {
-      toast.error("Login failed: " + error.message);
-    } else {
+    const success = await signInWithEmail(email, password);
+    
+    if (success) {
       setIsAuthDialogOpen(false);
-      toast.success("Logged in successfully");
+      toast.success("Connecté avec succès");
     }
   };
 
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Signup initiated with:', { email, password });
-  
-    try {
-      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://house-haven-market.vercel.app';
-      console.log('Using API base URL:', API_BASE_URL);
-  
-      const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-  
-      console.log('Response status:', response.status);
-      
-      // Vérifiez d'abord le content-type avant de parser
-      const contentType = response.headers.get('content-type');
-      console.log('Content-Type:', contentType);
-  
-      if (!contentType || !contentType.includes('application/json')) {
-        const text = await response.text();
-        console.error('Non-JSON response:', text);
-        throw new Error(text || 'Invalid server response');
-      }
-  
-      const data = await response.json();
-      console.log('Response data:', data);
-  
-      if (!response.ok) {
-        console.error('Signup failed:', data);
-        throw new Error(data.message || 'Sign up failed');
-      }
-  
-      toast.success("Sign up successful! Please check your email to confirm your account.");
-      setAuthMode("login");
-    } catch (error) {
-      console.error('Signup error:', error);
-      toast.error(error instanceof Error ? error.message : "Sign up failed");
+    const success = await signUpWithEmail(email, password);
+    
+    if (success) {
+      setIsAuthDialogOpen(false);
     }
   };
 
@@ -136,41 +83,32 @@ const Sell = () => {
 
   const renderAuthStep = () => (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-center">Get Started</h2>
+      <h2 className="text-2xl font-bold text-center">Commencer</h2>
       <p className="text-center text-gray-600">
         {user 
-          ? "You're ready to list your property!"
-          : "Please sign in or create an account to list your property"}
+          ? "Vous êtes prêt à publier votre propriété!"
+          : "Veuillez vous connecter ou créer un compte pour publier votre propriété"}
       </p>
       
       {user ? (
         <div className="space-y-4">
-          <p className="text-center">Welcome, {user.email || "User"}!</p>
+          <p className="text-center">Bienvenue, {user.email || "Utilisateur"}!</p>
           <Button 
             className="w-full bg-teal-500 hover:bg-teal-600"
             onClick={() => setStep(2)}
           >
-            Continue to Property Details
+            Continuer vers les détails de la propriété
           </Button>
         </div>
       ) : (
         <div className="space-y-4">
-          <Button 
-            variant="outline" 
-            className="w-full flex gap-2"
-            onClick={handleGitHubLogin}
-          >
-            <Github size={18} />
-            Continue with GitHub
-          </Button>
-          
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background px-2 text-muted-foreground">
-                Or continue with email
+                Connectez-vous avec votre email
               </span>
             </div>
           </div>
@@ -183,7 +121,7 @@ const Sell = () => {
               setIsAuthDialogOpen(true);
             }}
           >
-            Sign In
+            Se connecter
           </Button>
           
           <Button 
@@ -194,7 +132,7 @@ const Sell = () => {
               setIsAuthDialogOpen(true);
             }}
           >
-            Create Account
+            Créer un compte
           </Button>
         </div>
       )}
@@ -208,10 +146,10 @@ const Sell = () => {
         <section className="relative py-16 bg-estate-800">
           <div className="container text-center text-white">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif mb-4">
-              Post Your Property Listing
+              Publiez votre annonce immobilière
             </h1>
             <p className="text-lg md:text-xl max-w-2xl mx-auto text-slate-200">
-              Fill out the information below to create your property listing
+              Remplissez les informations ci-dessous pour créer votre annonce immobilière
             </p>
           </div>
         </section>
@@ -280,80 +218,60 @@ const Sell = () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-estate-800">
-              {authMode === "login" ? "Sign In" : "Create an Account"}
+              {authMode === "login" ? "Connexion" : "Créer un compte"}
             </DialogTitle>
           </DialogHeader>
           
           <div className="space-y-4">
-            <Button 
-              variant="outline" 
-              className="w-full flex gap-2"
-              onClick={handleGitHubLogin}
-            >
-              <Github size={18} />
-              Continue with GitHub
-            </Button>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">
-                  Or {authMode === "login" ? "sign in" : "sign up"} with email
-                </span>
-              </div>
-            </div>
-
             <form onSubmit={authMode === "login" ? handleEmailLogin : handleEmailSignUp} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="Entrez votre email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">Mot de passe</Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="Entrez votre mot de passe"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
               <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600">
-                {authMode === "login" ? "Sign In" : "Sign Up"}
+                {authMode === "login" ? "Se connecter" : "S'inscrire"}
               </Button>
             </form>
 
             <div className="text-center text-sm">
               {authMode === "login" ? (
                 <>
-                  Don't have an account?{" "}
+                  Vous n'avez pas de compte ?{" "}
                   <button 
                     type="button" 
                     className="text-teal-600 hover:underline"
                     onClick={() => setAuthMode("signup")}
                   >
-                    Sign up
+                    Inscrivez-vous
                   </button>
                 </>
               ) : (
                 <>
-                  Already have an account?{" "}
+                  Vous avez déjà un compte ?{" "}
                   <button 
                     type="button" 
                     className="text-teal-600 hover:underline"
                     onClick={() => setAuthMode("login")}
                   >
-                    Sign in
+                    Connectez-vous
                   </button>
                 </>
               )}

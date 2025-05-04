@@ -1,5 +1,6 @@
+
 import { Link } from "react-router-dom";
-import { Menu, X, User, Search, Github } from "lucide-react";
+import { Menu, X, User, Search } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +13,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { initiateGitHubLogin, checkGitHubAuth, githubLogout } from "@/lib/auth/githubAuth";
+import { signInWithEmail, signUpWithEmail, signOut } from "@/lib/api/auth";
+import { supabase } from "@/lib/api/supabaseClient";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,105 +26,48 @@ const Navbar = () => {
   const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
-    const checkAuth = () => {
-      const token = localStorage.getItem('authToken');
-      const githubAuth = checkGitHubAuth();
-      const email = localStorage.getItem('userEmail') || '';
-      
-      setIsLoggedIn(!!token || githubAuth);
-      setUserEmail(email);
+    // Check auth state
+    const checkAuth = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setIsLoggedIn(!!user);
+      setUserEmail(user?.email || "");
     };
     
     checkAuth();
-    
-    window.addEventListener('storage', checkAuth);
-    return () => window.removeEventListener('storage', checkAuth);
-  }, []);
 
-  const handleGitHubLogin = async () => {
-    try {
-      await initiateGitHubLogin();
-    } catch (error) {
-      toast.error("GitHub login failed");
-      console.error(error);
-    }
-  };
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setIsLoggedIn(!!session?.user);
+      setUserEmail(session?.user?.email || "");
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) throw new Error('Login failed');
-
-      const data = await response.json();
-      localStorage.setItem('authToken', data.token);
-      localStorage.setItem('userEmail', data.email);
-      setIsLoggedIn(true);
-      setUserEmail(data.email);
+    const success = await signInWithEmail(email, password);
+    
+    if (success) {
       setIsAuthDialogOpen(false);
-      toast.success("Logged in successfully");
-    } catch (error) {
-      toast.error("Login failed");
-      console.error(error);
+      toast.success("Connecté avec succès");
     }
   };
 
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Signup initiated with:', { email, password });
-  
-    try {
-      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://house-haven-market.vercel.app';
-      console.log('Using API base URL:', API_BASE_URL);
-  
-      const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-  
-      console.log('Response status:', response.status);
-      
-      // Vérifiez d'abord le content-type avant de parser
-      const contentType = response.headers.get('content-type');
-      console.log('Content-Type:', contentType);
-  
-      if (!contentType || !contentType.includes('application/json')) {
-        const text = await response.text();
-        console.error('Non-JSON response:', text);
-        throw new Error(text || 'Invalid server response');
-      }
-  
-      const data = await response.json();
-      console.log('Response data:', data);
-  
-      if (!response.ok) {
-        console.error('Signup failed:', data);
-        throw new Error(data.message || 'Sign up failed');
-      }
-  
-      toast.success("Sign up successful! Please check your email to confirm your account.");
-      setAuthMode("login");
-    } catch (error) {
-      console.error('Signup error:', error);
-      toast.error(error instanceof Error ? error.message : "Sign up failed");
+    const success = await signUpWithEmail(email, password);
+    
+    if (success) {
+      setIsAuthDialogOpen(false);
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userEmail');
-    githubLogout();
-    setIsLoggedIn(false);
-    setUserEmail("");
-    toast.success("Logged out successfully");
+  const handleLogout = async () => {
+    const success = await signOut();
+    if (success) {
+      toast.success("Déconnecté avec succès");
+    }
   };
 
   return (
@@ -136,13 +81,13 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-8">
           <div className="flex gap-8">
             <Link to="/properties?type=sale" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
-              Buy
+              Acheter
             </Link>
             <Link to="/properties?type=rent" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
-              Rent
+              Louer
             </Link>
             <Link to="/sell" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
-              Sell
+              Vendre
             </Link>
             <Link to="/agents" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
               Agents
@@ -156,7 +101,7 @@ const Navbar = () => {
               <Button asChild variant="outline" className="flex gap-2">
                 <Link to="/account">
                   <User size={18} />
-                  <span>{userEmail || "My Account"}</span>
+                  <span>{userEmail || "Mon compte"}</span>
                 </Link>
               </Button>
               <Button 
@@ -164,7 +109,7 @@ const Navbar = () => {
                 className="text-red-500 border-red-500 hover:bg-red-50"
                 onClick={handleLogout}
               >
-                Logout
+                Déconnexion
               </Button>
             </>
           ) : (
@@ -177,7 +122,7 @@ const Navbar = () => {
                     onClick={() => setAuthMode("login")}
                   >
                     <User size={18} />
-                    <span>Sign In</span>
+                    <span>Connexion</span>
                   </Button>
                 </DialogTrigger>
                 <Button 
@@ -188,11 +133,11 @@ const Navbar = () => {
                     setAuthMode("signup");
                   }}
                 >
-                  Sign Up
+                  Inscription
                 </Button>
               </Dialog>
               <Button asChild className="bg-teal-500 hover:bg-teal-600">
-                <Link to="/sell">Get Started</Link>
+                <Link to="/sell">Commencer</Link>
               </Button>
             </>
           )}
@@ -216,21 +161,21 @@ const Navbar = () => {
               className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              Buy
+              Acheter
             </Link>
             <Link
               to="/properties?type=rent"
               className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              Rent
+              Louer
             </Link>
             <Link
               to="/sell"
               className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              Sell
+              Vendre
             </Link>
             <Link
               to="/agents"
@@ -246,7 +191,7 @@ const Navbar = () => {
                   <Button asChild variant="outline" className="flex gap-2 justify-center">
                     <Link to="/account" onClick={() => setIsMenuOpen(false)}>
                       <User size={18} />
-                      <span>{userEmail || "My Account"}</span>
+                      <span>{userEmail || "Mon compte"}</span>
                     </Link>
                   </Button>
                   <Button 
@@ -257,7 +202,7 @@ const Navbar = () => {
                       setIsMenuOpen(false);
                     }}
                   >
-                    Logout
+                    Déconnexion
                   </Button>
                 </>
               ) : (
@@ -272,7 +217,7 @@ const Navbar = () => {
                     }}
                   >
                     <User size={18} />
-                    <span>Sign In</span>
+                    <span>Connexion</span>
                   </Button>
                   <Button 
                     variant="ghost" 
@@ -283,10 +228,10 @@ const Navbar = () => {
                       setIsMenuOpen(false);
                     }}
                   >
-                    Sign Up
+                    Inscription
                   </Button>
                   <Button asChild className="bg-teal-500 hover:bg-teal-600">
-                    <Link to="/sell" onClick={() => setIsMenuOpen(false)}>Get Started</Link>
+                    <Link to="/sell" onClick={() => setIsMenuOpen(false)}>Commencer</Link>
                   </Button>
                 </>
               )}
@@ -300,80 +245,60 @@ const Navbar = () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-estate-800">
-              {authMode === "login" ? "Sign In" : "Create an Account"}
+              {authMode === "login" ? "Connexion" : "Créer un compte"}
             </DialogTitle>
           </DialogHeader>
           
           <div className="space-y-4">
-            <Button 
-              variant="outline" 
-              className="w-full flex gap-2"
-              onClick={handleGitHubLogin}
-            >
-              <Github size={18} />
-              Continue with GitHub
-            </Button>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">
-                  Or {authMode === "login" ? "sign in" : "sign up"} with email
-                </span>
-              </div>
-            </div>
-
             <form onSubmit={authMode === "login" ? handleEmailLogin : handleEmailSignUp} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="Entrez votre email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">Mot de passe</Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="Entrez votre mot de passe"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
               <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600">
-                {authMode === "login" ? "Sign In" : "Sign Up"}
+                {authMode === "login" ? "Se connecter" : "S'inscrire"}
               </Button>
             </form>
 
             <div className="text-center text-sm">
               {authMode === "login" ? (
                 <>
-                  Don't have an account?{" "}
+                  Vous n'avez pas de compte ?{" "}
                   <button 
                     type="button" 
                     className="text-teal-600 hover:underline"
                     onClick={() => setAuthMode("signup")}
                   >
-                    Sign up
+                    Inscrivez-vous
                   </button>
                 </>
               ) : (
                 <>
-                  Already have an account?{" "}
+                  Vous avez déjà un compte ?{" "}
                   <button 
                     type="button" 
                     className="text-teal-600 hover:underline"
                     onClick={() => setAuthMode("login")}
                   >
-                    Sign in
+                    Connectez-vous
                   </button>
                 </>
               )}
