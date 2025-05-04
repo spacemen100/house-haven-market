@@ -2,15 +2,12 @@
 import { Property } from "@/types/property";
 import { MapPin, Bed, Bath, Square, Calendar, Building, ArrowUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { useTranslation } from "react-i18next";
 
 interface PropertySpecsProps {
   property: Property;
 }
 
 const PropertySpecs = ({ property }: PropertySpecsProps) => {
-  const { t } = useTranslation();
-  
   return (
     <div className="mb-8">
       <div className="flex items-center text-estate-neutral-600 mb-4">
@@ -27,7 +24,7 @@ const PropertySpecs = ({ property }: PropertySpecsProps) => {
             <div className="flex flex-col items-center p-4 border rounded-lg">
               <Bed size={24} className="text-teal-500 mb-2" />
               <p className="text-lg font-semibold">{property.beds}</p>
-              <p className="text-estate-neutral-500">{t("bedrooms")}</p>
+              <p className="text-estate-neutral-500">Bedrooms</p>
             </div>
           )}
           
@@ -35,7 +32,7 @@ const PropertySpecs = ({ property }: PropertySpecsProps) => {
             <div className="flex flex-col items-center p-4 border rounded-lg">
               <Bath size={24} className="text-teal-500 mb-2" />
               <p className="text-lg font-semibold">{property.baths}</p>
-              <p className="text-estate-neutral-500">{t("bathrooms")}</p>
+              <p className="text-estate-neutral-500">Bathrooms</p>
             </div>
           )}
           
@@ -47,7 +44,7 @@ const PropertySpecs = ({ property }: PropertySpecsProps) => {
                 : `${property.sqft.toLocaleString()}`}
             </p>
             <p className="text-estate-neutral-500">
-              {property.propertyType === "land" ? t("lotSize") : t("squareFeet")}
+              {property.propertyType === "land" ? "Lot Size" : "Square Feet"}
             </p>
           </div>
           
@@ -55,7 +52,7 @@ const PropertySpecs = ({ property }: PropertySpecsProps) => {
             <div className="flex flex-col items-center p-4 border rounded-lg">
               <Calendar size={24} className="text-teal-500 mb-2" />
               <p className="text-lg font-semibold">{property.yearBuilt}</p>
-              <p className="text-estate-neutral-500">{t("yearBuilt")}</p>
+              <p className="text-estate-neutral-500">Year Built</p>
             </div>
           )}
         </div>
@@ -63,7 +60,7 @@ const PropertySpecs = ({ property }: PropertySpecsProps) => {
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           {property.condition && (
             <div className="p-4 border rounded-lg">
-              <h3 className="font-medium mb-2">{t("condition")}</h3>
+              <h3 className="font-medium mb-2">Condition</h3>
               <Badge variant="secondary">
                 {property.condition.replace('_', ' ').toUpperCase()}
               </Badge>
@@ -72,7 +69,7 @@ const PropertySpecs = ({ property }: PropertySpecsProps) => {
 
           {property.status && (
             <div className="p-4 border rounded-lg">
-              <h3 className="font-medium mb-2">{t("status")}</h3>
+              <h3 className="font-medium mb-2">Status</h3>
               <Badge variant="secondary">
                 {property.status.replace('_', ' ').toUpperCase()}
               </Badge>
@@ -81,7 +78,7 @@ const PropertySpecs = ({ property }: PropertySpecsProps) => {
 
           {property.kitchenType && (
             <div className="p-4 border rounded-lg">
-              <h3 className="font-medium mb-2">{t("kitchenType")}</h3>
+              <h3 className="font-medium mb-2">Kitchen Type</h3>
               <Badge variant="secondary">
                 {property.kitchenType.toUpperCase()}
               </Badge>
@@ -90,7 +87,7 @@ const PropertySpecs = ({ property }: PropertySpecsProps) => {
 
           {(property.floorLevel !== undefined || property.totalFloors !== undefined) && (
             <div className="p-4 border rounded-lg">
-              <h3 className="font-medium mb-2">{t("floorInformation")}</h3>
+              <h3 className="font-medium mb-2">Floor Information</h3>
               <div className="flex items-center gap-2">
                 <Building size={18} className="text-teal-500" />
                 <span>
@@ -103,7 +100,7 @@ const PropertySpecs = ({ property }: PropertySpecsProps) => {
 
           {property.ceilingHeight && (
             <div className="p-4 border rounded-lg">
-              <h3 className="font-medium mb-2">{t("ceilingHeight")}</h3>
+              <h3 className="font-medium mb-2">Ceiling Height</h3>
               <div className="flex items-center gap-2">
                 <ArrowUp size={18} className="text-teal-500" />
                 <span>{property.ceilingHeight}m</span>

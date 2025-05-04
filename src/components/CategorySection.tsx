@@ -2,44 +2,41 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Home, Building, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useTranslation } from "react-i18next";
+
+const categories = [
+  {
+    title: "Buy a Home",
+    description: "Find your place with an immersive photo experience and the most listings, including things you won't find anywhere else.",
+    icon: <Home size={24} className="text-teal-500" />,
+    link: "/properties?type=sale",
+    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=2946&ixlib=rb-4.0.3"
+  },
+  {
+    title: "Rent a Home",
+    description: "We're creating a seamless online experience – from shopping on the largest rental network, to applying, to paying rent.",
+    icon: <Building size={24} className="text-teal-500" />,
+    link: "/properties?type=rent",
+    image: "https://images.unsplash.com/photo-1594484208019-b7d33c577659?auto=format&fit=crop&q=80&w=2970&ixlib=rb-4.0.3"
+  },
+  {
+    title: "Sell Your Property",
+    description: "No matter what path you take to sell your home, we can help you navigate a successful sale.",
+    icon: <MapPin size={24} className="text-teal-500" />,
+    link: "/sell",
+    image: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&q=80&w=2960&ixlib=rb-4.0.3"
+  }
+];
 
 const CategorySection = () => {
-  const { t } = useTranslation();
-  
-  const categories = [
-    {
-      title: t("buyHome"),
-      description: t("buyHomeDesc"),
-      icon: <Home size={24} className="text-teal-500" />,
-      link: "/properties?type=sale",
-      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=2946&ixlib=rb-4.0.3"
-    },
-    {
-      title: t("rentHome"),
-      description: t("rentHomeDesc"),
-      icon: <Building size={24} className="text-teal-500" />,
-      link: "/properties?type=rent",
-      image: "https://images.unsplash.com/photo-1594484208019-b7d33c577659?auto=format&fit=crop&q=80&w=2970&ixlib=rb-4.0.3"
-    },
-    {
-      title: t("sellProperty"),
-      description: t("sellPropertyDesc"),
-      icon: <MapPin size={24} className="text-teal-500" />,
-      link: "/sell",
-      image: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&q=80&w=2960&ixlib=rb-4.0.3"
-    }
-  ];
-
   return (
     <section className="section bg-estate-neutral-50">
       <div className="container">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-estate-800 mb-4">
-            {t("howCanWeHelp")}
+            How Can We Help You?
           </h2>
           <p className="text-lg text-estate-neutral-700 max-w-3xl mx-auto">
-            {t("completeService")}
+            We provide a complete service for the sale, purchase, or rental of real estate.
           </p>
         </div>
 
@@ -64,7 +61,7 @@ const CategorySection = () => {
                 <p className="text-estate-neutral-600 mb-4">{category.description}</p>
                 <Link to={category.link}>
                   <Button variant="outline" className="flex items-center gap-2 border-estate-800 text-estate-800 hover:bg-estate-800 hover:text-white">
-                    <span>{t("learnMore")}</span>
+                    <span>Learn More</span>
                     <ArrowRight size={16} />
                   </Button>
                 </Link>

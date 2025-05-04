@@ -1,7 +1,8 @@
+
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Property, PropertyType, ListingType, PropertyStatus, PropertyCondition, KitchenType } from "@/types/property";
+import { Property } from "@/types/property";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PropertyHeader from "@/components/property/PropertyHeader";
@@ -60,7 +61,7 @@ const PropertyDetail = () => {
           supabase.from('property_online_services').select('service_name').eq('property_id', id)
         ]);
 
-        // Transform the data to match the Property type with proper type casting
+        // Transform the data to match the Property type
         const propertyObject: Property = {
           id: propertyData.id,
           title: propertyData.title,
@@ -79,17 +80,17 @@ const PropertyDetail = () => {
               lng: propertyData.lng || 0
             }
           },
-          propertyType: propertyData.property_type as PropertyType,
-          listingType: propertyData.listing_type as ListingType,
-          status: propertyData.status as PropertyStatus || 'free',
-          condition: propertyData.condition as PropertyCondition || 'good',
+          propertyType: propertyData.property_type,
+          listingType: propertyData.listing_type,
+          status: propertyData.status || 'free',
+          condition: propertyData.condition || 'good',
           plan: propertyData.plan,
           beds: propertyData.beds,
           baths: propertyData.baths,
           sqft: propertyData.sqft,
           rooms: propertyData.rooms || 0,
           terraceArea: propertyData.terrace_area || 0,
-          kitchenType: propertyData.kitchen_type as KitchenType || 'open',
+          kitchenType: propertyData.kitchen_type || 'open',
           ceilingHeight: propertyData.ceiling_height || 0,
           floorLevel: propertyData.floor_level || 0,
           totalFloors: propertyData.total_floors || 1,

@@ -3,13 +3,11 @@ import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useTranslation } from "react-i18next";
 
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [propertyType, setPropertyType] = useState("all");
   const navigate = useNavigate();
-  const { t } = useTranslation();
 
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
@@ -31,10 +29,10 @@ const Hero = () => {
       <div className="container relative z-10">
         <div className="text-center text-white max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            {t("findDreamHome")}
+            Find Your Dream Home
           </h1>
           <p className="text-lg md:text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-            {t("discoverProperty")}
+            Discover the perfect property from our extensive collection of homes, apartments, and land for sale and rent.
           </p>
 
           {/* Search Form */}
@@ -48,7 +46,7 @@ const Hero = () => {
                   />
                   <input
                     type="text"
-                    placeholder={t("searchLocation")}
+                    placeholder="Enter location, city, or neighborhood"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="input-search pl-10"
@@ -62,11 +60,11 @@ const Hero = () => {
                   onChange={(e) => setPropertyType(e.target.value)}
                   className="input-search"
                 >
-                  <option value="all">{t("allTypes")}</option>
-                  <option value="house">{t("houses")}</option>
-                  <option value="apartment">{t("apartments")}</option>
-                  <option value="land">{t("land")}</option>
-                  <option value="commercial">{t("commercial")}</option>
+                  <option value="all">All Types</option>
+                  <option value="house">Houses</option>
+                  <option value="apartment">Apartments</option>
+                  <option value="land">Land</option>
+                  <option value="commercial">Commercial</option>
                 </select>
               </div>
 
@@ -74,7 +72,7 @@ const Hero = () => {
                 type="submit"
                 className="bg-teal-500 hover:bg-teal-600 text-white px-8 py-3 rounded-md font-medium"
               >
-                {t("search")}
+                Search
               </Button>
             </form>
           </div>
@@ -83,19 +81,19 @@ const Hero = () => {
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
             <div>
               <p className="text-4xl font-bold">2.5K+</p>
-              <p className="text-estate-neutral-200">{t("properties")}</p>
+              <p className="text-estate-neutral-200">Properties</p>
             </div>
             <div>
               <p className="text-4xl font-bold">1.8K+</p>
-              <p className="text-estate-neutral-200">{t("happyCustomers")}</p>
+              <p className="text-estate-neutral-200">Happy Customers</p>
             </div>
             <div>
               <p className="text-4xl font-bold">100+</p>
-              <p className="text-estate-neutral-200">{t("awardsWon")}</p>
+              <p className="text-estate-neutral-200">Awards Won</p>
             </div>
             <div>
               <p className="text-4xl font-bold">50+</p>
-              <p className="text-estate-neutral-200">{t("cities")}</p>
+              <p className="text-estate-neutral-200">Cities</p>
             </div>
           </div>
         </div>

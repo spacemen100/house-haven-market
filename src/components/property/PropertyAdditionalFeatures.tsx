@@ -1,20 +1,17 @@
 
 import { Property } from "@/types/property";
 import { Check } from "lucide-react";
-import { useTranslation } from "react-i18next";
 
 interface PropertyAdditionalFeaturesProps {
   property: Property;
 }
 
 const PropertyAdditionalFeatures = ({ property }: PropertyAdditionalFeaturesProps) => {
-  const { t } = useTranslation();
-  
   const features = [
-    { label: t("elevator"), value: property.hasElevator },
-    { label: t("ventilation"), value: property.hasVentilation },
-    { label: t("airConditioning"), value: property.hasAirConditioning },
-    { label: t("accessible"), value: property.isAccessible },
+    { label: "Elevator", value: property.hasElevator },
+    { label: "Ventilation", value: property.hasVentilation },
+    { label: "Air Conditioning", value: property.hasAirConditioning },
+    { label: "Accessible", value: property.isAccessible },
   ].filter(feature => feature.value);
 
   const hasEquipment = property.equipment && property.equipment.length > 0;
@@ -29,12 +26,12 @@ const PropertyAdditionalFeatures = ({ property }: PropertyAdditionalFeaturesProp
 
   return (
     <div className="mb-8">
-      <h2 className="text-2xl font-semibold text-estate-800 mb-4">{t("additionalFeatures")}</h2>
+      <h2 className="text-2xl font-semibold text-estate-800 mb-4">Additional Features</h2>
       <div className="bg-white rounded-lg p-6 shadow-sm border border-estate-neutral-100">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {features.length > 0 && (
             <div>
-              <h3 className="font-medium mb-3">{t("generalFeatures")}</h3>
+              <h3 className="font-medium mb-3">General Features</h3>
               <div className="grid grid-cols-1 gap-2">
                 {features.map((feature, index) => (
                   <div key={index} className="flex items-center gap-2">
@@ -48,7 +45,7 @@ const PropertyAdditionalFeatures = ({ property }: PropertyAdditionalFeaturesProp
 
           {hasEquipment && (
             <div>
-              <h3 className="font-medium mb-3">{t("equipment")}</h3>
+              <h3 className="font-medium mb-3">Equipment</h3>
               <div className="grid grid-cols-1 gap-2">
                 {property.equipment?.map((item, index) => (
                   <div key={index} className="flex items-center gap-2">
@@ -62,7 +59,7 @@ const PropertyAdditionalFeatures = ({ property }: PropertyAdditionalFeaturesProp
 
           {hasInternetTV && (
             <div>
-              <h3 className="font-medium mb-3">{t("internetTV")}</h3>
+              <h3 className="font-medium mb-3">Internet & TV</h3>
               <div className="grid grid-cols-1 gap-2">
                 {property.internetTV?.map((item, index) => (
                   <div key={index} className="flex items-center gap-2">
@@ -76,7 +73,7 @@ const PropertyAdditionalFeatures = ({ property }: PropertyAdditionalFeaturesProp
 
           {hasSecurity && (
             <div>
-              <h3 className="font-medium mb-3">{t("security")}</h3>
+              <h3 className="font-medium mb-3">Security</h3>
               <div className="grid grid-cols-1 gap-2">
                 {property.security?.map((item, index) => (
                   <div key={index} className="flex items-center gap-2">
@@ -90,7 +87,7 @@ const PropertyAdditionalFeatures = ({ property }: PropertyAdditionalFeaturesProp
 
           {hasNearbyPlaces && (
             <div>
-              <h3 className="font-medium mb-3">{t("nearbyPlaces")}</h3>
+              <h3 className="font-medium mb-3">Nearby Places</h3>
               <div className="grid grid-cols-1 gap-2">
                 {property.nearbyPlaces?.map((place, index) => (
                   <div key={index} className="flex items-center gap-2">
