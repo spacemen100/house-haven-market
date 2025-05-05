@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Property } from "@/types/property";
@@ -6,20 +6,21 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PropertyHeader from "@/components/property/PropertyHeader";
 import PropertyGallery from "@/components/property/PropertyGallery";
-import PropertySpecs from "@/components/property/PropertySpecs";
-import PropertyFeatures from "@/components/property/PropertyFeatures";
-import PropertyAdditionalFeatures from "@/components/property/PropertyAdditionalFeatures";
-import { Loader2 } from "lucide-react";
+import { Loader2, MapPin, Ruler, Building, Home, Layers, Calendar, Key, Heart, Share2, Printer } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, User } from "lucide-react";
+
+// Chargement différé du composant de carte
+const PropertyMap = lazy(() => import("@/components/PropertyMap"));
 
 const PropertyDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [property, setProperty] = useState<Property | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     const fetchPropertyDetails = async () => {
@@ -63,7 +64,7 @@ const PropertyDetail = () => {
           supabase.from('property_online_services').select('service_name').eq('property_id', id)
         ]);
 
-        // Transform the data to match the Property type with all fields
+        // Transform the data to match the Property type
         const propertyObject: Property = {
           id: propertyData.id,
           title: propertyData.title,
@@ -193,12 +194,12 @@ const PropertyDetail = () => {
 
   if (isLoading) {
     return (
-      <div>
+      <div className="min-h-screen flex flex-col">
         <Navbar />
-        <div className="container py-24 flex justify-center items-center">
+        <div className="flex-grow flex items-center justify-center bg-gray-50">
           <div className="text-center">
-            <Loader2 className="h-12 w-12 animate-spin text-estate-800 mx-auto mb-4" />
-            <p className="text-lg text-estate-neutral-600">Loading property details...</p>
+            <Loader2 className="h-12 w-12 animate-spin text-cyan-600 mx-auto mb-4" />
+            <p className="text-lg text-gray-600">Loading property details...</p>
           </div>
         </div>
         <Footer />
@@ -208,18 +209,18 @@ const PropertyDetail = () => {
 
   if (!property) {
     return (
-      <div>
+      <div className="min-h-screen flex flex-col">
         <Navbar />
-        <div className="container py-24 flex justify-center items-center">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-estate-800 mb-4">Property not found</h2>
-            <p className="text-lg text-estate-neutral-600 mb-6">This property doesn't exist or has been removed.</p>
-            <button 
+        <div className="flex-grow flex items-center justify-center bg-gray-50">
+          <div className="text-center max-w-md p-6 bg-white rounded-xl shadow-sm">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Property not found</h2>
+            <p className="text-gray-600 mb-6">This property doesn't exist or has been removed.</p>
+            <Button 
               onClick={() => navigate('/properties')}
-              className="bg-estate-800 text-white px-6 py-3 rounded-lg hover:bg-estate-700 transition-colors"
+              className="bg-cyan-600 hover:bg-cyan-700"
             >
               Back to properties list
-            </button>
+            </Button>
           </div>
         </div>
         <Footer />
@@ -228,199 +229,302 @@ const PropertyDetail = () => {
   }
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col bg-gray-50">
       <Navbar />
       
-      <div className="container py-8">
-        <PropertyHeader property={property} />
-        
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <PropertyGallery property={property} />
-            
-            {/* Property Details Section */}
-            <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-              <h2 className="text-xl font-bold text-estate-800 mb-4">Property Details</h2>
+      <main className="flex-grow">
+        <div className="container py-8">
+          <div className="flex justify-between items-start mb-6">
+            <PropertyHeader property={property} />
+            <div className="flex gap-2">
+              <Button variant="outline" size="icon" onClick={() => setIsFavorite(!isFavorite)}>
+                <Heart className={`h-4 w-4 ${isFavorite ? 'fill-rose-500 text-rose-500' : ''}`} />
+              </Button>
+              <Button variant="outline" size="icon">
+                <Share2 className="h-4 w-4" />
+              </Button>
+              <Button variant="outline" size="icon">
+                <Printer className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-8">
+              <PropertyGallery property={property} />
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Basic Info */}
-                <div>
-                  <h3 className="font-semibold text-estate-800 mb-3">Basic Information</h3>
-                  <div className="space-y-2">
-                    <p><span className="font-medium">Reference:</span> {property.referenceNumber || 'N/A'}</p>
-                    <p><span className="font-medium">Type:</span> {property.propertyType}</p>
-                    <p><span className="font-medium">Status:</span> {property.status}</p>
-                    <p><span className="font-medium">Condition:</span> {property.condition}</p>
-                    <p><span className="font-medium">Year Built:</span> {property.yearBuilt || 'N/A'}</p>
-                    <p><span className="font-medium">Total Floors:</span> {property.totalFloors}</p>
-                    <p><span className="font-medium">Floor Level:</span> {property.floorLevel}</p>
+              <div className="bg-white rounded-xl shadow-sm p-6">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900">{formatCurrency(property.price)}</h3>
+                    {property.pricePerSqm && (
+                      <p className="text-gray-600">{formatCurrency(property.pricePerSqm)} per sqm</p>
+                    )}
+                  </div>
+                  <div className="flex gap-2">
+                    <Badge variant="secondary" className="bg-cyan-100 text-cyan-800">
+                      {property.listingType}
+                    </Badge>
+                    <Badge variant="secondary" className="bg-emerald-100 text-emerald-800">
+                      {property.status}
+                    </Badge>
                   </div>
                 </div>
-
-                {/* Dimensions */}
-                <div>
-                  <h3 className="font-semibold text-estate-800 mb-3">Dimensions</h3>
-                  <div className="space-y-2">
-                    <p><span className="font-medium">Total Area:</span> {property.sqft} sqft</p>
-                    <p><span className="font-medium">Price per sqm:</span> {property.pricePerSqm ? formatCurrency(property.pricePerSqm) : 'N/A'}</p>
-                    <p><span className="font-medium">Rooms:</span> {property.rooms}</p>
-                    <p><span className="font-medium">Bedrooms:</span> {property.beds}</p>
-                    <p><span className="font-medium">Bathrooms:</span> {property.baths}</p>
-                    <p><span className="font-medium">Terrace Area:</span> {property.terraceArea || '0'} sqft</p>
-                    <p><span className="font-medium">Ceiling Height:</span> {property.ceilingHeight || 'N/A'} m</p>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="flex items-center gap-2">
+                    <Home className="h-5 w-5 text-gray-400" />
+                    <div>
+                      <p className="text-sm text-gray-500">Type</p>
+                      <p className="font-medium">{property.propertyType}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Ruler className="h-5 w-5 text-gray-400" />
+                    <div>
+                      <p className="text-sm text-gray-500">Area</p>
+                      <p className="font-medium">{property.sqft} sqft</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Key className="h-5 w-5 text-gray-400" />
+                    <div>
+                      <p className="text-sm text-gray-500">Rooms</p>
+                      <p className="font-medium">{property.rooms}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Calendar className="h-5 w-5 text-gray-400" />
+                    <div>
+                      <p className="text-sm text-gray-500">Year Built</p>
+                      <p className="font-medium">{property.yearBuilt || 'N/A'}</p>
+                    </div>
                   </div>
                 </div>
-
-                {/* Building Features */}
-                <div>
-                  <h3 className="font-semibold text-estate-800 mb-3">Building Features</h3>
-                  <div className="space-y-2">
-                    <p><span className="font-medium">Building Material:</span> {property.buildingMaterial || 'N/A'}</p>
-                    <p><span className="font-medium">Kitchen Type:</span> {property.kitchenType}</p>
-                    <p><span className="font-medium">Furniture Type:</span> {property.furnitureType || 'N/A'}</p>
-                    <p><span className="font-medium">Heating:</span> {property.heatingType || 'N/A'}</p>
-                    <p><span className="font-medium">Hot Water:</span> {property.hotWaterType || 'N/A'}</p>
-                    <p><span className="font-medium">Parking:</span> {property.parkingType || 'N/A'}</p>
-                    <p><span className="font-medium">Storeroom:</span> {property.storeroomType || 'N/A'}</p>
-                  </div>
+              </div>
+              
+              {property.description && (
+                <div className="bg-white rounded-xl shadow-sm p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Description</h3>
+                  <p className="text-gray-700 whitespace-pre-line">{property.description}</p>
                 </div>
-
-                {/* Amenities */}
-                <div>
-                  <h3 className="font-semibold text-estate-800 mb-3">Amenities</h3>
+              )}
+              
+              <div className="bg-white rounded-xl shadow-sm p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Key Features</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {property.hasElevator && <FeatureBadge icon="🚪" text="Elevator" />}
+                  {property.hasAirConditioning && <FeatureBadge icon="❄️" text="Air Conditioning" />}
+                  {property.hasInternet && <FeatureBadge icon="🌐" text="High-speed Internet" />}
+                  {property.parkingType && <FeatureBadge icon="🚗" text={`Parking: ${property.parkingType}`} />}
+                  {property.hasFireplace && <FeatureBadge icon="🔥" text="Fireplace" />}
+                  {property.isAccessible && <FeatureBadge icon="♿" text="Wheelchair Accessible" />}
+                  {property.hasLoggia && <FeatureBadge icon="🌿" text="Loggia" />}
+                  {property.hasAlarm && <FeatureBadge icon="🚨" text="Security Alarm" />}
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-xl shadow-sm p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Detailed Specifications</h3>
+                <div className="space-y-6">
+                  <SpecSection 
+                    icon={<Building className="h-5 w-5 text-cyan-600" />} 
+                    title="Building Details"
+                    items={[
+                      { label: "Building Material", value: property.buildingMaterial || 'N/A' },
+                      { label: "Total Floors", value: property.totalFloors },
+                      { label: "Floor Level", value: property.floorLevel },
+                      { label: "Condition", value: property.condition },
+                    ]}
+                  />
+                  
+                  <SpecSection 
+                    icon={<Home className="h-5 w-5 text-cyan-600" />} 
+                    title="Interior Details"
+                    items={[
+                      { label: "Bedrooms", value: property.beds },
+                      { label: "Bathrooms", value: property.baths },
+                      { label: "Kitchen Type", value: property.kitchenType },
+                      { label: "Furniture", value: property.furnitureType || 'N/A' },
+                    ]}
+                  />
+                  
+                  <SpecSection 
+                    icon={<Layers className="h-5 w-5 text-cyan-600" />} 
+                    title="Utilities"
+                    items={[
+                      { label: "Heating", value: property.heatingType || 'N/A' },
+                      { label: "Hot Water", value: property.hotWaterType || 'N/A' },
+                      { label: "Internet", value: property.hasInternet ? "Yes" : "No" },
+                      { label: "Cable TV", value: property.hasCableTV ? "Yes" : "No" },
+                    ]}
+                  />
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-xl shadow-sm p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  <MapPin className="h-5 w-5 text-cyan-600" />
+                  Location
+                </h3>
+                <div className="space-y-3">
+                  <p className="text-gray-700">
+                    {property.address.street}, {property.address.city}, {property.address.zip}
+                  </p>
+                  
+                  <Suspense fallback={
+                    <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                      <div className="text-center">
+                        <MapPin className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                        <p className="text-gray-500">Loading map...</p>
+                      </div>
+                    </div>
+                  }>
+                    {property.address.coordinates?.lat && property.address.coordinates?.lng ? (
+                      <PropertyMap 
+                        lat={property.address.coordinates.lat} 
+                        lng={property.address.coordinates.lng}
+                        address={`${property.address.street}, ${property.address.city}`}
+                      />
+                    ) : (
+                      <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <div className="text-center">
+                          <MapPin className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                          <p className="text-gray-500">Location map not available</p>
+                        </div>
+                      </div>
+                    )}
+                  </Suspense>
+                  
+                  <h4 className="font-medium text-gray-900 mt-4">Nearby Places</h4>
                   <div className="flex flex-wrap gap-2">
-                    {property.hasElevator && <Badge variant="outline">Elevator</Badge>}
-                    {property.hasVentilation && <Badge variant="outline">Ventilation</Badge>}
-                    {property.hasAirConditioning && <Badge variant="outline">Air Conditioning</Badge>}
-                    {property.isAccessible && <Badge variant="outline">Accessible</Badge>}
-                    {property.hasLoggia && <Badge variant="outline">Loggia</Badge>}
-                    {property.hasFireplace && <Badge variant="outline">Fireplace</Badge>}
-                    {property.amenities?.map((amenity, index) => (
-                      <Badge key={index} variant="outline">{amenity}</Badge>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Equipment */}
-                <div>
-                  <h3 className="font-semibold text-estate-800 mb-3">Equipment</h3>
-                  <div className="grid grid-cols-2 gap-2">
-                    {property.hasInternet && <Badge variant="outline">Internet</Badge>}
-                    {property.hasCableTV && <Badge variant="outline">Cable TV</Badge>}
-                    {property.hasDishwasher && <Badge variant="outline">Dishwasher</Badge>}
-                    {property.hasWashingMachine && <Badge variant="outline">Washing Machine</Badge>}
-                    {property.hasTV && <Badge variant="outline">TV</Badge>}
-                    {property.hasRefrigerator && <Badge variant="outline">Refrigerator</Badge>}
-                    {property.equipment?.map((item, index) => (
-                      <Badge key={index} variant="outline">{item}</Badge>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Security */}
-                <div>
-                  <h3 className="font-semibold text-estate-800 mb-3">Security</h3>
-                  <div className="grid grid-cols-2 gap-2">
-                    {property.hasAlarm && <Badge variant="outline">Alarm</Badge>}
-                    {property.hasPerimeterCameras && <Badge variant="outline">Cameras</Badge>}
-                    {property.hasFireFightingSystem && <Badge variant="outline">Fire System</Badge>}
-                    {property.hasSmokeDetector && <Badge variant="outline">Smoke Detector</Badge>}
-                    {property.hasCoDetector && <Badge variant="outline">CO Detector</Badge>}
-                    {property.security?.map((feature, index) => (
-                      <Badge key={index} variant="outline">{feature}</Badge>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Nearby Places */}
-                <div>
-                  <h3 className="font-semibold text-estate-800 mb-3">Nearby Places</h3>
-                  <div className="grid grid-cols-2 gap-2">
-                    {property.nearBusStop && <Badge variant="outline">Bus Stop</Badge>}
-                    {property.nearSubway && <Badge variant="outline">Subway</Badge>}
-                    {property.nearSupermarket && <Badge variant="outline">Supermarket</Badge>}
-                    {property.nearSchool && <Badge variant="outline">School</Badge>}
-                    {property.nearPark && <Badge variant="outline">Park</Badge>}
+                    {property.nearBusStop && <Badge variant="outline">🚌 Bus Stop</Badge>}
+                    {property.nearSubway && <Badge variant="outline">🚇 Subway</Badge>}
+                    {property.nearSupermarket && <Badge variant="outline">🛒 Supermarket</Badge>}
+                    {property.nearPark && <Badge variant="outline">🌳 Park</Badge>}
+                    {property.nearSchool && <Badge variant="outline">🏫 School</Badge>}
                     {property.nearbyPlaces?.map((place, index) => (
                       <Badge key={index} variant="outline">{place}</Badge>
                     ))}
                   </div>
                 </div>
-
-                {/* Rules */}
-                <div>
-                  <h3 className="font-semibold text-estate-800 mb-3">Property Rules</h3>
-                  <div className="space-y-2">
-                    <p><span className="font-medium">Pets:</span> {property.allowsPets ? 'Allowed' : 'Not allowed'}</p>
-                    <p><span className="font-medium">Parties:</span> {property.allowsParties ? 'Allowed' : 'Not allowed'}</p>
-                    <p><span className="font-medium">Smoking:</span> {property.allowsSmoking ? 'Allowed' : 'Not allowed'}</p>
-                  </div>
-                </div>
               </div>
             </div>
-
-            <PropertySpecs property={property} />
-            <PropertyFeatures property={property} />
-            <PropertyAdditionalFeatures property={property} />
-          </div>
-          
-          <div>
-            {/* Agent Contact Section - Combined from AgentContact component */}
-            <div className="bg-white rounded-lg p-6 shadow border border-estate-neutral-100 mb-6">
-              <Button className="w-full bg-teal-500 hover:bg-teal-600">
-                Schedule a Tour
-              </Button>
-              <Button variant="outline" className="w-full mt-3">
-                Request Info
-              </Button>
-            </div>
             
-            {property.agentName && (
-              <div className="bg-white rounded-lg p-6 shadow border border-estate-neutral-100">
-                <h3 className="text-xl font-semibold text-estate-800 mb-4">
-                  Listed by
-                </h3>
+            <div className="space-y-6">
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Contact Agent</h3>
                 
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-16 h-16 bg-estate-neutral-200 rounded-full flex items-center justify-center text-estate-neutral-500">
-                    <User size={32} />
-                  </div>
-                  <div>
-                    <p className="font-medium text-lg">{property.agentName}</p>
-                    <p className="text-estate-neutral-500">Real Estate Agent</p>
-                  </div>
-                </div>
-                
-                {property.agentPhone && (
-                  <div className="flex items-center gap-3 mb-3">
-                    <Phone size={18} className="text-teal-500" />
-                    <a 
-                      href={`tel:${property.agentPhone}`} 
-                      className="text-estate-neutral-700 hover:text-estate-800"
-                    >
-                      {property.agentPhone}
-                    </a>
+                {property.agentName && (
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center text-cyan-600">
+                      <User size={32} />
+                    </div>
+                    <div>
+                      <p className="font-medium text-lg">{property.agentName}</p>
+                      <p className="text-gray-500">Real Estate Agent</p>
+                    </div>
                   </div>
                 )}
                 
-                <div className="flex items-center gap-3">
-                  <Mail size={18} className="text-teal-500" />
-                  <a 
-                    href="mailto:agent@househaven.com" 
-                    className="text-estate-neutral-700 hover:text-estate-800"
-                  >
-                    agent@househaven.com
-                  </a>
+                <Button className="w-full bg-cyan-600 hover:bg-cyan-700 mb-3">
+                  <Phone className="h-4 w-4 mr-2" />
+                  Call Agent
+                </Button>
+                
+                <Button variant="outline" className="w-full mb-6">
+                  <Mail className="h-4 w-4 mr-2" />
+                  Email Agent
+                </Button>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <Phone className="h-4 w-4 text-cyan-600" />
+                    <a 
+                      href={`tel:${property.agentPhone || property.phoneNumber}`} 
+                      className="text-gray-700 hover:text-cyan-600"
+                    >
+                      {property.agentPhone || property.phoneNumber}
+                    </a>
+                  </div>
+                  
+                  <div className="flex items-center gap-3">
+                    <Mail className="h-4 w-4 text-cyan-600" />
+                    <a 
+                      href={`mailto:${property.contactEmail || 'contact@example.com'}`} 
+                      className="text-gray-700 hover:text-cyan-600"
+                    >
+                      {property.contactEmail || 'contact@example.com'}
+                    </a>
+                  </div>
                 </div>
               </div>
-            )}
+              
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Schedule a Tour</h3>
+                <p className="text-gray-600 mb-4">Arrange a viewing at your convenience</p>
+                <Button className="w-full bg-emerald-600 hover:bg-emerald-700">
+                  Book Viewing
+                </Button>
+              </div>
+              
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Property Facts</h3>
+                <div className="space-y-4">
+                  <FactItem label="Reference #" value={property.referenceNumber || 'N/A'} />
+                  <FactItem label="Cadastral Code" value={property.cadastralCode || 'N/A'} />
+                  <FactItem label="Listed on" value={new Date(property.createdAt).toLocaleDateString()} />
+                  <FactItem label="Property ID" value={property.id} />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </main>
       
       <Footer />
     </div>
   );
 };
+
+// Helper components
+const FeatureBadge = ({ icon, text }: { icon: string; text: string }) => (
+  <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+    <span className="text-lg">{icon}</span>
+    <span className="font-medium text-gray-700">{text}</span>
+  </div>
+);
+
+const SpecSection = ({ 
+  icon, 
+  title, 
+  items 
+}: { 
+  icon: React.ReactNode;
+  title: string;
+  items: { label: string; value: string | number }[];
+}) => (
+  <div>
+    <div className="flex items-center gap-2 mb-3">
+      {icon}
+      <h4 className="font-medium text-gray-900">{title}</h4>
+    </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {items.map((item, index) => (
+        <div key={index} className="flex justify-between border-b border-gray-100 pb-2">
+          <span className="text-gray-500">{item.label}</span>
+          <span className="font-medium text-gray-700">{item.value}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const FactItem = ({ label, value }: { label: string; value: string | number }) => (
+  <div className="flex justify-between">
+    <span className="text-gray-500">{label}</span>
+    <span className="font-medium text-gray-700">{value}</span>
+  </div>
+);
 
 export default PropertyDetail;
