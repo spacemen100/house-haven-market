@@ -17,7 +17,7 @@ const Properties = () => {
   const queryParams = new URLSearchParams(location.search);
   const initialListingType = (queryParams.get("type") as ListingType) || "sale";
   const initialSearch = queryParams.get("search") || "";
-  
+
   // State for basic filters
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [listingType, setListingType] = useState<ListingType>(initialListingType);
@@ -30,7 +30,9 @@ const Properties = () => {
   const [maxSqft, setMaxSqft] = useState(10000);
   const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  
+  const [minPriceInput, setMinPriceInput] = useState(minPrice.toString());
+  const [maxPriceInput, setMaxPriceInput] = useState(maxPrice.toString());
+
   // State for advanced filters
   const [features, setFeatures] = useState({
     hasElevator: false,
@@ -50,7 +52,7 @@ const Properties = () => {
     hasDishwasher: false,
     hasWashingMachine: false,
   });
-  
+
   const [condition, setCondition] = useState<string[]>([]);
   const [furnitureType, setFurnitureType] = useState<string[]>([]);
   const [heatingType, setHeatingType] = useState<string[]>([]);
@@ -64,14 +66,51 @@ const Properties = () => {
     queryFn: () => getPropertiesByType(listingType),
   });
 
+  // Synchronise les valeurs du slider avec les inputs texte
+  useEffect(() => {
+    setMinPriceInput(minPrice.toString());
+    setMaxPriceInput(maxPrice.toString());
+  }, [minPrice, maxPrice]);
+
+  // Gestion des changements dans les inputs texte
+  const handleMinPriceInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setMinPriceInput(value);
+    if (value) {
+      const numValue = parseInt(value);
+      if (!isNaN(numValue)) {  
+        setMinPrice(Math.min(numValue, maxPrice));
+      }
+    }
+  };
+
+  const handleMaxPriceInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setMaxPriceInput(value);
+    if (value) {
+      const numValue = parseInt(value);
+      if (!isNaN(numValue)) {
+        setMaxPrice(Math.max(numValue, minPrice));
+      }
+    }
+  };
+
+  // Validation lorsque l'input perd le focus
+  const handlePriceBlur = () => {
+    const min = parseInt(minPriceInput) || 0;
+    const max = parseInt(maxPriceInput) || 5000000;
+    setMinPrice(Math.min(min, max));
+    setMaxPrice(Math.max(min, max));
+  };
+
   // Apply all filters
   useEffect(() => {
     let filtered = [...properties];
-    
+
     // Search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(property => 
+      filtered = filtered.filter(property =>
         property.title.toLowerCase().includes(query) ||
         property.address_street.toLowerCase().includes(query) ||
         property.address_city.toLowerCase().includes(query) ||
@@ -79,34 +118,34 @@ const Properties = () => {
         property.address_zip.toLowerCase().includes(query)
       );
     }
-    
+
     // Property type filter
     if (propertyTypes.length > 0) {
-      filtered = filtered.filter(property => 
+      filtered = filtered.filter(property =>
         propertyTypes.includes(property.property_type)
       );
     }
-    
+
     // Price filter
-    filtered = filtered.filter(property => 
+    filtered = filtered.filter(property =>
       property.price >= minPrice && property.price <= maxPrice
     );
-    
+
     // Bedrooms filter
     if (minBeds > 0) {
       filtered = filtered.filter(property => property.beds >= minBeds);
     }
-    
+
     // Bathrooms filter
     if (minBaths > 0) {
       filtered = filtered.filter(property => property.baths >= minBaths);
     }
-    
+
     // Square footage filter
-    filtered = filtered.filter(property => 
+    filtered = filtered.filter(property =>
       property.sqft >= minSqft && property.sqft <= maxSqft
     );
-    
+
     // Features filters
     if (features.hasElevator) {
       filtered = filtered.filter(property => property.has_elevator);
@@ -156,55 +195,55 @@ const Properties = () => {
     if (features.hasWashingMachine) {
       filtered = filtered.filter(property => property.has_washing_machine);
     }
-    
+
     // Condition filter
     if (condition.length > 0) {
       filtered = filtered.filter(property => condition.includes(property.condition));
     }
-    
+
     // Furniture type filter
     if (furnitureType.length > 0) {
-      filtered = filtered.filter(property => 
+      filtered = filtered.filter(property =>
         property.furniture_type && furnitureType.includes(property.furniture_type)
       );
     }
-    
+
     // Heating type filter
     if (heatingType.length > 0) {
-      filtered = filtered.filter(property => 
+      filtered = filtered.filter(property =>
         property.heating_type && heatingType.includes(property.heating_type)
       );
     }
-    
+
     // Parking type filter
     if (parkingType.length > 0) {
-      filtered = filtered.filter(property => 
+      filtered = filtered.filter(property =>
         property.parking_type && parkingType.includes(property.parking_type)
       );
     }
-    
+
     // Building material filter
     if (buildingMaterial.length > 0) {
-      filtered = filtered.filter(property => 
+      filtered = filtered.filter(property =>
         property.building_material && buildingMaterial.includes(property.building_material)
       );
     }
-    
+
     // Kitchen type filter
     if (kitchenType.length > 0) {
-      filtered = filtered.filter(property => 
+      filtered = filtered.filter(property =>
         property.kitchen_type && kitchenType.includes(property.kitchen_type)
       );
     }
-    
+
     setFilteredProperties(filtered);
   }, [
-    searchQuery, listingType, propertyTypes, minPrice, maxPrice, 
+    searchQuery, listingType, propertyTypes, minPrice, maxPrice,
     minBeds, minBaths, minSqft, maxSqft, features, condition,
-    furnitureType, heatingType, parkingType, buildingMaterial, 
+    furnitureType, heatingType, parkingType, buildingMaterial,
     kitchenType, properties
   ]);
-  
+
   // Update URL when listing type or search changes
   useEffect(() => {
     const params = new URLSearchParams();
@@ -214,28 +253,28 @@ const Properties = () => {
     }
     navigate(`/properties?${params.toString()}`, { replace: true });
   }, [listingType, searchQuery, navigate]);
-  
+
   // Handler functions
   const handlePropertyTypeChange = (type: PropertyType) => {
-    setPropertyTypes(prev => 
+    setPropertyTypes(prev =>
       prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
     );
   };
-  
+
   const handleFeatureChange = (feature: keyof typeof features) => {
     setFeatures(prev => ({ ...prev, [feature]: !prev[feature] }));
   };
-  
+
   const handleMultiSelectChange = (
-    value: string, 
-    state: string[], 
+    value: string,
+    state: string[],
     setState: React.Dispatch<React.SetStateAction<string[]>>
   ) => {
-    setState(prev => 
+    setState(prev =>
       prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]
     );
   };
-  
+
   const handleClearFilters = () => {
     setPropertyTypes([]);
     setMinPrice(0);
@@ -277,40 +316,40 @@ const Properties = () => {
     { id: "land", label: "Land" },
     { id: "commercial", label: "Commercial" },
   ];
-  
+
   const conditionOptions = [
     { id: "new", label: "New" },
     { id: "good", label: "Good" },
     { id: "needs_renovation", label: "Needs Renovation" },
   ];
-  
+
   const furnitureOptions = [
     { id: "furnished", label: "Furnished" },
     { id: "partially_furnished", label: "Partially Furnished" },
     { id: "unfurnished", label: "Unfurnished" },
   ];
-  
+
   const heatingOptions = [
     { id: "central", label: "Central" },
     { id: "electric", label: "Electric" },
     { id: "gas", label: "Gas" },
     { id: "wood", label: "Wood" },
   ];
-  
+
   const parkingOptions = [
     { id: "garage", label: "Garage" },
     { id: "underground", label: "Underground" },
     { id: "street", label: "Street" },
     { id: "carport", label: "Carport" },
   ];
-  
+
   const buildingMaterialOptions = [
     { id: "brick", label: "Brick" },
     { id: "concrete", label: "Concrete" },
     { id: "wood", label: "Wood" },
     { id: "steel", label: "Steel" },
   ];
-  
+
   const kitchenTypeOptions = [
     { id: "open", label: "Open" },
     { id: "closed", label: "Closed" },
@@ -328,8 +367,8 @@ const Properties = () => {
             checked={propertyTypes.includes(option.id as PropertyType)}
             onCheckedChange={() => handlePropertyTypeChange(option.id as PropertyType)}
           />
-          <label 
-            htmlFor={`${prefix}${option.id}`} 
+          <label
+            htmlFor={`${prefix}${option.id}`}
             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             {option.label}
@@ -348,8 +387,8 @@ const Properties = () => {
             checked={condition.includes(option.id)}
             onCheckedChange={() => handleMultiSelectChange(option.id, condition, setCondition)}
           />
-          <label 
-            htmlFor={`${prefix}${option.id}`} 
+          <label
+            htmlFor={`${prefix}${option.id}`}
             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             {option.label}
@@ -506,8 +545,8 @@ const Properties = () => {
               checked={selected.includes(option.id)}
               onCheckedChange={() => handleMultiSelectChange(option.id, selected, setSelected)}
             />
-            <label 
-              htmlFor={`${prefix}${option.id}`} 
+            <label
+              htmlFor={`${prefix}${option.id}`}
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               {option.label}
@@ -524,29 +563,29 @@ const Properties = () => {
       <div className="absolute right-0 top-0 bottom-0 w-full max-w-sm bg-white p-6 overflow-y-auto animate-slide-up">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold">Filters</h2>
-          <Button 
-            variant="ghost" 
-            size="icon" 
+          <Button
+            variant="ghost"
+            size="icon"
             className="text-estate-neutral-500"
             onClick={() => setIsFilterOpen(false)}
           >
             <X size={24} />
           </Button>
         </div>
-        
+
         <div className="space-y-6">
           {/* Listing Type */}
           <div className="space-y-3">
             <h3 className="font-medium">Listing Type</h3>
             <div className="flex gap-3">
-              <Button 
+              <Button
                 variant={listingType === "sale" ? "default" : "outline"}
                 className={listingType === "sale" ? "bg-teal-500 hover:bg-teal-600" : ""}
                 onClick={() => setListingType("sale")}
               >
                 For Sale
               </Button>
-              <Button 
+              <Button
                 variant={listingType === "rent" ? "default" : "outline"}
                 className={listingType === "rent" ? "bg-teal-500 hover:bg-teal-600" : ""}
                 onClick={() => setListingType("rent")}
@@ -555,19 +594,19 @@ const Properties = () => {
               </Button>
             </div>
           </div>
-          
+
           {/* Property Type */}
           <div className="space-y-3">
             <h3 className="font-medium">Property Type</h3>
             {renderPropertyTypeFilter("mobile-")}
           </div>
-          
+
           {/* Price Range */}
           <div className="space-y-3">
-            <h3 className="font-medium">Price Range</h3>
+            <h4 className="font-medium">Price Range</h4>
             <div className="px-2">
-              <Slider 
-                defaultValue={[minPrice, maxPrice]}
+              <Slider
+                value={[minPrice, maxPrice]}
                 max={5000000}
                 step={100000}
                 onValueChange={(values) => {
@@ -576,17 +615,36 @@ const Properties = () => {
                 }}
               />
             </div>
-            <div className="flex justify-between text-sm mt-2">
-              <span>${(minPrice/1000).toLocaleString()}k</span>
-              <span>${(maxPrice/1000).toLocaleString()}k</span>
+            <div className="flex justify-between gap-2 mt-2">
+              <div className="flex items-center gap-1">
+                <span className="text-sm">$</span>
+                <input
+                  type="text"
+                  value={minPriceInput}
+                  onChange={handleMinPriceInputChange}
+                  onBlur={handlePriceBlur}
+                  className="w-20 border rounded px-2 py-1 text-sm"
+                />
+              </div>
+              <span className="text-sm">to</span>
+              <div className="flex items-center gap-1">
+                <span className="text-sm">$</span>
+                <input
+                  type="text"
+                  value={maxPriceInput}
+                  onChange={handleMaxPriceInputChange}
+                  onBlur={handlePriceBlur}
+                  className="w-20 border rounded px-2 py-1 text-sm"
+                />
+              </div>
             </div>
           </div>
-          
+
           {/* Square Footage */}
           <div className="space-y-3">
             <h3 className="font-medium">Square Footage</h3>
             <div className="px-2">
-              <Slider 
+              <Slider
                 defaultValue={[minSqft, maxSqft]}
                 max={10000}
                 step={100}
@@ -601,13 +659,13 @@ const Properties = () => {
               <span>{maxSqft.toLocaleString()} sqft</span>
             </div>
           </div>
-          
+
           {/* Bedrooms */}
           <div className="space-y-3">
             <h3 className="font-medium">Bedrooms</h3>
             <div className="flex flex-wrap gap-2">
               {[0, 1, 2, 3, 4].map(num => (
-                <Button 
+                <Button
                   key={`mobile-beds-${num}`}
                   variant={minBeds === num ? "default" : "outline"}
                   className={minBeds === num ? "bg-teal-500 hover:bg-teal-600" : ""}
@@ -619,13 +677,13 @@ const Properties = () => {
               ))}
             </div>
           </div>
-          
+
           {/* Bathrooms */}
           <div className="space-y-3">
             <h3 className="font-medium">Bathrooms</h3>
             <div className="flex flex-wrap gap-2">
               {[0, 1, 2, 3].map(num => (
-                <Button 
+                <Button
                   key={`mobile-baths-${num}`}
                   variant={minBaths === num ? "default" : "outline"}
                   className={minBaths === num ? "bg-teal-500 hover:bg-teal-600" : ""}
@@ -637,25 +695,25 @@ const Properties = () => {
               ))}
             </div>
           </div>
-          
+
           {/* Property Condition */}
           <div className="space-y-3">
             <h3 className="font-medium">Property Condition</h3>
             {renderConditionFilter("mobile-")}
           </div>
-          
+
           {/* Features */}
           <div className="space-y-3">
             <h3 className="font-medium">Features</h3>
             {renderFeaturesFilter("mobile-")}
           </div>
-          
+
           {/* Nearby */}
           <div className="space-y-3">
             <h3 className="font-medium">Nearby</h3>
             {renderNearbyFilter("mobile-")}
           </div>
-          
+
           {/* Furniture Type */}
           {renderMultiSelectFilter(
             furnitureOptions,
@@ -664,7 +722,7 @@ const Properties = () => {
             "Furniture Type",
             "mobile-"
           )}
-          
+
           {/* Heating Type */}
           {renderMultiSelectFilter(
             heatingOptions,
@@ -673,7 +731,7 @@ const Properties = () => {
             "Heating Type",
             "mobile-"
           )}
-          
+
           {/* Parking Type */}
           {renderMultiSelectFilter(
             parkingOptions,
@@ -682,7 +740,7 @@ const Properties = () => {
             "Parking Type",
             "mobile-"
           )}
-          
+
           {/* Building Material */}
           {renderMultiSelectFilter(
             buildingMaterialOptions,
@@ -691,7 +749,7 @@ const Properties = () => {
             "Building Material",
             "mobile-"
           )}
-          
+
           {/* Kitchen Type */}
           {renderMultiSelectFilter(
             kitchenTypeOptions,
@@ -700,17 +758,17 @@ const Properties = () => {
             "Kitchen Type",
             "mobile-"
           )}
-          
+
           {/* Action Buttons */}
           <div className="flex gap-3 pt-4">
-            <Button 
+            <Button
               variant="outline"
               className="flex-1"
               onClick={handleClearFilters}
             >
               Clear All
             </Button>
-            <Button 
+            <Button
               className="flex-1 bg-teal-500 hover:bg-teal-600"
               onClick={() => setIsFilterOpen(false)}
             >
@@ -729,19 +787,19 @@ const Properties = () => {
         <Filter size={20} />
         <span>Filters</span>
       </h3>
-      
+
       {/* Listing Type */}
       <div className="space-y-3">
         <h4 className="font-medium">Listing Type</h4>
         <div className="flex gap-3">
-          <Button 
+          <Button
             variant={listingType === "sale" ? "default" : "outline"}
             className={listingType === "sale" ? "bg-teal-500 hover:bg-teal-600" : ""}
             onClick={() => setListingType("sale")}
           >
             For Sale
           </Button>
-          <Button 
+          <Button
             variant={listingType === "rent" ? "default" : "outline"}
             className={listingType === "rent" ? "bg-teal-500 hover:bg-teal-600" : ""}
             onClick={() => setListingType("rent")}
@@ -750,23 +808,23 @@ const Properties = () => {
           </Button>
         </div>
       </div>
-      
+
       <hr />
-      
+
       {/* Property Type */}
       <div className="space-y-3">
         <h4 className="font-medium">Property Type</h4>
         {renderPropertyTypeFilter()}
       </div>
-      
+
       <hr />
-      
+
       {/* Price Range */}
       <div className="space-y-3">
-        <h4 className="font-medium">Price Range</h4>
+        <h3 className="font-medium">Price Range</h3>
         <div className="px-2">
-          <Slider 
-            defaultValue={[minPrice, maxPrice]}
+          <Slider
+            value={[minPrice, maxPrice]}
             max={5000000}
             step={100000}
             onValueChange={(values) => {
@@ -775,19 +833,38 @@ const Properties = () => {
             }}
           />
         </div>
-        <div className="flex justify-between text-sm mt-2">
-          <span>${(minPrice/1000).toLocaleString()}k</span>
-          <span>${(maxPrice/1000).toLocaleString()}k</span>
+        <div className="flex justify-between gap-2 mt-2">
+          <div className="flex items-center gap-1">
+            <span className="text-sm">$</span>
+            <input
+              type="text"
+              value={minPriceInput}
+              onChange={handleMinPriceInputChange}
+              onBlur={handlePriceBlur}
+              className="w-20 border rounded px-2 py-1 text-sm"
+            />
+          </div>
+          <span className="text-sm">to</span>
+          <div className="flex items-center gap-1">
+            <span className="text-sm">$</span>
+            <input
+              type="text"
+              value={maxPriceInput}
+              onChange={handleMaxPriceInputChange}
+              onBlur={handlePriceBlur}
+              className="w-20 border rounded px-2 py-1 text-sm"
+            />
+          </div>
         </div>
       </div>
-      
+
       <hr />
-      
+
       {/* Square Footage */}
       <div className="space-y-3">
         <h4 className="font-medium">Square Footage</h4>
         <div className="px-2">
-          <Slider 
+          <Slider
             defaultValue={[minSqft, maxSqft]}
             max={10000}
             step={100}
@@ -802,15 +879,15 @@ const Properties = () => {
           <span>{maxSqft.toLocaleString()} sqft</span>
         </div>
       </div>
-      
+
       <hr />
-      
+
       {/* Bedrooms */}
       <div className="space-y-3">
         <h4 className="font-medium">Bedrooms</h4>
         <div className="flex flex-wrap gap-2">
           {[0, 1, 2, 3, 4].map(num => (
-            <Button 
+            <Button
               key={`beds-${num}`}
               variant={minBeds === num ? "default" : "outline"}
               className={minBeds === num ? "bg-teal-500 hover:bg-teal-600" : ""}
@@ -822,15 +899,15 @@ const Properties = () => {
           ))}
         </div>
       </div>
-      
+
       <hr />
-      
+
       {/* Bathrooms */}
       <div className="space-y-3">
         <h4 className="font-medium">Bathrooms</h4>
         <div className="flex flex-wrap gap-2">
           {[0, 1, 2, 3].map(num => (
-            <Button 
+            <Button
               key={`baths-${num}`}
               variant={minBaths === num ? "default" : "outline"}
               className={minBaths === num ? "bg-teal-500 hover:bg-teal-600" : ""}
@@ -842,33 +919,33 @@ const Properties = () => {
           ))}
         </div>
       </div>
-      
+
       <hr />
-      
+
       {/* Property Condition */}
       <div className="space-y-3">
         <h4 className="font-medium">Property Condition</h4>
         {renderConditionFilter()}
       </div>
-      
+
       <hr />
-      
+
       {/* Features */}
       <div className="space-y-3">
         <h4 className="font-medium">Features</h4>
         {renderFeaturesFilter()}
       </div>
-      
+
       <hr />
-      
+
       {/* Nearby */}
       <div className="space-y-3">
         <h4 className="font-medium">Nearby</h4>
         {renderNearbyFilter()}
       </div>
-      
+
       <hr />
-      
+
       {/* Furniture Type */}
       {renderMultiSelectFilter(
         furnitureOptions,
@@ -876,9 +953,9 @@ const Properties = () => {
         setFurnitureType,
         "Furniture Type"
       )}
-      
+
       <hr />
-      
+
       {/* Heating Type */}
       {renderMultiSelectFilter(
         heatingOptions,
@@ -886,9 +963,9 @@ const Properties = () => {
         setHeatingType,
         "Heating Type"
       )}
-      
+
       <hr />
-      
+
       {/* Parking Type */}
       {renderMultiSelectFilter(
         parkingOptions,
@@ -896,9 +973,9 @@ const Properties = () => {
         setParkingType,
         "Parking Type"
       )}
-      
+
       <hr />
-      
+
       {/* Building Material */}
       {renderMultiSelectFilter(
         buildingMaterialOptions,
@@ -906,9 +983,9 @@ const Properties = () => {
         setBuildingMaterial,
         "Building Material"
       )}
-      
+
       <hr />
-      
+
       {/* Kitchen Type */}
       {renderMultiSelectFilter(
         kitchenTypeOptions,
@@ -916,12 +993,12 @@ const Properties = () => {
         setKitchenType,
         "Kitchen Type"
       )}
-      
+
       <hr />
-      
-      <Button 
-        variant="outline" 
-        className="w-full" 
+
+      <Button
+        variant="outline"
+        className="w-full"
         onClick={handleClearFilters}
       >
         Clear All Filters
@@ -932,7 +1009,7 @@ const Properties = () => {
   return (
     <div>
       <Navbar />
-      
+
       {/* Hero Search Section */}
       <div className="bg-estate-800 py-8">
         <div className="container">
@@ -953,7 +1030,7 @@ const Properties = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Main Content */}
       <div className="container py-8">
         <div className="flex flex-col-reverse lg:flex-row gap-8">
@@ -962,8 +1039,8 @@ const Properties = () => {
             <div className="text-lg font-semibold">
               {filteredProperties.length} Properties Found
             </div>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="flex gap-2 items-center"
               onClick={() => setIsFilterOpen(true)}
             >
@@ -971,13 +1048,13 @@ const Properties = () => {
               <span>Filters</span>
             </Button>
           </div>
-          
+
           {/* Mobile Filters */}
           {renderMobileFilters()}
-          
+
           {/* Desktop Filters */}
           {renderDesktopFilters()}
-          
+
           {/* Properties Grid */}
           <div className="flex-1">
             <div className="flex justify-between items-center mb-6">
@@ -985,7 +1062,7 @@ const Properties = () => {
                 {isLoading ? "Loading..." : `${filteredProperties.length} Properties Found`}
               </h2>
             </div>
-            
+
             {isLoading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                 {[1, 2, 3, 4, 5, 6].map((n) => (
@@ -1018,11 +1095,10 @@ const Properties = () => {
           </div>
         </div>
       </div>
-      
+
       <Footer />
     </div>
   );
 };
 
 export default Properties;
-           
