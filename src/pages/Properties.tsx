@@ -78,11 +78,18 @@ const Properties = () => {
   
     const parseDate = (dateStr: string | undefined): number => {
       if (!dateStr) return 0;
-      // Si c'est déjà un timestamp numérique
-      if (/^\d+$/.test(dateStr)) return parseInt(dateStr);
-      // Si c'est une date ISO
-      const date = new Date(dateStr);
-      return isNaN(date.getTime()) ? 0 : date.getTime();
+      
+      // Si c'est un timestamp numérique (en millisecondes)
+      if (/^\d+$/.test(dateStr)) {
+        return parseInt(dateStr);
+      }
+      
+      // Si c'est une date ISO (comme "2023-05-15T12:00:00Z")
+      try {
+        return new Date(dateStr).getTime();
+      } catch (e) {
+        return 0;
+      }
     };
   
     switch (sortOption) {
