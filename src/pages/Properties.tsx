@@ -34,6 +34,8 @@ const Properties = () => {
   const [maxPriceInput, setMaxPriceInput] = useState(maxPrice.toString());
   const [minSqftInput, setMinSqftInput] = useState(minSqft.toString());
   const [maxSqftInput, setMaxSqftInput] = useState(maxSqft.toString());
+  // Ajoutez ceci avec vos autres états
+  const [sortOption, setSortOption] = useState<string>("recent");
 
   // State for advanced filters
   const [features, setFeatures] = useState({
@@ -61,6 +63,37 @@ const Properties = () => {
   const [parkingType, setParkingType] = useState<string[]>([]);
   const [buildingMaterial, setBuildingMaterial] = useState<string[]>([]);
   const [kitchenType, setKitchenType] = useState<string[]>([]);
+
+  const sortOptions = [
+    { value: "recent", label: "Most Recent" },
+    { value: "oldest", label: "Oldest" },
+    { value: "price-asc", label: "Price: Low to High" },
+    { value: "price-desc", label: "Price: High to Low" },
+    { value: "sqft-asc", label: "Size: Small to Large" },
+    { value: "sqft-desc", label: "Size: Large to Small" },
+  ];
+
+  // Ajoutez cette fonction avant le useEffect qui filtre les propriétés
+  const sortProperties = (properties: Property[]) => {
+    const sorted = [...properties];
+
+    switch (sortOption) {
+      case "recent":
+        return sorted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      case "oldest":
+        return sorted.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+      case "price-asc":
+        return sorted.sort((a, b) => a.price - b.price);
+      case "price-desc":
+        return sorted.sort((a, b) => b.price - a.price);
+      case "sqft-asc":
+        return sorted.sort((a, b) => (a.sqft || 0) - (b.sqft || 0));
+      case "sqft-desc":
+        return sorted.sort((a, b) => (b.sqft || 0) - (a.sqft || 0));
+      default:
+        return sorted;
+    }
+  };
 
   // Fetch properties
   const { data: properties = [], isLoading } = useQuery({
@@ -272,7 +305,8 @@ const Properties = () => {
       );
     }
 
-    setFilteredProperties(filtered);
+    // Modifiez la dernière ligne du useEffect de filtrage
+    setFilteredProperties(sortProperties(filtered));
   }, [
     searchQuery, listingType, propertyTypes, minPrice, maxPrice,
     minBeds, minBaths, minSqft, maxSqft, features, condition,
@@ -1135,6 +1169,24 @@ const Properties = () => {
               <h2 className="text-xl font-semibold">
                 {isLoading ? "Loading..." : `${filteredProperties.length} Properties Found`}
               </h2>
+              <div className="relative">
+                <select
+                  value={sortOption}
+                  onChange={(e) => setSortOption(e.target.value)}
+                  className="appearance-none bg-white border border-estate-neutral-300 rounded-md py-2 pl-3 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                >
+                  {sortOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-estate-neutral-500">
+                  <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </div>
+              </div>
             </div>
 
             {isLoading ? (
