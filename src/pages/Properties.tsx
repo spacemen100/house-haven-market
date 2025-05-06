@@ -73,15 +73,23 @@ const Properties = () => {
     { value: "sqft-desc", label: "Size: Large to Small" },
   ];
 
-  // Ajoutez cette fonction avant le useEffect qui filtre les propriétés
   const sortProperties = (properties: Property[]) => {
     const sorted = [...properties];
-
+  
+    const parseDate = (dateStr: string | undefined): number => {
+      if (!dateStr) return 0;
+      // Si c'est déjà un timestamp numérique
+      if (/^\d+$/.test(dateStr)) return parseInt(dateStr);
+      // Si c'est une date ISO
+      const date = new Date(dateStr);
+      return isNaN(date.getTime()) ? 0 : date.getTime();
+    };
+  
     switch (sortOption) {
       case "recent":
-        return sorted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        return sorted.sort((a, b) => parseDate(b.created_at) - parseDate(a.created_at));
       case "oldest":
-        return sorted.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+        return sorted.sort((a, b) => parseDate(a.created_at) - parseDate(b.created_at));
       case "price-asc":
         return sorted.sort((a, b) => a.price - b.price);
       case "price-desc":
