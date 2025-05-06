@@ -175,7 +175,7 @@ const Properties = () => {
   // Apply all filters
   useEffect(() => {
     let filtered = [...properties];
-
+  
     // Search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
@@ -187,34 +187,34 @@ const Properties = () => {
         property.address_zip.toLowerCase().includes(query)
       );
     }
-
+  
     // Property type filter
     if (propertyTypes.length > 0) {
       filtered = filtered.filter(property =>
         propertyTypes.includes(property.property_type)
       );
     }
-
+  
     // Price filter
     filtered = filtered.filter(property =>
       property.price >= minPrice && property.price <= maxPrice
     );
-
+  
     // Bedrooms filter
     if (minBeds > 0) {
       filtered = filtered.filter(property => property.beds >= minBeds);
     }
-
+  
     // Bathrooms filter
     if (minBaths > 0) {
       filtered = filtered.filter(property => property.baths >= minBaths);
     }
-
+  
     // Square footage filter
     filtered = filtered.filter(property =>
       property.sqft >= minSqft && property.sqft <= maxSqft
     );
-
+  
     // Features filters
     if (features.hasElevator) {
       filtered = filtered.filter(property => property.has_elevator);
@@ -264,54 +264,56 @@ const Properties = () => {
     if (features.hasWashingMachine) {
       filtered = filtered.filter(property => property.has_washing_machine);
     }
-
+  
     // Condition filter
     if (condition.length > 0) {
       filtered = filtered.filter(property => condition.includes(property.condition));
     }
-
+  
     // Furniture type filter
     if (furnitureType.length > 0) {
       filtered = filtered.filter(property =>
         property.furniture_type && furnitureType.includes(property.furniture_type)
       );
     }
-
+  
     // Heating type filter
     if (heatingType.length > 0) {
       filtered = filtered.filter(property =>
         property.heating_type && heatingType.includes(property.heating_type)
       );
     }
-
+  
     // Parking type filter
     if (parkingType.length > 0) {
       filtered = filtered.filter(property =>
         property.parking_type && parkingType.includes(property.parking_type)
       );
     }
-
+  
     // Building material filter
     if (buildingMaterial.length > 0) {
       filtered = filtered.filter(property =>
         property.building_material && buildingMaterial.includes(property.building_material)
       );
     }
-
+  
     // Kitchen type filter
     if (kitchenType.length > 0) {
       filtered = filtered.filter(property =>
         property.kitchen_type && kitchenType.includes(property.kitchen_type)
       );
     }
-
-    // Modifiez la dernière ligne du useEffect de filtrage
-    setFilteredProperties(sortProperties(filtered));
+  
+    // Appliquer le tri final avant de mettre à jour l'état
+    const sortedProperties = sortProperties(filtered);
+    setFilteredProperties(sortedProperties);
+  
   }, [
     searchQuery, listingType, propertyTypes, minPrice, maxPrice,
     minBeds, minBaths, minSqft, maxSqft, features, condition,
     furnitureType, heatingType, parkingType, buildingMaterial,
-    kitchenType, properties
+    kitchenType, properties, sortOption // sortOption est inclus ici
   ]);
 
   // Update URL when listing type or search changes
