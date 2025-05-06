@@ -32,6 +32,8 @@ const Properties = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [minPriceInput, setMinPriceInput] = useState(minPrice.toString());
   const [maxPriceInput, setMaxPriceInput] = useState(maxPrice.toString());
+  const [minSqftInput, setMinSqftInput] = useState(minSqft.toString());
+  const [maxSqftInput, setMaxSqftInput] = useState(maxSqft.toString());
 
   // State for advanced filters
   const [features, setFeatures] = useState({
@@ -78,7 +80,7 @@ const Properties = () => {
     setMinPriceInput(value);
     if (value) {
       const numValue = parseInt(value);
-      if (!isNaN(numValue)) {  
+      if (!isNaN(numValue)) {
         setMinPrice(Math.min(numValue, maxPrice));
       }
     }
@@ -101,6 +103,40 @@ const Properties = () => {
     const max = parseInt(maxPriceInput) || 5000000;
     setMinPrice(Math.min(min, max));
     setMaxPrice(Math.max(min, max));
+  };
+
+  useEffect(() => {
+    setMinSqftInput(minSqft.toString());
+    setMaxSqftInput(maxSqft.toString());
+  }, [minSqft, maxSqft]);
+
+  const handleMinSqftInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setMinSqftInput(value);
+    if (value) {
+      const numValue = parseInt(value);
+      if (!isNaN(numValue)) {
+        setMinSqft(Math.min(numValue, maxSqft));
+      }
+    }
+  };
+
+  const handleMaxSqftInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setMaxSqftInput(value);
+    if (value) {
+      const numValue = parseInt(value);
+      if (!isNaN(numValue)) {
+        setMaxSqft(Math.max(numValue, minSqft));
+      }
+    }
+  };
+
+  const handleSqftBlur = () => {
+    const min = parseInt(minSqftInput) || 0;
+    const max = parseInt(maxSqftInput) || 10000;
+    setMinSqft(Math.min(min, max));
+    setMaxSqft(Math.max(min, max));
   };
 
   // Apply all filters
@@ -642,10 +678,10 @@ const Properties = () => {
 
           {/* Square Footage */}
           <div className="space-y-3">
-            <h3 className="font-medium">Square Footage</h3>
+            <h4 className="font-medium">Square Footage</h4>
             <div className="px-2">
               <Slider
-                defaultValue={[minSqft, maxSqft]}
+                value={[minSqft, maxSqft]}
                 max={10000}
                 step={100}
                 onValueChange={(values) => {
@@ -654,9 +690,28 @@ const Properties = () => {
                 }}
               />
             </div>
-            <div className="flex justify-between text-sm mt-2">
-              <span>{minSqft.toLocaleString()} sqft</span>
-              <span>{maxSqft.toLocaleString()} sqft</span>
+            <div className="flex justify-between gap-2 mt-2">
+              <div className="flex items-center gap-1">
+                <input
+                  type="text"
+                  value={minSqftInput}
+                  onChange={handleMinSqftInputChange}
+                  onBlur={handleSqftBlur}
+                  className="w-20 border rounded px-2 py-1 text-sm"
+                />
+                <span className="text-sm">sqft</span>
+              </div>
+              <span className="text-sm">to</span>
+              <div className="flex items-center gap-1">
+                <input
+                  type="text"
+                  value={maxSqftInput}
+                  onChange={handleMaxSqftInputChange}
+                  onBlur={handleSqftBlur}
+                  className="w-20 border rounded px-2 py-1 text-sm"
+                />
+                <span className="text-sm">sqft</span>
+              </div>
             </div>
           </div>
 
@@ -862,10 +917,10 @@ const Properties = () => {
 
       {/* Square Footage */}
       <div className="space-y-3">
-        <h4 className="font-medium">Square Footage</h4>
+        <h3 className="font-medium">Square Footage</h3>
         <div className="px-2">
           <Slider
-            defaultValue={[minSqft, maxSqft]}
+            value={[minSqft, maxSqft]}
             max={10000}
             step={100}
             onValueChange={(values) => {
@@ -874,9 +929,28 @@ const Properties = () => {
             }}
           />
         </div>
-        <div className="flex justify-between text-sm mt-2">
-          <span>{minSqft.toLocaleString()} sqft</span>
-          <span>{maxSqft.toLocaleString()} sqft</span>
+        <div className="flex justify-between gap-2 mt-2">
+          <div className="flex items-center gap-1">
+            <input
+              type="text"
+              value={minSqftInput}
+              onChange={handleMinSqftInputChange}
+              onBlur={handleSqftBlur}
+              className="w-20 border rounded px-2 py-1 text-sm"
+            />
+            <span className="text-sm">sqft</span>
+          </div>
+          <span className="text-sm">to</span>
+          <div className="flex items-center gap-1">
+            <input
+              type="text"
+              value={maxSqftInput}
+              onChange={handleMaxSqftInputChange}
+              onBlur={handleSqftBlur}
+              className="w-20 border rounded px-2 py-1 text-sm"
+            />
+            <span className="text-sm">sqft</span>
+          </div>
         </div>
       </div>
 
