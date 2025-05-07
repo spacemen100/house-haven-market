@@ -38,9 +38,10 @@ type FormValues = z.infer<typeof formSchema>;
 interface AddPropertyStep2Props {
   onBack: () => void;
   onNext: (data: FormValues) => void;
+  initialValues?: Partial<FormValues>;
 }
 
-const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
+const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Props) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,11 +58,19 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
       status: "available",
       kitchen_type: undefined,
       ceiling_height: undefined,
+      ...initialValues,
     },
   });
 
-  const onSubmit = (data: FormValues) => {
-    onNext(data);
+  const onSubmit = async (data: FormValues) => {
+    try {
+      console.log('Data before submit:', data);
+      
+      // Correction ici - envoyer toutes les données du formulaire
+      onNext(data);
+    } catch (error) {
+      console.error('Submission error:', error);
+    }
   };
 
   return (
@@ -116,10 +125,10 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
                   <FormLabel>Price*</FormLabel>
                   <div className="relative">
                     <FormControl>
-                      <Input 
-                        type="number" 
+                      <Input
+                        type="number"
                         placeholder="Enter price"
-                        {...field} 
+                        {...field}
                       />
                     </FormControl>
                     <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-muted-foreground">
@@ -137,7 +146,10 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Currency*</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select currency" />
@@ -219,7 +231,7 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
               name="sqft"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Area (m2)</FormLabel>
+                  <FormLabel>Area (m²)</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>
@@ -236,7 +248,7 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Property Condition*</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select condition" />
@@ -263,7 +275,7 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Property Status*</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select status" />
@@ -288,7 +300,7 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Kitchen Type</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select kitchen type" />

@@ -126,6 +126,8 @@ const Sell = () => {
   const handleFinalSubmit = async () => {
     try {
       setIsSubmitting(true);
+      // Ajoutez un log pour vérifier les données avant envoi
+      console.log('Submitting property data:', formData);
       await createProperty(formData as CreatePropertyInput);
       setFormData({});
       setStep(1);

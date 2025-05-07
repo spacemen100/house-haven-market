@@ -40,6 +40,7 @@ export interface CreatePropertyInput {
   instagramHandle?: string;
   facebookUrl?: string;
   twitterHandle?: string;
+  currency?: string;
 }
 
 const transformProperty = (property: any): Property => ({
@@ -99,42 +100,45 @@ const transformProperty = (property: any): Property => ({
   twitterHandle: property.twitter_handle
 });
 
+// src/lib/api/properties.ts
 export const createProperty = async (input: CreatePropertyInput) => {
   try {
+    // 1. Authentification et validation
     const { data: { user }, error: userError } = await supabase.auth.getUser();
     if (userError || !user) throw new Error("User not authenticated");
 
     const { data: property, error: propertyError } = await supabase
       .from('properties')
       .insert({
-        title: input.title,
-        description: input.description,
-        price: input.price,
-        phone_number: input.phoneNumber,
-        cadastral_code: input.cadastralCode,
-        property_type: input.propertyType,
-        listing_type: input.listingType,
-        status: input.status,
-        condition: input.condition,
-        plan: input.plan,
-        address_street: input.addressStreet,
-        address_city: input.addressCity,
-        address_district: input.addressDistrict,
-        lat: input.lat,
-        lng: input.lng,
-        beds: input.beds,
-        baths: input.baths,
-        sqft: input.sqft,
-        rooms: input.rooms,
-        has_elevator: input.hasElevator,
-        has_ventilation: input.hasVentilation,
-        has_air_conditioning: input.hasAirConditioning,
-        is_accessible: input.isAccessible,
-        contact_email: input.contactEmail,
-        instagram_handle: input.instagramHandle,
-        facebook_url: input.facebookUrl,
-        twitter_handle: input.twitterHandle,
-        user_id: user.id
+      title: input.title,
+      description: input.description,
+      price: input.price,
+      currency: input.currency || 'GEL', // Garantie de valeur par défaut
+      phone_number: input.phoneNumber,
+      cadastral_code: input.cadastralCode,
+      property_type: input.propertyType,
+      listing_type: input.listingType,
+      status: input.status,
+      condition: input.condition,
+      plan: input.plan,
+      address_street: input.addressStreet,
+      address_city: input.addressCity,
+      address_district: input.addressDistrict,
+      lat: input.lat,
+      lng: input.lng,
+      beds: input.beds,
+      baths: input.baths,
+      sqft: input.sqft,
+      rooms: input.rooms,
+      has_elevator: input.hasElevator,
+      has_ventilation: input.hasVentilation,
+      has_air_conditioning: input.hasAirConditioning,
+      is_accessible: input.isAccessible,
+      contact_email: input.contactEmail,
+      instagram_handle: input.instagramHandle,
+      facebook_url: input.facebookUrl,
+      twitter_handle: input.twitterHandle,
+      user_id: user.id
       })
       .select()
       .single();
@@ -146,17 +150,17 @@ export const createProperty = async (input: CreatePropertyInput) => {
         const fileExt = file.name.split('.').pop();
         const fileName = `${Math.random()}.${fileExt}`;
         const filePath = `${property.id}/${fileName}`;
-        
+
         const { error: uploadError } = await supabase.storage
           .from('property_images')
           .upload(filePath, file);
-          
+
         if (uploadError) throw uploadError;
-        
+
         const { data: { publicUrl } } = supabase.storage
           .from('property_images')
           .getPublicUrl(filePath);
-          
+
         return supabase
           .from('property_images')
           .insert({
@@ -164,10 +168,10 @@ export const createProperty = async (input: CreatePropertyInput) => {
             image_url: publicUrl
           });
       });
-      
+
       await Promise.all(imagePromises);
     }
-    
+
     const relatedDataPromises = [
       ...(input.amenities?.map(amenity => 
         supabase.from('property_amenities').insert({ property_id: property.id, amenity })
@@ -191,9 +195,9 @@ export const createProperty = async (input: CreatePropertyInput) => {
         supabase.from('property_online_services').insert({ property_id: property.id, service_name: service })
       ) || [])
     ];
-    
+
     await Promise.all(relatedDataPromises);
-    
+
     toast.success("Property listing created successfully!");
     return property;
   } catch (error) {
