@@ -35,6 +35,25 @@ const Properties = () => {
   const [minSqftInput, setMinSqftInput] = useState(minSqft.toString());
   const [maxSqftInput, setMaxSqftInput] = useState(maxSqft.toString());
   const [sortOption, setSortOption] = useState<string>("recent");
+  const [currency, setCurrency] = useState<string>('USD');
+
+  const currencyOptions = [
+    { value: 'USD', label: 'US Dollar ($)' },
+    { value: 'EUR', label: 'Euro (€)' },
+    { value: 'GEL', label: 'Georgian Lari (₾)' },
+  ];
+
+  const formatPrice = (price: number, currency: string) => {
+    let locale = 'en-US'; // Par défaut pour USD
+    if (currency === 'EUR') locale = 'fr-FR';
+    if (currency === 'GEL') locale = 'ka-GE'; // Géorgien
+
+    return new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency: currency,
+      maximumFractionDigits: currency === 'GEL' ? 2 : 0 // Le Lari utilise généralement 2 décimales
+    }).format(price);
+  };
 
   // State for advanced filters
   const [features, setFeatures] = useState({
@@ -74,7 +93,7 @@ const Properties = () => {
 
   const sortProperties = (properties: Property[]) => {
     const sorted = [...properties];
-  
+
     const parseDate = (dateStr: string | undefined): number => {
       if (!dateStr) return 0;
       if (/^\d+$/.test(dateStr)) {
@@ -86,7 +105,7 @@ const Properties = () => {
         return 0;
       }
     };
-  
+
     switch (sortOption) {
       case "recent":
         return sorted.sort((a, b) => parseDate(b.created_at) - parseDate(a.created_at));
@@ -185,7 +204,7 @@ const Properties = () => {
   // Apply all filters
   useEffect(() => {
     let filtered = [...properties];
-  
+
     // Search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
@@ -197,34 +216,34 @@ const Properties = () => {
         property.address_zip.toLowerCase().includes(query)
       );
     }
-  
+
     // Property type filter
     if (propertyTypes.length > 0) {
       filtered = filtered.filter(property =>
         propertyTypes.includes(property.property_type)
       );
     }
-  
+
     // Price filter
     filtered = filtered.filter(property =>
       property.price >= minPrice && property.price <= maxPrice
     );
-  
+
     // Bedrooms filter
     if (minBeds > 0) {
       filtered = filtered.filter(property => property.beds >= minBeds);
     }
-  
+
     // Bathrooms filter
     if (minBaths > 0) {
       filtered = filtered.filter(property => property.baths >= minBaths);
     }
-  
+
     // Square footage filter (maintenant en m²)
     filtered = filtered.filter(property =>
       property.sqft >= minSqft && property.sqft <= maxSqft
     );
-  
+
     // Features filters
     if (features.hasElevator) {
       filtered = filtered.filter(property => property.has_elevator);
@@ -274,51 +293,51 @@ const Properties = () => {
     if (features.hasWashingMachine) {
       filtered = filtered.filter(property => property.has_washing_machine);
     }
-  
+
     // Condition filter
     if (condition.length > 0) {
       filtered = filtered.filter(property => condition.includes(property.condition));
     }
-  
+
     // Furniture type filter
     if (furnitureType.length > 0) {
       filtered = filtered.filter(property =>
         property.furniture_type && furnitureType.includes(property.furniture_type)
       );
     }
-  
+
     // Heating type filter
     if (heatingType.length > 0) {
       filtered = filtered.filter(property =>
         property.heating_type && heatingType.includes(property.heating_type)
       );
     }
-  
+
     // Parking type filter
     if (parkingType.length > 0) {
       filtered = filtered.filter(property =>
         property.parking_type && parkingType.includes(property.parking_type)
       );
     }
-  
+
     // Building material filter
     if (buildingMaterial.length > 0) {
       filtered = filtered.filter(property =>
         property.building_material && buildingMaterial.includes(property.building_material)
       );
     }
-  
+
     // Kitchen type filter
     if (kitchenType.length > 0) {
       filtered = filtered.filter(property =>
         property.kitchen_type && kitchenType.includes(property.kitchen_type)
       );
     }
-  
+
     // Appliquer le tri final avant de mettre à jour l'état
     const sortedProperties = sortProperties(filtered);
     setFilteredProperties(sortedProperties);
-  
+
   }, [
     searchQuery, listingType, propertyTypes, minPrice, maxPrice,
     minBeds, minBaths, minSqft, maxSqft, features, condition,
@@ -720,6 +739,21 @@ const Properties = () => {
                 />
               </div>
             </div>
+          </div>
+
+          <div className="space-y-3">
+            <h4 className="font-medium">Currency</h4>
+            <select
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value)}
+              className="w-full border rounded-md px-3 py-2 text-sm"
+            >
+              {currencyOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Surface (m²) */}
@@ -1189,8 +1223,8 @@ const Properties = () => {
                 >
                   {sortOptions.map((option) => (
                     <option key={option.value} value={option.value}>
-                      {option.value.includes('sqft') 
-                        ? option.label.replace('Size', 'Surface (m²)') 
+                      {option.value.includes('sqft')
+                        ? option.label.replace('Size', 'Surface (m²)')
                         : option.label}
                     </option>
                   ))}
