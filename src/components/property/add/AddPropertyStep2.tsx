@@ -163,10 +163,10 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
 
             <FormField
               control={form.control}
-              name="sqft"
+              name="m2"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Area (sqft)</FormLabel>
+                  <FormLabel>Area (m2)</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>

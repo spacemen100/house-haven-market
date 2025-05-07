@@ -27,14 +27,13 @@ const Properties = () => {
   const [minBeds, setMinBeds] = useState(0);
   const [minBaths, setMinBaths] = useState(0);
   const [minSqft, setMinSqft] = useState(0);
-  const [maxSqft, setMaxSqft] = useState(10000);
+  const [maxSqft, setMaxSqft] = useState(1000); // Changé de 10000 sqft à 1000 m²
   const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [minPriceInput, setMinPriceInput] = useState(minPrice.toString());
   const [maxPriceInput, setMaxPriceInput] = useState(maxPrice.toString());
   const [minSqftInput, setMinSqftInput] = useState(minSqft.toString());
   const [maxSqftInput, setMaxSqftInput] = useState(maxSqft.toString());
-  // Ajoutez ceci avec vos autres états
   const [sortOption, setSortOption] = useState<string>("recent");
 
   // State for advanced filters
@@ -69,8 +68,8 @@ const Properties = () => {
     { value: "oldest", label: "Oldest" },
     { value: "price-asc", label: "Price: Low to High" },
     { value: "price-desc", label: "Price: High to Low" },
-    { value: "sqft-asc", label: "Size: Small to Large" },
-    { value: "sqft-desc", label: "Size: Large to Small" },
+    { value: "sqft-asc", label: "Surface: Small to Large" }, // Modifié le label
+    { value: "sqft-desc", label: "Surface: Large to Small" }, // Modifié le label
   ];
 
   const sortProperties = (properties: Property[]) => {
@@ -78,13 +77,9 @@ const Properties = () => {
   
     const parseDate = (dateStr: string | undefined): number => {
       if (!dateStr) return 0;
-      
-      // Si c'est un timestamp numérique (en millisecondes)
       if (/^\d+$/.test(dateStr)) {
         return parseInt(dateStr);
       }
-      
-      // Si c'est une date ISO (comme "2023-05-15T12:00:00Z")
       try {
         return new Date(dateStr).getTime();
       } catch (e) {
@@ -182,7 +177,7 @@ const Properties = () => {
 
   const handleSqftBlur = () => {
     const min = parseInt(minSqftInput) || 0;
-    const max = parseInt(maxSqftInput) || 10000;
+    const max = parseInt(maxSqftInput) || 1000; // Changé de 10000 à 1000
     setMinSqft(Math.min(min, max));
     setMaxSqft(Math.max(min, max));
   };
@@ -225,7 +220,7 @@ const Properties = () => {
       filtered = filtered.filter(property => property.baths >= minBaths);
     }
   
-    // Square footage filter
+    // Square footage filter (maintenant en m²)
     filtered = filtered.filter(property =>
       property.sqft >= minSqft && property.sqft <= maxSqft
     );
@@ -328,7 +323,7 @@ const Properties = () => {
     searchQuery, listingType, propertyTypes, minPrice, maxPrice,
     minBeds, minBaths, minSqft, maxSqft, features, condition,
     furnitureType, heatingType, parkingType, buildingMaterial,
-    kitchenType, properties, sortOption // sortOption est inclus ici
+    kitchenType, properties, sortOption
   ]);
 
   // Update URL when listing type or search changes
@@ -369,7 +364,7 @@ const Properties = () => {
     setMinBeds(0);
     setMinBaths(0);
     setMinSqft(0);
-    setMaxSqft(10000);
+    setMaxSqft(1000); // Réinitialisé à 1000 m²
     setFeatures({
       hasElevator: false,
       hasAirConditioning: false,
@@ -727,14 +722,14 @@ const Properties = () => {
             </div>
           </div>
 
-          {/* Square Footage */}
+          {/* Surface (m²) */}
           <div className="space-y-3">
-            <h4 className="font-medium">Square Footage</h4>
+            <h4 className="font-medium">Surface (m²)</h4>
             <div className="px-2">
               <Slider
                 value={[minSqft, maxSqft]}
-                max={10000}
-                step={100}
+                max={1000}
+                step={10}
                 onValueChange={(values) => {
                   setMinSqft(values[0]);
                   setMaxSqft(values[1]);
@@ -750,7 +745,7 @@ const Properties = () => {
                   onBlur={handleSqftBlur}
                   className="w-20 border rounded px-2 py-1 text-sm"
                 />
-                <span className="text-sm">sqft</span>
+                <span className="text-sm">m²</span>
               </div>
               <span className="text-sm">to</span>
               <div className="flex items-center gap-1">
@@ -761,7 +756,7 @@ const Properties = () => {
                   onBlur={handleSqftBlur}
                   className="w-20 border rounded px-2 py-1 text-sm"
                 />
-                <span className="text-sm">sqft</span>
+                <span className="text-sm">m²</span>
               </div>
             </div>
           </div>
@@ -966,14 +961,14 @@ const Properties = () => {
 
       <hr />
 
-      {/* Square Footage */}
+      {/* Surface (m²) */}
       <div className="space-y-3">
-        <h3 className="font-medium">Square Footage</h3>
+        <h3 className="font-medium">Surface (m²)</h3>
         <div className="px-2">
           <Slider
             value={[minSqft, maxSqft]}
-            max={10000}
-            step={100}
+            max={1000}
+            step={10}
             onValueChange={(values) => {
               setMinSqft(values[0]);
               setMaxSqft(values[1]);
@@ -989,7 +984,7 @@ const Properties = () => {
               onBlur={handleSqftBlur}
               className="w-20 border rounded px-2 py-1 text-sm"
             />
-            <span className="text-sm">sqft</span>
+            <span className="text-sm">m²</span>
           </div>
           <span className="text-sm">to</span>
           <div className="flex items-center gap-1">
@@ -1000,7 +995,7 @@ const Properties = () => {
               onBlur={handleSqftBlur}
               className="w-20 border rounded px-2 py-1 text-sm"
             />
-            <span className="text-sm">sqft</span>
+            <span className="text-sm">m²</span>
           </div>
         </div>
       </div>
@@ -1194,7 +1189,9 @@ const Properties = () => {
                 >
                   {sortOptions.map((option) => (
                     <option key={option.value} value={option.value}>
-                      {option.label}
+                      {option.value.includes('sqft') 
+                        ? option.label.replace('Size', 'Surface (m²)') 
+                        : option.label}
                     </option>
                   ))}
                 </select>
