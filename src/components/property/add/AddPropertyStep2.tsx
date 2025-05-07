@@ -20,7 +20,7 @@ const formSchema = z.object({
   price: z.coerce.number().positive("Price must be a positive number"),
   beds: z.coerce.number().int().min(0, "Beds must be 0 or more"),
   baths: z.coerce.number().int().min(0, "Baths must be 0 or more"),
-  sqft: z.coerce.number().positive("Area must be a positive number"),
+  m2: z.coerce.number().positive("Area must be a positive number"),
   yearBuilt: z.coerce.number().int().min(1800, "Year must be 1800 or later").max(new Date().getFullYear(), "Year cannot be in the future"),
   cadastral_code: z.string().optional(),
   condition: z.enum(["newly_renovated", "under_renovation", "white_frame", "green_frame", "not_renovated", "black_frame", "old_renovation"]),
