@@ -13,14 +13,18 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const formSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   price: z.coerce.number().positive("Price must be a positive number"),
+  currency: z.enum(["GEL", "USD", "EUR"], {
+    required_error: "Please select a currency",
+  }),
   beds: z.coerce.number().int().min(0, "Beds must be 0 or more"),
   baths: z.coerce.number().int().min(0, "Baths must be 0 or more"),
-  m2: z.coerce.number().positive("Area must be a positive number"),
+  sqft: z.coerce.number().positive("Area must be a positive number"),
   yearBuilt: z.coerce.number().int().min(1800, "Year must be 1800 or later").max(new Date().getFullYear(), "Year cannot be in the future"),
   cadastral_code: z.string().optional(),
   condition: z.enum(["newly_renovated", "under_renovation", "white_frame", "green_frame", "not_renovated", "black_frame", "old_renovation"]),
@@ -43,6 +47,7 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
       title: "",
       description: "",
       price: 0,
+      currency: "GEL",
       beds: 0,
       baths: 0,
       sqft: 0,
@@ -75,7 +80,7 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Property Title</FormLabel>
+                <FormLabel>Property Title*</FormLabel>
                 <FormControl>
                   <Input placeholder="e.g. Modern 3 Bedroom House with Garden" {...field} />
                 </FormControl>
@@ -89,7 +94,7 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Property Description</FormLabel>
+                <FormLabel>Property Description*</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Describe your property in detail..."
@@ -108,7 +113,55 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
               name="price"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Price ($)</FormLabel>
+                  <FormLabel>Price*</FormLabel>
+                  <div className="relative">
+                    <FormControl>
+                      <Input 
+                        type="number" 
+                        placeholder="Enter price"
+                        {...field} 
+                      />
+                    </FormControl>
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-muted-foreground">
+                      {form.watch("currency")}
+                    </div>
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="currency"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Currency*</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select currency" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="GEL">Georgian Lari (₾)</SelectItem>
+                      <SelectItem value="USD">US Dollar ($)</SelectItem>
+                      <SelectItem value="EUR">Euro (€)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="yearBuilt"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Year Built*</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>
@@ -119,12 +172,12 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
 
             <FormField
               control={form.control}
-              name="yearBuilt"
+              name="cadastral_code"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Year Built</FormLabel>
+                  <FormLabel>Cadastral Code</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input placeholder="Cadastral code (optional)" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -138,7 +191,7 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
               name="beds"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Beds</FormLabel>
+                  <FormLabel>Bedrooms</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>
@@ -152,7 +205,7 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
               name="baths"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Baths</FormLabel>
+                  <FormLabel>Bathrooms</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>
@@ -163,7 +216,7 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
 
             <FormField
               control={form.control}
-              name="m2"
+              name="sqft"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Area (m2)</FormLabel>
@@ -179,38 +232,26 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField
               control={form.control}
-              name="cadastral_code"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Cadastral Code</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Cadastral code (optional)" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
               name="condition"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Condition</FormLabel>
-                  <FormControl>
-                    <select
-                      {...field}
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                      <option value="newly_renovated">Newly Renovated</option>
-                      <option value="under_renovation">Under Renovation</option>
-                      <option value="white_frame">White Frame</option>
-                      <option value="green_frame">Green Frame</option>
-                      <option value="not_renovated">Not Renovated</option>
-                      <option value="black_frame">Black Frame</option>
-                      <option value="old_renovation">Old Renovation</option>
-                    </select>
-                  </FormControl>
+                  <FormLabel>Property Condition*</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select condition" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="newly_renovated">Newly Renovated</SelectItem>
+                      <SelectItem value="under_renovation">Under Renovation</SelectItem>
+                      <SelectItem value="white_frame">White Frame</SelectItem>
+                      <SelectItem value="green_frame">Green Frame</SelectItem>
+                      <SelectItem value="not_renovated">Not Renovated</SelectItem>
+                      <SelectItem value="black_frame">Black Frame</SelectItem>
+                      <SelectItem value="old_renovation">Old Renovation</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -221,19 +262,21 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
               name="status"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Status</FormLabel>
-                  <FormControl>
-                    <select
-                      {...field}
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                      <option value="available">Available</option>
-                      <option value="pending">Pending</option>
-                      <option value="sold">Sold/Rented</option>
-                      <option value="new_building_under_construction">New Building Under Construction</option>
-                      <option value="old_building">Old Building</option>
-                    </select>
-                  </FormControl>
+                  <FormLabel>Property Status*</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select status" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="available">Available</SelectItem>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="sold">Sold/Rented</SelectItem>
+                      <SelectItem value="new_building_under_construction">New Building Under Construction</SelectItem>
+                      <SelectItem value="old_building">Old Building</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -245,17 +288,18 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Kitchen Type</FormLabel>
-                  <FormControl>
-                    <select
-                      {...field}
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                      <option value="">Select...</option>
-                      <option value="isolated">Isolated</option>
-                      <option value="outside">Outside</option>
-                      <option value="studio">Studio</option>
-                    </select>
-                  </FormControl>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select kitchen type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="isolated">Isolated</SelectItem>
+                      <SelectItem value="outside">Outside</SelectItem>
+                      <SelectItem value="studio">Studio</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -273,6 +317,7 @@ const AddPropertyStep2 = ({ onBack, onNext }: AddPropertyStep2Props) => {
                       step="0.05"
                       min="2"
                       max="7"
+                      placeholder="e.g. 2.75"
                       {...field}
                       onChange={(e) => {
                         const value = parseFloat(e.target.value);
