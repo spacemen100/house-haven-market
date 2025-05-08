@@ -26,14 +26,14 @@ const Properties = () => {
   const [maxPrice, setMaxPrice] = useState(5000000);
   const [minBeds, setMinBeds] = useState(0);
   const [minBaths, setMinBaths] = useState(0);
-  const [minSqft, setMinSqft] = useState(0);
-  const [maxSqft, setMaxSqft] = useState(1000); // Changé de 10000 sqft à 1000 m²
+  const [minM2, setMinM2] = useState(0); // Changé de minSqft à minM2
+  const [maxM2, setMaxM2] = useState(500); // Changé de maxSqft (1000) à maxM2 (500)
   const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [minPriceInput, setMinPriceInput] = useState(minPrice.toString());
   const [maxPriceInput, setMaxPriceInput] = useState(maxPrice.toString());
-  const [minSqftInput, setMinSqftInput] = useState(minSqft.toString());
-  const [maxSqftInput, setMaxSqftInput] = useState(maxSqft.toString());
+  const [minM2Input, setMinM2Input] = useState(minM2.toString()); // Changé de minSqftInput
+  const [maxM2Input, setMaxM2Input] = useState(maxM2.toString()); // Changé de maxSqftInput
   const [sortOption, setSortOption] = useState<string>("recent");
   const [currency, setCurrency] = useState<string>('USD');
 
@@ -44,14 +44,14 @@ const Properties = () => {
   ];
 
   const formatPrice = (price: number, currency: string) => {
-    let locale = 'en-US'; // Par défaut pour USD
+    let locale = 'en-US';
     if (currency === 'EUR') locale = 'fr-FR';
-    if (currency === 'GEL') locale = 'ka-GE'; // Géorgien
+    if (currency === 'GEL') locale = 'ka-GE';
 
     return new Intl.NumberFormat(locale, {
       style: 'currency',
       currency: currency,
-      maximumFractionDigits: currency === 'GEL' ? 2 : 0 // Le Lari utilise généralement 2 décimales
+      maximumFractionDigits: currency === 'GEL' ? 2 : 0
     }).format(price);
   };
 
@@ -87,8 +87,8 @@ const Properties = () => {
     { value: "oldest", label: "Oldest" },
     { value: "price-asc", label: "Price: Low to High" },
     { value: "price-desc", label: "Price: High to Low" },
-    { value: "sqft-asc", label: "Surface: Small to Large" }, // Modifié le label
-    { value: "sqft-desc", label: "Surface: Large to Small" }, // Modifié le label
+    { value: "m2-asc", label: "Surface: Small to Large" }, // Changé de sqft-asc à m2-asc
+    { value: "m2-desc", label: "Surface: Large to Small" }, // Changé de sqft-desc à m2-desc
   ];
 
   const sortProperties = (properties: Property[]) => {
@@ -115,10 +115,10 @@ const Properties = () => {
         return sorted.sort((a, b) => a.price - b.price);
       case "price-desc":
         return sorted.sort((a, b) => b.price - a.price);
-      case "sqft-asc":
-        return sorted.sort((a, b) => (a.sqft || 0) - (b.sqft || 0));
-      case "sqft-desc":
-        return sorted.sort((a, b) => (b.sqft || 0) - (a.sqft || 0));
+      case "m2-asc": // Changé de sqft-asc à m2-asc
+        return sorted.sort((a, b) => (a.m2 || 0) - (b.m2 || 0)); // Changé de sqft à m2
+      case "m2-desc": // Changé de sqft-desc à m2-desc
+        return sorted.sort((a, b) => (b.m2 || 0) - (a.m2 || 0)); // Changé de sqft à m2
       default:
         return sorted;
     }
@@ -130,13 +130,11 @@ const Properties = () => {
     queryFn: () => getPropertiesByType(listingType),
   });
 
-  // Synchronise les valeurs du slider avec les inputs texte
   useEffect(() => {
     setMinPriceInput(minPrice.toString());
     setMaxPriceInput(maxPrice.toString());
   }, [minPrice, maxPrice]);
 
-  // Gestion des changements dans les inputs texte
   const handleMinPriceInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '');
     setMinPriceInput(value);
@@ -159,7 +157,6 @@ const Properties = () => {
     }
   };
 
-  // Validation lorsque l'input perd le focus
   const handlePriceBlur = () => {
     const min = parseInt(minPriceInput) || 0;
     const max = parseInt(maxPriceInput) || 5000000;
@@ -168,37 +165,37 @@ const Properties = () => {
   };
 
   useEffect(() => {
-    setMinSqftInput(minSqft.toString());
-    setMaxSqftInput(maxSqft.toString());
-  }, [minSqft, maxSqft]);
+    setMinM2Input(minM2.toString());
+    setMaxM2Input(maxM2.toString());
+  }, [minM2, maxM2]);
 
-  const handleMinSqftInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMinM2InputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '');
-    setMinSqftInput(value);
+    setMinM2Input(value);
     if (value) {
       const numValue = parseInt(value);
       if (!isNaN(numValue)) {
-        setMinSqft(Math.min(numValue, maxSqft));
+        setMinM2(Math.min(numValue, maxM2));
       }
     }
   };
 
-  const handleMaxSqftInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMaxM2InputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '');
-    setMaxSqftInput(value);
+    setMaxM2Input(value);
     if (value) {
       const numValue = parseInt(value);
       if (!isNaN(numValue)) {
-        setMaxSqft(Math.max(numValue, minSqft));
+        setMaxM2(Math.max(numValue, minM2));
       }
     }
   };
 
-  const handleSqftBlur = () => {
-    const min = parseInt(minSqftInput) || 0;
-    const max = parseInt(maxSqftInput) || 1000; // Changé de 10000 à 1000
-    setMinSqft(Math.min(min, max));
-    setMaxSqft(Math.max(min, max));
+  const handleM2Blur = () => {
+    const min = parseInt(minM2Input) || 0;
+    const max = parseInt(maxM2Input) || 500; // Changé de 1000 à 500
+    setMinM2(Math.min(min, max));
+    setMaxM2(Math.max(min, max));
   };
 
   // Apply all filters
@@ -239,9 +236,8 @@ const Properties = () => {
       filtered = filtered.filter(property => property.baths >= minBaths);
     }
 
-    // Square footage filter (maintenant en m²)
     filtered = filtered.filter(property =>
-      property.sqft >= minSqft && property.sqft <= maxSqft
+      property.m2 >= minM2 && property.m2 <= maxM2 // Changé de sqft à m2
     );
 
     // Features filters
@@ -340,7 +336,7 @@ const Properties = () => {
 
   }, [
     searchQuery, listingType, propertyTypes, minPrice, maxPrice,
-    minBeds, minBaths, minSqft, maxSqft, features, condition,
+    minBeds, minBaths, minM2, maxM2, features, condition,
     furnitureType, heatingType, parkingType, buildingMaterial,
     kitchenType, properties, sortOption
   ]);
@@ -382,8 +378,8 @@ const Properties = () => {
     setMaxPrice(5000000);
     setMinBeds(0);
     setMinBaths(0);
-    setMinSqft(0);
-    setMaxSqft(1000); // Réinitialisé à 1000 m²
+    setMinM2(0); // Changé de minSqft à minM2
+    setMaxM2(500); // Changé de maxSqft à maxM2
     setFeatures({
       hasElevator: false,
       hasAirConditioning: false,
@@ -756,44 +752,44 @@ const Properties = () => {
             </select>
           </div>
 
-          {/* Surface (m²) */}
-          <div className="space-y-3">
-            <h4 className="font-medium">Surface (m²)</h4>
-            <div className="px-2">
-              <Slider
-                value={[minSqft, maxSqft]}
-                max={1000}
-                step={10}
-                onValueChange={(values) => {
-                  setMinSqft(values[0]);
-                  setMaxSqft(values[1]);
-                }}
-              />
-            </div>
-            <div className="flex justify-between gap-2 mt-2">
-              <div className="flex items-center gap-1">
-                <input
-                  type="text"
-                  value={minSqftInput}
-                  onChange={handleMinSqftInputChange}
-                  onBlur={handleSqftBlur}
-                  className="w-20 border rounded px-2 py-1 text-sm"
-                />
-                <span className="text-sm">m²</span>
-              </div>
-              <span className="text-sm">to</span>
-              <div className="flex items-center gap-1">
-                <input
-                  type="text"
-                  value={maxSqftInput}
-                  onChange={handleMaxSqftInputChange}
-                  onBlur={handleSqftBlur}
-                  className="w-20 border rounded px-2 py-1 text-sm"
-                />
-                <span className="text-sm">m²</span>
-              </div>
-            </div>
+      {/* Surface (m²) */}
+      <div className="space-y-3">
+        <h3 className="font-medium">Surface (m²)</h3>
+        <div className="px-2">
+          <Slider
+            value={[minM2, maxM2]} // Changé de minSqft/maxSqft à minM2/maxM2
+            max={500} // Réduit de 1000 à 500 m²
+            step={10}
+            onValueChange={(values) => {
+              setMinM2(values[0]); // Changé de setMinSqft à setMinM2
+              setMaxM2(values[1]); // Changé de setMaxSqft à setMaxM2
+            }}
+          />
+        </div>
+        <div className="flex justify-between gap-2 mt-2">
+          <div className="flex items-center gap-1">
+            <input
+              type="text"
+              value={minM2Input} // Changé de minSqftInput à minM2Input
+              onChange={handleMinM2InputChange} // Changé de handleMinSqftInputChange
+              onBlur={handleM2Blur} // Changé de handleSqftBlur
+              className="w-20 border rounded px-2 py-1 text-sm"
+            />
+            <span className="text-sm">m²</span>
           </div>
+          <span className="text-sm">to</span>
+          <div className="flex items-center gap-1">
+            <input
+              type="text"
+              value={maxM2Input} // Changé de maxSqftInput à maxM2Input
+              onChange={handleMaxM2InputChange} // Changé de handleMaxSqftInputChange
+              onBlur={handleM2Blur} // Changé de handleSqftBlur
+              className="w-20 border rounded px-2 py-1 text-sm"
+            />
+            <span className="text-sm">m²</span>
+          </div>
+        </div>
+      </div>
 
           {/* Bedrooms */}
           <div className="space-y-3">
@@ -995,44 +991,44 @@ const Properties = () => {
 
       <hr />
 
-      {/* Surface (m²) */}
-      <div className="space-y-3">
-        <h3 className="font-medium">Surface (m²)</h3>
-        <div className="px-2">
-          <Slider
-            value={[minSqft, maxSqft]}
-            max={1000}
-            step={10}
-            onValueChange={(values) => {
-              setMinSqft(values[0]);
-              setMaxSqft(values[1]);
-            }}
-          />
-        </div>
-        <div className="flex justify-between gap-2 mt-2">
-          <div className="flex items-center gap-1">
-            <input
-              type="text"
-              value={minSqftInput}
-              onChange={handleMinSqftInputChange}
-              onBlur={handleSqftBlur}
-              className="w-20 border rounded px-2 py-1 text-sm"
+        {/* Surface (m²) */}
+        <div className="space-y-3">
+          <h4 className="font-medium">Surface (m²)</h4>
+          <div className="px-2">
+            <Slider
+              value={[minM2, maxM2]} // Changé de minSqft/maxSqft à minM2/maxM2
+              max={500} // Réduit de 1000 à 500 m²
+              step={10}
+              onValueChange={(values) => {
+                setMinM2(values[0]); // Changé de setMinSqft à setMinM2
+                setMaxM2(values[1]); // Changé de setMaxSqft à setMaxM2
+              }}
             />
-            <span className="text-sm">m²</span>
           </div>
-          <span className="text-sm">to</span>
-          <div className="flex items-center gap-1">
-            <input
-              type="text"
-              value={maxSqftInput}
-              onChange={handleMaxSqftInputChange}
-              onBlur={handleSqftBlur}
-              className="w-20 border rounded px-2 py-1 text-sm"
-            />
-            <span className="text-sm">m²</span>
+          <div className="flex justify-between gap-2 mt-2">
+            <div className="flex items-center gap-1">
+              <input
+                type="text"
+                value={minM2Input} // Changé de minSqftInput à minM2Input
+                onChange={handleMinM2InputChange} // Changé de handleMinSqftInputChange
+                onBlur={handleM2Blur} // Changé de handleSqftBlur
+                className="w-20 border rounded px-2 py-1 text-sm"
+              />
+              <span className="text-sm">m²</span>
+            </div>
+            <span className="text-sm">to</span>
+            <div className="flex items-center gap-1">
+              <input
+                type="text"
+                value={maxM2Input} // Changé de maxSqftInput à maxM2Input
+                onChange={handleMaxM2InputChange} // Changé de handleMaxSqftInputChange
+                onBlur={handleM2Blur} // Changé de handleSqftBlur
+                className="w-20 border rounded px-2 py-1 text-sm"
+              />
+              <span className="text-sm">m²</span>
+            </div>
           </div>
         </div>
-      </div>
 
       <hr />
 
@@ -1051,7 +1047,7 @@ const Properties = () => {
               {num === 0 ? "Any" : `${num}+`}
             </Button>
           ))}
-        </div>
+      </div>
       </div>
 
       <hr />
@@ -1223,9 +1219,7 @@ const Properties = () => {
                 >
                   {sortOptions.map((option) => (
                     <option key={option.value} value={option.value}>
-                      {option.value.includes('sqft')
-                        ? option.label.replace('Size', 'Surface (m²)')
-                        : option.label}
+                      {option.label}
                     </option>
                   ))}
                 </select>
