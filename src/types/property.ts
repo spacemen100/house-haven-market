@@ -1,5 +1,5 @@
 export type PropertyType = 'house' | 'apartment' | 'land' | 'commercial';
-export type ListingType = 'sale' | 'rent' | 'rent_by_day';
+export type ListingType = 'sale' | 'rent' | 'rent_by_day' | 'lease';
 export type PropertyCondition = 'new' | 'good' | 'needs_renovation';
 export type KitchenType = 'american' | 'open' | 'closed';
 export type PropertyStatus = 'free' | 'under_caution' | 'under_construction';
@@ -13,7 +13,7 @@ export interface Property {
   phone_number?: string;
   cadastral_code?: string;
   propertyType: 'house' | 'apartment' | 'land' | 'commercial';
-  listingType: 'sale' | 'rent' | 'rent_by_day';
+  listingType: 'sale' | 'rent' | 'rent_by_day'| 'lease';
   status?: 'free' | 'under_caution' | 'under_construction';
   condition?: 'new' | 'good' | 'needs_renovation';
   plan?: string;

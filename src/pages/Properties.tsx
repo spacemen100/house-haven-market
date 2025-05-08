@@ -22,7 +22,7 @@ const Properties = () => {
 
   // State for basic filters
   const [searchQuery, setSearchQuery] = useState(initialSearch);
-  const [listingType, setListingType] = useState<"sale" | "rent" | "rent_by_day">(initialListingType as "sale" | "rent" | "rent_by_day");
+  const [listingType, setListingType] = useState<"sale" | "rent" | "rent_by_day"| "lease">(initialListingType as "sale" | "rent" | "rent_by_day");
   const [propertyTypes, setPropertyTypes] = useState<PropertyType[]>([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(5000000);
@@ -61,10 +61,11 @@ const Properties = () => {
   const listingTypeButtons = [
     { value: "sale", label: "À vendre" },
     { value: "rent", label: "À louer" },
-    { value: "rent_by_day", label: "Location journalière" }
+    { value: "rent_by_day", label: "Location journalière" },
+    { value: "lease", label: "Bail commercial" }
   ];
 
-  const handleListingTypeChange = (value: "sale" | "rent" | "rent_by_day") => {
+  const handleListingTypeChange = (value: "sale" | "rent" | "rent_by_day"| "lease") => {
     setListingType(value);
   };
 
@@ -453,9 +454,9 @@ const Properties = () => {
   ];
 
   const furnitureOptions = [
-    { id: "furnished", label: "Furnished" },
-    { id: "partially_furnished", label: "Partially Furnished" },
-    { id: "unfurnished", label: "Unfurnished" },
+    { id: "furnished", label: "Meublé" },
+    { id: "semi_furnished", label: "Semi-meublé" },
+    { id: "unfurnished", label: "Non meublé" },
   ];
 
   const heatingOptions = [

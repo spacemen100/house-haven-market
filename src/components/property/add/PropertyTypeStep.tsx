@@ -8,7 +8,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 
 const formSchema = z.object({
-  listing_type: z.enum(["sale", "rent", "rent_by_day"], {
+  listing_type: z.enum(["sale", "rent", "rent_by_day", "lease"], {
     required_error: "Vous devez sélectionner un type d'annonce",
   }),
   property_type: z.enum(["house", "apartment", "land", "commercial"], {
@@ -82,6 +82,15 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                         className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
                         <span className="font-medium">Location journalière</span>
+                      </Label>
+                    </div>
+                    <div>
+                      <RadioGroupItem value="lease" id="lease" className="peer sr-only" />
+                      <Label
+                        htmlFor="lease"
+                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                      >
+                        <span className="font-medium">Bail commercial</span>
                       </Label>
                     </div>
                   </RadioGroup>
