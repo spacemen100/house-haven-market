@@ -45,7 +45,7 @@ export type Database = {
           project_name: string | null
           property_type: Database["public"]["Enums"]["property_type"]
           rooms: number | null
-          sqft: number
+          m2: number // Changé de sqft à m2
           status: Database["public"]["Enums"]["property_status"] | null
           terrace_area: number | null
           title: string
@@ -89,7 +89,7 @@ export type Database = {
           project_name?: string | null
           property_type: Database["public"]["Enums"]["property_type"]
           rooms?: number | null
-          sqft?: number
+          m2?: number // Changé de sqft à m2
           status?: Database["public"]["Enums"]["property_status"] | null
           terrace_area?: number | null
           title: string
@@ -133,7 +133,7 @@ export type Database = {
           project_name?: string | null
           property_type?: Database["public"]["Enums"]["property_type"]
           rooms?: number | null
-          sqft?: number
+          m2?: number // Changé de sqft à m2
           status?: Database["public"]["Enums"]["property_status"] | null
           terrace_area?: number | null
           title?: string

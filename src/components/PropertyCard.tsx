@@ -12,7 +12,7 @@ interface PropertyCardProps {
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
   const { t } = useTranslation();
-  
+
   // Vérification et conversion de la date
   const getFormattedDate = () => {
     try {
@@ -96,9 +96,9 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             <div className="flex items-center">
               <Square size={18} className="mr-1 text-estate-neutral-500" />
               <span className="text-sm">
-                {property.propertyType === "land" 
-                  ? `${(property.sqft / 43560).toFixed(2)} acres` 
-                  : `${property.sqft} sqft`}
+                {property.propertyType === "land"
+                  ? `${(property.m2 / 4046.86).toFixed(2)} acres`
+                  : `${property.m2} m²`}
               </span>
             </div>
           </div>

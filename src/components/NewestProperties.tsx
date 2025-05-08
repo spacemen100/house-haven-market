@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 const NewestProperties = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  
+
   console.log("Initializing NewestProperties component");
 
   const { data: properties = [], isLoading, error } = useQuery({
@@ -28,7 +28,7 @@ const NewestProperties = () => {
       console.log("First property details:", {
         beds: properties[0]?.beds,
         baths: properties[0]?.baths,
-        sqft: properties[0]?.sqft
+        m2: properties[0]?.m2 // Changé de sqft à m2
       });
     }
   }, [properties, isLoading, error]);
@@ -40,15 +40,15 @@ const NewestProperties = () => {
           <h2 className="text-2xl md:text-3xl font-bold text-estate-800">
             {t('newestProperties.title')}
           </h2>
-          <Button 
-            variant="link" 
+          <Button
+            variant="link"
             className="text-estate-800 hover:no-underline p-0"
             onClick={() => navigate("/properties")}
           >
             {t('newestProperties.viewAll')} <ArrowRight className="ml-2" size={18} />
           </Button>
         </div>
-        
+
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[1, 2, 3].map((n) => (
@@ -70,9 +70,9 @@ const NewestProperties = () => {
         ) : properties.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {properties.slice(0, 3).map((property) => (
-              <PropertyCard 
-                key={property.id} 
-                property={property} 
+              <PropertyCard
+                key={property.id}
+                property={property}
                 showListingType
               />
             ))}

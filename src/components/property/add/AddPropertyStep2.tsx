@@ -24,7 +24,7 @@ const formSchema = z.object({
   }),
   beds: z.coerce.number().int().min(0, "Beds must be 0 or more"),
   baths: z.coerce.number().int().min(0, "Baths must be 0 or more"),
-  sqft: z.coerce.number().positive("Area must be a positive number"),
+  m2: z.coerce.number().positive("Area must be a positive number"), // Changé de sqft à m2
   yearBuilt: z.coerce.number().int().min(1800, "Year must be 1800 or later").max(new Date().getFullYear(), "Year cannot be in the future"),
   cadastral_code: z.string().optional(),
   condition: z.enum(["newly_renovated", "under_renovation", "white_frame", "green_frame", "not_renovated", "black_frame", "old_renovation"]),
@@ -51,7 +51,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
       currency: "GEL",
       beds: 0,
       baths: 0,
-      sqft: 0,
+      m2: 0, // Changé de sqft à m2
       yearBuilt: new Date().getFullYear(),
       cadastral_code: "",
       condition: "newly_renovated",
@@ -65,7 +65,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
   const onSubmit = async (data: FormValues) => {
     try {
       console.log('Data before submit:', data);
-      
+
       // Correction ici - envoyer toutes les données du formulaire
       onNext(data);
     } catch (error) {
@@ -228,7 +228,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
 
             <FormField
               control={form.control}
-              name="sqft"
+              name="m2"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Area (m²)</FormLabel>

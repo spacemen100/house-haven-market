@@ -1,4 +1,3 @@
-
 // src/lib/api/properties.ts
 import { supabase } from "@/lib/api/supabaseClient";
 import { Property } from "@/types/property";
@@ -22,7 +21,7 @@ export interface CreatePropertyInput {
   lng?: number;
   beds: number;
   baths: number;
-  m2: number;
+  m2: number; // Changé de sqft à m2
   rooms?: number;
   hasElevator?: boolean;
   hasVentilation?: boolean;
@@ -68,7 +67,7 @@ const transformProperty = (property: any): Property => ({
   plan: property.plan,
   beds: property.beds,
   baths: property.baths,
-  sqft: property.sqft,
+  m2: property.m2, // Changé de sqft à m2
   rooms: property.rooms || 0,
   terraceArea: property.terrace_area || 0,
   kitchenType: property.kitchen_type || 'open',
@@ -128,7 +127,7 @@ export const createProperty = async (input: CreatePropertyInput) => {
       lng: input.lng,
       beds: input.beds,
       baths: input.baths,
-      sqft: input.sqft,
+      m2: input.m2, // Changé de sqft à m2
       rooms: input.rooms,
       has_elevator: input.hasElevator,
       has_ventilation: input.hasVentilation,
@@ -144,7 +143,7 @@ export const createProperty = async (input: CreatePropertyInput) => {
       .single();
 
     if (propertyError) throw propertyError;
-    
+
     if (input.images?.length) {
       const imagePromises = input.images.map(async (file) => {
         const fileExt = file.name.split('.').pop();
@@ -173,25 +172,25 @@ export const createProperty = async (input: CreatePropertyInput) => {
     }
 
     const relatedDataPromises = [
-      ...(input.amenities?.map(amenity => 
+      ...(input.amenities?.map(amenity =>
         supabase.from('property_amenities').insert({ property_id: property.id, amenity })
       ) || []),
-      ...(input.equipment?.map(equipment => 
+      ...(input.equipment?.map(equipment =>
         supabase.from('property_equipment').insert({ property_id: property.id, equipment })
       ) || []),
-      ...(input.internetTv?.map(option => 
+      ...(input.internetTv?.map(option =>
         supabase.from('property_internet_tv').insert({ property_id: property.id, option_name: option })
       ) || []),
-      ...(input.storage?.map(storage => 
+      ...(input.storage?.map(storage =>
         supabase.from('property_storage').insert({ property_id: property.id, storage_type: storage })
       ) || []),
-      ...(input.security?.map(security => 
+      ...(input.security?.map(security =>
         supabase.from('property_security').insert({ property_id: property.id, security_feature: security })
       ) || []),
-      ...(input.nearbyPlaces?.map(place => 
+      ...(input.nearbyPlaces?.map(place =>
         supabase.from('property_nearby_places').insert({ property_id: property.id, place_name: place })
       ) || []),
-      ...(input.onlineServices?.map(service => 
+      ...(input.onlineServices?.map(service =>
         supabase.from('property_online_services').insert({ property_id: property.id, service_name: service })
       ) || [])
     ];
@@ -222,7 +221,7 @@ export const getProperties = async (type?: 'sale' | 'rent' | 'rent_by_day'): Pro
         property_nearby_places (place_name),
         property_online_services (service_name)
       `);
-      
+
     if (type) {
       query = query.eq('listing_type', type);
     }
@@ -338,7 +337,7 @@ export const deleteProperty = async (propertyId: string) => {
       'property_online_services'
     ];
 
-    await Promise.all(relatedTables.map(table => 
+    await Promise.all(relatedTables.map(table =>
       supabase.from(table).delete().eq('property_id', propertyId)
     ));
 
@@ -382,7 +381,7 @@ export const getNewestProperties = async (): Promise<Property[]> => {
         price,
         beds,
         baths,
-        sqft,
+        m2, // Changé de sqft à m2
         property_type,
         listing_type,
         created_at,
@@ -399,9 +398,9 @@ export const getNewestProperties = async (): Promise<Property[]> => {
       .limit(3);
 
     if (error) throw error;
-    
+
     console.log('Raw properties data:', properties); // Debug
-    
+
     return properties.map(transformProperty);
   } catch (error) {
     console.error('Error fetching newest properties:', error);
