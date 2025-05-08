@@ -62,7 +62,6 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
       instagramHandle: values.instagramHandle,
       facebookUrl: values.facebookUrl,
       twitterHandle: values.twitterHandle,
-      reference_number: values.reference_number,
     };
     onNext(mappedData);
   };
