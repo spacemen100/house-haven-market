@@ -261,6 +261,8 @@ export const createProperty = async (input: CreatePropertyInput) => {
 
     if (propertyError) throw propertyError;
 
+    console.log('Property created:', property); // Log pour vérifier la propriété créée
+
     if (input.images?.length) {
       const imagePromises = input.images.map(async (file) => {
         const fileExt = file.name.split('.').pop();
@@ -322,6 +324,7 @@ export const createProperty = async (input: CreatePropertyInput) => {
     throw error;
   }
 };
+
 
 export const getProperties = async (type?: 'sale' | 'rent' | 'rent_by_day'): Promise<Property[]> => {
   try {

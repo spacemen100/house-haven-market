@@ -73,6 +73,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
 
   const onSubmit = async (data: FormValues) => {
     try {
+      console.log('Submitting form data:', data); // Log pour vérifier les données du formulaire
       const mappedData = {
         title: data.title,
         description: data.description,
@@ -92,6 +93,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
         total_floors: data.total_floors,
         featured: data.featured,
       };
+      console.log('Mapped data:', mappedData); // Log pour vérifier les données mappées
       onNext(mappedData);
     } catch (error) {
       console.error('Submission error:', error);

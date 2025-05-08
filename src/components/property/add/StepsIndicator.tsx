@@ -7,13 +7,15 @@ interface StepsIndicatorProps {
 }
 
 const StepsIndicator = ({ currentStep, steps }: StepsIndicatorProps) => {
+  console.log('Rendering StepsIndicator with currentStep:', currentStep, 'and steps:', steps); // Ajoutez un log pour vérifier les props
+
   return (
     <div className="flex justify-between items-center max-w-3xl mx-auto">
       {steps.map((step, index) => (
         <React.Fragment key={step.number}>
           <div className={`flex flex-col items-center ${currentStep >= step.number ? "text-teal-500" : "text-gray-400"}`}>
-            <div 
-              className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 
+            <div
+              className={`w-10 h-10 rounded-full flex items-center justify-center mb-2
                 ${currentStep > step.number ? "bg-teal-500" : currentStep === step.number ? "bg-teal-500" : "bg-gray-200"}
                 ${currentStep >= step.number ? "text-white" : ""}`}
             >
@@ -21,11 +23,11 @@ const StepsIndicator = ({ currentStep, steps }: StepsIndicatorProps) => {
             </div>
             <span className="text-sm hidden sm:block">{step.label}</span>
           </div>
-          
+
           {index < steps.length - 1 && (
             <div className="flex-1 h-1 mx-2 bg-gray-200">
-              <div 
-                className={`h-full transition-all duration-300 ${currentStep > step.number ? "bg-teal-500" : "bg-gray-200"}`} 
+              <div
+                className={`h-full transition-all duration-300 ${currentStep > step.number ? "bg-teal-500" : "bg-gray-200"}`}
                 style={{width: currentStep > step.number ? "100%" : "0%"}}
               />
             </div>
