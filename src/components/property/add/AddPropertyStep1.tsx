@@ -56,8 +56,8 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
 
   const onSubmit = (values: z.infer<typeof propertyStep1Schema>) => {
     const mappedData = {
-      phone_number: values.phone_number,
-      contact_email: values.contactEmail,
+      phoneNumber: values.phone_number, // Correction du nom
+      contactEmail: values.contactEmail,
       instagramHandle: values.instagramHandle,
       facebookUrl: values.facebookUrl,
       twitterHandle: values.twitterHandle,
