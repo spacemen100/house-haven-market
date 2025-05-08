@@ -5,6 +5,8 @@ import { Property, PropertyType, ListingType } from "@/types/property";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 import PropertyCard from "@/components/PropertyCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -20,7 +22,7 @@ const Properties = () => {
 
   // State for basic filters
   const [searchQuery, setSearchQuery] = useState(initialSearch);
-  const [listingType, setListingType] = useState<ListingType>(initialListingType);
+  const [listingType, setListingType] = useState<"sale" | "rent" | "rent_by_day">(initialListingType as "sale" | "rent" | "rent_by_day");
   const [propertyTypes, setPropertyTypes] = useState<PropertyType[]>([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(5000000);
@@ -54,6 +56,32 @@ const Properties = () => {
       maximumFractionDigits: currency === 'GEL' ? 2 : 0
     }).format(price);
   };
+
+  // Buttons de type de listing
+  const listingTypeButtons = [
+    { value: "sale", label: "À vendre" },
+    { value: "rent", label: "À louer" },
+    { value: "rent_by_day", label: "Location journalière" }
+  ];
+
+  const handleListingTypeChange = (value: "sale" | "rent" | "rent_by_day") => {
+    setListingType(value);
+  };
+
+  const renderListingTypeFilter = () => (
+    <RadioGroup
+      value={listingType}
+      onValueChange={(value: "sale" | "rent" | "rent_by_day") => handleListingTypeChange(value)}
+      className="flex flex-col space-y-1"
+    >
+      {listingTypeButtons.map((option) => (
+        <div key={option.value} className="flex items-center space-x-2">
+          <RadioGroupItem value={option.value} id={`listing-type-${option.value}`} />
+          <Label htmlFor={`listing-type-${option.value}`}>{option.label}</Label>
+        </div>
+      ))}
+    </RadioGroup>
+  );
 
   // State for advanced filters
   const [features, setFeatures] = useState({
@@ -408,16 +436,20 @@ const Properties = () => {
 
   // Filter options data
   const propertyTypeOptions = [
-    { id: "house", label: "Houses" },
-    { id: "apartment", label: "Apartments" },
-    { id: "land", label: "Land" },
-    { id: "commercial", label: "Commercial" },
+    { id: "house", label: "Maison" },
+    { id: "apartment", label: "Appartement" },
+    { id: "land", label: "Terrain" },
+    { id: "commercial", label: "Local commercial" },
   ];
 
   const conditionOptions = [
-    { id: "new", label: "New" },
-    { id: "good", label: "Good" },
-    { id: "needs_renovation", label: "Needs Renovation" },
+    { id: "newly_renovated", label: "Nouvellement rénové" },
+    { id: "under_renovation", label: "En rénovation" },
+    { id: "white_frame", label: "Cadre blanc" },
+    { id: "green_frame", label: "Cadre vert" },
+    { id: "not_renovated", label: "Non rénové" },
+    { id: "black_frame", label: "Cadre noir" },
+    { id: "old_renovation", label: "Ancienne rénovation" },
   ];
 
   const furnitureOptions = [
@@ -674,22 +706,7 @@ const Properties = () => {
           {/* Listing Type */}
           <div className="space-y-3">
             <h3 className="font-medium">Listing Type</h3>
-            <div className="flex gap-3">
-              <Button
-                variant={listingType === "sale" ? "default" : "outline"}
-                className={listingType === "sale" ? "bg-teal-500 hover:bg-teal-600" : ""}
-                onClick={() => setListingType("sale")}
-              >
-                For Sale
-              </Button>
-              <Button
-                variant={listingType === "rent" ? "default" : "outline"}
-                className={listingType === "rent" ? "bg-teal-500 hover:bg-teal-600" : ""}
-                onClick={() => setListingType("rent")}
-              >
-                For Rent
-              </Button>
-            </div>
+            {renderListingTypeFilter()}
           </div>
 
           {/* Property Type */}
@@ -922,22 +939,7 @@ const Properties = () => {
       {/* Listing Type */}
       <div className="space-y-3">
         <h4 className="font-medium">Listing Type</h4>
-        <div className="flex gap-3">
-          <Button
-            variant={listingType === "sale" ? "default" : "outline"}
-            className={listingType === "sale" ? "bg-teal-500 hover:bg-teal-600" : ""}
-            onClick={() => setListingType("sale")}
-          >
-            For Sale
-          </Button>
-          <Button
-            variant={listingType === "rent" ? "default" : "outline"}
-            className={listingType === "rent" ? "bg-teal-500 hover:bg-teal-600" : ""}
-            onClick={() => setListingType("rent")}
-          >
-            For Rent
-          </Button>
-        </div>
+        {renderListingTypeFilter()}
       </div>
 
       <hr />
