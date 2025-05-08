@@ -47,7 +47,8 @@
   "bath": "აბაზანა",
   "baths": "აბაზანა",
   "acres": "აკრი",
-  "sqft": "კვ.ფუტი",
+  "sqft": "მ²",  // Mis à jour pour utiliser des mètres carrés
+  "m2": "მ²",
   "loading": "იტვირთება",
   "fetchError": "უძრავი ქონების ჩატვირთვის შეცდომა",
   "noPropertiesAvailable": "ამჟამად ხელმისაწვდომი უძრავი ქონება არ არის",
