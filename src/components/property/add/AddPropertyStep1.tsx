@@ -56,7 +56,8 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
 
   const onSubmit = (values: z.infer<typeof propertyStep1Schema>) => {
     const mappedData = {
-      phoneNumber: values.phone_number, // Correction du nom
+      phone_number: values.phone_number,
+      reference_number: values.reference_number,
       contactEmail: values.contactEmail,
       instagramHandle: values.instagramHandle,
       facebookUrl: values.facebookUrl,
@@ -65,7 +66,7 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
     };
     onNext(mappedData);
   };
-  
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
