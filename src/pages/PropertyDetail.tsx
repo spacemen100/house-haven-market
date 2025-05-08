@@ -1,3 +1,4 @@
+// src/pages/PropertyDetail.tsx
 import { useEffect, useState, lazy, Suspense } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -8,7 +9,6 @@ import PropertyHeader from "@/components/property/PropertyHeader";
 import PropertyGallery from "@/components/property/PropertyGallery";
 import { Loader2, MapPin, Ruler, Building, Home, Layers, Calendar, Key, Heart, Share2, Printer } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { formatCurrency } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, User } from "lucide-react";
 import { useCurrency } from '@/CurrencyContext';
@@ -92,7 +92,7 @@ const PropertyDetail = () => {
           plan: propertyData.plan,
           beds: propertyData.beds,
           baths: propertyData.baths,
-          m2: propertyData.m2, // Changé de sqft à m2
+          m2: propertyData.m2, // Changed from sqft to m2
           rooms: propertyData.rooms || 0,
           terraceArea: propertyData.terrace_area || 0,
           kitchenType: propertyData.kitchen_type || 'open',
@@ -123,7 +123,7 @@ const PropertyDetail = () => {
           facebookUrl: propertyData.facebook_url,
           twitterHandle: propertyData.twitter_handle,
           referenceNumber: propertyData.reference_number,
-          pricePerM2: propertyData.price_per_m2, // Changé de price_per_sqm à price_per_m2
+          pricePerM2: propertyData.price_per_m2, // Changed from price_per_sqm to price_per_m2
           hasGas: propertyData.has_gas,
           hasLoggia: propertyData.has_loggia,
           buildingMaterial: propertyData.building_material,
@@ -266,12 +266,6 @@ const PropertyDetail = () => {
                       <p className="text-gray-600">
                         {formatPrice(property.pricePerM2, property.currency)} per m²
                       </p>
-                    )}
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-900">{formatCurrency(property.price)}</h3>
-                    {property.pricePerM2 && (
-                      <p className="text-gray-600">{formatCurrency(property.pricePerM2)} per m²</p>
                     )}
                   </div>
                   <div className="flex gap-2">
