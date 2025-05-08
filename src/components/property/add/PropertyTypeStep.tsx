@@ -8,17 +8,11 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 
 const formSchema = z.object({
-  listing_type: z.enum(["sell", "rent", "rent_by_day", "leasing"], {
-    required_error: "You must select a listing type",
+  listing_type: z.enum(["sale", "rent", "rent_by_day"], {
+    required_error: "Vous devez sélectionner un type d'annonce",
   }),
-  property_type: z.enum([
-    "house_construction",
-    "apartment",
-    "house_cottage",
-    "commercial",
-    "land"
-  ], {
-    required_error: "You must select a property type",
+  property_type: z.enum(["house", "apartment", "land", "commercial"], {
+    required_error: "Vous devez sélectionner un type de propriété",
   }),
 });
 
@@ -64,12 +58,12 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                     className="grid grid-cols-1 md:grid-cols-2 gap-4"
                   >
                     <div>
-                      <RadioGroupItem value="sell" id="sell" className="peer sr-only" />
+                      <RadioGroupItem value="sale" id="sale" className="peer sr-only" />
                       <Label
-                        htmlFor="sell"
+                        htmlFor="sale"
                         className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
-                        <span className="font-medium">Sell</span>
+                        <span className="font-medium">À vendre</span>
                       </Label>
                     </div>
                     <div>
@@ -78,7 +72,7 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                         htmlFor="rent"
                         className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
-                        <span className="font-medium">Rent</span>
+                        <span className="font-medium">À louer</span>
                       </Label>
                     </div>
                     <div>
@@ -87,16 +81,7 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                         htmlFor="rent_by_day"
                         className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
-                        <span className="font-medium">Daily Rent</span>
-                      </Label>
-                    </div>
-                    <div>
-                      <RadioGroupItem value="leasing" id="leasing" className="peer sr-only" />
-                      <Label
-                        htmlFor="leasing"
-                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-                      >
-                        <span className="font-medium">Leasing</span>
+                        <span className="font-medium">Location journalière</span>
                       </Label>
                     </div>
                   </RadioGroup>
@@ -111,7 +96,7 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
             name="property_type"
             render={({ field }) => (
               <FormItem className="space-y-4">
-                <FormLabel>Property Type*</FormLabel>
+                <FormLabel>Type de propriété*</FormLabel>
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
@@ -119,12 +104,12 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                     className="grid grid-cols-1 md:grid-cols-2 gap-4"
                   >
                     <div>
-                      <RadioGroupItem value="house_construction" id="house_construction" className="peer sr-only" />
+                      <RadioGroupItem value="house" id="house" className="peer sr-only" />
                       <Label
-                        htmlFor="house_construction"
+                        htmlFor="house"
                         className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
-                        <span className="font-medium">House, Construction and Renovation</span>
+                        <span className="font-medium">Maison</span>
                       </Label>
                     </div>
                     <div>
@@ -133,25 +118,7 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                         htmlFor="apartment"
                         className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
-                        <span className="font-medium">Apartment</span>
-                      </Label>
-                    </div>
-                    <div>
-                      <RadioGroupItem value="house_cottage" id="house_cottage" className="peer sr-only" />
-                      <Label
-                        htmlFor="house_cottage"
-                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-                      >
-                        <span className="font-medium">House and Cottage</span>
-                      </Label>
-                    </div>
-                    <div>
-                      <RadioGroupItem value="commercial" id="commercial" className="peer sr-only" />
-                      <Label
-                        htmlFor="commercial"
-                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-                      >
-                        <span className="font-medium">Commercial Real Estate</span>
+                        <span className="font-medium">Appartement</span>
                       </Label>
                     </div>
                     <div>
@@ -160,7 +127,16 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                         htmlFor="land"
                         className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
-                        <span className="font-medium">Land</span>
+                        <span className="font-medium">Terrain</span>
+                      </Label>
+                    </div>
+                    <div>
+                      <RadioGroupItem value="commercial" id="commercial" className="peer sr-only" />
+                      <Label
+                        htmlFor="commercial"
+                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                      >
+                        <span className="font-medium">Local commercial</span>
                       </Label>
                     </div>
                   </RadioGroup>

@@ -6,43 +6,39 @@ export interface CreatePropertyInput {
   title: string;
   description?: string;
   price: number;
-  phoneNumber?: string;
-  cadastralCode?: string;
+  phone_number?: string;
+  cadastral_code?: string;
   propertyType: 'house' | 'apartment' | 'land' | 'commercial';
   listingType: 'sale' | 'rent' | 'rent_by_day';
   status?: 'free' | 'under_caution' | 'under_construction';
   condition?: 'new' | 'good' | 'needs_renovation';
   plan?: string;
-  addressStreet?: string;
-  addressCity: string;
-  addressDistrict?: string;
+  address_street?: string;
+  address_city: string;
+  address_district?: string;
   lat?: number;
   lng?: number;
   beds: number;
   baths: number;
   m2: number;
   rooms?: number;
-  hasElevator?: boolean;
-  hasVentilation?: boolean;
-  hasAirConditioning?: boolean;
-  isAccessible?: boolean;
+  has_elevator?: boolean;
+  has_ventilation?: boolean;
+  has_air_conditioning?: boolean;
+  is_accessible?: boolean;
   amenities?: string[];
   equipment?: string[];
-  internetTv?: string[];
+  internet_tv?: string[];
   storage?: string[];
   security?: string[];
-  nearbyPlaces?: string[];
-  onlineServices?: string[];
+  nearby_places?: string[];
+  online_services?: string[];
   images?: File[];
   contactEmail?: string;
   instagramHandle?: string;
   facebookUrl?: string;
   twitterHandle?: string;
   currency?: string;
-  has_elevator?: boolean;
-  has_ventilation?: boolean;
-  has_air_conditioning?: boolean;
-  is_accessible?: boolean;
   has_gas?: boolean;
   has_loggia?: boolean;
   has_fireplace?: boolean;
@@ -93,7 +89,7 @@ export interface CreatePropertyInput {
   ceiling_height?: number;
   floor_level?: number;
   total_floors?: number;
-  yearBuilt?: number;
+  year_built?: number;
   featured?: boolean;
   building_material?: string;
   furniture_type?: string;
@@ -110,7 +106,7 @@ const transformProperty = (property: any): Property => ({
   title: property.title,
   description: property.description || '',
   price: property.price,
-  phoneNumber: property.phone_number,
+  phone_number: property.phone_number,
   cadastralCode: property.cadastral_code,
   address: {
     street: property.address_street || '',
@@ -168,6 +164,7 @@ export const createProperty = async (input: CreatePropertyInput) => {
     const { data: { user }, error: userError } = await supabase.auth.getUser();
     if (userError || !user) throw new Error("User not authenticated");
 
+    console.log('Data being inserted into properties table:', input); // Log pour vérifier les données insérées dans la table properties
     const { data: property, error: propertyError } = await supabase
       .from('properties')
       .insert({
@@ -175,33 +172,33 @@ export const createProperty = async (input: CreatePropertyInput) => {
         description: input.description,
         price: input.price,
         currency: input.currency || 'GEL',
-        phone_number: input.phoneNumber,
-        cadastral_code: input.cadastralCode,
+        phone_number: input.phone_number,
+        cadastral_code: input.cadastral_code,
         property_type: input.propertyType,
         listing_type: input.listingType,
         status: input.status,
         condition: input.condition,
         plan: input.plan,
-        address_street: input.addressStreet,
-        address_city: input.addressCity,
-        address_district: input.addressDistrict,
+        address_street: input.address_street,
+        address_city: input.address_city,
+        address_district: input.address_district,
         lat: input.lat,
         lng: input.lng,
         beds: input.beds,
         baths: input.baths,
         m2: input.m2,
         rooms: input.rooms,
-        terrace_area: input.terraceArea,
-        kitchen_type: input.kitchenType,
-        ceiling_height: input.ceilingHeight,
-        floor_level: input.floorLevel,
-        total_floors: input.totalFloors,
-        year_built: input.yearBuilt,
+        terrace_area: input.terrace_area,
+        kitchen_type: input.kitchen_type,
+        ceiling_height: input.ceiling_height,
+        floor_level: input.floor_level,
+        total_floors: input.total_floors,
+        year_built: input.year_built,
         featured: input.featured,
-        has_elevator: input.hasElevator,
-        has_ventilation: input.hasVentilation,
-        has_air_conditioning: input.hasAirConditioning,
-        is_accessible: input.isAccessible,
+        has_elevator: input.has_elevator,
+        has_ventilation: input.has_ventilation,
+        has_air_conditioning: input.has_air_conditioning,
+        is_accessible: input.is_accessible,
         has_gas: input.has_gas,
         has_loggia: input.has_loggia,
         building_material: input.building_material,
@@ -297,7 +294,7 @@ export const createProperty = async (input: CreatePropertyInput) => {
       ...(input.equipment?.map(equipment =>
         supabase.from('property_equipment').insert({ property_id: property.id, equipment })
       ) || []),
-      ...(input.internetTv?.map(option =>
+      ...(input.internet_tv?.map(option =>
         supabase.from('property_internet_tv').insert({ property_id: property.id, option_name: option })
       ) || []),
       ...(input.storage?.map(storage =>
@@ -306,10 +303,10 @@ export const createProperty = async (input: CreatePropertyInput) => {
       ...(input.security?.map(security =>
         supabase.from('property_security').insert({ property_id: property.id, security_feature: security })
       ) || []),
-      ...(input.nearbyPlaces?.map(place =>
+      ...(input.nearby_places?.map(place =>
         supabase.from('property_nearby_places').insert({ property_id: property.id, place_name: place })
       ) || []),
-      ...(input.onlineServices?.map(service =>
+      ...(input.online_services?.map(service =>
         supabase.from('property_online_services').insert({ property_id: property.id, service_name: service })
       ) || [])
     ];

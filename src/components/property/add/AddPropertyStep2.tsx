@@ -36,6 +36,7 @@ const formSchema = z.object({
   floor_level: z.coerce.number().optional(),
   total_floors: z.coerce.number().optional(),
   featured: z.boolean().default(false),
+  rooms: z.coerce.number().int().min(0, "Rooms must be 0 or more"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -67,13 +68,14 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
       floor_level: undefined,
       total_floors: undefined,
       featured: false,
+      rooms: 0,
       ...initialValues,
     },
   });
 
   const onSubmit = async (data: FormValues) => {
     try {
-      console.log('Submitting form data:', data); // Log pour vérifier les données du formulaire
+      console.log('Form data submitted:', data);
       const mappedData = {
         title: data.title,
         description: data.description,
@@ -82,7 +84,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
         beds: data.beds,
         baths: data.baths,
         m2: data.m2,
-        yearBuilt: data.yearBuilt,
+        year_built: data.yearBuilt,
         cadastral_code: data.cadastral_code,
         condition: data.condition,
         status: data.status,
@@ -92,14 +94,14 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
         floor_level: data.floor_level,
         total_floors: data.total_floors,
         featured: data.featured,
+        rooms: data.rooms,
       };
-      console.log('Mapped data:', mappedData); // Log pour vérifier les données mappées
+      console.log('Mapped data:', mappedData);
       onNext(mappedData);
     } catch (error) {
       console.error('Submission error:', error);
     }
   };
-  
 
   return (
     <Form {...form}>
@@ -262,6 +264,24 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
                   <FormLabel>Area (m²)</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="rooms"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Number of Rooms</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="Enter the number of rooms"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
