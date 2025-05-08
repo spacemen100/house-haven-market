@@ -27,7 +27,6 @@ const MAX_IMAGES = 10;
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
-// Schema Zod pour la validation
 const addressSchema = z.object({
   addressStreet: z.string().optional(),
   addressCity: z.string().min(1, "La ville est requise"),
@@ -59,7 +58,6 @@ const AddPropertyStep4 = ({
   const [availableDistricts, setAvailableDistricts] = useState<string[]>([]);
   const [availableStreets, setAvailableStreets] = useState<string[]>([]);
 
-  // Initialisation du formulaire avec Zod
   const form = useForm<AddressFormValues>({
     resolver: zodResolver(addressSchema),
     defaultValues: {
@@ -159,7 +157,6 @@ const AddPropertyStep4 = ({
   };
 
   const handleSubmit = (data: AddressFormValues) => {
-    // Mettre à jour formData avec les images et l'adresse
     Object.assign(formData, {
       images,
       address_street: data.addressStreet,
@@ -359,7 +356,6 @@ const AddPropertyStep4 = ({
           </Button>
         </div>
 
-        {/* Image Preview Dialog */}
         <Dialog open={previewDialogOpen} onOpenChange={setPreviewDialogOpen}>
           <DialogContent className="sm:max-w-xl">
             <DialogHeader>

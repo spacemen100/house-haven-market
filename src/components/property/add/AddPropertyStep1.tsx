@@ -42,7 +42,6 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
   });
 
   useEffect(() => {
-    // Generate a random alphanumeric reference number of length 7
     const generateReferenceNumber = () => {
       const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
       let result = '';

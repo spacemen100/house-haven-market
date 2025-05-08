@@ -150,6 +150,7 @@ const formSchema = z.object({
 
   // New Fields
   building_material: z.enum(["brick", "concrete", "wood", "combined"]).optional(),
+  furniture_type: z.enum(["furnished", "semi_furnished", "unfurnished"]).optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -213,6 +214,7 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
       allows_parties: false,
       allows_smoking: false,
       building_material: undefined,
+      furniture_type: undefined,
     },
   });
 
@@ -360,6 +362,28 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
                         <option value="concrete">Concrete</option>
                         <option value="wood">Wood</option>
                         <option value="combined">Combined</option>
+                      </select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="furniture_type"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Furniture Type</FormLabel>
+                    <FormControl>
+                      <select
+                        {...field}
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        <option value="">Select...</option>
+                        <option value="furnished">Furnished</option>
+                        <option value="semi_furnished">Semi Furnished</option>
+                        <option value="unfurnished">Unfurnished</option>
                       </select>
                     </FormControl>
                     <FormMessage />

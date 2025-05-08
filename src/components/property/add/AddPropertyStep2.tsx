@@ -24,13 +24,16 @@ const formSchema = z.object({
   }),
   beds: z.coerce.number().int().min(0, "Beds must be 0 or more"),
   baths: z.coerce.number().int().min(0, "Baths must be 0 or more"),
-  m2: z.coerce.number().positive("Area must be a positive number"), // Changé de sqft à m2
+  m2: z.coerce.number().positive("Area must be a positive number"),
   yearBuilt: z.coerce.number().int().min(1800, "Year must be 1800 or later").max(new Date().getFullYear(), "Year cannot be in the future"),
   cadastral_code: z.string().optional(),
   condition: z.enum(["newly_renovated", "under_renovation", "white_frame", "green_frame", "not_renovated", "black_frame", "old_renovation"]),
   status: z.enum(["available", "pending", "sold", "new_building_under_construction", "old_building"]).default("available"),
   kitchen_type: z.enum(["isolated", "outside", "studio"]).optional(),
   ceiling_height: z.coerce.number().min(2, "Ceiling height must be at least 2 meters").max(7, "Ceiling height must be at most 7 meters").optional(),
+  terrace_area: z.coerce.number().optional(),
+  floor_level: z.coerce.number().optional(),
+  total_floors: z.coerce.number().optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -51,13 +54,16 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
       currency: "GEL",
       beds: 0,
       baths: 0,
-      m2: 0, // Changé de sqft à m2
+      m2: 0,
       yearBuilt: new Date().getFullYear(),
       cadastral_code: "",
       condition: "newly_renovated",
       status: "available",
       kitchen_type: undefined,
       ceiling_height: undefined,
+      terrace_area: undefined,
+      floor_level: undefined,
+      total_floors: undefined,
       ...initialValues,
     },
   });
@@ -65,8 +71,6 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
   const onSubmit = async (data: FormValues) => {
     try {
       console.log('Data before submit:', data);
-
-      // Correction ici - envoyer toutes les données du formulaire
       onNext(data);
     } catch (error) {
       console.error('Submission error:', error);
@@ -344,6 +348,48 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
                         field.onChange(e);
                       }}
                     />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="terrace_area"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Terrace Area (m²)</FormLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="floor_level"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Floor Level</FormLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="total_floors"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Total Floors</FormLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
