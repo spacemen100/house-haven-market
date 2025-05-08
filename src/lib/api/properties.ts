@@ -99,7 +99,6 @@ const transformProperty = (property: any): Property => ({
   twitterHandle: property.twitter_handle
 });
 
-// src/lib/api/properties.ts
 export const createProperty = async (input: CreatePropertyInput) => {
   try {
     // 1. Authentification et validation
@@ -109,35 +108,50 @@ export const createProperty = async (input: CreatePropertyInput) => {
     const { data: property, error: propertyError } = await supabase
       .from('properties')
       .insert({
-      title: input.title,
-      description: input.description,
-      price: input.price,
-      currency: input.currency || 'GEL', // Garantie de valeur par défaut
-      phone_number: input.phoneNumber,
-      cadastral_code: input.cadastralCode,
-      property_type: input.propertyType,
-      listing_type: input.listingType,
-      status: input.status,
-      condition: input.condition,
-      plan: input.plan,
-      address_street: input.addressStreet,
-      address_city: input.addressCity,
-      address_district: input.addressDistrict,
-      lat: input.lat,
-      lng: input.lng,
-      beds: input.beds,
-      baths: input.baths,
-      m2: input.m2, // Changé de sqft à m2
-      rooms: input.rooms,
-      has_elevator: input.hasElevator,
-      has_ventilation: input.hasVentilation,
-      has_air_conditioning: input.hasAirConditioning,
-      is_accessible: input.isAccessible,
-      contact_email: input.contactEmail,
-      instagram_handle: input.instagramHandle,
-      facebook_url: input.facebookUrl,
-      twitter_handle: input.twitterHandle,
-      user_id: user.id
+        title: input.title,
+        description: input.description,
+        price: input.price,
+        currency: input.currency || 'GEL',
+        phone_number: input.phoneNumber,
+        cadastral_code: input.cadastralCode,
+        property_type: input.propertyType,
+        listing_type: input.listingType,
+        status: input.status,
+        condition: input.condition,
+        plan: input.plan,
+        address_street: input.addressStreet,
+        address_city: input.addressCity,
+        address_district: input.addressDistrict,
+        lat: input.lat,
+        lng: input.lng,
+        beds: input.beds,
+        baths: input.baths,
+        m2: input.m2,
+        rooms: input.rooms,
+        terrace_area: input.terraceArea,
+        kitchen_type: input.kitchenType,
+        ceiling_height: input.ceilingHeight,
+        floor_level: input.floorLevel,
+        total_floors: input.totalFloors,
+        year_built: input.yearBuilt,
+        featured: input.featured,
+        has_elevator: input.hasElevator,
+        has_ventilation: input.hasVentilation,
+        has_air_conditioning: input.hasAirConditioning,
+        is_accessible: input.isAccessible,
+        has_gas: input.hasGas,
+        has_loggia: input.hasLoggia,
+        building_material: input.buildingMaterial,
+        furniture_type: input.furnitureType,
+        has_fireplace: input.hasFireplace,
+        storeroom_type: input.storeroomType,
+        heating_type: input.heatingType,
+        hot_water_type: input.hotWaterType,
+        contact_email: input.contactEmail,
+        instagram_handle: input.instagramHandle,
+        facebook_url: input.facebookUrl,
+        twitter_handle: input.twitterHandle,
+        user_id: user.id
       })
       .select()
       .single();

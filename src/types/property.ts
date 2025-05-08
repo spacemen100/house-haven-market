@@ -5,81 +5,63 @@ export type PropertyCondition = 'new' | 'good' | 'needs_renovation';
 export type KitchenType = 'american' | 'open' | 'closed';
 export type PropertyStatus = 'free' | 'under_caution' | 'under_construction';
 
+// types/property.ts
 export interface Property {
-  // Basic Information
   id: string;
   title: string;
-  description: string;
-  currency: 'GEL' | 'USD' | 'EUR';
+  description?: string;
   price: number;
   phoneNumber?: string;
   cadastralCode?: string;
-  
-  // Location
-  address: {
-    street: string;
-    city: string;
-    state: string;
-    zip: string;
-    district?: string;
-    coordinates?: {
-      lat: number;
-      lng: number;
-    };
-  };
-  
-  // Property Details
-  propertyType: PropertyType;
-  listingType: ListingType;
-  status?: PropertyStatus;
-  condition?: PropertyCondition;
+  propertyType: 'house' | 'apartment' | 'land' | 'commercial';
+  listingType: 'sale' | 'rent' | 'rent_by_day';
+  status?: 'free' | 'under_caution' | 'under_construction';
+  condition?: 'new' | 'good' | 'needs_renovation';
   plan?: string;
-  
-  // Specifications
+  addressStreet?: string;
+  addressCity: string;
+  addressDistrict?: string;
+  lat?: number;
+  lng?: number;
   beds: number;
   baths: number;
   m2: number;
   rooms?: number;
   terraceArea?: number;
-  kitchenType?: KitchenType;
+  kitchenType?: string;
   ceilingHeight?: number;
   floorLevel?: number;
   totalFloors?: number;
-  yearBuilt: number;
-  
-  // Features and Amenities
+  yearBuilt?: number;
   featured?: boolean;
-  amenities?: string[];
   hasElevator?: boolean;
   hasVentilation?: boolean;
   hasAirConditioning?: boolean;
-  
-  // Equipment and Services
+  isAccessible?: boolean;
+  amenities?: string[];
   equipment?: string[];
-  internetTV?: string[];
+  internetTv?: string[];
   storage?: string[];
   security?: string[];
-  isAccessible?: boolean;
-  
-  // Environment
   nearbyPlaces?: string[];
   onlineServices?: string[];
-  
-  // Media
-  images: string[];
-  
-  // Agent Information
+  images?: string[];
+
   agentName?: string;
   agentPhone?: string;
   projectName?: string;
-
-  // Contact and social media fields
   contactEmail?: string;
   instagramHandle?: string;
   facebookUrl?: string;
   twitterHandle?: string;
-  
-  // Metadata
-  createdAt?: string;
-  userId?: string;
+  currency?: string;
+  hasGas?: boolean;
+  hasLoggia?: boolean;
+  buildingMaterial?: string;
+  furnitureType?: string;
+  hasFireplace?: boolean;
+  storeroomType?: string;
+  heatingType?: string;
+  hotWaterType?: string;
 }
+
