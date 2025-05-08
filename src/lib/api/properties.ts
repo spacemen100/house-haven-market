@@ -93,18 +93,18 @@ export interface CreatePropertyInput {
   ceiling_height?: number;
   floor_level?: number;
   total_floors?: number;
-  phone_number?: string;
-  cadastral_code?: string;
-  property_type?: string;
-  listing_type?: string;
+  yearBuilt?: number;
+  featured?: boolean;
   building_material?: string;
   furniture_type?: string;
   storeroom_type?: string;
   heating_type?: string;
   hot_water_type?: string;
   parking_type?: string;
+  has_satellite_tv?: boolean;
+  has_phone_line?: boolean;
+  price_per_m2?: number;
 }
-
 const transformProperty = (property: any): Property => ({
   id: property.id,
   title: property.title,
