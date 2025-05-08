@@ -126,8 +126,7 @@ const Sell = () => {
   const handleFinalSubmit = async () => {
     try {
       setIsSubmitting(true);
-      // Ajoutez un log pour vérifier les données avant envoi
-      console.log('Submitting property data:', formData);
+      console.log('Submitting property data:', formData); // Log pour vérifier les données avant envoi
       await createProperty(formData as CreatePropertyInput);
       setFormData({});
       setStep(1);
@@ -230,6 +229,7 @@ const Sell = () => {
                     <PropertyTypeStep
                       onBack={user ? () => setStep(1) : undefined}
                       onNext={(data) => {
+                        console.log('PropertyTypeStep data:', data); // Log pour vérifier les données de PropertyTypeStep
                         setFormData({ ...formData, ...data });
                         setStep(3);
                       }}
@@ -240,6 +240,7 @@ const Sell = () => {
                     <AddPropertyStep1
                       onBack={() => setStep(2)}
                       onNext={(data) => {
+                        console.log('AddPropertyStep1 data:', data); // Log pour vérifier les données de AddPropertyStep1
                         setFormData({ ...formData, ...data });
                         setStep(4);
                       }}
@@ -250,6 +251,7 @@ const Sell = () => {
                     <AddPropertyStep2
                       onBack={() => setStep(3)}
                       onNext={(data) => {
+                        console.log('AddPropertyStep2 data:', data); // Log pour vérifier les données de AddPropertyStep2
                         setFormData({ ...formData, ...data });
                         setStep(5);
                       }}
@@ -260,6 +262,7 @@ const Sell = () => {
                     <AddPropertyStep3
                       onBack={() => setStep(4)}
                       onNext={(data) => {
+                        console.log('AddPropertyStep3 data:', data); // Log pour vérifier les données de AddPropertyStep3
                         setFormData({ ...formData, ...data });
                         setStep(6);
                       }}

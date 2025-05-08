@@ -164,6 +164,7 @@ const transformProperty = (property: any): Property => ({
 
 export const createProperty = async (input: CreatePropertyInput) => {
   try {
+    console.log('Creating property with data:', input); // Log pour vérifier les données avant l'insertion
     const { data: { user }, error: userError } = await supabase.auth.getUser();
     if (userError || !user) throw new Error("User not authenticated");
 

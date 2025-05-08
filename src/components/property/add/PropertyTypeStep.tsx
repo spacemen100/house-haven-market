@@ -34,8 +34,8 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     const mappedData = {
-      listing_type: data.listing_type,
-      property_type: data.property_type,
+      listingType: data.listing_type, // Assurez-vous que le nom correspond à ce qui est attendu
+      propertyType: data.property_type, // Assurez-vous que le nom correspond à ce qui est attendu
     };
     onNext(mappedData);
   };
