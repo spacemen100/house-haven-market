@@ -24,6 +24,10 @@ const amenities = [
   { id: "has_fireplace", label: "Fireplace" },
   { id: "has_internet", label: "Internet" },
   { id: "has_cable_tv", label: "Cable TV" },
+  { id: "has_satellite_tv", label: "Satellite TV" },
+  { id: "has_phone_line", label: "Phone Line" },
+  { id: "has_vent", label: "Ventilation" },
+  { id: "has_cinema", label: "Home Cinema" },
 ];
 
 const kitchenAppliances = [
@@ -92,6 +96,10 @@ const formSchema = z.object({
   has_fireplace: z.boolean().default(false),
   has_internet: z.boolean().default(false),
   has_cable_tv: z.boolean().default(false),
+  has_satellite_tv: z.boolean().default(false),
+  has_phone_line: z.boolean().default(false),
+  has_vent: z.boolean().default(false),
+  has_cinema: z.boolean().default(false),
 
   // Kitchen
   has_dishwasher: z.boolean().default(false),
@@ -174,6 +182,10 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
       has_fireplace: false,
       has_internet: false,
       has_cable_tv: false,
+      has_satellite_tv: false,
+      has_phone_line: false,
+      has_vent: false,
+      has_cinema: false,
       has_dishwasher: false,
       has_gas_stove: false,
       has_electric_kettle: false,
@@ -231,6 +243,10 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
       has_fireplace: data.has_fireplace,
       has_internet: data.has_internet,
       has_cable_tv: data.has_cable_tv,
+      has_satellite_tv: data.has_satellite_tv,
+      has_phone_line: data.has_phone_line,
+      has_vent: data.has_vent,
+      has_cinema: data.has_cinema,
       has_dishwasher: data.has_dishwasher,
       has_gas_stove: data.has_gas_stove,
       has_electric_kettle: data.has_electric_kettle,
