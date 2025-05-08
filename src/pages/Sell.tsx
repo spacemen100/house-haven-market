@@ -126,8 +126,14 @@ const Sell = () => {
   const handleFinalSubmit = async () => {
     try {
       setIsSubmitting(true);
-      console.log('Submitting property data:', formData); // Log pour vérifier les données avant envoi
-      await createProperty(formData as CreatePropertyInput);
+      const finalData = {
+        ...formData,
+        instagramHandle: formData.instagramHandle,
+        facebookUrl: formData.facebookUrl,
+        twitterHandle: formData.twitterHandle,
+      };
+      console.log('Final property data:', finalData); // Log pour vérifier les données finales
+      await createProperty(finalData as CreatePropertyInput);
       setFormData({});
       setStep(1);
       toast.success("Ad published successfully");

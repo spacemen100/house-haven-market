@@ -58,9 +58,9 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
     const mappedData = {
       phone_number: values.phone_number,
       contact_email: values.contactEmail,
-      instagram_handle: values.instagramHandle,
-      facebook_url: values.facebookUrl,
-      twitter_handle: values.twitterHandle,
+      instagramHandle: values.instagramHandle,
+      facebookUrl: values.facebookUrl,
+      twitterHandle: values.twitterHandle,
       reference_number: values.reference_number,
     };
     onNext(mappedData);
