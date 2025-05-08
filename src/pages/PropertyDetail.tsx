@@ -92,7 +92,7 @@ const PropertyDetail = () => {
           plan: propertyData.plan,
           beds: propertyData.beds,
           baths: propertyData.baths,
-          sqft: propertyData.sqft,
+          m2: propertyData.m2, // Changé de sqft à m2
           rooms: propertyData.rooms || 0,
           terraceArea: propertyData.terrace_area || 0,
           kitchenType: propertyData.kitchen_type || 'open',
@@ -123,7 +123,7 @@ const PropertyDetail = () => {
           facebookUrl: propertyData.facebook_url,
           twitterHandle: propertyData.twitter_handle,
           referenceNumber: propertyData.reference_number,
-          pricePerSqm: propertyData.price_per_sqm,
+          pricePerM2: propertyData.price_per_m2, // Changé de price_per_sqm à price_per_m2
           hasGas: propertyData.has_gas,
           hasLoggia: propertyData.has_loggia,
           buildingMaterial: propertyData.building_material,
@@ -178,7 +178,8 @@ const PropertyDetail = () => {
           allowsParties: propertyData.allows_parties,
           allowsSmoking: propertyData.allows_smoking,
           hasSatelliteTV: propertyData.has_satellite_tv,
-          hasPhoneLine: propertyData.has_phone_line
+          hasPhoneLine: propertyData.has_phone_line,
+          currency: propertyData.currency
         };
 
         setProperty(propertyObject);
@@ -261,16 +262,16 @@ const PropertyDetail = () => {
                     <h3 className="text-2xl font-bold text-gray-900">
                       {formatPrice(property.price, property.currency)}
                     </h3>
-                    {property.pricePerSqm && (
+                    {property.pricePerM2 && (
                       <p className="text-gray-600">
-                        {formatPrice(property.pricePerSqm, property.currency)} per sqm
+                        {formatPrice(property.pricePerM2, property.currency)} per m²
                       </p>
                     )}
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-gray-900">{formatCurrency(property.price)}</h3>
-                    {property.pricePerSqm && (
-                      <p className="text-gray-600">{formatCurrency(property.pricePerSqm)} per sqm</p>
+                    {property.pricePerM2 && (
+                      <p className="text-gray-600">{formatCurrency(property.pricePerM2)} per m²</p>
                     )}
                   </div>
                   <div className="flex gap-2">
@@ -295,7 +296,7 @@ const PropertyDetail = () => {
                     <Ruler className="h-5 w-5 text-gray-400" />
                     <div>
                       <p className="text-sm text-gray-500">Area</p>
-                      <p className="font-medium">{property.sqft} sqft</p>
+                      <p className="font-medium">{property.m2} m²</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">

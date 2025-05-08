@@ -22,7 +22,7 @@ export interface CreatePropertyInput {
   lng?: number;
   beds: number;
   baths: number;
-  sqft: number;
+  m2: number;
   rooms?: number;
   hasElevator?: boolean;
   hasVentilation?: boolean;

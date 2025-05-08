@@ -38,7 +38,7 @@ export interface Property {
   // Specifications
   beds: number;
   baths: number;
-  sqft: number;
+  m2: number;
   rooms?: number;
   terraceArea?: number;
   kitchenType?: KitchenType;
