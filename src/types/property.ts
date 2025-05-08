@@ -10,6 +10,7 @@ export interface Property {
   id: string;
   title: string;
   description: string;
+  currency: 'GEL' | 'USD' | 'EUR';
   price: number;
   phoneNumber?: string;
   cadastralCode?: string;

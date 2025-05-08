@@ -12,6 +12,7 @@ import Account from "./pages/Account";
 import VerificationError from "./pages/VerificationError";
 import { supabase } from "@/lib/api/supabaseClient";
 import { useEffect, useState } from "react";
+import { CurrencyProvider } from '@/CurrencyContext';
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => {
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <CurrencyProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
@@ -53,6 +55,7 @@ const App = () => {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+        </CurrencyProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

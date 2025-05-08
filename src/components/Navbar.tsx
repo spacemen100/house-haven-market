@@ -10,10 +10,12 @@ import { signInWithEmail, signUpWithEmail, signOut } from '@/lib/api/auth';
 import { supabase } from '@/lib/api/supabaseClient';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/LanguageContext';
+import { useCurrency } from '@/CurrencyContext';
 
 const Navbar = () => {
   const { t } = useTranslation();
   const { language, changeLanguage } = useLanguage();
+  const { currency, setCurrency } = useCurrency();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
@@ -137,6 +139,20 @@ const Navbar = () => {
                 <option value="en">English</option>
                 <option value="ru">Русский</option>
                 <option value="ka">ქართული</option>
+              </select>
+            </Button>
+          </div>
+          <div className="relative">
+            <Button variant="ghost" className="flex items-center gap-1 text-gray-600 hover:text-gray-800">
+              {currency} <ChevronDown size={16} />
+              <select 
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value as Currency)}
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              >
+                <option value="GEL">GEL</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
               </select>
             </Button>
           </div>

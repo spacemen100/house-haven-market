@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, User } from "lucide-react";
+import { useCurrency } from '@/CurrencyContext';
 
 // Chargement différé du composant de carte
 const PropertyMap = lazy(() => import("@/components/PropertyMap"));
@@ -21,6 +22,7 @@ const PropertyDetail = () => {
   const [property, setProperty] = useState<Property | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
+  const { formatPrice } = useCurrency();
 
   useEffect(() => {
     const fetchPropertyDetails = async () => {
@@ -215,7 +217,7 @@ const PropertyDetail = () => {
           <div className="text-center max-w-md p-6 bg-white rounded-xl shadow-sm">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Property not found</h2>
             <p className="text-gray-600 mb-6">This property doesn't exist or has been removed.</p>
-            <Button 
+            <Button
               onClick={() => navigate('/properties')}
               className="bg-cyan-600 hover:bg-cyan-700"
             >
@@ -231,7 +233,7 @@ const PropertyDetail = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Navbar />
-      
+
       <main className="flex-grow">
         <div className="container py-8">
           <div className="flex justify-between items-start mb-6">
@@ -248,13 +250,23 @@ const PropertyDetail = () => {
               </Button>
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-8">
               <PropertyGallery property={property} />
-              
+
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900">
+                      {formatPrice(property.price, property.currency)}
+                    </h3>
+                    {property.pricePerSqm && (
+                      <p className="text-gray-600">
+                        {formatPrice(property.pricePerSqm, property.currency)} per sqm
+                      </p>
+                    )}
+                  </div>
                   <div>
                     <h3 className="text-2xl font-bold text-gray-900">{formatCurrency(property.price)}</h3>
                     {property.pricePerSqm && (
@@ -270,7 +282,7 @@ const PropertyDetail = () => {
                     </Badge>
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="flex items-center gap-2">
                     <Home className="h-5 w-5 text-gray-400" />
@@ -302,14 +314,14 @@ const PropertyDetail = () => {
                   </div>
                 </div>
               </div>
-              
+
               {property.description && (
                 <div className="bg-white rounded-xl shadow-sm p-6">
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">Description</h3>
                   <p className="text-gray-700 whitespace-pre-line">{property.description}</p>
                 </div>
               )}
-              
+
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Key Features</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -323,12 +335,12 @@ const PropertyDetail = () => {
                   {property.hasAlarm && <FeatureBadge icon="🚨" text="Security Alarm" />}
                 </div>
               </div>
-              
+
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Detailed Specifications</h3>
                 <div className="space-y-6">
-                  <SpecSection 
-                    icon={<Building className="h-5 w-5 text-cyan-600" />} 
+                  <SpecSection
+                    icon={<Building className="h-5 w-5 text-cyan-600" />}
                     title="Building Details"
                     items={[
                       { label: "Building Material", value: property.buildingMaterial || 'N/A' },
@@ -337,9 +349,9 @@ const PropertyDetail = () => {
                       { label: "Condition", value: property.condition },
                     ]}
                   />
-                  
-                  <SpecSection 
-                    icon={<Home className="h-5 w-5 text-cyan-600" />} 
+
+                  <SpecSection
+                    icon={<Home className="h-5 w-5 text-cyan-600" />}
                     title="Interior Details"
                     items={[
                       { label: "Bedrooms", value: property.beds },
@@ -348,9 +360,9 @@ const PropertyDetail = () => {
                       { label: "Furniture", value: property.furnitureType || 'N/A' },
                     ]}
                   />
-                  
-                  <SpecSection 
-                    icon={<Layers className="h-5 w-5 text-cyan-600" />} 
+
+                  <SpecSection
+                    icon={<Layers className="h-5 w-5 text-cyan-600" />}
                     title="Utilities"
                     items={[
                       { label: "Heating", value: property.heatingType || 'N/A' },
@@ -361,7 +373,7 @@ const PropertyDetail = () => {
                   />
                 </div>
               </div>
-              
+
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-cyan-600" />
@@ -371,7 +383,7 @@ const PropertyDetail = () => {
                   <p className="text-gray-700">
                     {property.address.street}, {property.address.city}, {property.address.zip}
                   </p>
-                  
+
                   <Suspense fallback={
                     <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
                       <div className="text-center">
@@ -381,8 +393,8 @@ const PropertyDetail = () => {
                     </div>
                   }>
                     {property.address.coordinates?.lat && property.address.coordinates?.lng ? (
-                      <PropertyMap 
-                        lat={property.address.coordinates.lat} 
+                      <PropertyMap
+                        lat={property.address.coordinates.lat}
                         lng={property.address.coordinates.lng}
                         address={`${property.address.street}, ${property.address.city}`}
                       />
@@ -395,7 +407,7 @@ const PropertyDetail = () => {
                       </div>
                     )}
                   </Suspense>
-                  
+
                   <h4 className="font-medium text-gray-900 mt-4">Nearby Places</h4>
                   <div className="flex flex-wrap gap-2">
                     {property.nearBusStop && <Badge variant="outline">🚌 Bus Stop</Badge>}
@@ -410,11 +422,11 @@ const PropertyDetail = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="space-y-6">
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Contact Agent</h3>
-                
+
                 {property.agentName && (
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center text-cyan-600">
@@ -426,32 +438,32 @@ const PropertyDetail = () => {
                     </div>
                   </div>
                 )}
-                
+
                 <Button className="w-full bg-cyan-600 hover:bg-cyan-700 mb-3">
                   <Phone className="h-4 w-4 mr-2" />
                   Call Agent
                 </Button>
-                
+
                 <Button variant="outline" className="w-full mb-6">
                   <Mail className="h-4 w-4 mr-2" />
                   Email Agent
                 </Button>
-                
+
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <Phone className="h-4 w-4 text-cyan-600" />
-                    <a 
-                      href={`tel:${property.agentPhone || property.phoneNumber}`} 
+                    <a
+                      href={`tel:${property.agentPhone || property.phoneNumber}`}
                       className="text-gray-700 hover:text-cyan-600"
                     >
                       {property.agentPhone || property.phoneNumber}
                     </a>
                   </div>
-                  
+
                   <div className="flex items-center gap-3">
                     <Mail className="h-4 w-4 text-cyan-600" />
-                    <a 
-                      href={`mailto:${property.contactEmail || 'contact@example.com'}`} 
+                    <a
+                      href={`mailto:${property.contactEmail || 'contact@example.com'}`}
                       className="text-gray-700 hover:text-cyan-600"
                     >
                       {property.contactEmail || 'contact@example.com'}
@@ -459,7 +471,7 @@ const PropertyDetail = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Schedule a Tour</h3>
                 <p className="text-gray-600 mb-4">Arrange a viewing at your convenience</p>
@@ -467,7 +479,7 @@ const PropertyDetail = () => {
                   Book Viewing
                 </Button>
               </div>
-              
+
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Property Facts</h3>
                 <div className="space-y-4">
@@ -481,7 +493,7 @@ const PropertyDetail = () => {
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );
@@ -495,11 +507,11 @@ const FeatureBadge = ({ icon, text }: { icon: string; text: string }) => (
   </div>
 );
 
-const SpecSection = ({ 
-  icon, 
-  title, 
-  items 
-}: { 
+const SpecSection = ({
+  icon,
+  title,
+  items
+}: {
   icon: React.ReactNode;
   title: string;
   items: { label: string; value: string | number }[];
