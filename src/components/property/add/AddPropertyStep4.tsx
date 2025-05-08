@@ -165,10 +165,10 @@ const AddPropertyStep4 = ({
       lat: data.lat,
       lng: data.lng
     });
-
+  
     onSubmit();
   };
-
+  
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">

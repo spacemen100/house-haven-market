@@ -73,12 +73,31 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
 
   const onSubmit = async (data: FormValues) => {
     try {
-      console.log('Data before submit:', data);
-      onNext(data);
+      const mappedData = {
+        title: data.title,
+        description: data.description,
+        price: data.price,
+        currency: data.currency,
+        beds: data.beds,
+        baths: data.baths,
+        m2: data.m2,
+        yearBuilt: data.yearBuilt,
+        cadastral_code: data.cadastral_code,
+        condition: data.condition,
+        status: data.status,
+        kitchen_type: data.kitchen_type,
+        ceiling_height: data.ceiling_height,
+        terrace_area: data.terrace_area,
+        floor_level: data.floor_level,
+        total_floors: data.total_floors,
+        featured: data.featured,
+      };
+      onNext(mappedData);
     } catch (error) {
       console.error('Submission error:', error);
     }
   };
+  
 
   return (
     <Form {...form}>

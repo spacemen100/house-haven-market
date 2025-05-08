@@ -221,8 +221,66 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
   });
 
   const onSubmit = (data: FormValues) => {
-    onNext(data);
+    const mappedData = {
+      has_elevator: data.has_elevator,
+      has_ventilation: data.has_ventilation,
+      has_air_conditioning: data.has_air_conditioning,
+      is_accessible: data.is_accessible,
+      has_gas: data.has_gas,
+      has_loggia: data.has_loggia,
+      has_fireplace: data.has_fireplace,
+      has_internet: data.has_internet,
+      has_cable_tv: data.has_cable_tv,
+      has_dishwasher: data.has_dishwasher,
+      has_gas_stove: data.has_gas_stove,
+      has_electric_kettle: data.has_electric_kettle,
+      has_induction_oven: data.has_induction_oven,
+      has_microwave: data.has_microwave,
+      has_electric_oven: data.has_electric_oven,
+      has_washing_machine: data.has_washing_machine,
+      has_tv: data.has_tv,
+      has_coffee_machine: data.has_coffee_machine,
+      has_audio_system: data.has_audio_system,
+      has_heater: data.has_heater,
+      has_hair_dryer: data.has_hair_dryer,
+      has_refrigerator: data.has_refrigerator,
+      has_vacuum_cleaner: data.has_vacuum_cleaner,
+      has_dryer: data.has_dryer,
+      has_iron: data.has_iron,
+      has_co_detector: data.has_co_detector,
+      has_smoke_detector: data.has_smoke_detector,
+      has_evacuation_ladder: data.has_evacuation_ladder,
+      has_fire_fighting_system: data.has_fire_fighting_system,
+      has_perimeter_cameras: data.has_perimeter_cameras,
+      has_alarm: data.has_alarm,
+      has_live_protection: data.has_live_protection,
+      has_locked_entrance: data.has_locked_entrance,
+      has_locked_yard: data.has_locked_yard,
+      near_bus_stop: data.near_bus_stop,
+      near_bank: data.near_bank,
+      near_subway: data.near_subway,
+      near_supermarket: data.near_supermarket,
+      near_kindergarten: data.near_kindergarten,
+      near_city_center: data.near_city_center,
+      near_pharmacy: data.near_pharmacy,
+      near_greenery: data.near_greenery,
+      near_park: data.near_park,
+      near_shopping_centre: data.near_shopping_centre,
+      near_school: data.near_school,
+      near_old_district: data.near_old_district,
+      allows_pets: data.allows_pets,
+      allows_parties: data.allows_parties,
+      allows_smoking: data.allows_smoking,
+      heating_type: data.heating_type,
+      hot_water_type: data.hot_water_type,
+      parking_type: data.parking_type,
+      building_material: data.building_material,
+      furniture_type: data.furniture_type,
+      storeroom_type: data.storeroom_type,
+    };
+    onNext(mappedData);
   };
+  
 
   const renderCheckboxGroup = (title: string, items: {id: string, label: string}[]) => (
     <div className="space-y-4">
