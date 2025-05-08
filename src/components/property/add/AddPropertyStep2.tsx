@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -34,6 +35,7 @@ const formSchema = z.object({
   terrace_area: z.coerce.number().optional(),
   floor_level: z.coerce.number().optional(),
   total_floors: z.coerce.number().optional(),
+  featured: z.boolean().default(false),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -64,6 +66,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
       terrace_area: undefined,
       floor_level: undefined,
       total_floors: undefined,
+      featured: false,
       ...initialValues,
     },
   });
@@ -391,6 +394,23 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="featured"
+              render={({ field }) => (
+                <FormItem className="flex items-center space-x-2">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormLabel>Featured</FormLabel>
                   <FormMessage />
                 </FormItem>
               )}
