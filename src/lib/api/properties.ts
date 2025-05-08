@@ -1,4 +1,3 @@
-// src/lib/api/properties.ts
 import { supabase } from "@/lib/api/supabaseClient";
 import { Property } from "@/types/property";
 import { toast } from "sonner";
@@ -21,7 +20,7 @@ export interface CreatePropertyInput {
   lng?: number;
   beds: number;
   baths: number;
-  m2: number; // Changé de sqft à m2
+  m2: number;
   rooms?: number;
   hasElevator?: boolean;
   hasVentilation?: boolean;
@@ -40,7 +39,6 @@ export interface CreatePropertyInput {
   facebookUrl?: string;
   twitterHandle?: string;
   currency?: string;
-  // Ajouter tous les champs booléens
   has_elevator?: boolean;
   has_ventilation?: boolean;
   has_air_conditioning?: boolean;
@@ -90,8 +88,6 @@ export interface CreatePropertyInput {
   allows_pets?: boolean;
   allows_parties?: boolean;
   allows_smoking?: boolean;
-  
-  // Ajouter les autres champs manquants
   terrace_area?: number;
   kitchen_type?: string;
   ceiling_height?: number;
@@ -134,7 +130,7 @@ const transformProperty = (property: any): Property => ({
   plan: property.plan,
   beds: property.beds,
   baths: property.baths,
-  m2: property.m2, // Changé de sqft à m2
+  m2: property.m2,
   rooms: property.rooms || 0,
   terraceArea: property.terrace_area || 0,
   kitchenType: property.kitchen_type || 'open',
@@ -436,26 +432,21 @@ export const getMyProperties = async (): Promise<Property[]> => {
   }
 };
 
-// Temporarily removing favorite property functions until we create a user_likes table in Supabase
 export const getLikedProperties = async (): Promise<Property[]> => {
-  // This will be implemented when we create a user_likes table
   return [];
 };
 
 export const likeProperty = async (propertyId: string) => {
-  // This will be implemented when we create a user_likes table
   toast.success("Property added to favorites");
   return true;
 };
 
 export const unlikeProperty = async (propertyId: string) => {
-  // This will be implemented when we create a user_likes table
   toast.success("Property removed from favorites");
   return true;
 };
 
 export const checkIfLiked = async (propertyId: string): Promise<boolean> => {
-  // This will be implemented when we create a user_likes table
   return false;
 };
 
@@ -464,7 +455,6 @@ export const deleteProperty = async (propertyId: string) => {
     const { data: { user }, error: userError } = await supabase.auth.getUser();
     if (userError || !user) throw new Error("User not authenticated");
 
-    // First delete all related data
     const relatedTables = [
       'property_amenities',
       'property_equipment',
@@ -480,7 +470,6 @@ export const deleteProperty = async (propertyId: string) => {
       supabase.from(table).delete().eq('property_id', propertyId)
     ));
 
-    // Then delete the property
     const { error } = await supabase
       .from('properties')
       .delete()
@@ -520,7 +509,7 @@ export const getNewestProperties = async (): Promise<Property[]> => {
         price,
         beds,
         baths,
-        m2, // Changé de sqft à m2
+        m2,
         property_type,
         listing_type,
         created_at,
@@ -531,14 +520,13 @@ export const getNewestProperties = async (): Promise<Property[]> => {
         property_images (image_url),
         property_amenities (amenity),
         property_equipment (equipment)
-        // ... autres relations nécessaires ...
       `)
       .order('created_at', { ascending: false })
       .limit(3);
 
     if (error) throw error;
 
-    console.log('Raw properties data:', properties); // Debug
+    console.log('Raw properties data:', properties);
 
     return properties.map(transformProperty);
   } catch (error) {
