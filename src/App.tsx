@@ -1,3 +1,4 @@
+// src/App.tsx
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -41,20 +42,20 @@ const App = () => {
         <Toaster />
         <Sonner />
         <CurrencyProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/property/:id" element={<PropertyDetail />} />
-            <Route path="/properties" element={<Properties />} />
-            <Route path="/sell" element={<Sell />} />
-            <Route
-              path="/account"
-              element={user ? <Account /> : <Navigate to="/" replace />}
-            />
-            <Route path="/verification-error" element={<VerificationError />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/property/:id" element={<PropertyDetail />} />
+              <Route path="/properties" element={<Properties />} />
+              <Route path="/sell" element={<Sell />} />
+              <Route
+                path="/account"
+                element={user ? <Account /> : <Navigate to="/" replace />}
+              />
+              <Route path="/verification-error" element={<VerificationError />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
         </CurrencyProvider>
       </TooltipProvider>
     </QueryClientProvider>

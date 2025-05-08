@@ -1,3 +1,4 @@
+// src/components/Navbar.tsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, User, ChevronDown } from 'lucide-react';
@@ -131,7 +132,7 @@ const Navbar = () => {
           <div className="relative">
             <Button variant="ghost" className="flex items-center gap-1 text-gray-600 hover:text-gray-800">
               {t('language')} <ChevronDown size={16} />
-              <select 
+              <select
                 value={language}
                 onChange={(e) => handleLanguageChange(e.target.value)}
                 className="absolute inset-0 opacity-0 cursor-pointer"
@@ -145,7 +146,7 @@ const Navbar = () => {
           <div className="relative">
             <Button variant="ghost" className="flex items-center gap-1 text-gray-600 hover:text-gray-800">
               {currency} <ChevronDown size={16} />
-              <select 
+              <select
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value as Currency)}
                 className="absolute inset-0 opacity-0 cursor-pointer"
@@ -251,7 +252,7 @@ const Navbar = () => {
             <hr className="my-2" />
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium text-gray-700">{t('language')}</label>
-              <select 
+              <select
                 value={language}
                 onChange={(e) => {
                   handleLanguageChange(e.target.value);

@@ -47,8 +47,8 @@
   "bath": "Ванная",
   "baths": "Ванные",
   "acres": "акров",
-  "sqft": "м²",  // Mis à jour pour utiliser des mètres carrés
-  "m2": "м²",  // Mis à jour pour utiliser des mètres carrés
+  "sqft": "м²",  
+  "m2": "м²", 
   "loading": "Загрузка",
   "fetchError": "Ошибка загрузки объектов",
   "noPropertiesAvailable": "Нет доступных объектов в данный момент",

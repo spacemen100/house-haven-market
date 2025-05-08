@@ -1,8 +1,10 @@
+// src/components/PropertyCard.tsx
+import React from "react";
 import { Link } from "react-router-dom";
 import { MapPin, Bed, Bath, Square, Calendar } from "lucide-react";
 import { Property } from "@/types/property";
 import { Badge } from "@/components/ui/badge";
-import { formatCurrency } from "@/lib/utils";
+import { useCurrency } from "@/CurrencyContext";
 import { useTranslation } from "react-i18next";
 import { format, parseISO } from "date-fns";
 
@@ -12,15 +14,13 @@ interface PropertyCardProps {
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
   const { t } = useTranslation();
+  const { formatPrice } = useCurrency();
 
-  // Vérification et conversion de la date
   const getFormattedDate = () => {
     try {
-      // Si createdAt est une string ISO, on la parse
       if (typeof property.createdAt === 'string') {
         return format(parseISO(property.createdAt), 'MMM d, yyyy');
       }
-      // Si c'est déjà un objet Date
       if (property.createdAt instanceof Date) {
         return format(property.createdAt, 'MMM d, yyyy');
       }
@@ -69,8 +69,8 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
           <div className="flex justify-between items-center mb-2">
             <p className="text-lg font-bold text-estate-800">
               {property.listingType === "rent"
-                ? `${formatCurrency(property.price)}/month`
-                : formatCurrency(property.price)}
+                ? `${formatPrice(property.price, property.currency)}/month`
+                : formatPrice(property.price, property.currency)}
             </p>
             <div className="flex items-center text-sm text-estate-neutral-500">
               <Calendar size={14} className="mr-1" />

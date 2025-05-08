@@ -6,29 +6,42 @@ type Currency = 'GEL' | 'USD' | 'EUR';
 interface CurrencyContextType {
   currency: Currency;
   setCurrency: (currency: Currency) => void;
-  convertPrice: (price: number, fromCurrency: Currency) => number;
-  formatPrice: (price: number, fromCurrency: Currency) => string;
+  convertPrice: (price: number, fromCurrency?: Currency) => number;
+  formatPrice: (price: number, fromCurrency?: Currency) => string;
 }
 
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
+// Conversion rates
+const conversionRates = {
+  GEL: {
+    GEL: 1,
+    USD: 1 / 2.75, // 1 GEL = 1 / 2.75 USD
+    EUR: 1 / 3.12, // 1 GEL = 1 / 3.12 EUR
+  },
+  USD: {
+    GEL: 2.75, // 1 USD = 2.75 GEL
+    USD: 1,
+    EUR: 2.75 / 3.12, // 1 USD = 2.75 / 3.12 EUR
+  },
+  EUR: {
+    GEL: 3.12, // 1 EUR = 3.12 GEL
+    USD: 3.12 / 2.75, // 1 EUR = 3.12 / 2.75 USD
+    EUR: 1,
+  },
+};
+
 export const CurrencyProvider = ({ children }: { children: ReactNode }) => {
   const [currency, setCurrency] = useState<Currency>('GEL');
 
-  // Taux de conversion (1 USD = 2.75 GEL, 1 EUR = 3.12 GEL)
-  const conversionRates = {
-    GEL: 1,
-    USD: 2.75,
-    EUR: 3.12
+  const convertPrice = (price: number, fromCurrency: Currency = 'GEL') => {
+    // Ensure fromCurrency is valid
+    const validFromCurrency = fromCurrency in conversionRates ? fromCurrency : 'GEL';
+    // Convert the price from the source currency to the target currency
+    return price * conversionRates[validFromCurrency][currency];
   };
 
-  const convertPrice = (price: number, fromCurrency: Currency) => {
-    // Convertir d'abord en GEL puis vers la devise cible
-    const priceInGel = price * conversionRates[fromCurrency];
-    return priceInGel / conversionRates[currency];
-  };
-
-  const formatPrice = (price: number, fromCurrency: Currency) => {
+  const formatPrice = (price: number, fromCurrency: Currency = 'GEL') => {
     const convertedPrice = convertPrice(price, fromCurrency);
     return new Intl.NumberFormat(undefined, {
       style: 'currency',
