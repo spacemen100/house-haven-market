@@ -22,20 +22,20 @@ const Properties = () => {
 
   // State for basic filters
   const [searchQuery, setSearchQuery] = useState(initialSearch);
-  const [listingType, setListingType] = useState<"sale" | "rent" | "rent_by_day"| "lease">(initialListingType as "sale" | "rent" | "rent_by_day");
+  const [listingType, setListingType] = useState<"sale" | "rent" | "rent_by_day" | "lease">(initialListingType as "sale" | "rent" | "rent_by_day");
   const [propertyTypes, setPropertyTypes] = useState<PropertyType[]>([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(5000000);
   const [minBeds, setMinBeds] = useState(0);
   const [minBaths, setMinBaths] = useState(0);
-  const [minM2, setMinM2] = useState(0); // Changé de minSqft à minM2
-  const [maxM2, setMaxM2] = useState(500); // Changé de maxSqft (1000) à maxM2 (500)
+  const [minM2, setMinM2] = useState(0);
+  const [maxM2, setMaxM2] = useState(500);
   const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [minPriceInput, setMinPriceInput] = useState(minPrice.toString());
   const [maxPriceInput, setMaxPriceInput] = useState(maxPrice.toString());
-  const [minM2Input, setMinM2Input] = useState(minM2.toString()); // Changé de minSqftInput
-  const [maxM2Input, setMaxM2Input] = useState(maxM2.toString()); // Changé de maxSqftInput
+  const [minM2Input, setMinM2Input] = useState(minM2.toString());
+  const [maxM2Input, setMaxM2Input] = useState(maxM2.toString());
   const [sortOption, setSortOption] = useState<string>("recent");
   const [currency, setCurrency] = useState<string>('USD');
 
@@ -59,13 +59,13 @@ const Properties = () => {
 
   // Buttons de type de listing
   const listingTypeButtons = [
-    { value: "sale", label: "À vendre" },
-    { value: "rent", label: "À louer" },
-    { value: "rent_by_day", label: "Location journalière" },
-    { value: "lease", label: "Bail commercial" }
+    { value: "sale", label: "For Sale" },
+    { value: "rent", label: "For Rent" },
+    { value: "rent_by_day", label: "Daily Rent" },
+    { value: "lease", label: "Commercial Lease" }
   ];
 
-  const handleListingTypeChange = (value: "sale" | "rent" | "rent_by_day"| "lease") => {
+  const handleListingTypeChange = (value: "sale" | "rent" | "rent_by_day" | "lease") => {
     setListingType(value);
   };
 
@@ -102,6 +102,41 @@ const Properties = () => {
     hasLoggia: false,
     hasDishwasher: false,
     hasWashingMachine: false,
+    hasGasStove: false,
+    hasVent: false,
+    hasElectricKettle: false,
+    hasInductionOven: false,
+    hasMicrowave: false,
+    hasTv: false,
+    hasCoffeeMachine: false,
+    hasAudioSystem: false,
+    hasHeater: false,
+    hasElectricOven: false,
+    hasHairDryer: false,
+    hasCinema: false,
+    hasRefrigerator: false,
+    hasVacuumCleaner: false,
+    hasDryer: false,
+    hasIron: false,
+    hasCoDetector: false,
+    hasSmokeDetector: false,
+    hasEvacuationLadder: false,
+    hasFireFightingSystem: false,
+    hasPerimeterCameras: false,
+    hasAlarm: false,
+    hasLiveProtection: false,
+    hasLockedEntrance: false,
+    hasLockedYard: false,
+    nearBusStop: false,
+    nearBank: false,
+    nearSupermarket: false,
+    nearKindergarten: false,
+    nearCityCenter: false,
+    nearPharmacy: false,
+    nearGreenery: false,
+    nearOldDistrict: false,
+    hasSatelliteTv: false,
+    hasPhoneLine: false,
   });
 
   const [condition, setCondition] = useState<string[]>([]);
@@ -116,8 +151,8 @@ const Properties = () => {
     { value: "oldest", label: "Oldest" },
     { value: "price-asc", label: "Price: Low to High" },
     { value: "price-desc", label: "Price: High to Low" },
-    { value: "m2-asc", label: "Surface: Small to Large" }, // Changé de sqft-asc à m2-asc
-    { value: "m2-desc", label: "Surface: Large to Small" }, // Changé de sqft-desc à m2-desc
+    { value: "m2-asc", label: "Surface: Small to Large" },
+    { value: "m2-desc", label: "Surface: Large to Small" },
   ];
 
   const sortProperties = (properties: Property[]) => {
@@ -144,10 +179,10 @@ const Properties = () => {
         return sorted.sort((a, b) => a.price - b.price);
       case "price-desc":
         return sorted.sort((a, b) => b.price - a.price);
-      case "m2-asc": // Changé de sqft-asc à m2-asc
-        return sorted.sort((a, b) => (a.m2 || 0) - (b.m2 || 0)); // Changé de sqft à m2
-      case "m2-desc": // Changé de sqft-desc à m2-desc
-        return sorted.sort((a, b) => (b.m2 || 0) - (a.m2 || 0)); // Changé de sqft à m2
+      case "m2-asc":
+        return sorted.sort((a, b) => (a.m2 || 0) - (b.m2 || 0));
+      case "m2-desc":
+        return sorted.sort((a, b) => (b.m2 || 0) - (a.m2 || 0));
       default:
         return sorted;
     }
@@ -222,7 +257,7 @@ const Properties = () => {
 
   const handleM2Blur = () => {
     const min = parseInt(minM2Input) || 0;
-    const max = parseInt(maxM2Input) || 500; // Changé de 1000 à 500
+    const max = parseInt(maxM2Input) || 500;
     setMinM2(Math.min(min, max));
     setMaxM2(Math.max(min, max));
   };
@@ -266,7 +301,7 @@ const Properties = () => {
     }
 
     filtered = filtered.filter(property =>
-      property.m2 >= minM2 && property.m2 <= maxM2 // Changé de sqft à m2
+      property.m2 >= minM2 && property.m2 <= maxM2
     );
 
     // Features filters
@@ -317,6 +352,111 @@ const Properties = () => {
     }
     if (features.hasWashingMachine) {
       filtered = filtered.filter(property => property.has_washing_machine);
+    }
+    if (features.hasGasStove) {
+      filtered = filtered.filter(property => property.has_gas_stove);
+    }
+    if (features.hasVent) {
+      filtered = filtered.filter(property => property.has_vent);
+    }
+    if (features.hasElectricKettle) {
+      filtered = filtered.filter(property => property.has_electric_kettle);
+    }
+    if (features.hasInductionOven) {
+      filtered = filtered.filter(property => property.has_induction_oven);
+    }
+    if (features.hasMicrowave) {
+      filtered = filtered.filter(property => property.has_microwave);
+    }
+    if (features.hasTv) {
+      filtered = filtered.filter(property => property.has_tv);
+    }
+    if (features.hasCoffeeMachine) {
+      filtered = filtered.filter(property => property.has_coffee_machine);
+    }
+    if (features.hasAudioSystem) {
+      filtered = filtered.filter(property => property.has_audio_system);
+    }
+    if (features.hasHeater) {
+      filtered = filtered.filter(property => property.has_heater);
+    }
+    if (features.hasElectricOven) {
+      filtered = filtered.filter(property => property.has_electric_oven);
+    }
+    if (features.hasHairDryer) {
+      filtered = filtered.filter(property => property.has_hair_dryer);
+    }
+    if (features.hasCinema) {
+      filtered = filtered.filter(property => property.has_cinema);
+    }
+    if (features.hasRefrigerator) {
+      filtered = filtered.filter(property => property.has_refrigerator);
+    }
+    if (features.hasVacuumCleaner) {
+      filtered = filtered.filter(property => property.has_vacuum_cleaner);
+    }
+    if (features.hasDryer) {
+      filtered = filtered.filter(property => property.has_dryer);
+    }
+    if (features.hasIron) {
+      filtered = filtered.filter(property => property.has_iron);
+    }
+    if (features.hasCoDetector) {
+      filtered = filtered.filter(property => property.has_co_detector);
+    }
+    if (features.hasSmokeDetector) {
+      filtered = filtered.filter(property => property.has_smoke_detector);
+    }
+    if (features.hasEvacuationLadder) {
+      filtered = filtered.filter(property => property.has_evacuation_ladder);
+    }
+    if (features.hasFireFightingSystem) {
+      filtered = filtered.filter(property => property.has_fire_fighting_system);
+    }
+    if (features.hasPerimeterCameras) {
+      filtered = filtered.filter(property => property.has_perimeter_cameras);
+    }
+    if (features.hasAlarm) {
+      filtered = filtered.filter(property => property.has_alarm);
+    }
+    if (features.hasLiveProtection) {
+      filtered = filtered.filter(property => property.has_live_protection);
+    }
+    if (features.hasLockedEntrance) {
+      filtered = filtered.filter(property => property.has_locked_entrance);
+    }
+    if (features.hasLockedYard) {
+      filtered = filtered.filter(property => property.has_locked_yard);
+    }
+    if (features.nearBusStop) {
+      filtered = filtered.filter(property => property.near_bus_stop);
+    }
+    if (features.nearBank) {
+      filtered = filtered.filter(property => property.near_bank);
+    }
+    if (features.nearSupermarket) {
+      filtered = filtered.filter(property => property.near_supermarket);
+    }
+    if (features.nearKindergarten) {
+      filtered = filtered.filter(property => property.near_kindergarten);
+    }
+    if (features.nearCityCenter) {
+      filtered = filtered.filter(property => property.near_city_center);
+    }
+    if (features.nearPharmacy) {
+      filtered = filtered.filter(property => property.near_pharmacy);
+    }
+    if (features.nearGreenery) {
+      filtered = filtered.filter(property => property.near_greenery);
+    }
+    if (features.nearOldDistrict) {
+      filtered = filtered.filter(property => property.near_old_district);
+    }
+    if (features.hasSatelliteTv) {
+      filtered = filtered.filter(property => property.has_satellite_tv);
+    }
+    if (features.hasPhoneLine) {
+      filtered = filtered.filter(property => property.has_phone_line);
     }
 
     // Condition filter
@@ -407,8 +547,8 @@ const Properties = () => {
     setMaxPrice(5000000);
     setMinBeds(0);
     setMinBaths(0);
-    setMinM2(0); // Changé de minSqft à minM2
-    setMaxM2(500); // Changé de maxSqft à maxM2
+    setMinM2(0);
+    setMaxM2(500);
     setFeatures({
       hasElevator: false,
       hasAirConditioning: false,
@@ -426,6 +566,41 @@ const Properties = () => {
       hasLoggia: false,
       hasDishwasher: false,
       hasWashingMachine: false,
+      hasGasStove: false,
+      hasVent: false,
+      hasElectricKettle: false,
+      hasInductionOven: false,
+      hasMicrowave: false,
+      hasTv: false,
+      hasCoffeeMachine: false,
+      hasAudioSystem: false,
+      hasHeater: false,
+      hasElectricOven: false,
+      hasHairDryer: false,
+      hasCinema: false,
+      hasRefrigerator: false,
+      hasVacuumCleaner: false,
+      hasDryer: false,
+      hasIron: false,
+      hasCoDetector: false,
+      hasSmokeDetector: false,
+      hasEvacuationLadder: false,
+      hasFireFightingSystem: false,
+      hasPerimeterCameras: false,
+      hasAlarm: false,
+      hasLiveProtection: false,
+      hasLockedEntrance: false,
+      hasLockedYard: false,
+      nearBusStop: false,
+      nearBank: false,
+      nearSupermarket: false,
+      nearKindergarten: false,
+      nearCityCenter: false,
+      nearPharmacy: false,
+      nearGreenery: false,
+      nearOldDistrict: false,
+      hasSatelliteTv: false,
+      hasPhoneLine: false,
     });
     setCondition([]);
     setFurnitureType([]);
@@ -437,26 +612,26 @@ const Properties = () => {
 
   // Filter options data
   const propertyTypeOptions = [
-    { id: "house", label: "Maison" },
-    { id: "apartment", label: "Appartement" },
-    { id: "land", label: "Terrain" },
-    { id: "commercial", label: "Local commercial" },
+    { id: "house", label: "House" },
+    { id: "apartment", label: "Apartment" },
+    { id: "land", label: "Land" },
+    { id: "commercial", label: "Commercial" },
   ];
 
   const conditionOptions = [
-    { id: "newly_renovated", label: "Nouvellement rénové" },
-    { id: "under_renovation", label: "En rénovation" },
-    { id: "white_frame", label: "Cadre blanc" },
-    { id: "green_frame", label: "Cadre vert" },
-    { id: "not_renovated", label: "Non rénové" },
-    { id: "black_frame", label: "Cadre noir" },
-    { id: "old_renovation", label: "Ancienne rénovation" },
+    { id: "newly_renovated", label: "Newly Renovated" },
+    { id: "under_renovation", label: "Under Renovation" },
+    { id: "white_frame", label: "White Frame" },
+    { id: "green_frame", label: "Green Frame" },
+    { id: "not_renovated", label: "Not Renovated" },
+    { id: "black_frame", label: "Black Frame" },
+    { id: "old_renovation", label: "Old Renovation" },
   ];
 
   const furnitureOptions = [
-    { id: "furnished", label: "Meublé" },
-    { id: "semi_furnished", label: "Semi-meublé" },
-    { id: "unfurnished", label: "Non meublé" },
+    { id: "furnished", label: "Furnished" },
+    { id: "semi_furnished", label: "Semi-Furnished" },
+    { id: "unfurnished", label: "Unfurnished" },
   ];
 
   const heatingOptions = [
@@ -626,6 +801,206 @@ const Properties = () => {
         />
         <label htmlFor={`${prefix}washing-machine`} className="text-sm">Washing Machine</label>
       </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}gas-stove`}
+          checked={features.hasGasStove}
+          onCheckedChange={() => handleFeatureChange("hasGasStove")}
+        />
+        <label htmlFor={`${prefix}gas-stove`} className="text-sm">Gas Stove</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}vent`}
+          checked={features.hasVent}
+          onCheckedChange={() => handleFeatureChange("hasVent")}
+        />
+        <label htmlFor={`${prefix}vent`} className="text-sm">Vent</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}electric-kettle`}
+          checked={features.hasElectricKettle}
+          onCheckedChange={() => handleFeatureChange("hasElectricKettle")}
+        />
+        <label htmlFor={`${prefix}electric-kettle`} className="text-sm">Electric Kettle</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}induction-oven`}
+          checked={features.hasInductionOven}
+          onCheckedChange={() => handleFeatureChange("hasInductionOven")}
+        />
+        <label htmlFor={`${prefix}induction-oven`} className="text-sm">Induction Oven</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}microwave`}
+          checked={features.hasMicrowave}
+          onCheckedChange={() => handleFeatureChange("hasMicrowave")}
+        />
+        <label htmlFor={`${prefix}microwave`} className="text-sm">Microwave</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}tv`}
+          checked={features.hasTv}
+          onCheckedChange={() => handleFeatureChange("hasTv")}
+        />
+        <label htmlFor={`${prefix}tv`} className="text-sm">TV</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}coffee-machine`}
+          checked={features.hasCoffeeMachine}
+          onCheckedChange={() => handleFeatureChange("hasCoffeeMachine")}
+        />
+        <label htmlFor={`${prefix}coffee-machine`} className="text-sm">Coffee Machine</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}audio-system`}
+          checked={features.hasAudioSystem}
+          onCheckedChange={() => handleFeatureChange("hasAudioSystem")}
+        />
+        <label htmlFor={`${prefix}audio-system`} className="text-sm">Audio System</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}heater`}
+          checked={features.hasHeater}
+          onCheckedChange={() => handleFeatureChange("hasHeater")}
+        />
+        <label htmlFor={`${prefix}heater`} className="text-sm">Heater</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}electric-oven`}
+          checked={features.hasElectricOven}
+          onCheckedChange={() => handleFeatureChange("hasElectricOven")}
+        />
+        <label htmlFor={`${prefix}electric-oven`} className="text-sm">Electric Oven</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}hair-dryer`}
+          checked={features.hasHairDryer}
+          onCheckedChange={() => handleFeatureChange("hasHairDryer")}
+        />
+        <label htmlFor={`${prefix}hair-dryer`} className="text-sm">Hair Dryer</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}cinema`}
+          checked={features.hasCinema}
+          onCheckedChange={() => handleFeatureChange("hasCinema")}
+        />
+        <label htmlFor={`${prefix}cinema`} className="text-sm">Cinema</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}refrigerator`}
+          checked={features.hasRefrigerator}
+          onCheckedChange={() => handleFeatureChange("hasRefrigerator")}
+        />
+        <label htmlFor={`${prefix}refrigerator`} className="text-sm">Refrigerator</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}vacuum-cleaner`}
+          checked={features.hasVacuumCleaner}
+          onCheckedChange={() => handleFeatureChange("hasVacuumCleaner")}
+        />
+        <label htmlFor={`${prefix}vacuum-cleaner`} className="text-sm">Vacuum Cleaner</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}dryer`}
+          checked={features.hasDryer}
+          onCheckedChange={() => handleFeatureChange("hasDryer")}
+        />
+        <label htmlFor={`${prefix}dryer`} className="text-sm">Dryer</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}iron`}
+          checked={features.hasIron}
+          onCheckedChange={() => handleFeatureChange("hasIron")}
+        />
+        <label htmlFor={`${prefix}iron`} className="text-sm">Iron</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}co-detector`}
+          checked={features.hasCoDetector}
+          onCheckedChange={() => handleFeatureChange("hasCoDetector")}
+        />
+        <label htmlFor={`${prefix}co-detector`} className="text-sm">CO Detector</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}smoke-detector`}
+          checked={features.hasSmokeDetector}
+          onCheckedChange={() => handleFeatureChange("hasSmokeDetector")}
+        />
+        <label htmlFor={`${prefix}smoke-detector`} className="text-sm">Smoke Detector</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}evacuation-ladder`}
+          checked={features.hasEvacuationLadder}
+          onCheckedChange={() => handleFeatureChange("hasEvacuationLadder")}
+        />
+        <label htmlFor={`${prefix}evacuation-ladder`} className="text-sm">Evacuation Ladder</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}fire-fighting-system`}
+          checked={features.hasFireFightingSystem}
+          onCheckedChange={() => handleFeatureChange("hasFireFightingSystem")}
+        />
+        <label htmlFor={`${prefix}fire-fighting-system`} className="text-sm">Fire Fighting System</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}perimeter-cameras`}
+          checked={features.hasPerimeterCameras}
+          onCheckedChange={() => handleFeatureChange("hasPerimeterCameras")}
+        />
+        <label htmlFor={`${prefix}perimeter-cameras`} className="text-sm">Perimeter Cameras</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}alarm`}
+          checked={features.hasAlarm}
+          onCheckedChange={() => handleFeatureChange("hasAlarm")}
+        />
+        <label htmlFor={`${prefix}alarm`} className="text-sm">Alarm</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}live-protection`}
+          checked={features.hasLiveProtection}
+          onCheckedChange={() => handleFeatureChange("hasLiveProtection")}
+        />
+        <label htmlFor={`${prefix}live-protection`} className="text-sm">Live Protection</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}locked-entrance`}
+          checked={features.hasLockedEntrance}
+          onCheckedChange={() => handleFeatureChange("hasLockedEntrance")}
+        />
+        <label htmlFor={`${prefix}locked-entrance`} className="text-sm">Locked Entrance</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}locked-yard`}
+          checked={features.hasLockedYard}
+          onCheckedChange={() => handleFeatureChange("hasLockedYard")}
+        />
+        <label htmlFor={`${prefix}locked-yard`} className="text-sm">Locked Yard</label>
+      </div>
     </div>
   );
 
@@ -654,6 +1029,91 @@ const Properties = () => {
           onCheckedChange={() => handleFeatureChange("nearSchool")}
         />
         <label htmlFor={`${prefix}school`} className="text-sm">School</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}bus-stop`}
+          checked={features.nearBusStop}
+          onCheckedChange={() => handleFeatureChange("nearBusStop")}
+        />
+        <label htmlFor={`${prefix}bus-stop`} className="text-sm">Bus Stop</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}bank`}
+          checked={features.nearBank}
+          onCheckedChange={() => handleFeatureChange("nearBank")}
+        />
+        <label htmlFor={`${prefix}bank`} className="text-sm">Bank</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}supermarket`}
+          checked={features.nearSupermarket}
+          onCheckedChange={() => handleFeatureChange("nearSupermarket")}
+        />
+        <label htmlFor={`${prefix}supermarket`} className="text-sm">Supermarket</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}kindergarten`}
+          checked={features.nearKindergarten}
+          onCheckedChange={() => handleFeatureChange("nearKindergarten")}
+        />
+        <label htmlFor={`${prefix}kindergarten`} className="text-sm">Kindergarten</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}city-center`}
+          checked={features.nearCityCenter}
+          onCheckedChange={() => handleFeatureChange("nearCityCenter")}
+        />
+        <label htmlFor={`${prefix}city-center`} className="text-sm">City Center</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}pharmacy`}
+          checked={features.nearPharmacy}
+          onCheckedChange={() => handleFeatureChange("nearPharmacy")}
+        />
+        <label htmlFor={`${prefix}pharmacy`} className="text-sm">Pharmacy</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}greenery`}
+          checked={features.nearGreenery}
+          onCheckedChange={() => handleFeatureChange("nearGreenery")}
+        />
+        <label htmlFor={`${prefix}greenery`} className="text-sm">Greenery</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}old-district`}
+          checked={features.nearOldDistrict}
+          onCheckedChange={() => handleFeatureChange("nearOldDistrict")}
+        />
+        <label htmlFor={`${prefix}old-district`} className="text-sm">Old District</label>
+      </div>
+    </div>
+  );
+
+  const renderAdditionalFeaturesFilter = (prefix = "") => (
+    <div className="grid grid-cols-2 gap-2">
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}satellite-tv`}
+          checked={features.hasSatelliteTv}
+          onCheckedChange={() => handleFeatureChange("hasSatelliteTv")}
+        />
+        <label htmlFor={`${prefix}satellite-tv`} className="text-sm">Satellite TV</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`${prefix}phone-line`}
+          checked={features.hasPhoneLine}
+          onCheckedChange={() => handleFeatureChange("hasPhoneLine")}
+        />
+        <label htmlFor={`${prefix}phone-line`} className="text-sm">Phone Line</label>
       </div>
     </div>
   );
@@ -770,44 +1230,44 @@ const Properties = () => {
             </select>
           </div>
 
-      {/* Surface (m²) */}
-      <div className="space-y-3">
-        <h3 className="font-medium">Surface (m²)</h3>
-        <div className="px-2">
-          <Slider
-            value={[minM2, maxM2]} // Changé de minSqft/maxSqft à minM2/maxM2
-            max={500} // Réduit de 1000 à 500 m²
-            step={10}
-            onValueChange={(values) => {
-              setMinM2(values[0]); // Changé de setMinSqft à setMinM2
-              setMaxM2(values[1]); // Changé de setMaxSqft à setMaxM2
-            }}
-          />
-        </div>
-        <div className="flex justify-between gap-2 mt-2">
-          <div className="flex items-center gap-1">
-            <input
-              type="text"
-              value={minM2Input} // Changé de minSqftInput à minM2Input
-              onChange={handleMinM2InputChange} // Changé de handleMinSqftInputChange
-              onBlur={handleM2Blur} // Changé de handleSqftBlur
-              className="w-20 border rounded px-2 py-1 text-sm"
-            />
-            <span className="text-sm">m²</span>
+          {/* Surface (m²) */}
+          <div className="space-y-3">
+            <h3 className="font-medium">Surface (m²)</h3>
+            <div className="px-2">
+              <Slider
+                value={[minM2, maxM2]}
+                max={500}
+                step={10}
+                onValueChange={(values) => {
+                  setMinM2(values[0]);
+                  setMaxM2(values[1]);
+                }}
+              />
+            </div>
+            <div className="flex justify-between gap-2 mt-2">
+              <div className="flex items-center gap-1">
+                <input
+                  type="text"
+                  value={minM2Input}
+                  onChange={handleMinM2InputChange}
+                  onBlur={handleM2Blur}
+                  className="w-20 border rounded px-2 py-1 text-sm"
+                />
+                <span className="text-sm">m²</span>
+              </div>
+              <span className="text-sm">to</span>
+              <div className="flex items-center gap-1">
+                <input
+                  type="text"
+                  value={maxM2Input}
+                  onChange={handleMaxM2InputChange}
+                  onBlur={handleM2Blur}
+                  className="w-20 border rounded px-2 py-1 text-sm"
+                />
+                <span className="text-sm">m²</span>
+              </div>
+            </div>
           </div>
-          <span className="text-sm">to</span>
-          <div className="flex items-center gap-1">
-            <input
-              type="text"
-              value={maxM2Input} // Changé de maxSqftInput à maxM2Input
-              onChange={handleMaxM2InputChange} // Changé de handleMaxSqftInputChange
-              onBlur={handleM2Blur} // Changé de handleSqftBlur
-              className="w-20 border rounded px-2 py-1 text-sm"
-            />
-            <span className="text-sm">m²</span>
-          </div>
-        </div>
-      </div>
 
           {/* Bedrooms */}
           <div className="space-y-3">
@@ -861,6 +1321,12 @@ const Properties = () => {
           <div className="space-y-3">
             <h3 className="font-medium">Nearby</h3>
             {renderNearbyFilter("mobile-")}
+          </div>
+
+          {/* Additional Features */}
+          <div className="space-y-3">
+            <h3 className="font-medium">Additional Features</h3>
+            {renderAdditionalFeaturesFilter("mobile-")}
           </div>
 
           {/* Furniture Type */}
@@ -994,44 +1460,44 @@ const Properties = () => {
 
       <hr />
 
-        {/* Surface (m²) */}
-        <div className="space-y-3">
-          <h4 className="font-medium">Surface (m²)</h4>
-          <div className="px-2">
-            <Slider
-              value={[minM2, maxM2]} // Changé de minSqft/maxSqft à minM2/maxM2
-              max={500} // Réduit de 1000 à 500 m²
-              step={10}
-              onValueChange={(values) => {
-                setMinM2(values[0]); // Changé de setMinSqft à setMinM2
-                setMaxM2(values[1]); // Changé de setMaxSqft à setMaxM2
-              }}
+      {/* Surface (m²) */}
+      <div className="space-y-3">
+        <h4 className="font-medium">Surface (m²)</h4>
+        <div className="px-2">
+          <Slider
+            value={[minM2, maxM2]}
+            max={500}
+            step={10}
+            onValueChange={(values) => {
+              setMinM2(values[0]);
+              setMaxM2(values[1]);
+            }}
+          />
+        </div>
+        <div className="flex justify-between gap-2 mt-2">
+          <div className="flex items-center gap-1">
+            <input
+              type="text"
+              value={minM2Input}
+              onChange={handleMinM2InputChange}
+              onBlur={handleM2Blur}
+              className="w-20 border rounded px-2 py-1 text-sm"
             />
+            <span className="text-sm">m²</span>
           </div>
-          <div className="flex justify-between gap-2 mt-2">
-            <div className="flex items-center gap-1">
-              <input
-                type="text"
-                value={minM2Input} // Changé de minSqftInput à minM2Input
-                onChange={handleMinM2InputChange} // Changé de handleMinSqftInputChange
-                onBlur={handleM2Blur} // Changé de handleSqftBlur
-                className="w-20 border rounded px-2 py-1 text-sm"
-              />
-              <span className="text-sm">m²</span>
-            </div>
-            <span className="text-sm">to</span>
-            <div className="flex items-center gap-1">
-              <input
-                type="text"
-                value={maxM2Input} // Changé de maxSqftInput à maxM2Input
-                onChange={handleMaxM2InputChange} // Changé de handleMaxSqftInputChange
-                onBlur={handleM2Blur} // Changé de handleSqftBlur
-                className="w-20 border rounded px-2 py-1 text-sm"
-              />
-              <span className="text-sm">m²</span>
-            </div>
+          <span className="text-sm">to</span>
+          <div className="flex items-center gap-1">
+            <input
+              type="text"
+              value={maxM2Input}
+              onChange={handleMaxM2InputChange}
+              onBlur={handleM2Blur}
+              className="w-20 border rounded px-2 py-1 text-sm"
+            />
+            <span className="text-sm">m²</span>
           </div>
         </div>
+      </div>
 
       <hr />
 
@@ -1050,7 +1516,7 @@ const Properties = () => {
               {num === 0 ? "Any" : `${num}+`}
             </Button>
           ))}
-      </div>
+        </div>
       </div>
 
       <hr />
@@ -1095,6 +1561,14 @@ const Properties = () => {
       <div className="space-y-3">
         <h4 className="font-medium">Nearby</h4>
         {renderNearbyFilter()}
+      </div>
+
+      <hr />
+
+      {/* Additional Features */}
+      <div className="space-y-3">
+        <h4 className="font-medium">Additional Features</h4>
+        {renderAdditionalFeaturesFilter()}
       </div>
 
       <hr />

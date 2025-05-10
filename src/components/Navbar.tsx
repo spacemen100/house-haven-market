@@ -116,17 +116,17 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
           <div className="flex gap-8">
-            <Link to="/properties?type=sale" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
-              {t('buy')}
+            <Link to="/properties?type=sell" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
+              {t('sell')}
+            </Link>
+            <Link to="/properties?type=lease" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
+              {t('lease')}
             </Link>
             <Link to="/properties?type=rent" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
               {t('rent')}
             </Link>
-            <Link to="/sell" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
-              {t('sell')}
-            </Link>
-            <Link to="/agents" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
-              {t('agents')}
+            <Link to="/properties?type=daily-rent" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
+              {t('dailyRent')}
             </Link>
           </div>
           <div className="relative">
@@ -201,7 +201,7 @@ const Navbar = () => {
                 </Button>
               </Dialog>
               <Button asChild className="bg-teal-500 hover:bg-teal-600">
-                <Link to="/sell">{t('getStarted')}</Link>
+                <Link to="/sell">{t('addListing')}</Link>
               </Button>
             </>
           )}
@@ -222,11 +222,18 @@ const Navbar = () => {
         <div className="md:hidden bg-white py-4 px-6 shadow-lg animate-fade-in">
           <div className="flex flex-col gap-4">
             <Link
-              to="/properties?type=sale"
+              to="/properties?type=sell"
               className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              {t('buy')}
+              {t('sell')}
+            </Link>
+            <Link
+              to="/properties?type=lease"
+              className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {t('lease')}
             </Link>
             <Link
               to="/properties?type=rent"
@@ -236,18 +243,11 @@ const Navbar = () => {
               {t('rent')}
             </Link>
             <Link
-              to="/sell"
+              to="/properties?type=daily-rent"
               className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              {t('sell')}
-            </Link>
-            <Link
-              to="/agents"
-              className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {t('agents')}
+              {t('dailyRent')}
             </Link>
             <hr className="my-2" />
             <div className="flex flex-col gap-2">
@@ -312,7 +312,7 @@ const Navbar = () => {
                     {t('signup')}
                   </Button>
                   <Button asChild className="bg-teal-500 hover:bg-teal-600">
-                    <Link to="/sell" onClick={() => setIsMenuOpen(false)}>{t('getStarted')}</Link>
+                    <Link to="/sell" onClick={() => setIsMenuOpen(false)}>{t('addListing')}</Link>
                   </Button>
                 </>
               )}
