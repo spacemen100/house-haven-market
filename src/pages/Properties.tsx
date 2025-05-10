@@ -7,6 +7,7 @@ import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PropertyCard from "@/components/PropertyCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -38,6 +39,7 @@ const Properties = () => {
   const [maxM2Input, setMaxM2Input] = useState(maxM2.toString());
   const [sortOption, setSortOption] = useState<string>("recent");
   const [currency, setCurrency] = useState<string>('USD');
+  const [activeTab, setActiveTab] = useState("filters");
 
   const currencyOptions = [
     { value: 'USD', label: 'US Dollar ($)' },
@@ -262,261 +264,261 @@ const Properties = () => {
     setMaxM2(Math.max(min, max));
   };
 
-// Apply all filters
-useEffect(() => {
-  let filtered = [...properties];
+  // Apply all filters
+  useEffect(() => {
+    let filtered = [...properties];
 
-  // Search filter
-  if (searchQuery) {
-    const query = searchQuery.toLowerCase();
-    filtered = filtered.filter(property => {
-      const title = property.title || '';
-      const addressStreet = property.address_street || '';
-      const addressCity = property.address_city || '';
-      const addressState = property.address_state || '';
-      const addressZip = property.address_zip || '';
+    // Search filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(property => {
+        const title = property.title || '';
+        const addressStreet = property.address_street || '';
+        const addressCity = property.address_city || '';
+        const addressState = property.address_state || '';
+        const addressZip = property.address_zip || '';
 
-      return (
-        title.toLowerCase().includes(query) ||
-        addressStreet.toLowerCase().includes(query) ||
-        addressCity.toLowerCase().includes(query) ||
-        addressState.toLowerCase().includes(query) ||
-        addressZip.toLowerCase().includes(query)
+        return (
+          title.toLowerCase().includes(query) ||
+          addressStreet.toLowerCase().includes(query) ||
+          addressCity.toLowerCase().includes(query) ||
+          addressState.toLowerCase().includes(query) ||
+          addressZip.toLowerCase().includes(query)
+        );
+      });
+    }
+
+    // Property type filter
+    if (propertyTypes.length > 0) {
+      filtered = filtered.filter(property =>
+        propertyTypes.includes(property.property_type)
       );
-    });
-  }
+    }
 
-  // Property type filter
-  if (propertyTypes.length > 0) {
+    // Price filter
     filtered = filtered.filter(property =>
-      propertyTypes.includes(property.property_type)
+      property.price >= minPrice && property.price <= maxPrice
     );
-  }
 
-  // Price filter
-  filtered = filtered.filter(property =>
-    property.price >= minPrice && property.price <= maxPrice
-  );
+    // Bedrooms filter
+    if (minBeds > 0) {
+      filtered = filtered.filter(property => property.beds >= minBeds);
+    }
 
-  // Bedrooms filter
-  if (minBeds > 0) {
-    filtered = filtered.filter(property => property.beds >= minBeds);
-  }
+    // Bathrooms filter
+    if (minBaths > 0) {
+      filtered = filtered.filter(property => property.baths >= minBaths);
+    }
 
-  // Bathrooms filter
-  if (minBaths > 0) {
-    filtered = filtered.filter(property => property.baths >= minBaths);
-  }
-
-  filtered = filtered.filter(property =>
-    property.m2 >= minM2 && property.m2 <= maxM2
-  );
-
-  // Features filters
-  if (features.hasElevator) {
-    filtered = filtered.filter(property => property.has_elevator);
-  }
-  if (features.hasAirConditioning) {
-    filtered = filtered.filter(property => property.has_air_conditioning);
-  }
-  if (features.isAccessible) {
-    filtered = filtered.filter(property => property.is_accessible);
-  }
-  if (features.hasFireplace) {
-    filtered = filtered.filter(property => property.has_fireplace);
-  }
-  if (features.hasInternet) {
-    filtered = filtered.filter(property => property.has_internet);
-  }
-  if (features.hasCableTV) {
-    filtered = filtered.filter(property => property.has_cable_tv);
-  }
-  if (features.allowsPets) {
-    filtered = filtered.filter(property => property.allows_pets);
-  }
-  if (features.allowsSmoking) {
-    filtered = filtered.filter(property => property.allows_smoking);
-  }
-  if (features.nearSubway) {
-    filtered = filtered.filter(property => property.near_subway);
-  }
-  if (features.nearPark) {
-    filtered = filtered.filter(property => property.near_park);
-  }
-  if (features.nearSchool) {
-    filtered = filtered.filter(property => property.near_school);
-  }
-  if (features.hasParking) {
-    filtered = filtered.filter(property => property.parking_type && property.parking_type !== 'none');
-  }
-  if (features.hasGas) {
-    filtered = filtered.filter(property => property.has_gas);
-  }
-  if (features.hasLoggia) {
-    filtered = filtered.filter(property => property.has_loggia);
-  }
-  if (features.hasDishwasher) {
-    filtered = filtered.filter(property => property.has_dishwasher);
-  }
-  if (features.hasWashingMachine) {
-    filtered = filtered.filter(property => property.has_washing_machine);
-  }
-  if (features.hasGasStove) {
-    filtered = filtered.filter(property => property.has_gas_stove);
-  }
-  if (features.hasVent) {
-    filtered = filtered.filter(property => property.has_vent);
-  }
-  if (features.hasElectricKettle) {
-    filtered = filtered.filter(property => property.has_electric_kettle);
-  }
-  if (features.hasInductionOven) {
-    filtered = filtered.filter(property => property.has_induction_oven);
-  }
-  if (features.hasMicrowave) {
-    filtered = filtered.filter(property => property.has_microwave);
-  }
-  if (features.hasTv) {
-    filtered = filtered.filter(property => property.has_tv);
-  }
-  if (features.hasCoffeeMachine) {
-    filtered = filtered.filter(property => property.has_coffee_machine);
-  }
-  if (features.hasAudioSystem) {
-    filtered = filtered.filter(property => property.has_audio_system);
-  }
-  if (features.hasHeater) {
-    filtered = filtered.filter(property => property.has_heater);
-  }
-  if (features.hasElectricOven) {
-    filtered = filtered.filter(property => property.has_electric_oven);
-  }
-  if (features.hasHairDryer) {
-    filtered = filtered.filter(property => property.has_hair_dryer);
-  }
-  if (features.hasCinema) {
-    filtered = filtered.filter(property => property.has_cinema);
-  }
-  if (features.hasRefrigerator) {
-    filtered = filtered.filter(property => property.has_refrigerator);
-  }
-  if (features.hasVacuumCleaner) {
-    filtered = filtered.filter(property => property.has_vacuum_cleaner);
-  }
-  if (features.hasDryer) {
-    filtered = filtered.filter(property => property.has_dryer);
-  }
-  if (features.hasIron) {
-    filtered = filtered.filter(property => property.has_iron);
-  }
-  if (features.hasCoDetector) {
-    filtered = filtered.filter(property => property.has_co_detector);
-  }
-  if (features.hasSmokeDetector) {
-    filtered = filtered.filter(property => property.has_smoke_detector);
-  }
-  if (features.hasEvacuationLadder) {
-    filtered = filtered.filter(property => property.has_evacuation_ladder);
-  }
-  if (features.hasFireFightingSystem) {
-    filtered = filtered.filter(property => property.has_fire_fighting_system);
-  }
-  if (features.hasPerimeterCameras) {
-    filtered = filtered.filter(property => property.has_perimeter_cameras);
-  }
-  if (features.hasAlarm) {
-    filtered = filtered.filter(property => property.has_alarm);
-  }
-  if (features.hasLiveProtection) {
-    filtered = filtered.filter(property => property.has_live_protection);
-  }
-  if (features.hasLockedEntrance) {
-    filtered = filtered.filter(property => property.has_locked_entrance);
-  }
-  if (features.hasLockedYard) {
-    filtered = filtered.filter(property => property.has_locked_yard);
-  }
-  if (features.nearBusStop) {
-    filtered = filtered.filter(property => property.near_bus_stop);
-  }
-  if (features.nearBank) {
-    filtered = filtered.filter(property => property.near_bank);
-  }
-  if (features.nearSupermarket) {
-    filtered = filtered.filter(property => property.near_supermarket);
-  }
-  if (features.nearKindergarten) {
-    filtered = filtered.filter(property => property.near_kindergarten);
-  }
-  if (features.nearCityCenter) {
-    filtered = filtered.filter(property => property.near_city_center);
-  }
-  if (features.nearPharmacy) {
-    filtered = filtered.filter(property => property.near_pharmacy);
-  }
-  if (features.nearGreenery) {
-    filtered = filtered.filter(property => property.near_greenery);
-  }
-  if (features.nearOldDistrict) {
-    filtered = filtered.filter(property => property.near_old_district);
-  }
-  if (features.hasSatelliteTv) {
-    filtered = filtered.filter(property => property.has_satellite_tv);
-  }
-  if (features.hasPhoneLine) {
-    filtered = filtered.filter(property => property.has_phone_line);
-  }
-
-  // Condition filter
-  if (condition.length > 0) {
-    filtered = filtered.filter(property => condition.includes(property.condition));
-  }
-
-  // Furniture type filter
-  if (furnitureType.length > 0) {
     filtered = filtered.filter(property =>
-      property.furniture_type && furnitureType.includes(property.furniture_type)
+      property.m2 >= minM2 && property.m2 <= maxM2
     );
-  }
 
-  // Heating type filter
-  if (heatingType.length > 0) {
-    filtered = filtered.filter(property =>
-      property.heating_type && heatingType.includes(property.heating_type)
-    );
-  }
+    // Features filters
+    if (features.hasElevator) {
+      filtered = filtered.filter(property => property.has_elevator);
+    }
+    if (features.hasAirConditioning) {
+      filtered = filtered.filter(property => property.has_air_conditioning);
+    }
+    if (features.isAccessible) {
+      filtered = filtered.filter(property => property.is_accessible);
+    }
+    if (features.hasFireplace) {
+      filtered = filtered.filter(property => property.has_fireplace);
+    }
+    if (features.hasInternet) {
+      filtered = filtered.filter(property => property.has_internet);
+    }
+    if (features.hasCableTV) {
+      filtered = filtered.filter(property => property.has_cable_tv);
+    }
+    if (features.allowsPets) {
+      filtered = filtered.filter(property => property.allows_pets);
+    }
+    if (features.allowsSmoking) {
+      filtered = filtered.filter(property => property.allows_smoking);
+    }
+    if (features.nearSubway) {
+      filtered = filtered.filter(property => property.near_subway);
+    }
+    if (features.nearPark) {
+      filtered = filtered.filter(property => property.near_park);
+    }
+    if (features.nearSchool) {
+      filtered = filtered.filter(property => property.near_school);
+    }
+    if (features.hasParking) {
+      filtered = filtered.filter(property => property.parking_type && property.parking_type !== 'none');
+    }
+    if (features.hasGas) {
+      filtered = filtered.filter(property => property.has_gas);
+    }
+    if (features.hasLoggia) {
+      filtered = filtered.filter(property => property.has_loggia);
+    }
+    if (features.hasDishwasher) {
+      filtered = filtered.filter(property => property.has_dishwasher);
+    }
+    if (features.hasWashingMachine) {
+      filtered = filtered.filter(property => property.has_washing_machine);
+    }
+    if (features.hasGasStove) {
+      filtered = filtered.filter(property => property.has_gas_stove);
+    }
+    if (features.hasVent) {
+      filtered = filtered.filter(property => property.has_vent);
+    }
+    if (features.hasElectricKettle) {
+      filtered = filtered.filter(property => property.has_electric_kettle);
+    }
+    if (features.hasInductionOven) {
+      filtered = filtered.filter(property => property.has_induction_oven);
+    }
+    if (features.hasMicrowave) {
+      filtered = filtered.filter(property => property.has_microwave);
+    }
+    if (features.hasTv) {
+      filtered = filtered.filter(property => property.has_tv);
+    }
+    if (features.hasCoffeeMachine) {
+      filtered = filtered.filter(property => property.has_coffee_machine);
+    }
+    if (features.hasAudioSystem) {
+      filtered = filtered.filter(property => property.has_audio_system);
+    }
+    if (features.hasHeater) {
+      filtered = filtered.filter(property => property.has_heater);
+    }
+    if (features.hasElectricOven) {
+      filtered = filtered.filter(property => property.has_electric_oven);
+    }
+    if (features.hasHairDryer) {
+      filtered = filtered.filter(property => property.has_hair_dryer);
+    }
+    if (features.hasCinema) {
+      filtered = filtered.filter(property => property.has_cinema);
+    }
+    if (features.hasRefrigerator) {
+      filtered = filtered.filter(property => property.has_refrigerator);
+    }
+    if (features.hasVacuumCleaner) {
+      filtered = filtered.filter(property => property.has_vacuum_cleaner);
+    }
+    if (features.hasDryer) {
+      filtered = filtered.filter(property => property.has_dryer);
+    }
+    if (features.hasIron) {
+      filtered = filtered.filter(property => property.has_iron);
+    }
+    if (features.hasCoDetector) {
+      filtered = filtered.filter(property => property.has_co_detector);
+    }
+    if (features.hasSmokeDetector) {
+      filtered = filtered.filter(property => property.has_smoke_detector);
+    }
+    if (features.hasEvacuationLadder) {
+      filtered = filtered.filter(property => property.has_evacuation_ladder);
+    }
+    if (features.hasFireFightingSystem) {
+      filtered = filtered.filter(property => property.has_fire_fighting_system);
+    }
+    if (features.hasPerimeterCameras) {
+      filtered = filtered.filter(property => property.has_perimeter_cameras);
+    }
+    if (features.hasAlarm) {
+      filtered = filtered.filter(property => property.has_alarm);
+    }
+    if (features.hasLiveProtection) {
+      filtered = filtered.filter(property => property.has_live_protection);
+    }
+    if (features.hasLockedEntrance) {
+      filtered = filtered.filter(property => property.has_locked_entrance);
+    }
+    if (features.hasLockedYard) {
+      filtered = filtered.filter(property => property.has_locked_yard);
+    }
+    if (features.nearBusStop) {
+      filtered = filtered.filter(property => property.near_bus_stop);
+    }
+    if (features.nearBank) {
+      filtered = filtered.filter(property => property.near_bank);
+    }
+    if (features.nearSupermarket) {
+      filtered = filtered.filter(property => property.near_supermarket);
+    }
+    if (features.nearKindergarten) {
+      filtered = filtered.filter(property => property.near_kindergarten);
+    }
+    if (features.nearCityCenter) {
+      filtered = filtered.filter(property => property.near_city_center);
+    }
+    if (features.nearPharmacy) {
+      filtered = filtered.filter(property => property.near_pharmacy);
+    }
+    if (features.nearGreenery) {
+      filtered = filtered.filter(property => property.near_greenery);
+    }
+    if (features.nearOldDistrict) {
+      filtered = filtered.filter(property => property.near_old_district);
+    }
+    if (features.hasSatelliteTv) {
+      filtered = filtered.filter(property => property.has_satellite_tv);
+    }
+    if (features.hasPhoneLine) {
+      filtered = filtered.filter(property => property.has_phone_line);
+    }
 
-  // Parking type filter
-  if (parkingType.length > 0) {
-    filtered = filtered.filter(property =>
-      property.parking_type && parkingType.includes(property.parking_type)
-    );
-  }
+    // Condition filter
+    if (condition.length > 0) {
+      filtered = filtered.filter(property => condition.includes(property.condition));
+    }
 
-  // Building material filter
-  if (buildingMaterial.length > 0) {
-    filtered = filtered.filter(property =>
-      property.building_material && buildingMaterial.includes(property.building_material)
-    );
-  }
+    // Furniture type filter
+    if (furnitureType.length > 0) {
+      filtered = filtered.filter(property =>
+        property.furniture_type && furnitureType.includes(property.furniture_type)
+      );
+    }
 
-  // Kitchen type filter
-  if (kitchenType.length > 0) {
-    filtered = filtered.filter(property =>
-      property.kitchen_type && kitchenType.includes(property.kitchen_type)
-    );
-  }
+    // Heating type filter
+    if (heatingType.length > 0) {
+      filtered = filtered.filter(property =>
+        property.heating_type && heatingType.includes(property.heating_type)
+      );
+    }
 
-  // Appliquer le tri final avant de mettre à jour l'état
-  const sortedProperties = sortProperties(filtered);
-  setFilteredProperties(sortedProperties);
+    // Parking type filter
+    if (parkingType.length > 0) {
+      filtered = filtered.filter(property =>
+        property.parking_type && parkingType.includes(property.parking_type)
+      );
+    }
 
-}, [
-  searchQuery, listingType, propertyTypes, minPrice, maxPrice,
-  minBeds, minBaths, minM2, maxM2, features, condition,
-  furnitureType, heatingType, parkingType, buildingMaterial,
-  kitchenType, properties, sortOption
-]);
+    // Building material filter
+    if (buildingMaterial.length > 0) {
+      filtered = filtered.filter(property =>
+        property.building_material && buildingMaterial.includes(property.building_material)
+      );
+    }
+
+    // Kitchen type filter
+    if (kitchenType.length > 0) {
+      filtered = filtered.filter(property =>
+        property.kitchen_type && kitchenType.includes(property.kitchen_type)
+      );
+    }
+
+    // Appliquer le tri final avant de mettre à jour l'état
+    const sortedProperties = sortProperties(filtered);
+    setFilteredProperties(sortedProperties);
+
+  }, [
+    searchQuery, listingType, propertyTypes, minPrice, maxPrice,
+    minBeds, minBaths, minM2, maxM2, features, condition,
+    furnitureType, heatingType, parkingType, buildingMaterial,
+    kitchenType, properties, sortOption
+  ]);
 
   // Update URL when listing type or search changes
   useEffect(() => {
@@ -1126,6 +1128,24 @@ useEffect(() => {
     </div>
   );
 
+  const renderKeywordSearch = () => (
+    <div className="space-y-4">
+      <h3 className="font-medium">Keyword Search</h3>
+      <div className="flex bg-white rounded-lg p-3">
+        <div className="flex items-center pl-3 text-estate-neutral-400">
+          <Search size={20} />
+        </div>
+        <input
+          type="text"
+          placeholder="Enter keywords to search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="flex-1 py-2 px-3 outline-none"
+        />
+      </div>
+    </div>
+  );
+
   const renderMultiSelectFilter = (
     options: { id: string; label: string }[],
     selected: string[],
@@ -1171,22 +1191,282 @@ useEffect(() => {
           </Button>
         </div>
 
-        <div className="space-y-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="filters">Filters</TabsTrigger>
+            <TabsTrigger value="keyword">Keyword Search</TabsTrigger>
+          </TabsList>
+          <TabsContent value="filters">
+            <div className="space-y-6">
+              {/* Listing Type */}
+              <div className="space-y-3">
+                <h3 className="font-medium">Listing Type</h3>
+                {renderListingTypeFilter()}
+              </div>
+
+              {/* Property Type */}
+              <div className="space-y-3">
+                <h3 className="font-medium">Property Type</h3>
+                {renderPropertyTypeFilter("mobile-")}
+              </div>
+
+              {/* Price Range */}
+              <div className="space-y-3">
+                <h4 className="font-medium">Price Range</h4>
+                <div className="px-2">
+                  <Slider
+                    value={[minPrice, maxPrice]}
+                    max={5000000}
+                    step={100000}
+                    onValueChange={(values) => {
+                      setMinPrice(values[0]);
+                      setMaxPrice(values[1]);
+                    }}
+                  />
+                </div>
+                <div className="flex justify-between gap-2 mt-2">
+                  <div className="flex items-center gap-1">
+                    <span className="text-sm">$</span>
+                    <input
+                      type="text"
+                      value={minPriceInput}
+                      onChange={handleMinPriceInputChange}
+                      onBlur={handlePriceBlur}
+                      className="w-20 border rounded px-2 py-1 text-sm"
+                    />
+                  </div>
+                  <span className="text-sm">to</span>
+                  <div className="flex items-center gap-1">
+                    <span className="text-sm">$</span>
+                    <input
+                      type="text"
+                      value={maxPriceInput}
+                      onChange={handleMaxPriceInputChange}
+                      onBlur={handlePriceBlur}
+                      className="w-20 border rounded px-2 py-1 text-sm"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="font-medium">Currency</h4>
+                <select
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value)}
+                  className="w-full border rounded-md px-3 py-2 text-sm"
+                >
+                  {currencyOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Surface (m²) */}
+              <div className="space-y-3">
+                <h3 className="font-medium">Surface (m²)</h3>
+                <div className="px-2">
+                  <Slider
+                    value={[minM2, maxM2]}
+                    max={500}
+                    step={10}
+                    onValueChange={(values) => {
+                      setMinM2(values[0]);
+                      setMaxM2(values[1]);
+                    }}
+                  />
+                </div>
+                <div className="flex justify-between gap-2 mt-2">
+                  <div className="flex items-center gap-1">
+                    <input
+                      type="text"
+                      value={minM2Input}
+                      onChange={handleMinM2InputChange}
+                      onBlur={handleM2Blur}
+                      className="w-20 border rounded px-2 py-1 text-sm"
+                    />
+                    <span className="text-sm">m²</span>
+                  </div>
+                  <span className="text-sm">to</span>
+                  <div className="flex items-center gap-1">
+                    <input
+                      type="text"
+                      value={maxM2Input}
+                      onChange={handleMaxM2InputChange}
+                      onBlur={handleM2Blur}
+                      className="w-20 border rounded px-2 py-1 text-sm"
+                    />
+                    <span className="text-sm">m²</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bedrooms */}
+              <div className="space-y-3">
+                <h3 className="font-medium">Bedrooms</h3>
+                <div className="flex flex-wrap gap-2">
+                  {[0, 1, 2, 3, 4].map(num => (
+                    <Button
+                      key={`mobile-beds-${num}`}
+                      variant={minBeds === num ? "default" : "outline"}
+                      className={minBeds === num ? "bg-teal-500 hover:bg-teal-600" : ""}
+                      size="sm"
+                      onClick={() => setMinBeds(num)}
+                    >
+                      {num === 0 ? "Any" : `${num}+`}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bathrooms */}
+              <div className="space-y-3">
+                <h3 className="font-medium">Bathrooms</h3>
+                <div className="flex flex-wrap gap-2">
+                  {[0, 1, 2, 3].map(num => (
+                    <Button
+                      key={`mobile-baths-${num}`}
+                      variant={minBaths === num ? "default" : "outline"}
+                      className={minBaths === num ? "bg-teal-500 hover:bg-teal-600" : ""}
+                      size="sm"
+                      onClick={() => setMinBaths(num)}
+                    >
+                      {num === 0 ? "Any" : `${num}+`}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Property Condition */}
+              <div className="space-y-3">
+                <h3 className="font-medium">Property Condition</h3>
+                {renderConditionFilter("mobile-")}
+              </div>
+
+              {/* Features */}
+              <div className="space-y-3">
+                <h3 className="font-medium">Features</h3>
+                {renderFeaturesFilter("mobile-")}
+              </div>
+
+              {/* Nearby */}
+              <div className="space-y-3">
+                <h3 className="font-medium">Nearby</h3>
+                {renderNearbyFilter("mobile-")}
+              </div>
+
+              {/* Additional Features */}
+              <div className="space-y-3">
+                <h3 className="font-medium">Additional Features</h3>
+                {renderAdditionalFeaturesFilter("mobile-")}
+              </div>
+
+              {/* Furniture Type */}
+              {renderMultiSelectFilter(
+                furnitureOptions,
+                furnitureType,
+                setFurnitureType,
+                "Furniture Type",
+                "mobile-"
+              )}
+
+              {/* Heating Type */}
+              {renderMultiSelectFilter(
+                heatingOptions,
+                heatingType,
+                setHeatingType,
+                "Heating Type",
+                "mobile-"
+              )}
+
+              {/* Parking Type */}
+              {renderMultiSelectFilter(
+                parkingOptions,
+                parkingType,
+                setParkingType,
+                "Parking Type",
+                "mobile-"
+              )}
+
+              {/* Building Material */}
+              {renderMultiSelectFilter(
+                buildingMaterialOptions,
+                buildingMaterial,
+                setBuildingMaterial,
+                "Building Material",
+                "mobile-"
+              )}
+
+              {/* Kitchen Type */}
+              {renderMultiSelectFilter(
+                kitchenTypeOptions,
+                kitchenType,
+                setKitchenType,
+                "Kitchen Type",
+                "mobile-"
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex gap-3 pt-4">
+                <Button
+                  variant="outline"
+                  className="flex-1"
+                  onClick={handleClearFilters}
+                >
+                  Clear All
+                </Button>
+                <Button
+                  className="flex-1 bg-teal-500 hover:bg-teal-600"
+                  onClick={() => setIsFilterOpen(false)}
+                >
+                  Show Results
+                </Button>
+              </div>
+            </div>
+          </TabsContent>
+          <TabsContent value="keyword">
+            {renderKeywordSearch()}
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  );
+
+  // Desktop filters sidebar
+  const renderDesktopFilters = () => (
+    <div className="hidden lg:block w-80 h-fit bg-white rounded-lg p-6 shadow-sm border border-estate-neutral-100 space-y-6 sticky top-4">
+      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+        <Filter size={20} />
+        <span>Filters</span>
+      </h3>
+
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="flex w-full">
+          <TabsTrigger value="filters" className="flex-1">Filters</TabsTrigger>
+          <TabsTrigger value="keyword" className="flex-1">Keyword Search</TabsTrigger>
+        </TabsList>
+        <TabsContent value="filters">
           {/* Listing Type */}
           <div className="space-y-3">
-            <h3 className="font-medium">Listing Type</h3>
+            <h4 className="font-medium">Listing Type</h4>
             {renderListingTypeFilter()}
           </div>
 
+          <hr />
+
           {/* Property Type */}
           <div className="space-y-3">
-            <h3 className="font-medium">Property Type</h3>
-            {renderPropertyTypeFilter("mobile-")}
+            <h4 className="font-medium">Property Type</h4>
+            {renderPropertyTypeFilter()}
           </div>
+
+          <hr />
 
           {/* Price Range */}
           <div className="space-y-3">
-            <h4 className="font-medium">Price Range</h4>
+            <h3 className="font-medium">Price Range</h3>
             <div className="px-2">
               <Slider
                 value={[minPrice, maxPrice]}
@@ -1223,24 +1503,11 @@ useEffect(() => {
             </div>
           </div>
 
-          <div className="space-y-3">
-            <h4 className="font-medium">Currency</h4>
-            <select
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value)}
-              className="w-full border rounded-md px-3 py-2 text-sm"
-            >
-              {currencyOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </div>
+          <hr />
 
           {/* Surface (m²) */}
           <div className="space-y-3">
-            <h3 className="font-medium">Surface (m²)</h3>
+            <h4 className="font-medium">Surface (m²)</h4>
             <div className="px-2">
               <Slider
                 value={[minM2, maxM2]}
@@ -1277,13 +1544,15 @@ useEffect(() => {
             </div>
           </div>
 
+          <hr />
+
           {/* Bedrooms */}
           <div className="space-y-3">
-            <h3 className="font-medium">Bedrooms</h3>
+            <h4 className="font-medium">Bedrooms</h4>
             <div className="flex flex-wrap gap-2">
               {[0, 1, 2, 3, 4].map(num => (
                 <Button
-                  key={`mobile-beds-${num}`}
+                  key={`beds-${num}`}
                   variant={minBeds === num ? "default" : "outline"}
                   className={minBeds === num ? "bg-teal-500 hover:bg-teal-600" : ""}
                   size="sm"
@@ -1295,13 +1564,15 @@ useEffect(() => {
             </div>
           </div>
 
+          <hr />
+
           {/* Bathrooms */}
           <div className="space-y-3">
-            <h3 className="font-medium">Bathrooms</h3>
+            <h4 className="font-medium">Bathrooms</h4>
             <div className="flex flex-wrap gap-2">
               {[0, 1, 2, 3].map(num => (
                 <Button
-                  key={`mobile-baths-${num}`}
+                  key={`baths-${num}`}
                   variant={minBaths === num ? "default" : "outline"}
                   className={minBaths === num ? "bg-teal-500 hover:bg-teal-600" : ""}
                   size="sm"
@@ -1313,331 +1584,102 @@ useEffect(() => {
             </div>
           </div>
 
+          <hr />
+
           {/* Property Condition */}
           <div className="space-y-3">
-            <h3 className="font-medium">Property Condition</h3>
-            {renderConditionFilter("mobile-")}
+            <h4 className="font-medium">Property Condition</h4>
+            {renderConditionFilter()}
           </div>
+
+          <hr />
 
           {/* Features */}
           <div className="space-y-3">
-            <h3 className="font-medium">Features</h3>
-            {renderFeaturesFilter("mobile-")}
+            <h4 className="font-medium">Features</h4>
+            {renderFeaturesFilter()}
           </div>
+
+          <hr />
 
           {/* Nearby */}
           <div className="space-y-3">
-            <h3 className="font-medium">Nearby</h3>
-            {renderNearbyFilter("mobile-")}
+            <h4 className="font-medium">Nearby</h4>
+            {renderNearbyFilter()}
           </div>
+
+          <hr />
 
           {/* Additional Features */}
           <div className="space-y-3">
-            <h3 className="font-medium">Additional Features</h3>
-            {renderAdditionalFeaturesFilter("mobile-")}
+            <h4 className="font-medium">Additional Features</h4>
+            {renderAdditionalFeaturesFilter()}
           </div>
+
+          <hr />
 
           {/* Furniture Type */}
           {renderMultiSelectFilter(
             furnitureOptions,
             furnitureType,
             setFurnitureType,
-            "Furniture Type",
-            "mobile-"
+            "Furniture Type"
           )}
+
+          <hr />
 
           {/* Heating Type */}
           {renderMultiSelectFilter(
             heatingOptions,
             heatingType,
             setHeatingType,
-            "Heating Type",
-            "mobile-"
+            "Heating Type"
           )}
+
+          <hr />
 
           {/* Parking Type */}
           {renderMultiSelectFilter(
             parkingOptions,
             parkingType,
             setParkingType,
-            "Parking Type",
-            "mobile-"
+            "Parking Type"
           )}
+
+          <hr />
 
           {/* Building Material */}
           {renderMultiSelectFilter(
             buildingMaterialOptions,
             buildingMaterial,
             setBuildingMaterial,
-            "Building Material",
-            "mobile-"
+            "Building Material"
           )}
+
+          <hr />
 
           {/* Kitchen Type */}
           {renderMultiSelectFilter(
             kitchenTypeOptions,
             kitchenType,
             setKitchenType,
-            "Kitchen Type",
-            "mobile-"
+            "Kitchen Type"
           )}
 
-          {/* Action Buttons */}
-          <div className="flex gap-3 pt-4">
-            <Button
-              variant="outline"
-              className="flex-1"
-              onClick={handleClearFilters}
-            >
-              Clear All
-            </Button>
-            <Button
-              className="flex-1 bg-teal-500 hover:bg-teal-600"
-              onClick={() => setIsFilterOpen(false)}
-            >
-              Show Results
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+          <hr />
 
-  // Desktop filters sidebar
-  const renderDesktopFilters = () => (
-    <div className="hidden lg:block w-80 h-fit bg-white rounded-lg p-6 shadow-sm border border-estate-neutral-100 space-y-6 sticky top-4">
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Filter size={20} />
-        <span>Filters</span>
-      </h3>
-
-      {/* Listing Type */}
-      <div className="space-y-3">
-        <h4 className="font-medium">Listing Type</h4>
-        {renderListingTypeFilter()}
-      </div>
-
-      <hr />
-
-      {/* Property Type */}
-      <div className="space-y-3">
-        <h4 className="font-medium">Property Type</h4>
-        {renderPropertyTypeFilter()}
-      </div>
-
-      <hr />
-
-      {/* Price Range */}
-      <div className="space-y-3">
-        <h3 className="font-medium">Price Range</h3>
-        <div className="px-2">
-          <Slider
-            value={[minPrice, maxPrice]}
-            max={5000000}
-            step={100000}
-            onValueChange={(values) => {
-              setMinPrice(values[0]);
-              setMaxPrice(values[1]);
-            }}
-          />
-        </div>
-        <div className="flex justify-between gap-2 mt-2">
-          <div className="flex items-center gap-1">
-            <span className="text-sm">$</span>
-            <input
-              type="text"
-              value={minPriceInput}
-              onChange={handleMinPriceInputChange}
-              onBlur={handlePriceBlur}
-              className="w-20 border rounded px-2 py-1 text-sm"
-            />
-          </div>
-          <span className="text-sm">to</span>
-          <div className="flex items-center gap-1">
-            <span className="text-sm">$</span>
-            <input
-              type="text"
-              value={maxPriceInput}
-              onChange={handleMaxPriceInputChange}
-              onBlur={handlePriceBlur}
-              className="w-20 border rounded px-2 py-1 text-sm"
-            />
-          </div>
-        </div>
-      </div>
-
-      <hr />
-
-      {/* Surface (m²) */}
-      <div className="space-y-3">
-        <h4 className="font-medium">Surface (m²)</h4>
-        <div className="px-2">
-          <Slider
-            value={[minM2, maxM2]}
-            max={500}
-            step={10}
-            onValueChange={(values) => {
-              setMinM2(values[0]);
-              setMaxM2(values[1]);
-            }}
-          />
-        </div>
-        <div className="flex justify-between gap-2 mt-2">
-          <div className="flex items-center gap-1">
-            <input
-              type="text"
-              value={minM2Input}
-              onChange={handleMinM2InputChange}
-              onBlur={handleM2Blur}
-              className="w-20 border rounded px-2 py-1 text-sm"
-            />
-            <span className="text-sm">m²</span>
-          </div>
-          <span className="text-sm">to</span>
-          <div className="flex items-center gap-1">
-            <input
-              type="text"
-              value={maxM2Input}
-              onChange={handleMaxM2InputChange}
-              onBlur={handleM2Blur}
-              className="w-20 border rounded px-2 py-1 text-sm"
-            />
-            <span className="text-sm">m²</span>
-          </div>
-        </div>
-      </div>
-
-      <hr />
-
-      {/* Bedrooms */}
-      <div className="space-y-3">
-        <h4 className="font-medium">Bedrooms</h4>
-        <div className="flex flex-wrap gap-2">
-          {[0, 1, 2, 3, 4].map(num => (
-            <Button
-              key={`beds-${num}`}
-              variant={minBeds === num ? "default" : "outline"}
-              className={minBeds === num ? "bg-teal-500 hover:bg-teal-600" : ""}
-              size="sm"
-              onClick={() => setMinBeds(num)}
-            >
-              {num === 0 ? "Any" : `${num}+`}
-            </Button>
-          ))}
-        </div>
-      </div>
-
-      <hr />
-
-      {/* Bathrooms */}
-      <div className="space-y-3">
-        <h4 className="font-medium">Bathrooms</h4>
-        <div className="flex flex-wrap gap-2">
-          {[0, 1, 2, 3].map(num => (
-            <Button
-              key={`baths-${num}`}
-              variant={minBaths === num ? "default" : "outline"}
-              className={minBaths === num ? "bg-teal-500 hover:bg-teal-600" : ""}
-              size="sm"
-              onClick={() => setMinBaths(num)}
-            >
-              {num === 0 ? "Any" : `${num}+`}
-            </Button>
-          ))}
-        </div>
-      </div>
-
-      <hr />
-
-      {/* Property Condition */}
-      <div className="space-y-3">
-        <h4 className="font-medium">Property Condition</h4>
-        {renderConditionFilter()}
-      </div>
-
-      <hr />
-
-      {/* Features */}
-      <div className="space-y-3">
-        <h4 className="font-medium">Features</h4>
-        {renderFeaturesFilter()}
-      </div>
-
-      <hr />
-
-      {/* Nearby */}
-      <div className="space-y-3">
-        <h4 className="font-medium">Nearby</h4>
-        {renderNearbyFilter()}
-      </div>
-
-      <hr />
-
-      {/* Additional Features */}
-      <div className="space-y-3">
-        <h4 className="font-medium">Additional Features</h4>
-        {renderAdditionalFeaturesFilter()}
-      </div>
-
-      <hr />
-
-      {/* Furniture Type */}
-      {renderMultiSelectFilter(
-        furnitureOptions,
-        furnitureType,
-        setFurnitureType,
-        "Furniture Type"
-      )}
-
-      <hr />
-
-      {/* Heating Type */}
-      {renderMultiSelectFilter(
-        heatingOptions,
-        heatingType,
-        setHeatingType,
-        "Heating Type"
-      )}
-
-      <hr />
-
-      {/* Parking Type */}
-      {renderMultiSelectFilter(
-        parkingOptions,
-        parkingType,
-        setParkingType,
-        "Parking Type"
-      )}
-
-      <hr />
-
-      {/* Building Material */}
-      {renderMultiSelectFilter(
-        buildingMaterialOptions,
-        buildingMaterial,
-        setBuildingMaterial,
-        "Building Material"
-      )}
-
-      <hr />
-
-      {/* Kitchen Type */}
-      {renderMultiSelectFilter(
-        kitchenTypeOptions,
-        kitchenType,
-        setKitchenType,
-        "Kitchen Type"
-      )}
-
-      <hr />
-
-      <Button
-        variant="outline"
-        className="w-full"
-        onClick={handleClearFilters}
-      >
-        Clear All Filters
-      </Button>
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={handleClearFilters}
+          >
+            Clear All Filters
+          </Button>
+        </TabsContent>
+        <TabsContent value="keyword">
+          {renderKeywordSearch()}
+        </TabsContent>
+      </Tabs>
     </div>
   );
 
@@ -1645,26 +1687,7 @@ useEffect(() => {
     <div>
       <Navbar />
 
-      {/* Hero Search Section */}
-      <div className="bg-estate-800 py-8">
-        <div className="container">
-          <h1 className="text-white text-3xl md:text-4xl font-bold mb-4">
-            {listingType === "sale" ? "Properties for Sale" : "Properties for Rent"}
-          </h1>
-          <div className="flex bg-white rounded-lg p-3">
-            <div className="flex items-center pl-3 text-estate-neutral-400">
-              <Search size={20} />
-            </div>
-            <input
-              type="text"
-              placeholder="Enter location, city, zip or address"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1 py-2 px-3 outline-none"
-            />
-          </div>
-        </div>
-      </div>
+      
 
       {/* Main Content */}
       <div className="container py-8">
