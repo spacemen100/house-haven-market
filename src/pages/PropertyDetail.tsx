@@ -432,18 +432,7 @@ const PropertyDetail = () => {
                       <p className="text-gray-500">Real Estate Agent</p>
                     </div>
                   </div>
-                )}
-
-                <Button className="w-full bg-cyan-600 hover:bg-cyan-700 mb-3">
-                  <Phone className="h-4 w-4 mr-2" />
-                  Call Agent
-                </Button>
-
-                <Button variant="outline" className="w-full mb-6">
-                  <Mail className="h-4 w-4 mr-2" />
-                  Email Agent
-                </Button>
-
+                )}                
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <Phone className="h-4 w-4 text-cyan-600" />
@@ -467,13 +456,7 @@ const PropertyDetail = () => {
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Schedule a Tour</h3>
-                <p className="text-gray-600 mb-4">Arrange a viewing at your convenience</p>
-                <Button className="w-full bg-emerald-600 hover:bg-emerald-700">
-                  Book Viewing
-                </Button>
-              </div>
+              
 
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Property Facts</h3>
