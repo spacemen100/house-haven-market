@@ -1975,5 +1975,15 @@
   "internal": "Внутреннее",
   "external": "Внешнее",
   "back": "Назад",
-  "nextStep": "Следующий шаг"
+  "nextStep": "Следующий шаг",
+  "myAccount": "Мой аккаунт",
+  "myListings": "Мои объявления",
+  "favorites": "Избранное",
+  "myPublishedListings": "Мои опубликованные объявления",
+  "loading": "Загрузка...",
+  "noPublishedListings": "Вы еще не опубликовали ни одного объявления.",
+  "publishListing": "Опубликовать объявление",
+  "myFavorites": "Мои избранные",
+  "noFavorites": "У вас пока нет избранных объявлений.",
+  "exploreProperties": "Посмотреть недвижимость"
 }

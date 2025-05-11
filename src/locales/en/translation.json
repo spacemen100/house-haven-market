@@ -1975,5 +1975,15 @@
   "internal": "Internal",
   "external": "External",
   "back": "Back",
-  "nextStep": "Next Step"
+  "nextStep": "Next Step",
+  "myAccount": "My Account",
+  "myListings": "My Listings",
+  "favorites": "Favorites",
+  "myPublishedListings": "My published listings",
+  "loading": "Loading...",
+  "noPublishedListings": "You haven't published any listings yet.",
+  "publishListing": "Publish a listing",
+  "myFavorites": "My favorites",
+  "noFavorites": "You don't have any favorites yet.",
+  "exploreProperties": "Explore properties"
 }

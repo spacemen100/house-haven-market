@@ -10,10 +10,12 @@ import { supabase } from "@/lib/api/supabaseClient";
 import { toast } from "sonner";
 import { handleAuthError } from "@/lib/api/auth";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Account = () => {
+  const { t } = useTranslation();
   const location = useLocation();
-  
+
   useEffect(() => {
     // Check for auth errors in hash
     if (location.hash) {
@@ -42,13 +44,13 @@ const Account = () => {
   return (
     <div>
       <Navbar />
-      
+
       <div className="container py-8">
         <div className="flex items-center gap-4 mb-8">
           {user?.user_metadata?.avatar_url ? (
-            <img 
-              src={user.user_metadata.avatar_url} 
-              alt="Profile" 
+            <img
+              src={user.user_metadata.avatar_url}
+              alt="Profile"
               className="w-16 h-16 rounded-full"
             />
           ) : (
@@ -58,27 +60,27 @@ const Account = () => {
           )}
           <div>
             <h1 className="text-3xl font-bold text-estate-800">
-              {user?.user_metadata?.full_name || 'My Account'}
+              {user?.user_metadata?.full_name || t("myAccount")}
             </h1>
             <p className="text-estate-neutral-600">
               {user?.email}
             </p>
           </div>
         </div>
-        
+
         <Tabs defaultValue="published" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="published">My Listings</TabsTrigger>
-            <TabsTrigger value="liked">Favorites</TabsTrigger>
+            <TabsTrigger value="published">{t("myListings")}</TabsTrigger>
+            <TabsTrigger value="liked">{t("favorites")}</TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="published">
             <div className="py-4">
-              <h2 className="text-xl font-semibold mb-4">My published listings</h2>
-              
+              <h2 className="text-xl font-semibold mb-4">{t("myPublishedListings")}</h2>
+
               {loadingMyProperties ? (
                 <div className="flex justify-center py-8">
-                  <p>Loading...</p>
+                  <p>{t("loading")}</p>
                 </div>
               ) : myProperties.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -89,26 +91,26 @@ const Account = () => {
               ) : (
                 <div className="bg-white rounded-lg p-8 text-center border border-estate-neutral-200">
                   <p className="text-estate-neutral-600">
-                    You haven't published any listings yet.
+                    {t("noPublishedListings")}
                   </p>
-                  <a 
-                    href="/sell" 
+                  <a
+                    href="/sell"
                     className="text-teal-500 hover:text-teal-600 font-medium mt-2 inline-block"
                   >
-                    Publish a listing
+                    {t("publishListing")}
                   </a>
                 </div>
               )}
             </div>
           </TabsContent>
-          
+
           <TabsContent value="liked">
             <div className="py-4">
-              <h2 className="text-xl font-semibold mb-4">My favorites</h2>
-              
+              <h2 className="text-xl font-semibold mb-4">{t("myFavorites")}</h2>
+
               {loadingLikedProperties ? (
                 <div className="flex justify-center py-8">
-                  <p>Loading...</p>
+                  <p>{t("loading")}</p>
                 </div>
               ) : likedProperties.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -119,13 +121,13 @@ const Account = () => {
               ) : (
                 <div className="bg-white rounded-lg p-8 text-center border border-estate-neutral-200">
                   <p className="text-estate-neutral-600">
-                    You don't have any favorites yet.
+                    {t("noFavorites")}
                   </p>
-                  <a 
-                    href="/properties" 
+                  <a
+                    href="/properties"
                     className="text-teal-500 hover:text-teal-600 font-medium mt-2 inline-block"
                   >
-                    Explore properties
+                    {t("exploreProperties")}
                   </a>
                 </div>
               )}
@@ -133,7 +135,7 @@ const Account = () => {
           </TabsContent>
         </Tabs>
       </div>
-      
+
       <Footer />
     </div>
   );

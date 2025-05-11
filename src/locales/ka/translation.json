@@ -1974,5 +1974,15 @@
   "internal": "შიდა",
   "external": "გარე",
   "back": "უკან",
-  "nextStep": "შემდეგი ნაბიჯი"
+  "nextStep": "შემდეგი ნაბიჯი",
+  "myAccount": "ჩემი ანგარიში",
+  "myListings": "ჩემი განცხადებები",
+  "favorites": "ფავორიტები",
+  "myPublishedListings": "ჩემი გამოქვეყნებული განცხადებები",
+  "loading": "იტვირთება...",
+  "noPublishedListings": "თქვენ ჯერ არ გაქვთ გამოქვეყნებული განცხადებები.",
+  "publishListing": "განცხადების გამოქვეყნება",
+  "myFavorites": "ჩემი ფავორიტები",
+  "noFavorites": "თქვენ ჯერ არ გაქვთ ფავორიტები.",
+  "exploreProperties": "უძრავი ქონების ნახვა"
 }
