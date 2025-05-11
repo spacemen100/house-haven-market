@@ -12,53 +12,53 @@ export const GEORGIAN_STREETS: StreetData = {
       "Chavchavadze Avenue",
       "Pekini Street",
       "Irakli Abashidze Street",
-    "Tsereteli Avenue",
-    "Vazha Pshavela Avenue",
+      "Tsereteli Avenue",
+      "Vazha Pshavela Avenue",
       "Alexander Kazbegi Avenue",
       "Tamarashvili Street",
       "Lisi Lake Road",
       "Chitadze Street",
-    "Grigol Tabidze Street",
-    "Akaki Tsereteli Street",
-    "Besiki Street",
-    "Zakaria Paliashvili Street"
+      "Grigol Tabidze Street",
+      "Akaki Tsereteli Street",
+      "Besiki Street",
+      "Zakaria Paliashvili Street"
     ],
     "Isani-Samgori": [
       "Ketevan Tsamebuli Avenue",
       "Aghmashenebeli Avenue",
-    "Queen Ketevan Street",
-    "Vazha Pshavela Avenue",
-    "Tsereteli Avenue",
+      "Queen Ketevan Street",
+      "Vazha Pshavela Avenue",
+      "Tsereteli Avenue",
       "Samgori Street",
-          "Akaki Tsereteli Street",
-    "Tsinamdzgvrishvili Street",
+      "Akaki Tsereteli Street",
+      "Tsinamdzgvrishvili Street",
       "Varketili Street",
       "Navtlugi Street",
       "Abashvili Street"
     ],
     "Didube-Chughureti": [
-          "Merab Kostava Avenue",
+      "Merab Kostava Avenue",
       "Tsereteli Avenue",
       "Aghmashenebeli Avenue",
       "Marjanishvili Street",
-          "Zviad Gamsakhurdia Street",
+      "Zviad Gamsakhurdia Street",
       "Chughureti Street",
       "Zubalashvili Street",
       "Kukia Street",
       "Didube Street",
-    "Kukia Street",
-    "Orbeliani Street",
-    "Marjanishvili Street"
+      "Kukia Street",
+      "Orbeliani Street",
+      "Marjanishvili Street"
     ],
     "Gldani-Nadzaladevi": [
       "Guramishvili Avenue",
-          "Vazha Pshavela Avenue",
+      "Vazha Pshavela Avenue",
       "Khizanishvili Street",
       "Nadzaladevi Street",
       "Gldani Street",
       "Davit Agmashenebeli Alley",
-          "Mukhran Machavariani Street",
-    "Aleksi-Meskhishvili Street"
+      "Mukhran Machavariani Street",
+      "Aleksi-Meskhishvili Street"
     ],
     "Mtatsminda-Krtsanisi": [
       "Rustaveli Avenue",
@@ -66,9 +66,9 @@ export const GEORGIAN_STREETS: StreetData = {
       "Krtsanisi Street",
       "Giorgi Leonidze Street",
       "Chavchavadze Avenue",
-    "Shota Rustaveli Avenue",
-    "Leselidze Street",
-    "Betlemi Street",
+      "Shota Rustaveli Avenue",
+      "Leselidze Street",
+      "Betlemi Street",
       "Tabukashvili Street",
       "Chonkadze Street"
     ],
@@ -77,14 +77,14 @@ export const GEORGIAN_STREETS: StreetData = {
       "Erekle II Street",
       "Leselidze Street",
       "Lado Asatiani Street",
-    "Shavteli Street",
+      "Shavteli Street",
       "Sioni Street",
       "Shavteli Street",
       "Gorgasali Street"
     ],
     "Dighomi": [
       "Didi Dighomi Street",
-          "Digomi Street",
+      "Digomi Street",
       "Petre Kavtaradze Street",
       "Guramishvili Avenue",
       "Aghmashenebeli Alley"
@@ -101,8 +101,8 @@ export const GEORGIAN_STREETS: StreetData = {
       "Janashia Street",
       "Tarkhnishvili Street",
       "Zandukeli Street",
-          "Kipshidze Street",
-              "Tarkhnishvili Street"
+      "Kipshidze Street",
+      "Tarkhnishvili Street"
     ],
     "Sololaki": [
       "Lado Asatiani Street",
@@ -114,7 +114,7 @@ export const GEORGIAN_STREETS: StreetData = {
       "Gorgasali Street",
       "Ortachala Rise"
     ],
-    
+
     "Lisi": [
       "Lisi Lake Road",
       "Lisi Hill Street"
@@ -552,7 +552,7 @@ export const GEORGIAN_STREETS: StreetData = {
       "Samegrelo Street",
       "Zugdidi Park Road"
     ],
-    "Lac Paliastomi": [
+    "Paliastomi Lake District": [
       "Paliastomi Lake Shore Road",
       "Paliastomi Nature Reserve Street"
     ],

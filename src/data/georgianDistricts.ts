@@ -11,72 +11,168 @@ export const GEORGIAN_DISTRICTS: DistrictData = {
     "Didube-Chughureti",
     "Gldani-Nadzaladevi",
     "Mtatsminda-Krtsanisi",
-    "Didgori",
-    "Digomi",
-    "Narikala",
+    "Old Tbilisi",
+    "Dighomi",
     "Avlabari",
     "Vera",
-    "Saburtalo",
-    "Dighomi",
+    "Sololaki",
+    "Ortachala",
+    "Lisi",
+    "Tskneti",
+    "Tabakhmela",
+    "Kojori",
+    "Bagebi",
+    "Nutsubidze Plateau",
+    "Temka",
+    "Lilo",
+    "Okrokana",
+    "Shindisi",
+    "Tsavkisi",
+    "Sofelgora",
+    "Didgori",
+    "Narikala",
     "Tsereteli Avenue",
     "Rustaveli Avenue",
-    "Old Tbilisi"
   ],
   "Batumi": [
-    "City Center/Centre-ville",
+    "City Center",
+    "Old Boulevard",
+    "New Boulevard",
     "Gonio",
     "Makhinjauri",
     "Bagrationi",
-    "Rue de la Mer",
+    "Port Area",
     "Anaria",
-    "Old Boulevard",
-    "Port",
-    "New Boulevard",
-    "Europe Square",
-    "Piazza Square",
-    "Batumi Plaza"
+    "Industrial Zone",
+    "Historical District",
+    "Tamarisi",
+    "Chakvi",
+    "Kobuleti Outskirts",
+    "Airport Area",
+    "Adlia",
+    "Angisa",
+    "Tamar Mephe",
+    "Green Cape",
+    "Kakhaberi",
+        "Piazza Square",
+            "Batumi Plaza",
   ],
   "Kutaisi": [
-    "Centre",
+    "City Center",
     "Gamardsuli",
     "Sachkhere",
     "Vakis Park",
-    "Rioni",
-    "Tskaltubo Road",
     "White Bridge",
-    "David Agmashenebeli Avenue",
-    "Kutaisi Central Park",
-    "Bagrati District"
+        "David Agmashenebeli Avenue",
+            "Kutaisi Central Park",
+    "Bagrati",
+    "Motsameta",
+    "Gelati",
+    "Sataplia",
+    "Tskaltubo",
+    "Avangard",
+    "Gora",
+    "Red Bridge",
+    "Khoni Road Area",
+    "Nikea",
+    "Chkvishi",
+    "Rioni District",
+    "Mukhrani",
+    "Tskhenistskali"
   ],
   "Rustavi": [
-    "Zone Est",
-    "Zone Ouest",
-    "Centre",
-    "Rustavi Central Park",
-    "Industrial District",
-    "Varketili"
+    "City Center",
+    "East Zone",
+    "West Zone",
+    "Old Rustavi",
+    "New Rustavi",
+    "Rustavi Industrial Park",
+    "Krtsanisi District",
+    "Shavnabada Area",
+    "Rustavi Lake Area",
+        "Varketili"
   ],
   "Gori": [
-    "Centre",
-    "Staline",
+    "City Center",
+        "Staline",
     "Tserovani",
-    "Gori Fortress",
-    "Stalin Avenue",
-    "Military Town"
+    "Fortress Area",
+    "Gori University Area",
+    "Zemo Gori",
+    "Lower Gori",
+    "Gori Industrial Zone",
+    "Kakhati District",
+    "Gori Lake Area"
   ],
   "Zugdidi": [
-    "Centre",
-    "Dadiani Palace",
-    "Zugdidi Park",
-    "Rukhi",
-    "Jvari Road"
+    "City Center",
+    "Suburban",
+    "Dadiani Palace Area",
+    "Old Town",
+    "Zugdidi Park Area",
+    "Industrial Zone",
+    "Zugdidi Port Area"
   ],
   "Poti": [
     "Port Area",
-    "Central District",
-    "Colchis Avenue",
-    "Poti Sea Port",
-    "Paliastomi Lake District"
+    "Beachside",
+    "City Center",
+    "Maltakva",
+    "Nabada",
+    "Suburban Areas",
+    "Khobi",
+    "Ureki",
+    "Zugdidi",
+    "Paliastomi Lake District",
+    "Kolkheti National Park",
+        "Colchis Avenue",
+  ],
+  "Borjomi": [
+    "Central Park",
+    "Resort Area"
+  ],
+  "Telavi": [
+    "Old Town",
+    "Wine District"
+  ],
+  "Mtskheta": [
+    "Old Town",
+    "Monastery Area"
+  ],
+  "Akhaltsikhe": [
+    "Rabati Fortress",
+    "Cultural District"
+  ],
+  "Kvareli": [
+    "Wine District",
+    "Nature Reserve"
+  ],
+  "Ambrolauri": [
+    "Wine District",
+    "Mountain Area"
+  ],
+  "Akhalkalaki": [
+    "Armenian District",
+    "Historic Center"
+  ],
+  "Bolnisi": [
+    "German Settlement",
+    "Industrial Zone"
+  ],
+  "Samtredia": [
+    "City Center",
+    "Railway District",
+    "Industrial Zone"
+  ],
+  "Khashuri": [
+    "City Center",
+    "Surami District",
+    "Railway District"
+  ],
+  "Senaki": [
+    "City Center",
+    "Old Town",
+    "Railway District"
   ],
   "Kobouleti": [
     "Beachfront",
@@ -90,16 +186,6 @@ export const GEORGIAN_DISTRICTS: DistrictData = {
     "Khachouri Park",
     "Industrial Zone"
   ],
-  "Samtredia": [
-    "Centre",
-    "Rioni River District",
-    "Railway Station Area"
-  ],
-  "Senaki": [
-    "Central District",
-    "Senaki Park",
-    "Military Base Area"
-  ],
   "Zestaponi": [
     "Industrial Zone",
     "Central District",
@@ -110,18 +196,7 @@ export const GEORGIAN_DISTRICTS: DistrictData = {
     "Marneuli Park",
     "Border Zone"
   ],
-  "Telavi": [
-    "Old Telavi",
-    "Wine District",
-    "Alazani Valley View",
-    "Telavi Fortress"
-  ],
-  "Akhaltsikhe": [
-    "Rabati Fortress",
-    "Old Town",
-    "New District",
-    "Akhaltsikhe Park"
-  ],
+
   "Ozourguéti": [
     "Central District",
     "Ozurgeti Park",
@@ -152,12 +227,7 @@ export const GEORGIAN_DISTRICTS: DistrictData = {
     "Central District",
     "Border Area"
   ],
-  "Borjomi": [
-    "Central Park",
-    "Mineral Water Park",
-    "Resort Area",
-    "Borjomi-Kharagauli National Park"
-  ],
+
   "Tqibuli": [
     "Coal Mining District",
     "Central Area",
@@ -168,33 +238,13 @@ export const GEORGIAN_DISTRICTS: DistrictData = {
     "Agricultural Zone",
     "Khoni Park"
   ],
-  "Bolnisi": [
-    "German Settlement",
-    "Central District",
-    "Wine Region"
-  ],
-  "Akhalkalaki": [
-    "Armenian District",
-    "Central Area",
-    "Military Base Zone"
-  ],
+
   "Gourdjaani": [
     "Wine District",
     "Central Area",
     "Alazani Valley Zone"
   ],
-  "Mtskheta": [
-    "Old Town",
-    "Svetitskhoveli Cathedral Area",
-    "Jvari Monastery View",
-    "Historical District"
-  ],
-  "Kvareli": [
-    "Wine District",
-    "Kvareli Lake",
-    "Central Area",
-    "Kindzmarauli Wine Factory"
-  ],
+
   "Akhmeta": [
     "Central District",
     "Pankisi Valley",
@@ -250,11 +300,7 @@ export const GEORGIAN_DISTRICTS: DistrictData = {
     "Mountain View Area",
     "Historical Jewish Quarter"
   ],
-  "Ambrolauri": [
-    "Wine District",
-    "Central Area",
-    "Racha Highlands"
-  ],
+
   "Aspindza": [
     "Vardzia Cave Town Area",
     "Central District",
