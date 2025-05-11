@@ -5,6 +5,8 @@
   "logout": "Logout",
   "buy": "Buy",
   "rent": "Rent",
+  "lease": "Lease",
+  "dailyRent": "Daily Rent",
   "sell": "Sell",
   "agents": "Agents",
   "myAccount": "My Account",
