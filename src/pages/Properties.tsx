@@ -1260,9 +1260,9 @@ const Properties = () => {
                       onChange={(e) => setCurrency(e.target.value as Currency)}
                       className="p-2 border rounded-md"
                     >
-                      <option value="USD">USD</option>
-                      <option value="GEL">GEL</option>
-                      <option value="EUR">EUR</option>
+                      <option value="USD">$</option>
+                      <option value="GEL">₾</option>
+                      <option value="EUR">€</option>
                     </select>
                     <input
                       type="text"
@@ -1279,9 +1279,9 @@ const Properties = () => {
                       onChange={(e) => setCurrency(e.target.value as Currency)}
                       className="p-2 border rounded-md"
                     >
-                      <option value="USD">USD</option>
-                      <option value="GEL">GEL</option>
-                      <option value="EUR">EUR</option>
+                      <option value="USD">$</option>
+                      <option value="GEL">₾</option>
+                      <option value="EUR">€</option>
                     </select>
                     <input
                       type="text"
@@ -1301,9 +1301,9 @@ const Properties = () => {
                   onChange={(e) => setCurrency(e.target.value as Currency)}
                   className="p-2 border rounded-md"
                 >
-                  <option value="GEL">GEL</option>
-                  <option value="USD">USD</option>
-                  <option value="EUR">EUR</option>
+                  <option value="GEL">₾</option>
+                  <option value="USD">$</option>
+                  <option value="EUR">€</option>
                 </select>
               </div>
 
@@ -1528,9 +1528,9 @@ const Properties = () => {
                   onChange={(e) => setCurrency(e.target.value as Currency)}
                   className="p-2 border rounded-md"
                 >
-                  <option value="USD">USD</option>
-                  <option value="GEL">GEL</option>
-                  <option value="EUR">EUR</option>
+                  <option value="USD">$</option>
+                  <option value="GEL">₾</option>
+                  <option value="EUR">€</option>
                 </select>
                 <input
                   type="text"
@@ -1547,9 +1547,9 @@ const Properties = () => {
                   onChange={(e) => setCurrency(e.target.value as Currency)}
                   className="p-2 border rounded-md"
                 >
-                  <option value="USD">USD</option>
-                  <option value="GEL">GEL</option>
-                  <option value="EUR">EUR</option>
+                  <option value="USD">$</option>
+                  <option value="GEL">₾</option>
+                  <option value="EUR">€</option>
                 </select>
                 <input
                   type="text"
