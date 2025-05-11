@@ -9,7 +9,7 @@ export interface CreatePropertyInput {
   phone_number?: string;
   cadastral_code?: string;
   propertyType: 'house' | 'apartment' | 'land' | 'commercial';
-  listingType: 'sale' | 'rent' | 'rent_by_day';
+  listingType: 'sale' | 'rent' | 'rent_by_day' | 'lease';
   status?: 'free' | 'under_caution' | 'under_construction';
   condition?: 'new' | 'good' | 'needs_renovation';
   plan?: string;
@@ -323,7 +323,7 @@ export const createProperty = async (input: CreatePropertyInput) => {
 };
 
 
-export const getProperties = async (type?: 'sale' | 'rent' | 'rent_by_day'): Promise<Property[]> => {
+export const getProperties = async (type?: 'sale' | 'rent' | 'rent_by_day' | 'lease'): Promise<Property[]> => {
   try {
     let query = supabase
       .from('properties')
@@ -354,7 +354,7 @@ export const getProperties = async (type?: 'sale' | 'rent' | 'rent_by_day'): Pro
   }
 };
 
-export const getPropertiesByType = async (listingType: 'sale' | 'rent' | 'rent_by_day'): Promise<Property[]> => {
+export const getPropertiesByType = async (listingType: 'sale' | 'rent' | 'rent_by_day' | 'lease'): Promise<Property[]> => {
   return getProperties(listingType);
 };
 
