@@ -69,6 +69,7 @@
     "title": "ახალი განცხადებები",
     "viewAll": "ყველა განცხადების ნახვა"
   },
+      "cities": {
   "Tbilissi": "თბილისი",
   "Batumi": "ბათუმი",
   "Kutaisi": "ქუთაისი",
@@ -118,7 +119,8 @@
   "Vani": "ვანი",
   "Dmanissi": "დმანისი",
   "Tsnori": "წნორი",
-  "Tkibouli": "ტყიბული",
+  "Tkibouli": "ტყიბული"
+    },
   "Vake-Saburtalo": "ვაკე-საბურთალო",
   "Isani-Samgori": "ისანი-სამგორი",
   "Didube-Chughureti": "დიდუბე-ჩუღურეთი",
@@ -745,5 +747,37 @@
   "noProperties": {
     "title": "ობიექტები ვერ მოიძებნა",
     "description": "სცადეთ ძიების კრიტერიუმების შეცვლა, რათა დაინახოთ მეტი ობიექტი."
+  },
+  "propertyWizard": {
+    "step4": {
+      "title": "მდებარეობა და ფოტოები",
+      "subtitle": "დაამატეთ ქონების ზუსტი მდებარეობა და ფოტოები",
+      "locationTitle": "მდებარეობა",
+      "propertyLocation": "ქონების მდებარეობა",
+      "city": "ქალაქი",
+      "selectCity": "აირჩიეთ ქალაქი",
+      "district": "რაიონი",
+      "selectDistrict": "აირჩიეთ რაიონი",
+      "street": "ქუჩა",
+      "selectStreet": "აირჩიეთ ქუჩა",
+      "locationNotes": "მდებარეობის დეტალები",
+      "locationNotesPlaceholder": "ინსტრუქციები ქონების მოსაძებნად, ღირშესანიშნაობები...",
+      "photosTitle": "ქონების ფოტოები",
+      "images": "ფოტო",
+      "addPhotos": "ფოტოების დამატება",
+      "propertyPhotoAlt": "ქონების ფოტო {index}",
+      "imagePreview": "ფოტოს გადახედვა",
+      "previewAlt": "წინასწარი ნახვა",
+      "publishing": "გამოქვეყნება...",
+      "publishListing": "გამოქვეყნება"
+    }
+  },
+  "errors": {
+    "unsupportedFileType": "მხარდაუჭერელი ფაილის ფორმატი. გამოიყენეთ JPG, PNG ან WebP.",
+    "fileSizeExceeded": "ფოტოს ზომა არ უნდა აღემატებოდეს 5MB-ს.",
+    "maxImagesExceeded": "თქვენ არ შეგიძლიათ {max}-ზე მეტი ფოტოს დამატება."
+  },
+  "common": {
+    "back": "უკან"
   }
 }

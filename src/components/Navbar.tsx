@@ -1,4 +1,3 @@
-// src/components/Navbar.tsx
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, User, ChevronDown } from 'lucide-react';
@@ -219,11 +218,11 @@ const Navbar = () => {
                   {t('signup')}
                 </Button>
               </Dialog>
-              <Button asChild className="bg-teal-500 hover:bg-teal-600">
-                <Link to="/sell">{t('addListing')}</Link>
-              </Button>
             </>
           )}
+          <Button asChild className="bg-teal-500 hover:bg-teal-600">
+            <Link to="/sell">{t('addListing')}</Link>
+          </Button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -338,11 +337,11 @@ const Navbar = () => {
                   >
                     {t('signup')}
                   </Button>
-                  <Button asChild className="bg-teal-500 hover:bg-teal-600">
-                    <Link to="/sell" onClick={() => setIsMenuOpen(false)}>{t('addListing')}</Link>
-                  </Button>
                 </>
               )}
+              <Button asChild className="bg-teal-500 hover:bg-teal-600">
+                <Link to="/sell" onClick={() => setIsMenuOpen(false)}>{t('addListing')}</Link>
+              </Button>
             </div>
           </div>
         </div>

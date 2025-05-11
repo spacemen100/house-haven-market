@@ -69,6 +69,7 @@
     "title": "Новые объявления",
     "viewAll": "Посмотреть все объявления"
   },
+    "cities": {
   "Tbilissi": "Тбилиси",
   "Batumi": "Батуми",
   "Kutaisi": "Кутаиси",
@@ -118,7 +119,8 @@
   "Vani": "Вани",
   "Dmanissi": "Дманиси",
   "Tsnori": "Цнори",
-  "Tkibouli": "Ткибули",
+  "Tkibouli": "Ткибули"
+  },
   "Vake-Saburtalo": "Ваке-Сабуртало",
   "Isani-Samgori": "Исани-Самгори",
   "Didube-Chughureti": "Дидубе-Чугурети",
@@ -746,5 +748,37 @@
   "noProperties": {
     "title": "Объекты не найдены",
     "description": "Попробуйте изменить критерии поиска, чтобы найти больше объектов."
+  },
+  "propertyWizard": {
+    "step4": {
+      "title": "Местоположение и Фотографии",
+      "subtitle": "Добавьте точное местоположение и фотографии вашей недвижимости",
+      "locationTitle": "Местоположение",
+      "propertyLocation": "Расположение объекта",
+      "city": "Город",
+      "selectCity": "Выберите город",
+      "district": "Район",
+      "selectDistrict": "Выберите район",
+      "street": "Улица",
+      "selectStreet": "Выберите улицу",
+      "locationNotes": "Примечания к местоположению",
+      "locationNotesPlaceholder": "Инструкции как найти объект, ориентиры...",
+      "photosTitle": "Фотографии объекта",
+      "images": "фотографии",
+      "addPhotos": "Добавить фото",
+      "propertyPhotoAlt": "Фотография объекта {index}",
+      "imagePreview": "Просмотр изображения",
+      "previewAlt": "Превью",
+      "publishing": "Публикация...",
+      "publishListing": "Опубликовать объявление"
+    }
+  },
+  "errors": {
+    "unsupportedFileType": "Неподдерживаемый формат файла. Используйте JPG, PNG или WebP.",
+    "fileSizeExceeded": "Размер изображения не должен превышать 5MB.",
+    "maxImagesExceeded": "Вы не можете добавить более {max} изображений."
+  },
+  "common": {
+    "back": "Назад"
   }
 }

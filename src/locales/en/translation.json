@@ -69,6 +69,7 @@
     "title": "Newest Properties",
     "viewAll": "View all properties"
   },
+    "cities": {
   "Tbilissi": "Tbilisi",
   "Batumi": "Batumi",
   "Kutaisi": "Kutaisi",
@@ -118,7 +119,8 @@
   "Vani": "Vani",
   "Dmanissi": "Dmanisi",
   "Tsnori": "Tsnori",
-  "Tkibouli": "Tkibuli",
+  "Tkibouli": "Tkibuli"
+  },
   "Vake-Saburtalo": "Vake-Saburtalo",
   "Isani-Samgori": "Isani-Samgori",
   "Didube-Chughureti": "Didube-Chughureti",
@@ -746,5 +748,37 @@
   "noProperties": {
     "title": "No properties found",
     "description": "Try adjusting your search criteria to find more properties."
+  },
+  "propertyWizard": {
+    "step4": {
+      "title": "Location and Photos",
+      "subtitle": "Add the exact location and photos of your property",
+      "locationTitle": "Location",
+      "propertyLocation": "Property Location",
+      "city": "City",
+      "selectCity": "Select a city",
+      "district": "District",
+      "selectDistrict": "Select a district",
+      "street": "Street",
+      "selectStreet": "Select a street",
+      "locationNotes": "Location Notes",
+      "locationNotesPlaceholder": "Instructions to find the property, landmarks...",
+      "photosTitle": "Property Photos",
+      "images": "images",
+      "addPhotos": "Add Photos",
+      "propertyPhotoAlt": "Property photo {index}",
+      "imagePreview": "Image Preview",
+      "previewAlt": "Preview",
+      "publishing": "Publishing...",
+      "publishListing": "Publish Listing"
+    }
+  },
+  "errors": {
+    "unsupportedFileType": "Unsupported file type. Use JPG, PNG, or WebP.",
+    "fileSizeExceeded": "Image should not exceed 5MB.",
+    "maxImagesExceeded": "You cannot add more than {max} images."
+  },
+  "common": {
+    "back": "Back"
   }
 }
