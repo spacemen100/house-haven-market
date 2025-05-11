@@ -780,5 +780,364 @@
   },
   "common": {
     "back": "Back"
+  },
+  "districts": {
+    "Tbilissi": {
+      "Vake-Saburtalo": "Vake-Saburtalo",
+      "Isani-Samgori": "Isani-Samgori",
+      "Didube-Chughureti": "Didube-Chughureti",
+      "Gldani-Nadzaladevi": "Gldani-Nadzaladevi",
+      "Mtatsminda-Krtsanisi": "Mtatsminda-Krtsanisi",
+      "Old Tbilisi": "Old Tbilisi",
+      "Dighomi": "Dighomi",
+      "Avlabari": "Avlabari",
+      "Vera": "Vera",
+      "Sololaki": "Sololaki",
+      "Ortachala": "Ortachala",
+      "Lisi": "Lisi",
+      "Tskneti": "Tskneti",
+      "Tabakhmela": "Tabakhmela",
+      "Kojori": "Kojori",
+      "Bagebi": "Bagebi",
+      "Nutsubidze Plateau": "Nutsubidze Plateau",
+      "Temka": "Temka",
+      "Lilo": "Lilo",
+      "Okrokana": "Okrokana",
+      "Shindisi": "Shindisi",
+      "Tsavkisi": "Tsavkisi",
+      "Sofelgora": "Sofelgora",
+      "Didgori": "Didgori",
+      "Narikala": "Narikala",
+      "Tsereteli Avenue": "Tsereteli Avenue",
+      "Rustaveli Avenue": "Rustaveli Avenue"
+    },
+    "Batumi": {
+      "City Center": "City Center",
+      "Old Boulevard": "Old Boulevard",
+      "New Boulevard": "New Boulevard",
+      "Gonio": "Gonio",
+      "Makhinjauri": "Makhinjauri",
+      "Bagrationi": "Bagrationi",
+      "Port Area": "Port Area",
+      "Anaria": "Anaria",
+      "Industrial Zone": "Industrial Zone",
+      "Historical District": "Historical District",
+      "Tamarisi": "Tamarisi",
+      "Chakvi": "Chakvi",
+      "Kobuleti Outskirts": "Kobuleti Outskirts",
+      "Airport Area": "Airport Area",
+      "Adlia": "Adlia",
+      "Angisa": "Angisa",
+      "Tamar Mephe": "Tamar Mephe",
+      "Green Cape": "Green Cape",
+      "Kakhaberi": "Kakhaberi",
+      "Piazza Square": "Piazza Square",
+      "Batumi Plaza": "Batumi Plaza"
+    },
+    "Kutaisi": {
+      "City Center": "City Center",
+      "Gamardsuli": "Gamardsuli",
+      "Sachkhere": "Sachkhere",
+      "Vakis Park": "Vakis Park",
+      "White Bridge": "White Bridge",
+      "David Agmashenebeli Avenue": "David Agmashenebeli Avenue",
+      "Kutaisi Central Park": "Kutaisi Central Park",
+      "Bagrati": "Bagrati",
+      "Motsameta": "Motsameta",
+      "Gelati": "Gelati",
+      "Sataplia": "Sataplia",
+      "Tskaltubo": "Tskaltubo",
+      "Avangard": "Avangard",
+      "Gora": "Gora",
+      "Red Bridge": "Red Bridge",
+      "Khoni Road Area": "Khoni Road Area",
+      "Nikea": "Nikea",
+      "Chkvishi": "Chkvishi",
+      "Rioni District": "Rioni District",
+      "Mukhrani": "Mukhrani",
+      "Tskhenistskali": "Tskhenistskali"
+    },
+    "Rustavi": {
+      "City Center": "City Center",
+      "East Zone": "East Zone",
+      "West Zone": "West Zone",
+      "Old Rustavi": "Old Rustavi",
+      "New Rustavi": "New Rustavi",
+      "Rustavi Industrial Park": "Rustavi Industrial Park",
+      "Krtsanisi District": "Krtsanisi District",
+      "Shavnabada Area": "Shavnabada Area",
+      "Rustavi Lake Area": "Rustavi Lake Area",
+      "Varketili": "Varketili"
+    },
+    "Gori": {
+      "City Center": "City Center",
+      "Staline": "Staline",
+      "Tserovani": "Tserovani",
+      "Fortress Area": "Fortress Area",
+      "Gori University Area": "Gori University Area",
+      "Zemo Gori": "Zemo Gori",
+      "Lower Gori": "Lower Gori",
+      "Gori Industrial Zone": "Gori Industrial Zone",
+      "Kakhati District": "Kakhati District",
+      "Gori Lake Area": "Gori Lake Area"
+    },
+    "Zugdidi": {
+      "City Center": "City Center",
+      "Suburban": "Suburban",
+      "Dadiani Palace Area": "Dadiani Palace Area",
+      "Old Town": "Old Town",
+      "Zugdidi Park Area": "Zugdidi Park Area",
+      "Industrial Zone": "Industrial Zone",
+      "Zugdidi Port Area": "Zugdidi Port Area"
+    },
+    "Poti": {
+      "Port Area": "Port Area",
+      "Beachside": "Beachside",
+      "City Center": "City Center",
+      "Maltakva": "Maltakva",
+      "Nabada": "Nabada",
+      "Suburban Areas": "Suburban Areas",
+      "Khobi": "Khobi",
+      "Ureki": "Ureki",
+      "Zugdidi": "Zugdidi",
+      "Paliastomi Lake District": "Paliastomi Lake District",
+      "Kolkheti National Park": "Kolkheti National Park",
+      "Colchis Avenue": "Colchis Avenue"
+    },
+    "Borjomi": {
+      "Central Park": "Central Park",
+      "Resort Area": "Resort Area"
+    },
+    "Telavi": {
+      "Old Town": "Old Town",
+      "Wine District": "Wine District"
+    },
+    "Mtskheta": {
+      "Old Town": "Old Town",
+      "Monastery Area": "Monastery Area"
+    },
+    "Akhaltsikhe": {
+      "Rabati Fortress": "Rabati Fortress",
+      "Cultural District": "Cultural District"
+    },
+    "Kvareli": {
+      "Wine District": "Wine District",
+      "Nature Reserve": "Nature Reserve"
+    },
+    "Ambrolauri": {
+      "Wine District": "Wine District",
+      "Mountain Area": "Mountain Area"
+    },
+    "Akhalkalaki": {
+      "Armenian District": "Armenian District",
+      "Historic Center": "Historic Center"
+    },
+    "Bolnisi": {
+      "German Settlement": "German Settlement",
+      "Industrial Zone": "Industrial Zone"
+    },
+    "Samtredia": {
+      "City Center": "City Center",
+      "Railway District": "Railway District",
+      "Industrial Zone": "Industrial Zone"
+    },
+    "Khashuri": {
+      "City Center": "City Center",
+      "Surami District": "Surami District",
+      "Railway District": "Railway District"
+    },
+    "Senaki": {
+      "City Center": "City Center",
+      "Old Town": "Old Town",
+      "Railway District": "Railway District"
+    },
+    "Kobouleti": {
+      "Beachfront": "Beachfront",
+      "Central Park": "Central Park",
+      "Kobuleti Boulevard": "Kobuleti Boulevard",
+      "Resort Area": "Resort Area",
+      "Old Kobuleti": "Old Kobuleti"
+    },
+    "Khachouri": {
+      "Central District": "Central District",
+      "Khachouri Park": "Khachouri Park",
+      "Industrial Zone": "Industrial Zone"
+    },
+    "Zestaponi": {
+      "Industrial Zone": "Industrial Zone",
+      "Central District": "Central District",
+      "Ferroalloy Plant Area": "Ferroalloy Plant Area"
+    },
+    "Marneouli": {
+      "Central District": "Central District",
+      "Marneuli Park": "Marneuli Park",
+      "Border Zone": "Border Zone"
+    },
+    "Ozourguéti": {
+      "Central District": "Central District",
+      "Ozurgeti Park": "Ozurgeti Park",
+      "Administrative Center": "Administrative Center"
+    },
+    "Kaspi": {
+      "Industrial Zone": "Industrial Zone",
+      "Central District": "Central District",
+      "Kaspi Fortress": "Kaspi Fortress"
+    },
+    "Tchiatoura": {
+      "Manganese Mine Area": "Manganese Mine Area",
+      "Central District": "Central District",
+      "Industrial Zone": "Industrial Zone"
+    },
+    "Tskhaltubo": {
+      "Spa Resort Area": "Spa Resort Area",
+      "Central Park": "Central Park",
+      "Old Sanatoriums": "Old Sanatoriums"
+    },
+    "Sagaredjo": {
+      "Central District": "Central District",
+      "Agricultural Zone": "Agricultural Zone",
+      "Sagarejo Park": "Sagarejo Park"
+    },
+    "Gardabani": {
+      "Industrial Zone": "Industrial Zone",
+      "Central District": "Central District",
+      "Border Area": "Border Area"
+    },
+    "Tqibuli": {
+      "Coal Mining District": "Coal Mining District",
+      "Central Area": "Central Area",
+      "Industrial Zone": "Industrial Zone"
+    },
+    "Khoni": {
+      "Central District": "Central District",
+      "Agricultural Zone": "Agricultural Zone",
+      "Khoni Park": "Khoni Park"
+    },
+    "Gourdjaani": {
+      "Wine District": "Wine District",
+      "Central Area": "Central Area",
+      "Alazani Valley Zone": "Alazani Valley Zone"
+    },
+    "Akhmeta": {
+      "Central District": "Central District",
+      "Pankisi Valley": "Pankisi Valley",
+      "Agricultural Zone": "Agricultural Zone"
+    },
+    "Kareli": {
+      "Central District": "Central District",
+      "Industrial Zone": "Industrial Zone",
+      "Kareli Park": "Kareli Park"
+    },
+    "Lantchkhouti": {
+      "Tea Plantation Area": "Tea Plantation Area",
+      "Central District": "Central District",
+      "Subtropical Zone": "Subtropical Zone"
+    },
+    "Tsalendjikha": {
+      "Central District": "Central District",
+      "Agricultural Area": "Agricultural Area",
+      "Tsalenjikha Cathedral": "Tsalenjikha Cathedral"
+    },
+    "Doucheti": {
+      "Central District": "Central District",
+      "Mountain View Area": "Mountain View Area",
+      "Agricultural Zone": "Agricultural Zone"
+    },
+    "Satchkhere": {
+      "Industrial Zone": "Industrial Zone",
+      "Central District": "Central District",
+      "Mining Area": "Mining Area"
+    },
+    "Dedoplistsqaro": {
+      "Vashlovani Reserve Area": "Vashlovani Reserve Area",
+      "Central District": "Central District",
+      "Agricultural Zone": "Agricultural Zone"
+    },
+    "Lagodekhi": {
+      "National Park Area": "National Park Area",
+      "Central District": "Central District",
+      "Border Zone": "Border Zone"
+    },
+    "Ninotsminda": {
+      "Central District": "Central District",
+      "Lake Khanchali Area": "Lake Khanchali Area",
+      "Agricultural Zone": "Agricultural Zone"
+    },
+    "Tsageri": {
+      "Mountain District": "Mountain District",
+      "Central Area": "Central Area",
+      "Forest Zone": "Forest Zone"
+    },
+    "Oni": {
+      "Central District": "Central District",
+      "Mountain View Area": "Mountain View Area",
+      "Historical Jewish Quarter": "Historical Jewish Quarter"
+    },
+    "Aspindza": {
+      "Vardzia Cave Town Area": "Vardzia Cave Town Area",
+      "Central District": "Central District",
+      "Agricultural Zone": "Agricultural Zone"
+    },
+    "Tianeti": {
+      "Central District": "Central District",
+      "Mountainous Area": "Mountainous Area",
+      "Forest Zone": "Forest Zone"
+    },
+    "Kharagaouli": {
+      "Central District": "Central District",
+      "Borjomi-Kharagauli Park": "Borjomi-Kharagauli Park",
+      "Mountain Zone": "Mountain Zone"
+    },
+    "Baghdati": {
+      "Central District": "Central District",
+      "Mayakovsky Museum Area": "Mayakovsky Museum Area",
+      "Forest Zone": "Forest Zone"
+    },
+    "Vani": {
+      "Archaeological Site": "Archaeological Site",
+      "Central District": "Central District",
+      "Agricultural Zone": "Agricultural Zone"
+    },
+    "Dmanissi": {
+      "Historical Site": "Historical Site",
+      "Central District": "Central District",
+      "Archaeological Zone": "Archaeological Zone"
+    },
+    "Tsnori": {
+      "Wine District": "Wine District",
+      "Central Area": "Central Area",
+      "Agricultural Zone": "Agricultural Zone"
+    },
+    "Tkibouli": {
+      "Coal Mining District": "Coal Mining District",
+      "Central Area": "Central Area",
+      "Industrial Zone": "Industrial Zone"
+    }
+  },
+  "streets": {
+    "Tbilissi": {
+      "Vake-Saburtalo": {
+        "Chavchavadze Avenue": "Chavchavadze Avenue",
+        "Pekini Street": "Pekini Street",
+        "Irakli Abashidze Street": "Irakli Abashidze Street"
+      },
+      "Isani-Samgori": {
+        "Ketevan Tsamebuli Avenue": "Ketevan Tsamebuli Avenue",
+        "Aghmashenebeli Avenue": "Aghmashenebeli Avenue",
+        "Queen Ketevan Street": "Queen Ketevan Street"
+      }
+    },
+    "Batumi": {
+      "City Center": {
+        "Ninoshvili Street": "Ninoshvili Street",
+        "King Parnavaz Street": "King Parnavaz Street",
+        "Chavchavadze Street": "Chavchavadze Street"
+      },
+      "Old Boulevard": {
+        "Batumi Boulevard": "Batumi Boulevard",
+        "Zakaria Paliashvili Street": "Zakaria Paliashvili Street",
+        "Seaside Promenade": "Seaside Promenade"
+      }
+    }
   }
 }

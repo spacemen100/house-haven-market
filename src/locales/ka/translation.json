@@ -779,5 +779,364 @@
   },
   "common": {
     "back": "უკან"
+  },
+  "districts": {
+    "Tbilissi": {
+      "Vake-Saburtalo": "ვაკე-საბურთალო",
+      "Isani-Samgori": "ისანი-სამგორი",
+      "Didube-Chughureti": "დიდუბე-ჩუღურეთი",
+      "Gldani-Nadzaladevi": "გლდანი-ნაძალადევი",
+      "Mtatsminda-Krtsanisi": "მთაწმინდა-წრწყისი",
+      "Old Tbilisi": "ძველი თბილისი",
+      "Dighomi": "დიღომი",
+      "Avlabari": "ავლაბარი",
+      "Vera": "ვერა",
+      "Sololaki": "სოლოლაკი",
+      "Ortachala": "ორთაჭალა",
+      "Lisi": "ლისი",
+      "Tskneti": "ცხნეთი",
+      "Tabakhmela": "ტაბახმელა",
+      "Kojori": "კოჯორი",
+      "Bagebi": "ბაგები",
+      "Nutsubidze Plateau": "ნუცუბიძის პლატო",
+      "Temka": "თემკა",
+      "Lilo": "ლილო",
+      "Okrokana": "ოკროკანა",
+      "Shindisi": "შინდისი",
+      "Tsavkisi": "ცავკისი",
+      "Sofelgora": "სოფელგორა",
+      "Didgori": "დიდგორი",
+      "Narikala": "ნარიკალა",
+      "Tsereteli Avenue": "წერეთლის გამზირი",
+      "Rustaveli Avenue": "რუსთაველის გამზირი"
+    },
+    "Batumi": {
+      "City Center": "ქალაქის ცენტრი",
+      "Old Boulevard": "ძველი ბულვარი",
+      "New Boulevard": "ახალი ბულვარი",
+      "Gonio": "გონიო",
+      "Makhinjauri": "მახინჯაური",
+      "Bagrationi": "ბაგრატიონი",
+      "Port Area": "პორტის რაიონი",
+      "Anaria": "ანარია",
+      "Industrial Zone": "სამრეწველო ზონა",
+      "Historical District": "ისტორიული რაიონი",
+      "Tamarisi": "თამარისი",
+      "Chakvi": "ჩაქვი",
+      "Kobuleti Outskirts": "ქობულეთის გარეუბანი",
+      "Airport Area": "აეროპორტის რაიონი",
+      "Adlia": "ადლია",
+      "Angisa": "ანგისა",
+      "Tamar Mephe": "თამარ მეფე",
+      "Green Cape": "მწვანე კაპი",
+      "Kakhaberi": "კახაბერი",
+      "Piazza Square": "პიაცას მოედანი",
+      "Batumi Plaza": "ბათუმის პლაზა"
+    },
+    "Kutaisi": {
+      "City Center": "ქალაქის ცენტრი",
+      "Gamardsuli": "გამარდსული",
+      "Sachkhere": "საჩხერე",
+      "Vakis Park": "ვაკის პარკი",
+      "White Bridge": "თეთრი ხიდი",
+      "David Agmashenebeli Avenue": "დავით აღმაშენებლის გამზირი",
+      "Kutaisi Central Park": "ქუთაისის ცენტრალური პარკი",
+      "Bagrati": "ბაგრატი",
+      "Motsameta": "მოცამეთა",
+      "Gelati": "გელათი",
+      "Sataplia": "სატაპლია",
+      "Tskaltubo": "წყალტუბო",
+      "Avangard": "ავანგარდი",
+      "Gora": "გორა",
+      "Red Bridge": "წითელი ხიდი",
+      "Khoni Road Area": "ხონის გზის რაიონი",
+      "Nikea": "ნიკეა",
+      "Chkvishi": "ჩქვიში",
+      "Rioni District": "რიონის რაიონი",
+      "Mukhrani": "მუხრანი",
+      "Tskhenistskali": "წყენისწყალი"
+    },
+    "Rustavi": {
+      "City Center": "ქალაქის ცენტრი",
+      "East Zone": "აღმოსავლეთი ზონა",
+      "West Zone": "დასავლეთი ზონა",
+      "Old Rustavi": "ძველი რუსთავი",
+      "New Rustavi": "ახალი რუსთავი",
+      "Rustavi Industrial Park": "რუსთავის სამრეწველო პარკი",
+      "Krtsanisi District": "წრწყისის რაიონი",
+      "Shavnabada Area": "შავნაბადის რაიონი",
+      "Rustavi Lake Area": "რუსთავის ტბის რაიონი",
+      "Varketili": "ვარკეთილი"
+    },
+    "Gori": {
+      "City Center": "ქალაქის ცენტრი",
+      "Staline": "სტალინი",
+      "Tserovani": "წეროვანი",
+      "Fortress Area": "ციხის რაიონი",
+      "Gori University Area": "გორის უნივერსიტეტის რაიონი",
+      "Zemo Gori": "ზემო გორი",
+      "Lower Gori": "ქვემო გორი",
+      "Gori Industrial Zone": "გორის სამრეწველო ზონა",
+      "Kakhati District": "კახათის რაიონი",
+      "Gori Lake Area": "გორის ტბის რაიონი"
+    },
+    "Zugdidi": {
+      "City Center": "ქალაქის ცენტრი",
+      "Suburban": "გარეუბანი",
+      "Dadiani Palace Area": "დადიანების სასახლის რაიონი",
+      "Old Town": "ძველი ქალაქი",
+      "Zugdidi Park Area": "ზუგდიდის პარკის რაიონი",
+      "Industrial Zone": "სამრეწველო ზონა",
+      "Zugdidi Port Area": "ზუგდიდის პორტის რაიონი"
+    },
+    "Poti": {
+      "Port Area": "პორტის რაიონი",
+      "Beachside": "სანაპირო",
+      "City Center": "ქალაქის ცენტრი",
+      "Maltakva": "მალტაკვა",
+      "Nabada": "ნაბადა",
+      "Suburban Areas": "გარეუბნები",
+      "Khobi": "ხობი",
+      "Ureki": "ურეკი",
+      "Zugdidi": "ზუგდიდი",
+      "Paliastomi Lake District": "პალიასტომის ტბის რაიონი",
+      "Kolkheti National Park": "კოლხეთის ეროვნული პარკი",
+      "Colchis Avenue": "კოლხეთის გამზირი"
+    },
+    "Borjomi": {
+      "Central Park": "ცენტრალური პარკი",
+      "Resort Area": "კურორტის რაიონი"
+    },
+    "Telavi": {
+      "Old Town": "ძველი ქალაქი",
+      "Wine District": "ღვინის რაიონი"
+    },
+    "Mtskheta": {
+      "Old Town": "ძველი ქალაქი",
+      "Monastery Area": "მონასტრის რაიონი"
+    },
+    "Akhaltsikhe": {
+      "Rabati Fortress": "რაბათის ციხე",
+      "Cultural District": "კულტურული რაიონი"
+    },
+    "Kvareli": {
+      "Wine District": "ღვინის რაიონი",
+      "Nature Reserve": "ბუნების ნაკრძალი"
+    },
+    "Ambrolauri": {
+      "Wine District": "ღვინის რაიონი",
+      "Mountain Area": "მთიანი რაიონი"
+    },
+    "Akhalkalaki": {
+      "Armenian District": "სომხური რაიონი",
+      "Historic Center": "ისტორიული ცენტრი"
+    },
+    "Bolnisi": {
+      "German Settlement": "გერმანული დასახლება",
+      "Industrial Zone": "სამრეწველო ზონა"
+    },
+    "Samtredia": {
+      "City Center": "ქალაქის ცენტრი",
+      "Railway District": "რკინიგზის რაიონი",
+      "Industrial Zone": "სამრეწველო ზონა"
+    },
+    "Khashuri": {
+      "City Center": "ქალაქის ცენტრი",
+      "Surami District": "სურამის რაიონი",
+      "Railway District": "რკინიგზის რაიონი"
+    },
+    "Senaki": {
+      "City Center": "ქალაქის ცენტრი",
+      "Old Town": "ძველი ქალაქი",
+      "Railway District": "რკინიგზის რაიონი"
+    },
+    "Kobouleti": {
+      "Beachfront": "სანაპირო",
+      "Central Park": "ცენტრალური პარკი",
+      "Kobuleti Boulevard": "ქობულეთის ბულვარი",
+      "Resort Area": "კურორტის რაიონი",
+      "Old Kobuleti": "ძველი ქობულეთი"
+    },
+    "Khachouri": {
+      "Central District": "ცენტრალური რაიონი",
+      "Khachouri Park": "ხაჩურის პარკი",
+      "Industrial Zone": "სამრეწველო ზონა"
+    },
+    "Zestaponi": {
+      "Industrial Zone": "სამრეწველო ზონა",
+      "Central District": "ცენტრალური რაიონი",
+      "Ferroalloy Plant Area": "ფეროშენადნობების ქარხნის რაიონი"
+    },
+    "Marneouli": {
+      "Central District": "ცენტრალური რაიონი",
+      "Marneuli Park": "მარნეულის პარკი",
+      "Border Zone": "საზღვრის ზონა"
+    },
+    "Ozourguéti": {
+      "Central District": "ცენტრალური რაიონი",
+      "Ozurgeti Park": "ოზურგეთის პარკი",
+      "Administrative Center": "ადმინისტრაციული ცენტრი"
+    },
+    "Kaspi": {
+      "Industrial Zone": "სამრეწველო ზონა",
+      "Central District": "ცენტრალური რაიონი",
+      "Kaspi Fortress": "კასპის ციხე"
+    },
+    "Tchiatoura": {
+      "Manganese Mine Area": "მანგანუმის მაღაროს რაიონი",
+      "Central District": "ცენტრალური რაიონი",
+      "Industrial Zone": "სამრეწველო ზონა"
+    },
+    "Tskhaltubo": {
+      "Spa Resort Area": "კურორტის რაიონი",
+      "Central Park": "ცენტრალური პარკი",
+      "Old Sanatoriums": "ძველი სანატორიუმები"
+    },
+    "Sagaredjo": {
+      "Central District": "ცენტრალური რაიონი",
+      "Agricultural Zone": "სოფლის მეურნეობის ზონა",
+      "Sagarejo Park": "საგარეჯოს პარკი"
+    },
+    "Gardabani": {
+      "Industrial Zone": "სამრეწველო ზონა",
+      "Central District": "ცენტრალური რაიონი",
+      "Border Area": "საზღვრის რაიონი"
+    },
+    "Tqibuli": {
+      "Coal Mining District": "ნახშირის მაღაროს რაიონი",
+      "Central Area": "ცენტრალური რაიონი",
+      "Industrial Zone": "სამრეწველო ზონა"
+    },
+    "Khoni": {
+      "Central District": "ცენტრალური რაიონი",
+      "Agricultural Zone": "სოფლის მეურნეობის ზონა",
+      "Khoni Park": "ხონის პარკი"
+    },
+    "Gourdjaani": {
+      "Wine District": "ღვინის რაიონი",
+      "Central Area": "ცენტრალური რაიონი",
+      "Alazani Valley Zone": "ალაზნის ხეობის ზონა"
+    },
+    "Akhmeta": {
+      "Central District": "ცენტრალური რაიონი",
+      "Pankisi Valley": "ფანკისის ხეობა",
+      "Agricultural Zone": "სოფლის მეურნეობის ზონა"
+    },
+    "Kareli": {
+      "Central District": "ცენტრალური რაიონი",
+      "Industrial Zone": "სამრეწველო ზონა",
+      "Kareli Park": "კარელის პარკი"
+    },
+    "Lantchkhouti": {
+      "Tea Plantation Area": "ჩაის პლანტაციის რაიონი",
+      "Central District": "ცენტრალური რაიონი",
+      "Subtropical Zone": "სუბტროპიკული ზონა"
+    },
+    "Tsalendjikha": {
+      "Central District": "ცენტრალური რაიონი",
+      "Agricultural Area": "სოფლის მეურნეობის რაიონი",
+      "Tsalenjikha Cathedral": "წალენჯიხის საკათედრო ტაძარი"
+    },
+    "Doucheti": {
+      "Central District": "ცენტრალური რაიონი",
+      "Mountain View Area": "მთის ხედის რაიონი",
+      "Agricultural Zone": "სოფლის მეურნეობის ზონა"
+    },
+    "Satchkhere": {
+      "Industrial Zone": "სამრეწველო ზონა",
+      "Central District": "ცენტრალური რაიონი",
+      "Mining Area": "სამთო რაიონი"
+    },
+    "Dedoplistsqaro": {
+      "Vashlovani Reserve Area": "ვაშლოვანის ნაკრძალის რაიონი",
+      "Central District": "ცენტრალური რაიონი",
+      "Agricultural Zone": "სოფლის მეურნეობის ზონა"
+    },
+    "Lagodekhi": {
+      "National Park Area": "ეროვნული პარკის რაიონი",
+      "Central District": "ცენტრალური რაიონი",
+      "Border Zone": "საზღვრის ზონა"
+    },
+    "Ninotsminda": {
+      "Central District": "ცენტრალური რაიონი",
+      "Lake Khanchali Area": "ხანჩალის ტბის რაიონი",
+      "Agricultural Zone": "სოფლის მეურნეობის ზონა"
+    },
+    "Tsageri": {
+      "Mountain District": "მთიანი რაიონი",
+      "Central Area": "ცენტრალური რაიონი",
+      "Forest Zone": "ტყის ზონა"
+    },
+    "Oni": {
+      "Central District": "ცენტრალური რაიონი",
+      "Mountain View Area": "მთის ხედის რაიონი",
+      "Historical Jewish Quarter": "ისტორიული ებრაული კვარტალი"
+    },
+    "Aspindza": {
+      "Vardzia Cave Town Area": "ვარდზიის მღვიმეების ქალაქის რაიონი",
+      "Central District": "ცენტრალური რაიონი",
+      "Agricultural Zone": "სოფლის მეურნეობის ზონა"
+    },
+    "Tianeti": {
+      "Central District": "ცენტრალური რაიონი",
+      "Mountainous Area": "მთიანი რაიონი",
+      "Forest Zone": "ტყის ზონა"
+    },
+    "Kharagaouli": {
+      "Central District": "ცენტრალური რაიონი",
+      "Borjomi-Kharagauli Park": "ბორჯომ-ხარაგაულის პარკი",
+      "Mountain Zone": "მთიანი ზონა"
+    },
+    "Baghdati": {
+      "Central District": "ცენტრალური რაიონი",
+      "Mayakovsky Museum Area": "მაიაკოვსკის მუზეუმის რაიონი",
+      "Forest Zone": "ტყის ზონა"
+    },
+    "Vani": {
+      "Archaeological Site": "არქეოლოგიური ძეგლის რაიონი",
+      "Central District": "ცენტრალური რაიონი",
+      "Agricultural Zone": "სოფლის მეურნეობის ზონა"
+    },
+    "Dmanissi": {
+      "Historical Site": "ისტორიული ძეგლის რაიონი",
+      "Central District": "ცენტრალური რაიონი",
+      "Archaeological Zone": "არქეოლოგიური ზონა"
+    },
+    "Tsnori": {
+      "Wine District": "ღვინის რაიონი",
+      "Central Area": "ცენტრალური რაიონი",
+      "Agricultural Zone": "სოფლის მეურნეობის ზონა"
+    },
+    "Tkibouli": {
+      "Coal Mining District": "ნახშირის მაღაროს რაიონი",
+      "Central Area": "ცენტრალური რაიონი",
+      "Industrial Zone": "სამრეწველო ზონა"
+    }
+  },
+  "streets": {
+    "Tbilissi": {
+      "Vake-Saburtalo": {
+        "Chavchavadze Avenue": "ჭავჭავაძის გამზირი",
+        "Pekini Street": "პეკინის ქუჩა",
+        "Irakli Abashidze Street": "ირაკლი აბაშიძის ქუჩა"
+      },
+      "Isani-Samgori": {
+        "Ketevan Tsamebuli Avenue": "ქეთევან წამებულის გამზირი",
+        "Aghmashenebeli Avenue": "აღმაშენებლის გამზირი",
+        "Queen Ketevan Street": "ქეთევან დედოფლის ქუჩა"
+      }
+    },
+    "Batumi": {
+      "City Center": {
+        "Ninoshvili Street": "ნინოშვილის ქუჩა",
+        "King Parnavaz Street": "ფარნავაზ მეფის ქუჩა",
+        "Chavchavadze Street": "ჭავჭავაძის ქუჩა"
+      },
+      "Old Boulevard": {
+        "Batumi Boulevard": "ბათუმის ბულვარი",
+        "Zakaria Paliashvili Street": "ზაქარია ფალიაშვილის ქუჩა",
+        "Seaside Promenade": "ზღვისპირა პრომენადი"
+      }
+    }
   }
 }
