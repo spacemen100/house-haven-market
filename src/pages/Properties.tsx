@@ -1255,15 +1255,6 @@ const Properties = () => {
                 </div>
                 <div className="flex justify-between gap-2 mt-2">
                   <div className="flex items-center gap-1">
-                    <select
-                      value={currency}
-                      onChange={(e) => setCurrency(e.target.value as Currency)}
-                      className="p-2 border rounded-md"
-                    >
-                      <option value="USD">$</option>
-                      <option value="GEL">₾</option>
-                      <option value="EUR">€</option>
-                    </select>
                     <input
                       type="text"
                       value={minPriceInput}
@@ -1271,9 +1262,6 @@ const Properties = () => {
                       onBlur={handlePriceBlur}
                       className="w-20 border rounded px-2 py-1 text-sm"
                     />
-                  </div>
-                  <span className="text-sm">to</span>
-                  <div className="flex items-center gap-1">
                     <select
                       value={currency}
                       onChange={(e) => setCurrency(e.target.value as Currency)}
@@ -1282,7 +1270,10 @@ const Properties = () => {
                       <option value="USD">$</option>
                       <option value="GEL">₾</option>
                       <option value="EUR">€</option>
-                    </select>
+                    </select>   
+                  </div>
+                  
+                  <div className="flex items-center gap-1">
                     <input
                       type="text"
                       value={maxPriceInput}
@@ -1290,6 +1281,15 @@ const Properties = () => {
                       onBlur={handlePriceBlur}
                       className="w-20 border rounded px-2 py-1 text-sm"
                     />
+                    <select
+                      value={currency}
+                      onChange={(e) => setCurrency(e.target.value as Currency)}
+                      className="p-2 border rounded-md"
+                    >
+                      <option value="USD">$</option>
+                      <option value="GEL">₾</option>
+                      <option value="EUR">€</option>
+                    </select>                   
                   </div>
                 </div>
               </div>
@@ -1523,15 +1523,6 @@ const Properties = () => {
             </div>
             <div className="flex justify-between gap-2 mt-2">
               <div className="flex items-center gap-1">
-                <select
-                  value={currency}
-                  onChange={(e) => setCurrency(e.target.value as Currency)}
-                  className="p-2 border rounded-md"
-                >
-                  <option value="USD">$</option>
-                  <option value="GEL">₾</option>
-                  <option value="EUR">€</option>
-                </select>
                 <input
                   type="text"
                   value={minPriceInput}
@@ -1539,9 +1530,25 @@ const Properties = () => {
                   onBlur={handlePriceBlur}
                   className="w-20 border rounded px-2 py-1 text-sm"
                 />
+                <select
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value as Currency)}
+                  className="p-2 border rounded-md"
+                >
+                  <option value="USD">$</option>
+                  <option value="GEL">₾</option>
+                  <option value="EUR">€</option>
+                </select>             
               </div>
-              <span className="text-sm">to</span>
+              
               <div className="flex items-center gap-1">
+                <input
+                  type="text"
+                  value={maxPriceInput}
+                  onChange={handleMaxPriceInputChange}
+                  onBlur={handlePriceBlur}
+                  className="w-20 border rounded px-2 py-1 text-sm"
+                />
                 <select
                   value={currency}
                   onChange={(e) => setCurrency(e.target.value as Currency)}
@@ -1551,13 +1558,6 @@ const Properties = () => {
                   <option value="GEL">₾</option>
                   <option value="EUR">€</option>
                 </select>
-                <input
-                  type="text"
-                  value={maxPriceInput}
-                  onChange={handleMaxPriceInputChange}
-                  onBlur={handlePriceBlur}
-                  className="w-20 border rounded px-2 py-1 text-sm"
-                />
               </div>
             </div>
           </div>
