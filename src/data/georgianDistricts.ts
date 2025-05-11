@@ -36,7 +36,7 @@ export const GEORGIAN_DISTRICTS: DistrictData = {
     "Piazza Square",
     "Batumi Plaza"
   ],
-  "Koutaïssi": [
+  "Kutaisi": [
     "Centre",
     "Gamardsuli",
     "Sachkhere",
@@ -48,7 +48,7 @@ export const GEORGIAN_DISTRICTS: DistrictData = {
     "Kutaisi Central Park",
     "Bagrati District"
   ],
-  "Roustavi": [
+  "Rustavi": [
     "Zone Est",
     "Zone Ouest",
     "Centre",
@@ -64,7 +64,7 @@ export const GEORGIAN_DISTRICTS: DistrictData = {
     "Stalin Avenue",
     "Military Town"
   ],
-  "Zougdidi": [
+  "Zugdidi": [
     "Centre",
     "Dadiani Palace",
     "Zugdidi Park",
@@ -116,7 +116,7 @@ export const GEORGIAN_DISTRICTS: DistrictData = {
     "Alazani Valley View",
     "Telavi Fortress"
   ],
-  "Akhaltsikhé": [
+  "Akhaltsikhe": [
     "Rabati Fortress",
     "Old Town",
     "New District",
@@ -152,7 +152,7 @@ export const GEORGIAN_DISTRICTS: DistrictData = {
     "Central District",
     "Border Area"
   ],
-  "Bordjomi": [
+  "Borjomi": [
     "Central Park",
     "Mineral Water Park",
     "Resort Area",
@@ -168,7 +168,7 @@ export const GEORGIAN_DISTRICTS: DistrictData = {
     "Agricultural Zone",
     "Khoni Park"
   ],
-  "Bolnissi": [
+  "Bolnisi": [
     "German Settlement",
     "Central District",
     "Wine Region"

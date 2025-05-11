@@ -128,29 +128,58 @@ export const GEORGIAN_STREETS: StreetData = {
   },
   // ... (keep other cities as they were)
   "Kutaisi": {
-    "City Center": [
-      "David Agmashenebeli Street",
-      "Shota Rustaveli Street",
-      "Tsereteli Street",
-      "Queen Tamar Street",
-      "Vekua Street"
-    ],
-    "White Bridge": [
-      "White Bridge Street",
-      "Rioni River Street",
-      "Colchis Street"
-    ]
-  },
+  "City Center": [
+    "David Agmashenebeli Street",
+    "Shota Rustaveli Street",
+    "Tsereteli Street",
+    "Queen Tamar Street",
+    "Vekua Street"
+  ],
+  "White Bridge": [
+    "White Bridge Street",
+    "Rioni River Street",
+    "Colchis Street"
+  ],
+  "Bagrati": [
+    "Bagrati Cathedral Street",
+    "Gelati Monastery Road",
+    "Historical Museum Street"
+  ],
+  "Motsameta": [
+    "Motsameta Monastery Street",
+    "River View Street",
+    "Monastery Hill Road"
+  ],
+  "Gelati": [
+    "Gelati Academy Street",
+    "Science Avenue",
+    "University Lane"
+  ],
+  "Sataplia": [
+    "Sataplia Cave Street",
+    "Dinosaur Park Road",
+    "Nature Reserve Lane"
+  ],
+  "Tskaltubo": [
+    "Spa Resort Street",
+    "Health Avenue",
+    "Sanatorium Lane"
+  ]
+},
   "Rustavi": {
     "East Zone": [
-      "Rustavi 1st Street",
-      "Industrial Avenue",
-      "Metallurgist Street"
+      "Rustavi Street",
+      "Metallurgists Street"
     ],
     "City Center": [
-      "Central Avenue",
-      "Vazha Pshavela Street",
-      "Stalin Avenue"
+      "Rustaveli Street",
+      "Shartava Street",
+      "Chavchavadze Street"
+    ],
+    "West Zone": [
+      "Giorgi Chkondideli Street",
+      "Ilia Chavchavadze Street",
+      "Vakhtang Gorgasali Street"
     ]
   },
   "Gori": {
@@ -160,15 +189,22 @@ export const GEORGIAN_STREETS: StreetData = {
       "Ketskhoveli Street"
     ],
     "Tserovani": [
-      "Main Settlement Street",
-      "IDP Housing Street"
+      "Tserovani Settlement Street"
+    ],
+    "Fortress Area": [
+      "Gori Fortress Street",
+      "Museum Street"
     ]
   },
   "Zugdidi": {
     "City Center": [
-      "Dadiani Palace Street",
+      "Dadiani Street",
       "Merab Kostava Street",
-      "Rukhi Highway"
+      "Rustaveli Street"
+    ],
+    "Suburban": [
+      "Tamar Mepe Street",
+      "Kolkheti Street"
     ]
   },
   "Poti": {
@@ -176,13 +212,23 @@ export const GEORGIAN_STREETS: StreetData = {
       "Port Street",
       "Seaside Avenue",
       "Industrial Zone Road"
+    ],
+    "Beachside": [
+      "Beach Boulevard",
+      "Marina Street",
+      "Lighthouse Lane"
     ]
   },
-  "Bordjomi": {
+  "Borjomi": {
     "Central Park": [
       "Park Avenue",
       "Mineral Springs Street",
       "Stalin Street"
+    ],
+    "Resort Area": [
+      "Spa Street",
+      "Wellness Avenue",
+      "Sanatorium Road"
     ]
   },
   "Telavi": {
@@ -190,6 +236,11 @@ export const GEORGIAN_STREETS: StreetData = {
       "King Erekle II Street",
       "Wine Valley Road",
       "Fortress Hill Street"
+    ],
+    "Wine District": [
+      "Vineyard Lane",
+      "Cellar Street",
+      "Harvest Road"
     ]
   },
   "Mtskheta": {
@@ -197,6 +248,11 @@ export const GEORGIAN_STREETS: StreetData = {
       "Svetitskhoveli Street",
       "Armazi Street",
       "Church Hill Road"
+    ],
+    "Monastery Area": [
+      "Jvari Monastery Street",
+      "Monastic Lane",
+      "Pilgrimage Road"
     ]
   },
   "Akhaltsikhe": {
@@ -204,6 +260,11 @@ export const GEORGIAN_STREETS: StreetData = {
       "Fortress Road",
       "Ahmed-Pasha Street",
       "Old Town Street"
+    ],
+    "Cultural District": [
+      "Museum Street",
+      "Art Gallery Lane",
+      "Cultural Center Road"
     ]
   },
   "Kvareli": {
@@ -211,6 +272,11 @@ export const GEORGIAN_STREETS: StreetData = {
       "Kindzmarauli Street",
       "Winemakers Alley",
       "Lakeview Street"
+    ],
+    "Nature Reserve": [
+      "Forest Trail",
+      "Lake Street",
+      "Wildlife Lane"
     ]
   },
   "Ambrolauri": {
@@ -218,6 +284,11 @@ export const GEORGIAN_STREETS: StreetData = {
       "Khvanchkara Street",
       "Usakhelauri Lane",
       "Racha Valley Road"
+    ],
+    "Mountain Area": [
+      "Alpine Street",
+      "Ski Resort Road",
+      "Mountain View Lane"
     ]
   },
   "Akhalkalaki": {
@@ -225,6 +296,11 @@ export const GEORGIAN_STREETS: StreetData = {
       "Yerevan Street",
       "Lake Sevan Street",
       "Mount Ararat Street"
+    ],
+    "Historic Center": [
+      "Ancient Street",
+      "Heritage Lane",
+      "Cultural Road"
     ]
   },
   "Bolnisi": {
@@ -232,6 +308,11 @@ export const GEORGIAN_STREETS: StreetData = {
       "Katharinenfeld Street",
       "Martin Luther Street",
       "Vinegrowers Lane"
+    ],
+    "Industrial Zone": [
+      "Factory Street",
+      "Manufacturing Avenue",
+      "Warehouse Lane"
     ]
   }
 };
