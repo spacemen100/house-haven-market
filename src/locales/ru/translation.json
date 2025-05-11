@@ -595,5 +595,156 @@
   "Mineral Water Street": "Улица Минеральной Воды",
   "Church Street": "Улица Церкви",
   "Market Street": "Улица Рынка",
-  "Theatre Street": "Улица Театра"
+  "Theatre Street": "Улица Театра",
+  "currency": {
+    "usd": "Доллар США ($)",
+    "eur": "Евро (€)",
+    "gel": "Грузинский лари (₾)"
+  },
+  "listingType": {
+    "sale": "Продажа",
+    "rent": "Аренда",
+    "rent_by_day": "Посуточная аренда",
+    "lease": "Коммерческая аренда"
+  },
+  "sort": {
+    "recent": "Последние",
+    "oldest": "Старые",
+    "price_asc": "Цена: по возрастанию",
+    "price_desc": "Цена: по убыванию",
+    "m2_asc": "Площадь: от малой к большой",
+    "m2_desc": "Площадь: от большой к малой"
+  },
+  "propertyType": {
+    "house": "Дом",
+    "apartment": "Квартира",
+    "land": "Земля",
+    "commercial": "Коммерческая"
+  },
+  "condition": {
+    "newly_renovated": "Новоотремонтированный",
+    "under_renovation": "В процессе ремонта",
+    "white_frame": "Белый каркас",
+    "green_frame": "Зеленый каркас",
+    "not_renovated": "Не отремонтированный",
+    "black_frame": "Черный каркас",
+    "old_renovation": "Старый ремонт"
+  },
+  "furniture": {
+    "furnished": "Меблированный",
+    "semi_furnished": "Полумеблированный",
+    "unfurnished": "Не меблированный"
+  },
+  "heating": {
+    "central": "Центральное",
+    "electric": "Электрическое",
+    "gas": "Газовое",
+    "wood": "Дровяное"
+  },
+  "parking": {
+    "garage": "Гараж",
+    "underground": "Подземный",
+    "street": "Улица",
+    "carport": "Навес"
+  },
+  "material": {
+    "brick": "Кирпич",
+    "concrete": "Бетон",
+    "wood": "Дерево",
+    "steel": "Сталь"
+  },
+  "kitchen": {
+    "open": "Открытая",
+    "closed": "Закрытая",
+    "kitchenette": "Кухня-ниша",
+    "american": "Американская"
+  },
+  "features": {
+    "elevator": "Лифт",
+    "airConditioning": "Кондиционер",
+    "accessible": "Доступный",
+    "fireplace": "Камин",
+    "internet": "Интернет",
+    "cableTv": "Кабельное ТВ",
+    "petsAllowed": "Разрешены животные",
+    "smokingAllowed": "Разрешены курение",
+    "gas": "Газ",
+    "loggia": "Лоджия",
+    "dishwasher": "Посудомоечная машина",
+    "washingMachine": "Стиральная машина",
+    "gasStove": "Газовая плита",
+    "vent": "Вентиляция",
+    "electricKettle": "Электрический чайник",
+    "inductionOven": "Индукционная плита",
+    "microwave": "Микроволновая печь",
+    "tv": "Телевизор",
+    "coffeeMachine": "Кофемашина",
+    "audioSystem": "Аудиосистема",
+    "heater": "Обогреватель",
+    "electricOven": "Электрическая духовка",
+    "hairDryer": "Фен",
+    "cinema": "Кинотеатр",
+    "refrigerator": "Холодильник",
+    "vacuumCleaner": "Пылесос",
+    "dryer": "Сушилка",
+    "iron": "Утюг",
+    "coDetector": "Датчик угарного газа",
+    "smokeDetector": "Датчик дыма",
+    "evacuationLadder": "Эвакуационная лестница",
+    "fireFightingSystem": "Система пожаротушения",
+    "perimeterCameras": "Периметровые камеры",
+    "alarm": "Сигнализация",
+    "liveProtection": "Живая защита",
+    "lockedEntrance": "Запертый вход",
+    "lockedYard": "Запертый двор"
+  },
+  "nearby": {
+    "subway": "Метро",
+    "park": "Парк",
+    "school": "Школа",
+    "busStop": "Автобусная остановка",
+    "bank": "Банк",
+    "supermarket": "Супермаркет",
+    "kindergarten": "Детский сад",
+    "cityCenter": "Центр города",
+    "pharmacy": "Аптека",
+    "greenery": "Зелень",
+    "oldDistrict": "Старый район"
+  },
+  "additionalFeatures": {
+    "satelliteTv": "Спутниковое ТВ",
+    "phoneLine": "Телефонная линия"
+  },
+  "filters": {
+    "title": "Фильтры",
+    "filters": "Фильтры",
+    "keywordSearch": "Поиск по ключевым словам",
+    "keywordPlaceholder": "Введите ключевые слова для поиска",
+    "listingType": "Тип объявления",
+    "propertyType": "Тип недвижимости",
+    "priceRange": "Диапазон цен",
+    "currency": "Валюта",
+    "surface": "Площадь (м²)",
+    "bedrooms": "Спальни",
+    "bathrooms": "Ванные комнаты",
+    "propertyCondition": "Состояние недвижимости",
+    "features": "Особенности",
+    "nearby": "Рядом",
+    "additionalFeatures": "Дополнительные особенности",
+    "furnitureType": "Тип мебели",
+    "heatingType": "Тип отопления",
+    "parkingType": "Тип парковки",
+    "buildingMaterial": "Материал здания",
+    "kitchenType": "Тип кухни",
+    "clearAll": "Очистить все",
+    "showResults": "Показать результаты",
+    "any": "Любой",
+    "to": "до"
+  },
+  "propertiesFound": "Найдено объектов",
+  "loading": "Загрузка...",
+  "noProperties": {
+    "title": "Объекты не найдены",
+    "description": "Попробуйте изменить критерии поиска, чтобы найти больше объектов."
+  }
 }

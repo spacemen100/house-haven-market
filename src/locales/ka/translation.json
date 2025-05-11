@@ -594,5 +594,156 @@
   "Mineral Water Street": "მინერალური წყლის ქუჩა",
   "Church Street": "ეკლესიის ქუჩა",
   "Market Street": "ბაზრის ქუჩა",
-  "Theatre Street": "თეატრის ქუჩა"
+  "Theatre Street": "თეატრის ქუჩა",
+  "currency": {
+    "usd": "ამერიკული დოლარი ($)",
+    "eur": "ევრო (€)",
+    "gel": "ქართული ლარი (₾)"
+  },
+  "listingType": {
+    "sale": "გასაყიდად",
+    "rent": "ქირავდებაში",
+    "rent_by_day": "დღიური ქირავდა",
+    "lease": "კომერციული ლიზინგი"
+  },
+  "sort": {
+    "recent": "ყველაზე ახალი",
+    "oldest": "ყველაზე ძველი",
+    "price_asc": "ფასი: დაბალიდან მაღლა",
+    "price_desc": "ფასი: მაღლიდან დაბლა",
+    "m2_asc": "ფართობი: პატარაიდან დიდი",
+    "m2_desc": "ფართობი: დიდიიდან პატარა"
+  },
+  "propertyType": {
+    "house": "სახლი",
+    "apartment": "ბინა",
+    "land": "მიწა",
+    "commercial": "კომერციული"
+  },
+  "condition": {
+    "newly_renovated": "ახლად რემონტირებული",
+    "under_renovation": "რემონტის პროცესში",
+    "white_frame": "თეთრი ჩარჩო",
+    "green_frame": "მწვანე ჩარჩო",
+    "not_renovated": "არარემონტირებული",
+    "black_frame": "შავი ჩარჩო",
+    "old_renovation": "ძველი რემონტი"
+  },
+  "furniture": {
+    "furnished": "ათვისებული",
+    "semi_furnished": "ნახევრად ათვისებული",
+    "unfurnished": "არათვისებული"
+  },
+  "heating": {
+    "central": "ცენტრალური",
+    "electric": "ელექტრული",
+    "gas": "გაზი",
+    "wood": "ხე"
+  },
+  "parking": {
+    "garage": "გარაჟი",
+    "underground": "მიწისქვეშა",
+    "street": "ქუჩა",
+    "carport": "სადგომი"
+  },
+  "material": {
+    "brick": "აგური",
+    "concrete": "ბეტონი",
+    "wood": "ხე",
+    "steel": "ფოლადი"
+  },
+  "kitchen": {
+    "open": "ღია",
+    "closed": "დახურული",
+    "kitchenette": "მინისამზარეულო",
+    "american": "ამერიკული"
+  },
+  "features": {
+    "elevator": "ლიფტი",
+    "airConditioning": "კონდიციონერი",
+    "accessible": "მიუწვდომელი",
+    "fireplace": "ბუხარი",
+    "internet": "ინტერნეტი",
+    "cableTv": "კაბელური ტელევიზია",
+    "petsAllowed": "ცხოველები ნებადართულია",
+    "smokingAllowed": "მოწევა ნებადართულია",
+    "gas": "გაზი",
+    "loggia": "ლოჯია",
+    "dishwasher": "ჩამსატრევი მანქანა",
+    "washingMachine": "სარეცხი მანქანა",
+    "gasStove": "გაზის ფურნე",
+    "vent": "ვენტილაცია",
+    "electricKettle": "ელექტროჩაიდანი",
+    "inductionOven": "ინდუქციური ფურნე",
+    "microwave": "მიკროტალღური",
+    "tv": "ტელევიზორი",
+    "coffeeMachine": "ყავის მანქანა",
+    "audioSystem": "აუდიო სისტემა",
+    "heater": "გათბობის სისტემა",
+    "electricOven": "ელექტროღუმელი",
+    "hairDryer": "ფენის მაშრალი",
+    "cinema": "კინო",
+    "refrigerator": "მაცივარი",
+    "vacuumCleaner": "მტვერსასრუტი",
+    "dryer": "მოსაშრელი",
+    "iron": "დათბობი",
+    "coDetector": "ნახშიროქსიდის დეტექტორი",
+    "smokeDetector": "წვის დეტექტორი",
+    "evacuationLadder": "ევაკუაციის კიბე",
+    "fireFightingSystem": "წიაღის ჩაქრობის სისტემა",
+    "perimeterCameras": "პერიმეტრის კამერები",
+    "alarm": "სიგნალიზაცია",
+    "liveProtection": "ცოცხალი დაცვა",
+    "lockedEntrance": "დახურული შესასვლელი",
+    "lockedYard": "დახურული ეზო"
+  },
+  "nearby": {
+    "subway": "მეტრო",
+    "park": "პარკი",
+    "school": "სკოლა",
+    "busStop": "ავტობუსის გაჩერება",
+    "bank": "ბანკი",
+    "supermarket": "სუპერმარკეტი",
+    "kindergarten": "ბაღი",
+    "cityCenter": "ქალაქის ცენტრი",
+    "pharmacy": "აპთიაკი",
+    "greenery": "მწვანე",
+    "oldDistrict": "ძველი უბანი"
+  },
+  "additionalFeatures": {
+    "satelliteTv": "სატელიტური ტელევიზია",
+    "phoneLine": "ტელეფონის ხაზი"
+  },
+  "filters": {
+    "title": "ფილტრები",
+    "filters": "ფილტრები",
+    "keywordSearch": "გასაღების ძიება",
+    "keywordPlaceholder": "შეიყვანეთ გასაღები ძიებისთვის",
+    "listingType": "განცხადების ტიპი",
+    "propertyType": "უძრავი ქონების ტიპი",
+    "priceRange": "ფასების დიაპაზონი",
+    "currency": "ვალუტა",
+    "surface": "ფართობი (მ²)",
+    "bedrooms": "საძინებლები",
+    "bathrooms": "აბაზანები",
+    "propertyCondition": "უძრავი ქონების მდგომარეობა",
+    "features": "მახასიათებლები",
+    "nearby": "მახლობლად",
+    "additionalFeatures": "დამატებითი მახასიათებლები",
+    "furnitureType": "ათვისების ტიპი",
+    "heatingType": "გათბობის ტიპი",
+    "parkingType": "პარკინგის ტიპი",
+    "buildingMaterial": "შენების მასალა",
+    "kitchenType": "სამზარეულოს ტიპი",
+    "clearAll": "გასუფთავება",
+    "showResults": "შედეგების ჩვენება",
+    "any": "ნებისმიერი",
+    "to": "მდე"
+  },
+  "propertiesFound": "ნაპოვნი ობიექტები",
+  "loading": "იტვირთება...",
+  "noProperties": {
+    "title": "ობიექტები ვერ მოიძებნა",
+    "description": "სცადეთ ძიების კრიტერიუმების შეცვლა, რათა დაინახოთ მეტი ობიექტი."
+  }
 }
