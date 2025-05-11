@@ -314,7 +314,64 @@ export const GEORGIAN_STREETS: StreetData = {
       "Manufacturing Avenue",
       "Warehouse Lane"
     ]
-  }
+  },
+  "Samtredia": {
+  "City Center": [
+    "Rustaveli Street",
+    "Chavchavadze Street",
+    "Tamar Mepe Street",
+    "Gogebashvili Street",
+    "Kostava Street"
+  ],
+  "Railway District": [
+    "Station Street",
+    "Railway Workers Street",
+    "Depot Street"
+  ],
+  "Industrial Zone": [
+    "Factory Street",
+    "Warehouse Lane",
+    "Logistics Avenue"
+  ]
+},
+"Khashuri": {
+  "City Center": [
+    "Rustaveli Street",
+    "Chavchavadze Street",
+    "Tsereteli Street",
+    "Kostava Street",
+    "Queen Tamar Street"
+  ],
+  "Surami District": [
+    "Surami Street",
+    "Mineral Water Street",
+    "Resort Lane"
+  ],
+  "Railway District": [
+    "Station Street",
+    "Railway Avenue",
+    "Depot Street"
+  ]
+},
+"Senaki": {
+  "City Center": [
+    "Rustaveli Street",
+    "Chavchavadze Street",
+    "Kutaisi Street",
+    "Kostava Street",
+    "Tamar Mepe Street"
+  ],
+  "Old Town": [
+    "Church Street",
+    "Market Street",
+    "Theatre Street"
+  ],
+  "Railway District": [
+    "Station Street",
+    "Railway Workers Street",
+    "Depot Street"
+  ]
+}
 };
 
 
