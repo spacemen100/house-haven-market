@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CreatePropertyInput } from '@/lib/api/properties';
+import { useTranslation } from "react-i18next";
 
 const propertyStep1Schema = z.object({
   phone_number: z.string().min(6, "Phone number too short").max(20, "Phone number too long"),
@@ -29,6 +30,7 @@ interface AddPropertyStep1Props {
 }
 
 const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) => {
+  const { t } = useTranslation();
   const form = useForm<z.infer<typeof propertyStep1Schema>>({
     resolver: zodResolver(propertyStep1Schema),
     defaultValues: {
@@ -70,9 +72,9 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <div className="mb-8 text-center">
-          <h2 className="text-2xl font-bold">Additional Information</h2>
+          <h2 className="text-2xl font-bold">{t("additionalInformation")}</h2>
           <p className="text-muted-foreground mt-2">
-            Provide additional information for your listing
+            {t("provideAdditionalInformation")}
           </p>
         </div>
 
@@ -82,9 +84,9 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
             name="phone_number"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone Number*</FormLabel>
+                <FormLabel>{t("phoneNumber")}*</FormLabel>
                 <FormControl>
-                  <Input placeholder="Your contact number" {...field} />
+                  <Input placeholder={t("yourContactNumber")} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -96,9 +98,9 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
             name="contactEmail"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Contact Email</FormLabel>
+                <FormLabel>{t("contactEmail")}</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="Email for contacts" {...field} />
+                  <Input type="email" placeholder={t("emailForContacts")} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -110,16 +112,16 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
             name="reference_number"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Reference Number</FormLabel>
+                <FormLabel>{t("referenceNumber")}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Internal reference (automatically generated)" {...field} readOnly />
+                  <Input placeholder={t("internalReference")} {...field} readOnly />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          <h3 className="text-lg font-medium mt-6">Social Media</h3>
+          <h3 className="text-lg font-medium mt-6">{t("socialMedia")}</h3>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <FormField
@@ -127,9 +129,9 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
               name="instagramHandle"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Instagram</FormLabel>
+                  <FormLabel>{t("instagram")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="@yourusername" {...field} />
+                    <Input placeholder={t("yourInstagramUsername")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -141,9 +143,9 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
               name="facebookUrl"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Facebook</FormLabel>
+                  <FormLabel>{t("facebook")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Link to your profile" {...field} />
+                    <Input placeholder={t("linkToYourProfile")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -155,9 +157,9 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
               name="twitterHandle"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Twitter</FormLabel>
+                  <FormLabel>{t("twitter")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="@yourusername" {...field} />
+                    <Input placeholder={t("yourTwitterUsername")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -173,10 +175,10 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
               variant="outline"
               onClick={onBack}
             >
-              Back
+              {t("back")}
             </Button>
           )}
-          <Button type="submit" className={onBack ? "" : "w-full"}>Next</Button>
+          <Button type="submit" className={onBack ? "" : "w-full"}>{t("next")}</Button>
         </div>
       </form>
     </Form>

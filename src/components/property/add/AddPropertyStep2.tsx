@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useTranslation } from "react-i18next";
 
 const formSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters"),
@@ -48,6 +49,7 @@ interface AddPropertyStep2Props {
 }
 
 const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Props) => {
+  const { t } = useTranslation();
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -108,9 +110,9 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="space-y-6">
           <div className="mb-8 text-center">
-            <h2 className="text-2xl font-bold">Basic Information</h2>
+            <h2 className="text-2xl font-bold">{t("basicInformation")}</h2>
             <p className="text-muted-foreground mt-2">
-              Provide essential details about your property
+              {t("provideEssentialDetails")}
             </p>
           </div>
 
@@ -119,7 +121,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Property Title*</FormLabel>
+                <FormLabel>{t("propertyTitle")}*</FormLabel>
                 <FormControl>
                   <Input placeholder="e.g. Modern 3 Bedroom House with Garden" {...field} />
                 </FormControl>
@@ -133,10 +135,10 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Property Description*</FormLabel>
+                <FormLabel>{t("propertyDescription")}*</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Describe your property in detail..."
+                    placeholder={t("describeYourProperty")}
                     className="min-h-32"
                     {...field}
                   />
@@ -152,12 +154,12 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
               name="price"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Price*</FormLabel>
+                  <FormLabel>{t("price")}*</FormLabel>
                   <div className="relative">
                     <FormControl>
                       <Input
                         type="number"
-                        placeholder="Enter price"
+                        placeholder={t("enterPrice")}
                         {...field}
                       />
                     </FormControl>
@@ -175,14 +177,14 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
               name="currency"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Currency*</FormLabel>
+                  <FormLabel>{t("currency")}*</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     value={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select currency" />
+                        <SelectValue placeholder={t("selectCurrency")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -203,7 +205,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
               name="yearBuilt"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Year Built*</FormLabel>
+                  <FormLabel>{t("yearBuilt")}*</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>
@@ -217,9 +219,9 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
               name="cadastral_code"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Cadastral Code</FormLabel>
+                  <FormLabel>{t("cadastralCode")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Cadastral code (optional)" {...field} />
+                    <Input placeholder={t("cadastralCodeOptional")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -233,7 +235,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
               name="beds"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Bedrooms</FormLabel>
+                  <FormLabel>{t("bedrooms")}</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>
@@ -247,7 +249,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
               name="baths"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Bathrooms</FormLabel>
+                  <FormLabel>{t("bathrooms")}</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>
@@ -261,7 +263,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
               name="m2"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Area (m²)</FormLabel>
+                  <FormLabel>{t("area")}</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>
@@ -275,11 +277,11 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
               name="rooms"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Number of Rooms</FormLabel>
+                  <FormLabel>{t("numberOfRooms")}</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
-                      placeholder="Enter the number of rooms"
+                      placeholder={t("enterNumberOfRooms")}
                       {...field}
                     />
                   </FormControl>
@@ -295,21 +297,21 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
               name="condition"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Property Condition*</FormLabel>
+                  <FormLabel>{t("propertyCondition")}*</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select condition" />
+                        <SelectValue placeholder={t("selectCondition")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="newly_renovated">Newly Renovated</SelectItem>
-                      <SelectItem value="under_renovation">Under Renovation</SelectItem>
-                      <SelectItem value="white_frame">White Frame</SelectItem>
-                      <SelectItem value="green_frame">Green Frame</SelectItem>
-                      <SelectItem value="not_renovated">Not Renovated</SelectItem>
-                      <SelectItem value="black_frame">Black Frame</SelectItem>
-                      <SelectItem value="old_renovation">Old Renovation</SelectItem>
+                      <SelectItem value="newly_renovated">{t("newlyRenovated")}</SelectItem>
+                      <SelectItem value="under_renovation">{t("underRenovation")}</SelectItem>
+                      <SelectItem value="white_frame">{t("whiteFrame")}</SelectItem>
+                      <SelectItem value="green_frame">{t("greenFrame")}</SelectItem>
+                      <SelectItem value="not_renovated">{t("notRenovated")}</SelectItem>
+                      <SelectItem value="black_frame">{t("blackFrame")}</SelectItem>
+                      <SelectItem value="old_renovation">{t("oldRenovation")}</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -322,19 +324,19 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
               name="status"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Property Status*</FormLabel>
+                  <FormLabel>{t("propertyStatus")}*</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select status" />
+                        <SelectValue placeholder={t("selectStatus")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="available">Available</SelectItem>
-                      <SelectItem value="pending">Pending</SelectItem>
-                      <SelectItem value="sold">Sold/Rented</SelectItem>
-                      <SelectItem value="new_building_under_construction">New Building Under Construction</SelectItem>
-                      <SelectItem value="old_building">Old Building</SelectItem>
+                      <SelectItem value="available">{t("available")}</SelectItem>
+                      <SelectItem value="pending">{t("pending")}</SelectItem>
+                      <SelectItem value="sold">{t("sold")}</SelectItem>
+                      <SelectItem value="new_building_under_construction">{t("newBuildingUnderConstruction")}</SelectItem>
+                      <SelectItem value="old_building">{t("oldBuilding")}</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -347,17 +349,17 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
               name="kitchen_type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Kitchen Type</FormLabel>
+                  <FormLabel>{t("kitchenType")}</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select kitchen type" />
+                        <SelectValue placeholder={t("selectKitchenType")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="isolated">Isolated</SelectItem>
-                      <SelectItem value="outside">Outside</SelectItem>
-                      <SelectItem value="studio">Studio</SelectItem>
+                      <SelectItem value="isolated">{t("isolated")}</SelectItem>
+                      <SelectItem value="outside">{t("outside")}</SelectItem>
+                      <SelectItem value="studio">{t("studio")}</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -370,7 +372,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
               name="ceiling_height"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Ceiling Height (m)</FormLabel>
+                  <FormLabel>{t("ceilingHeight")}</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
@@ -403,7 +405,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
               name="terrace_area"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Terrace Area (m²)</FormLabel>
+                  <FormLabel>{t("terraceArea")}</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>
@@ -417,7 +419,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
               name="floor_level"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Floor Level</FormLabel>
+                  <FormLabel>{t("floorLevel")}</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>
@@ -431,7 +433,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
               name="total_floors"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Total Floors</FormLabel>
+                  <FormLabel>{t("totalFloors")}</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>
@@ -451,7 +453,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>
-                  <FormLabel>Featured</FormLabel>
+                  <FormLabel>{t("featured")}</FormLabel>
                   <FormMessage />
                 </FormItem>
               )}
@@ -461,9 +463,9 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
 
         <div className="flex justify-between">
           <Button type="button" variant="outline" onClick={onBack}>
-            Back
+            {t("back")}
           </Button>
-          <Button type="submit">Next Step</Button>
+          <Button type="submit">{t("nextStep")}</Button>
         </div>
       </form>
     </Form>
