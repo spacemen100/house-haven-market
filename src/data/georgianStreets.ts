@@ -64,20 +64,69 @@ export const GEORGIAN_STREETS: StreetData = {
       "Seaside Boulevard",
       "Memed Abashidze Avenue",
       "Zubalashvili Street",
-      "Gorgiladze Street"
+      "Gorgiladze Street",
+      "Europe Square",
+      "Piazza Square",
+      "May 6 Park Street"
     ],
     "Gonio": [
       "Gonio Fortress Road",
       "Beachside Street",
-      "Airport Highway"
+      "Airport Highway",
+      "Adjara Street",
+      "Ancient Road"
     ],
     "Old Boulevard": [
-      "Boulevard Street",
+      "Batumi Boulevard",
       "Zakaria Paliashvili Street",
       "Seaside Promenade",
-      "Europe Square"
+      "Alphabetic Tower Street",
+      "Neptune Square",
+      "Dancing Fountains Street"
+    ],
+    "Makhinjauri": [
+      "Botanical Garden Street",
+      "Green Cape Road",
+      "Resort Avenue",
+      "Mountain View Street"
+    ],
+    "Bagrationi": [
+      "King Bagration Street",
+      "Heroes Square",
+      "Victory Street",
+      "Military Road"
+    ],
+    "Port Area": [
+      "Harbor Street",
+      "Ferry Terminal Road",
+      "Fisherman's Wharf",
+      "Marine Station Street"
+    ],
+    "New Boulevard": [
+      "Miracle Park Street",
+      "Chacha Tower Street",
+      "Bike Lane",
+      "Skatepark Street"
+    ],
+    "Anaria": [
+      "Anaria Beach Street",
+      "Residential Lane",
+      "Palm Tree Avenue",
+      "Sunset Boulevard"
+    ],
+    "Industrial Zone": [
+      "Factory Street",
+      "Cargo Port Road",
+      "Railway Access Street"
+    ],
+    "Historical District": [
+      "Old Batumi Street",
+      "Mosque Street",
+      "Orta Mosque Alley",
+      "Jewish Quarter Street"
     ]
   },
+  // ... (keep other cities as they were)
   "Kutaisi": {
     "City Center": [
       "David Agmashenebeli Street",
@@ -187,76 +236,7 @@ export const GEORGIAN_STREETS: StreetData = {
   }
 };
 
-"Batumi": {
-  "City Center/Centre-ville": [
-    "Ninoshvili Street/Rue Ninoshvili",
-    "King Parnavaz Street/Rue Parnavaz Mepe",
-    "Chavchavadze Avenue/Avenue Chavchavadze",
-    "Seaside Boulevard/Boulevard Maritime",
-    "Memed Abashidze Avenue/Avenue Memed Abashidze",
-    "Zubalashvili Street/Rue Zubalashvili",
-    "Gorgiladze Street/Rue Gorgiladze",
-    "Europe Square/Place d'Europe",
-    "Piazza Square/Place Piazza",
-    "May 6 Park Street/Rue du Parc 6 Mai"
-  ],
-  "Gonio": [
-    "Gonio Fortress Road/Route de la Forteresse de Gonio",
-    "Beachside Street/Rue de la Plage",
-    "Airport Highway/Autoroute de l'Aéroport",
-    "Adjara Street/Rue d'Adjara",
-    "Ancient Road/Voie Antique"
-  ],
-  "Old Boulevard/Ancien Boulevard": [
-    "Batumi Boulevard/Promenade de Batoumi",
-    "Zakaria Paliashvili Street/Rue Zakaria Paliashvili",
-    "Seaside Promenade/Promenade Maritime",
-    "Alphabetic Tower Street/Rue de la Tour Alphabétique",
-    "Neptune Square/Place Neptune",
-    "Dancing Fountains Street/Rue des Fontaines Dansantes"
-  ],
-  "Makhinjauri": [
-    "Botanical Garden Street/Rue du Jardin Botanique",
-    "Green Cape Road/Route du Cap Vert",
-    "Resort Avenue/Avenue des Stations Balnéaires",
-    "Mountain View Street/Rue Vue sur les Montagnes"
-  ],
-  "Bagrationi": [
-    "King Bagration Street/Rue du Roi Bagration",
-    "Heroes Square/Place des Héros",
-    "Victory Street/Rue de la Victoire",
-    "Military Road/Route Militaire"
-  ],
-  "Port Area/Zone Portuaire": [
-    "Harbor Street/Rue du Port",
-    "Ferry Terminal Road/Voie du Terminal Ferry",
-    "Fisherman's Wharf/Quai des Pêcheurs",
-    "Marine Station Street/Rue de la Gare Maritime"
-  ],
-  "New Boulevard/Nouveau Boulevard": [
-    "Miracle Park Street/Rue du Parc Miracle",
-    "Chacha Tower Street/Rue de la Tour Chacha",
-    "Bike Lane/Piste Cyclable",
-    "Skatepark Street/Rue du Skatepark"
-  ],
-  "Anaria": [
-    "Anaria Beach Street/Rue de la Plage Anaria",
-    "Residential Lane/Allée Résidentielle",
-    "Palm Tree Avenue/Avenue des Palmiers",
-    "Sunset Boulevard/Boulevard du Coucher de Soleil"
-  ],
-  "Industrial Zone/Zone Industrielle": [
-    "Factory Street/Rue des Usines",
-    "Cargo Port Road/Voie du Port de Fret",
-    "Railway Access Street/Rue d'Accès au Chemin de Fer"
-  ],
-  "Historical District/Quartier Historique": [
-    "Old Batumi Street/Rue du Vieux Batoumi",
-    "Mosque Street/Rue de la Mosquée",
-    "Orta Mosque Alley/Allée de la Mosquée Orta",
-    "Jewish Quarter Street/Rue du Quartier Juif"
-  ]
-}
+
 
 export const getStreetsForDistrict = (city: GeorgianCity, district: string): string[] => {
   return GEORGIAN_STREETS[city]?.[district] || [];
