@@ -21,15 +21,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signInWithEmail, signUpWithEmail } from "@/lib/api/auth";
+import { useTranslation } from "react-i18next";
 
 const Sell = () => {
+  const { t } = useTranslation();
   const steps = [
-    { number: 1, label: "Authentication" },
-    { number: 2, label: "Ad Type" },
-    { number: 3, label: "Basic Information" },
-    { number: 4, label: "Features" },
-    { number: 5, label: "Location" },
-    { number: 6, label: "Publish" }
+    { number: 1, label: t("authentication") },
+    { number: 2, label: t("adType") },
+    { number: 3, label: t("basicInformation") },
+    { number: 4, label: t("features1") },
+    { number: 5, label: t("location") },
+    { number: 6, label: t("publish") }
   ];
 
   const [step, setStep] = useState(1);
@@ -83,7 +85,7 @@ const Sell = () => {
         twitter: "",
         facebook: ""
       });
-      toast.success("Logged in successfully");
+      toast.success(t("loginSuccess"));
     }
   };
 
@@ -119,7 +121,7 @@ const Sell = () => {
         twitter: "",
         facebook: ""
       });
-      toast.success("Account created successfully");
+      toast.success(t("signupSuccess"));
     }
   };
 
@@ -132,14 +134,14 @@ const Sell = () => {
         facebookUrl: formData.facebookUrl,
         twitterHandle: formData.twitterHandle,
       };
-      console.log('Final property data:', finalData); // Log pour vérifier les données finales
+      console.log('Final property data:', finalData);
       await createProperty(finalData as CreatePropertyInput);
       setFormData({});
       setStep(1);
-      toast.success("Ad published successfully");
+      toast.success(t("adPublishedSuccessfully"));
     } catch (error) {
       console.error('Error submitting form:', error);
-      toast.error("Error publishing the ad");
+      toast.error(t("errorPublishingAd"));
     } finally {
       setIsSubmitting(false);
     }
@@ -147,21 +149,21 @@ const Sell = () => {
 
   const renderAuthStep = () => (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-center">Get Started</h2>
+      <h2 className="text-2xl font-bold text-center">{t("getStarted")}</h2>
       <p className="text-center text-gray-600">
         {user
-          ? "You are ready to publish your property!"
-          : "Please log in or create an account to publish your property"}
+          ? t("readyToPublish")
+          : t("logInOrCreateAccount")}
       </p>
 
       {user ? (
         <div className="space-y-4">
-          <p className="text-center">Welcome, {user.email || "User"}!</p>
+          <p className="text-center">{t("welcome")} : {user.email || "User"}!</p>
           <Button
             className="w-full bg-teal-500 hover:bg-teal-600"
             onClick={() => setStep(2)}
           >
-            Continue to Property Details
+            {t("continueToPropertyDetails")}
           </Button>
         </div>
       ) : (
@@ -172,7 +174,7 @@ const Sell = () => {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background px-2 text-muted-foreground">
-                Log in with your email
+                {t("logInWithEmail")}
               </span>
             </div>
           </div>
@@ -185,7 +187,7 @@ const Sell = () => {
               setIsAuthDialogOpen(true);
             }}
           >
-            Log In
+            {t("logIn")}
           </Button>
 
           <Button
@@ -196,7 +198,7 @@ const Sell = () => {
               setIsAuthDialogOpen(true);
             }}
           >
-            Create Account
+            {t("createAccount")}
           </Button>
         </div>
       )}
@@ -210,10 +212,10 @@ const Sell = () => {
         <section className="relative py-16 bg-estate-800">
           <div className="container text-center text-white">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif mb-4">
-              Publish Your Real Estate Ad
+              {t("publishRealEstateAd")}
             </h1>
             <p className="text-lg md:text-xl max-w-2xl mx-auto text-slate-200">
-              Fill in the information below to create your real estate ad
+              {t("fillInformation")}
             </p>
           </div>
         </section>
@@ -235,7 +237,7 @@ const Sell = () => {
                     <PropertyTypeStep
                       onBack={user ? () => setStep(1) : undefined}
                       onNext={(data) => {
-                        console.log('PropertyTypeStep data:', data); // Log pour vérifier les données de PropertyTypeStep
+                        console.log('PropertyTypeStep data:', data);
                         setFormData({ ...formData, ...data });
                         setStep(3);
                       }}
@@ -246,7 +248,7 @@ const Sell = () => {
                     <AddPropertyStep1
                       onBack={() => setStep(2)}
                       onNext={(data) => {
-                        console.log('AddPropertyStep1 data:', data); // Log pour vérifier les données de AddPropertyStep1
+                        console.log('AddPropertyStep1 data:', data);
                         setFormData({ ...formData, ...data });
                         setStep(4);
                       }}
@@ -257,7 +259,7 @@ const Sell = () => {
                     <AddPropertyStep2
                       onBack={() => setStep(3)}
                       onNext={(data) => {
-                        console.log('AddPropertyStep2 data:', data); // Log pour vérifier les données de AddPropertyStep2
+                        console.log('AddPropertyStep2 data:', data);
                         setFormData({ ...formData, ...data });
                         setStep(5);
                       }}
@@ -268,7 +270,7 @@ const Sell = () => {
                     <AddPropertyStep3
                       onBack={() => setStep(4)}
                       onNext={(data) => {
-                        console.log('AddPropertyStep3 data:', data); // Log pour vérifier les données de AddPropertyStep3
+                        console.log('AddPropertyStep3 data:', data);
                         setFormData({ ...formData, ...data });
                         setStep(6);
                       }}
@@ -296,29 +298,29 @@ const Sell = () => {
         <DialogContent className="max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-estate-800">
-              {authMode === "login" ? "Log In" : "Create Account"}
+              {authMode === "login" ? t("logIn") : t("createAccount")}
             </DialogTitle>
           </DialogHeader>
 
           <div className="space-y-4">
             <form onSubmit={authMode === "login" ? handleEmailLogin : handleEmailSignUp} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("email")}</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder={t("enterEmail")}
                   value={authFormData.email}
                   onChange={handleAuthInputChange}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t("password")}</Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder={t("enterPassword")}
                   value={authFormData.password}
                   onChange={handleAuthInputChange}
                   required
@@ -328,27 +330,27 @@ const Sell = () => {
               {authMode === "signup" && (
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Phone</Label>
+                    <Label htmlFor="phone">{t("phone")}</Label>
                     <Input
                       id="phone"
                       type="tel"
-                      placeholder="Enter your phone number"
+                      placeholder={t("enterPhone")}
                       value={authFormData.phone}
                       onChange={handleAuthInputChange}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="address">Address</Label>
+                    <Label htmlFor="address">{t("address")}</Label>
                     <Input
                       id="address"
                       type="text"
-                      placeholder="Enter your address"
+                      placeholder={t("enterAddress")}
                       value={authFormData.address}
                       onChange={handleAuthInputChange}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="instagram">Instagram</Label>
+                    <Label htmlFor="instagram">{t("instagram")}</Label>
                     <Input
                       id="instagram"
                       type="text"
@@ -358,7 +360,7 @@ const Sell = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="twitter">Twitter</Label>
+                    <Label htmlFor="twitter">{t("twitter")}</Label>
                     <Input
                       id="twitter"
                       type="text"
@@ -368,11 +370,11 @@ const Sell = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="facebook">Facebook</Label>
+                    <Label htmlFor="facebook">{t("facebook")}</Label>
                     <Input
                       id="facebook"
                       type="text"
-                      placeholder="Link to your profile"
+                      placeholder={t("linkToProfile")}
                       value={authFormData.facebook}
                       onChange={handleAuthInputChange}
                     />
@@ -381,31 +383,31 @@ const Sell = () => {
               )}
 
               <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600">
-                {authMode === "login" ? "Log In" : "Sign Up"}
+                {authMode === "login" ? t("logIn") : t("signup")}
               </Button>
             </form>
 
             <div className="text-center text-sm">
               {authMode === "login" ? (
                 <>
-                  Don't have an account?{" "}
+                  {t("noAccount")}{" "}
                   <button
                     type="button"
                     className="text-teal-600 hover:underline"
                     onClick={() => setAuthMode("signup")}
                   >
-                    Sign Up
+                    {t("signup")}
                   </button>
                 </>
               ) : (
                 <>
-                  Already have an account?{" "}
+                  {t("haveAccount")}{" "}
                   <button
                     type="button"
                     className="text-teal-600 hover:underline"
                     onClick={() => setAuthMode("login")}
                   >
-                    Log In
+                    {t("login")}
                   </button>
                 </>
               )}
