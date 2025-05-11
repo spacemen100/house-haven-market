@@ -1138,5 +1138,704 @@
         "Seaside Promenade": "ზღვისპირა პრომენადი"
       }
     }
+  },
+  "streets": {
+    "Tbilissi": {
+      "Vake-Saburtalo": {
+        "Chavchavadze Avenue": "ჭავჭავაძის გამზირი",
+        "Pekini Street": "პეკინის ქუჩა",
+        "Irakli Abashidze Street": "ირაკლი აბაშიძის ქუჩა",
+        "Tsereteli Avenue": "წერეთლის გამზირი",
+        "Vazha Pshavela Avenue": "ვაჟა-ფშაველას გამზირი",
+        "Alexander Kazbegi Avenue": "ალექსანდრე ყაზბეგის გამზირი",
+        "Tamarashvili Street": "თამარაშვილის ქუჩა",
+        "Lisi Lake Road": "ლისის ტბის გზა",
+        "Chitadze Street": "ჩიტაძის ქუჩა",
+        "Grigol Tabidze Street": "გრიგოლ რობაქიძის ქუჩა",
+        "Akaki Tsereteli Street": "აკაკი წერეთლის ქუჩა",
+        "Besiki Street": "ბესიკის ქუჩა",
+        "Zakaria Paliashvili Street": "ზაქარია ფალიაშვილის ქუჩა"
+      },
+      "Isani-Samgori": {
+        "Ketevan Tsamebuli Avenue": "ქეთევან წამებულის გამზირი",
+        "Aghmashenebeli Avenue": "აღმაშენებლის გამზირი",
+        "Queen Ketevan Street": "ქეთევან დედოფლის ქუჩა",
+        "Vazha Pshavela Avenue": "ვაჟა-ფშაველას გამზირი",
+        "Tsereteli Avenue": "წერეთლის გამზირი",
+        "Samgori Street": "სამგორის ქუჩა",
+        "Akaki Tsereteli Street": "აკაკი წერეთლის ქუჩა",
+        "Tsinamdzgvrishvili Street": "წინამძღვრიშვილის ქუჩა",
+        "Varketili Street": "ვარკეთილის ქუჩა",
+        "Navtlugi Street": "ნავთლუღის ქუჩა",
+        "Abashvili Street": "აბაშვილის ქუჩა"
+      },
+      "Didube-Chughureti": {
+        "Merab Kostava Avenue": "მერაბ კოსტავას გამზირი",
+        "Tsereteli Avenue": "წერეთლის გამზირი",
+        "Aghmashenebeli Avenue": "აღმაშენებლის გამზირი",
+        "Marjanishvili Street": "მარჯანიშვილის ქუჩა",
+        "Zviad Gamsakhurdia Street": "ზვიად გამსახურდიას ქუჩა",
+        "Chughureti Street": "ჩუღურეთის ქუჩა",
+        "Zubalashvili Street": "ზუბალაშვილის ქუჩა",
+        "Kukia Street": "კუკიის ქუჩა",
+        "Didube Street": "დიდუბის ქუჩა",
+        "Orbeliani Street": "ორბელიანის ქუჩა",
+        "Marjanishvili Street": "მარჯანიშვილის ქუჩა"
+      },
+      "Gldani-Nadzaladevi": {
+        "Guramishvili Avenue": "გურამიშვილის გამზირი",
+        "Vazha Pshavela Avenue": "ვაჟა-ფშაველას გამზირი",
+        "Khizanishvili Street": "ხიზანიშვილის ქუჩა",
+        "Nadzaladevi Street": "ნაძალადევის ქუჩა",
+        "Gldani Street": "გლდანის ქუჩა",
+        "Davit Agmashenebeli Alley": "დავით აღმაშენებლის შტრიხი",
+        "Mukhran Machavariani Street": "მუხრან მაჩავარიანის ქუჩა",
+        "Aleksi-Meskhishvili Street": "ალექსი-მესხიშვილის ქუჩა"
+      },
+      "Mtatsminda-Krtsanisi": {
+        "Rustaveli Avenue": "რუსთაველის გამზირი",
+        "Mtatsminda Street": "მთაწმინდის ქუჩა",
+        "Krtsanisi Street": "კრწანისის ქუჩა",
+        "Giorgi Leonidze Street": "გიორგი ლეონიძის ქუჩა",
+        "Chavchavadze Avenue": "ჭავჭავაძის გამზირი",
+        "Shota Rustaveli Avenue": "შოთა რუსთაველის გამზირი",
+        "Leselidze Street": "ლესელიძის ქუჩა",
+        "Betlemi Street": "ბეთლემის ქუჩა",
+        "Tabukashvili Street": "ტაბუკაშვილის ქუჩა",
+        "Chonkadze Street": "ჩონკაძის ქუჩა"
+      },
+      "Old Tbilisi": {
+        "Kote Abkhazi Street": "კოტე აფხაზის ქუჩა",
+        "Erekle II Street": "ერეკლე II-ის ქუჩა",
+        "Leselidze Street": "ლესელიძის ქუჩა",
+        "Lado Asatiani Street": "ლადო ასათიანის ქუჩა",
+        "Shavteli Street": "შავთელის ქუჩა",
+        "Sioni Street": "სიონის ქუჩა",
+        "Gorgasali Street": "გორგასლის ქუჩა"
+      },
+      "Dighomi": {
+        "Didi Dighomi Street": "დიდი დიღომის ქუჩა",
+        "Digomi Street": "დიღომის ქუჩა",
+        "Petre Kavtaradze Street": "პეტრე კავთარაძის ქუჩა",
+        "Guramishvili Avenue": "გურამიშვილის გამზირი",
+        "Aghmashenebeli Alley": "აღმაშენებლის შტრიხი"
+      },
+      "Avlabari": {
+        "Metekhi Rise": "მეთეხის ასვლის ქუჩა",
+        "Samreklo Street": "სამრეკლო ქუჩა",
+        "Metekhi Street": "მეთეხის ქუჩა",
+        "Gorgasali Street": "გორგასლის ქუჩა",
+        "Ketevan Tsamebuli Avenue": "ქეთევან წამებულის გამზირი"
+      },
+      "Vera": {
+        "Melikishvili Avenue": "მელიქიშვილის გამზირი",
+        "Janashia Street": "ჯანაშიის ქუჩა",
+        "Tarkhnishvili Street": "თარხნიშვილის ქუჩა",
+        "Zandukeli Street": "ზანდუკელის ქუჩა",
+        "Kipshidze Street": "ქიფშიძის ქუჩა"
+      },
+      "Sololaki": {
+        "Lado Asatiani Street": "ლადო ასათიანის ქუჩა",
+        "Shalva Dadiani Street": "შალვა დადიანის ქუჩა",
+        "Machabeli Street": "მაჩაბელის ქუჩა"
+      },
+      "Ortachala": {
+        "Krtsanisi Street": "კრწანისის ქუჩა",
+        "Gorgasali Street": "გორგასლის ქუჩა",
+        "Ortachala Rise": "ორთაჭალის ასვლის ქუჩა"
+      },
+      "Lisi": {
+        "Lisi Lake Road": "ლისის ტბის გზა",
+        "Lisi Hill Street": "ლისის ბორცვის ქუჩა"
+      },
+      "Tskneti": {
+        "Tskneti Highway": "ცხნეთის გზატკეცილი",
+        "Tskneti Center Street": "ცხნეთის ცენტრის ქუჩა"
+      },
+      "Tabakhmela": {
+        "Tabakhmela Village Road": "ტაბახმელის სოფლის გზა"
+      },
+      "Kojori": {
+        "Kojori-Tbilisi Road": "კოჯორი-თბილისი გზა"
+      },
+      "Bagebi": {
+        "Bagebi Street": "ბაგების ქუჩა",
+        "University Street": "უნივერსიტეტის ქუჩა"
+      },
+      "Nutsubidze Plateau": {
+        "Nutsubidze Street": "ნუცუბიძის ქუჩა",
+        "Vazha Pshavela Avenue (Segment IV)": "ვაჟა-ფშაველას გამზირი (სეგმენტი IV)"
+      },
+      "Temka": {
+        "Temka Street": "თემკის ქუჩა",
+        "Khizanishvili Street": "ხიზანიშვილის ქუჩა"
+      },
+      "Lilo": {
+        "Lilo Settlement": "ლილოს დასახლება",
+        "Lilo Airport Road": "ლილოს აეროპორტის გზა"
+      },
+      "Okrokana": {
+        "Okrokana Road": "ოკროკანის გზა"
+      },
+      "Shindisi": {
+        "Shindisi-Tbilisi Road": "შინდისი-თბილისი გზა"
+      },
+      "Tsavkisi": {
+        "Tsavkisi Village Road": "ცავკისის სოფლის გზა"
+      },
+      "Sofelgora": {
+        "Sofelgora Road": "სოფელგორის გზა"
+      }
+    },
+    "Batumi": {
+      "City Center": {
+        "Ninoshvili Street": "ნინოშვილის ქუჩა",
+        "King Parnavaz Street": "ფარნავაზ მეფის ქუჩა",
+        "Chavchavadze Street": "ჭავჭავაძის ქუჩა",
+        "Seaside Boulevard": "ზღვისპირა ბულვარი",
+        "Memed Abashidze Avenue": "მემედ აბაშიძის გამზირი",
+        "Zubalashvili Street": "ზუბალაშვილის ქუჩა",
+        "Gorgiladze Street": "გორგილაძის ქუჩა",
+        "Europe Square": "ევროპის მოედანი",
+        "Piazza Square": "პიაცას მოედანი",
+        "May 6 Park Street": "6 მაისის პარკის ქუჩა"
+      },
+      "Old Boulevard": {
+        "Batumi Boulevard": "ბათუმის ბულვარი",
+        "Zakaria Paliashvili Street": "ზაქარია ფალიაშვილის ქუჩა",
+        "Seaside Promenade": "ზღვისპირა პრომენადი",
+        "Alphabetic Tower Street": "ანბანური კოშკის ქუჩა",
+        "Neptune Square": "ნეპტუნის მოედანი",
+        "Dancing Fountains Street": "ცეკვავი შადრევნების ქუჩა"
+      },
+      "New Boulevard": {
+        "Miracle Park Street": "საკვირველო პარკის ქუჩა",
+        "Chacha Tower Street": "ჩაჩის კოშკის ქუჩა",
+        "Bike Lane": "ველოსიპედო ბილიკი",
+        "Skatepark Street": "სკეიტპარკის ქუჩა"
+      },
+      "Gonio": {
+        "Gonio Fortress Road": "გონიოს ციხის გზა",
+        "Beachside Street": "პლაჟის გასწვრივი ქუჩა",
+        "Airport Highway": "აეროპორტის გზატკეცილი",
+        "Adjara Street": "აჭარის ქუჩა",
+        "Ancient Road": "ძველი გზა"
+      },
+      "Makhinjauri": {
+        "Botanical Garden Street": "ბოტანიკური ბაღის ქუჩა",
+        "Green Cape Road": "მწვანე კაპის გზა",
+        "Resort Avenue": "კურორტის გამზირი",
+        "Mountain View Street": "მთის ხედის ქუჩა"
+      },
+      "Bagrationi": {
+        "King Bagration Street": "ბაგრატიონის ქუჩა",
+        "Heroes Square": "გმირების მოედანი",
+        "Victory Street": "გამარჯვების ქუჩა",
+        "Military Road": "სამხედრო გზა"
+      },
+      "Port Area": {
+        "Harbor Street": "პორტის ქუჩა",
+        "Ferry Terminal Road": "ნავსადგურის გზა",
+        "Fisherman's Wharf": "მეთევზის ნავმასადგური",
+        "Marine Station Street": "საზღვაო სადგურის ქუჩა"
+      },
+      "Anaria": {
+        "Anaria Beach Street": "ანარიის პლაჟის ქუჩა",
+        "Residential Lane": "სასახლე ბილიკი",
+        "Palm Tree Avenue": "პალმის ხეების გამზირი",
+        "Sunset Boulevard": "მზის ჩასვლის ბულვარი"
+      },
+      "Industrial Zone": {
+        "Factory Street": "ქარხნის ქუჩა",
+        "Cargo Port Road": "ტვირთების პორტის გზა",
+        "Railway Access Street": "რკინიგზის წვდომის ქუჩა"
+      },
+      "Historical District": {
+        "Old Batumi Street": "ძველი ბათუმის ქუჩა",
+        "Mosque Street": "მეჩეთის ქუჩა",
+        "Orta Mosque Alley": "ორთა მეჩეთის შტრიხი",
+        "Jewish Quarter Street": "ებრაული კვარტალის ქუჩა"
+      },
+      "Tamarisi": {
+        "Tamarisi Street": "თამარისის ქუჩა",
+        "Border Road": "საზღვრის გზა",
+        "Rustavi Settlement Street": "რუსთავის დასახლების ქუჩა"
+      },
+      "Chakvi": {
+        "Chakvi Highway": "ჩაქვის გზატკეცილი",
+        "Resort Street": "კურორტის ქუჩა",
+        "Beachfront Road": "პლაჟის გასწვრივი გზა"
+      },
+      "Kobuleti Outskirts": {
+        "Kobuleti-Batumi Highway": "ქობულეთი-ბათუმის გზატკეცილი",
+        "Forest Lane": "ტყის ბილიკი",
+        "Seaside Alley": "ზღვისპირა შტრიხი"
+      },
+      "Airport Area": {
+        "Batumi International Airport Road": "ბათუმის საერთაშორისო აეროპორტის გზა",
+        "Tbel Abuseridze Street": "თბელ აბუსერიძის ქუჩა",
+        "Aviation Street": "ავიაციის ქუჩა"
+      },
+      "Adlia": {
+        "Adlia Street": "ადლიის ქუჩა",
+        "Shalva Inasaridze Street": "შალვა ინასარიძის ქუჩა",
+        "New Adlia Boulevard": "ახალი ადლიის ბულვარი"
+      },
+      "Angisa": {
+        "Angisa Street": "ანგისის ქუჩა",
+        "Sunrise Road": "მზის ამოსვლის გზა",
+        "Residential Lane": "სასახლე ბილიკი"
+      },
+      "Tamar Mephe": {
+        "Tamar Mephe Avenue": "თამარ მეფის გამზირი",
+        "Queen Tamar Street": "დედოფალ თამარის ქუჩა",
+        "Adjara Alley": "აჭარის შტრიხი"
+      },
+      "Green Cape": {
+        "Green Cape Coastal Road": "მწვანე კაპის სანაპირო გზა",
+        "Garden Entrance Street": "ბაღის შესასვლელი ქუჩა",
+        "Sea View Path": "ზღვის ხედის ბილიკი"
+      },
+      "Kakhaberi": {
+        "Kakhaberi Street": "კახაბერის ქუჩა",
+        "Canal Street": "არხის ქუჩა",
+        "Southern Bay Street": "სამხრეთი ყურის ქუჩა"
+      }
+    },
+    "Kutaisi": {
+      "City Center": {
+        "David Agmashenebeli Street": "დავით აღმაშენებლის ქუჩა",
+        "Shota Rustaveli Street": "შოთა რუსთაველის ქუჩა",
+        "Tsereteli Street": "წერეთლის ქუჩა",
+        "Queen Tamar Street": "დედოფალ თამარის ქუჩა",
+        "Vekua Street": "ვეკუას ქუჩა"
+      },
+      "White Bridge": {
+        "White Bridge Street": "თეთრი ხიდის ქუჩა",
+        "Rioni River Street": "რიონის ქუჩა",
+        "Colchis Street": "კოლხეთის ქუჩა"
+      },
+      "Bagrati": {
+        "Bagrati Cathedral Street": "ბაგრატის ტაძრის ქუჩა",
+        "Gelati Monastery Road": "გელათის მონასტრის გზა",
+        "Historical Museum Street": "ისტორიული მუზეუმის ქუჩა"
+      },
+      "Motsameta": {
+        "Motsameta Monastery Street": "მოცამეთის მონასტრის ქუჩა",
+        "River View Street": "მდინარის ხედის ქუჩა",
+        "Monastery Hill Road": "მონასტრის ბორცვის გზა"
+      },
+      "Gelati": {
+        "Gelati Academy Street": "გელათის აკადემიის ქუჩა",
+        "Science Avenue": "მეცნიერების გამზირი",
+        "University Lane": "უნივერსიტეტის შტრიხი"
+      },
+      "Sataplia": {
+        "Sataplia Cave Street": "სატაპლიის მღვიმის ქუჩა",
+        "Dinosaur Park Road": "დინოზავრების პარკის გზა",
+        "Nature Reserve Lane": "ბუნების ნაკრძალის შტრიხი"
+      },
+      "Tskaltubo": {
+        "Spa Resort Street": "კურორტის ქუჩა",
+        "Health Avenue": "ჯანმრთელობის გამზირი",
+        "Sanatorium Lane": "სანატორიუმის შტრიხი"
+      },
+      "Avangard": {
+        "Avangard Street": "ავანგარდის ქუჩა",
+        "Market Lane": "ბაზრის შტრიხი",
+        "Station Road": "სადგურის გზა"
+      },
+      "Gora": {
+        "Gora Hill Street": "გორის ბორცვის ქუჩა",
+        "Viewpoint Road": "ხედის გზა",
+        "Fortress Lane": "ციხის შტრიხი"
+      },
+      "Red Bridge": {
+        "Red Bridge Street": "წითელი ხიდის ქუჩა",
+        "Bridge Market Road": "ხიდის ბაზრის გზა",
+        "Railway Overpass Street": "რკინიგზის გადასასვლელი ქუჩა"
+      },
+      "Khoni Road Area": {
+        "Khoni Highway": "ხონის გზატკეცილი",
+        "Industrial Lane": "სამრეწველო შტრიხი",
+        "Logistics Street": "ლოგისტიკის ქუჩა"
+      },
+      "Nikea": {
+        "Nikea Street": "ნიკეის ქუჩა",
+        "Residential Alley": "სასახლე შტრიხი",
+        "Parkview Street": "პარკის ხედის ქუჩა"
+      },
+      "Chkvishi": {
+        "Village Road": "სოფლის გზა",
+        "River Trail": "მდინარის ბილიკი",
+        "Farmland Street": "სასოფლო-სამეურნეო ქუჩა"
+      },
+      "Rioni District": {
+        "Rioni Riverside Street": "რიონის სანაპირო ქუჩა",
+        "Fishing Dock Road": "თევზაობის დოკის გზა",
+        "Lower Town Avenue": "ქვედა ქალაქის გამზირი"
+      },
+      "Mukhrani": {
+        "Mukhrani Street": "მუხრანის ქუჩა",
+        "Old Quarter Lane": "ძველ კვარტალის შტრიხი",
+        "Historic Trail": "ისტორიული ბილიკი"
+      },
+      "Tskhenistskali": {
+        "Tskhenistskali River Road": "წყენისწყლის მდინარის გზა",
+        "Bridgeview Street": "ხიდის ხედის ქუჩა",
+        "East Bank Path": "აღმოსავლეთ სანაპიროს ბილიკი"
+      }
+    },
+    "Rustavi": {
+      "City Center": {
+        "Rustaveli Street": "რუსთაველის ქუჩა",
+        "Shartava Street": "შართავას ქუჩა",
+        "Chavchavadze Street": "ჭავჭავაძის ქუჩა",
+        "Freedom Square": "თავისუფლების მოედანი",
+        "City Hall Street": "მერიის ქუჩა"
+      },
+      "East Zone": {
+        "Rustavi Street": "რუსთავის ქუჩა",
+        "Metallurgists Street": "მეტალურგების ქუჩა",
+        "Industrial Road": "სამრეწველო გზა",
+        "Power Plant Avenue": "ელექტროსადგურის გამზირი"
+      },
+      "West Zone": {
+        "Giorgi Chkondideli Street": "გიორგი ჩქონდიდელის ქუჩა",
+        "Ilia Chavchavadze Street": "ილია ჭავჭავაძის ქუჩა",
+        "Vakhtang Gorgasali Street": "ვახტანგ გორგასლის ქუჩა",
+        "Mshvidoba Street": "მშვიდობის ქუჩა"
+      },
+      "Old Rustavi": {
+        "Beridze Street": "ბერიძის ქუჩა",
+        "Shamkorets Street": "შამკორეცის ქუჩა",
+        "Old Factory Road": "ძველი ქარხნის გზა"
+      },
+      "New Rustavi": {
+        "New District Street": "ახალი უბნის ქუჩა",
+        "Block A Street": "ბლოკ A-ის ქუჩა",
+        "Modern Avenue": "მოდერნის გამზირი",
+        "Residential Complex Lane": "სასახლე კომპლექსის შტრიხი"
+      },
+      "Rustavi Industrial Park": {
+        "Tech Park Street": "ტექნოპარკის ქუჩა",
+        "Warehouse Road": "სანაპიროს გზა",
+        "Logistics Street": "ლოგისტიკის ქუჩა"
+      },
+      "Krtsanisi District": {
+        "Krtsanisi Road": "კრწანისის გზა",
+        "Hilltop Street": "ბორცვის ქუჩა",
+        "Gardabani Border Lane": "გარდაბნის საზღვრის შტრიხი"
+      },
+      "Shavnabada Area": {
+        "Shavnabada Street": "შავნაბადის ქუჩა",
+        "Military Base Road": "სამხედრო ბაზის გზა",
+        "South Access Lane": "სამხრეთის წვდომის შტრიხი"
+      },
+      "Rustavi Lake Area": {
+        "Lake Promenade": "ტბის პრომენადი",
+        "Waterfront Avenue": "სანაპირო გამზირი",
+        "Picnic Park Road": "პიკნიკის პარკის გზა"
+      }
+    },
+    "Gori": {
+      "City Center": {
+        "Stalin Avenue": "სტალინის გამზირი",
+        "Chavchavadze Street": "ჭავჭავაძის ქუჩა",
+        "Ketskhoveli Street": "კეცხოველის ქუჩა",
+        "Freedom Square": "თავისუფლების მოედანი",
+        "Cultural Center Street": "კულტურის ცენტრის ქუჩა"
+      },
+      "Tserovani": {
+        "Tserovani Settlement Street": "წეროვანის დასახლების ქუჩა",
+        "Tserovani Residential Lane": "წეროვანის სასახლე შტრიხი"
+      },
+      "Fortress Area": {
+        "Gori Fortress Street": "გორის ციხის ქუჩა",
+        "Museum Street": "მუზეუმის ქუჩა",
+        "Old Fortress Road": "ძველი ციხის გზა",
+        "Historical District Lane": "ისტორიული უბნის შტრიხი"
+      },
+      "Gori University Area": {
+        "Gori University Street": "გორის უნივერსიტეტის ქუჩა",
+        "Science Avenue": "მეცნიერების გამზირი",
+        "Student Quarter Lane": "სტუდენტური კვარტალის შტრიხი"
+      },
+      "Zemo Gori": {
+        "Zemo Gori Street": "ზემო გორის ქუჩა",
+        "Highland District Road": "მაღალმთიანი უბნის გზა",
+        "Mountain View Lane": "მთის ხედის შტრიხი"
+      },
+      "Lower Gori": {
+        "Mtkvari River Road": "მტკვრის მდინარის გზა",
+        "Suburban Avenue": "გარეუბნის გამზირი",
+        "Industrial Zone Lane": "სამრეწველო ზონის შტრიხი"
+      },
+      "Gori Industrial Zone": {
+        "Industrial District Street": "სამრეწველო უბნის ქუჩა",
+        "Factory Road": "ქარხნის გზა",
+        "Transportation Hub Lane": "ტრანსპორტის კვანძის შტრიხი"
+      },
+      "Kakhati District": {
+        "Kakhati Street": "კახათის ქუჩა",
+        "Central Park Road": "ცენტრალური პარკის გზა",
+        "Kakhati Square": "კახათის მოედანი"
+      },
+      "Gori Lake Area": {
+        "Lake Promenade": "ტბის პრომენადი",
+        "Picnic Park Road": "პიკნიკის პარკის გზა",
+        "Lakeside Avenue": "ტბის სანაპირო გამზირი"
+      }
+    },
+    "Zugdidi": {
+      "City Center": {
+        "Dadiani Street": "დადიანის ქუჩა",
+        "Merab Kostava Street": "მერაბ კოსტავას ქუჩა",
+        "Rustaveli Street": "რუსთაველის ქუჩა",
+        "Shota Rustaveli Square": "შოთა რუსთაველის მოედანი",
+        "Freedom Square": "თავისუფლების მოედანი"
+      },
+      "Suburban": {
+        "Tamar Mepe Street": "თამარ მეფის ქუჩა",
+        "Kolkheti Street": "კოლხეთის ქუჩა",
+        "Kvirike Street": "კვირიკეს ქუჩა",
+        "Kobuleti Road": "ქობულეთის გზა",
+        "Mtsvane Kontskhi Street": "მწვანე კონცხის ქუჩა"
+      },
+      "Dadiani Palace Area": {
+        "Dadiani Palace Street": "დადიანების სასახლის ქუჩა",
+        "Park Avenue": "პარკის გამზირი",
+        "Historical Museum Street": "ისტორიული მუზეუმის ქუჩა"
+      },
+      "Old Town": {
+        "Old Bazaar Street": "ძველი ბაზრის ქუჩა",
+        "Tbilisi Street": "თბილისის ქუჩა",
+        "Rioni River Road": "რიონის მდინარის გზა"
+      },
+      "Zugdidi Park Area": {
+        "Zugdidi Park Avenue": "ზუგდიდის პარკის გამზირი",
+        "Green Boulevard": "მწვანე ბულვარი",
+        "Recreational Zone Road": "რეკრეაციული ზონის გზა"
+      },
+      "Industrial Zone": {
+        "Factory Street": "ქარხნის ქუჩა",
+        "Cargo Port Road": "ტვირთების პორტის გზა",
+        "Workshop Avenue": "სამუშაოს გამზირი"
+      },
+      "Zugdidi Port Area": {
+        "Zugdidi Port Road": "ზუგდიდის პორტის გზა",
+        "Ferry Terminal Lane": "ნავსადგურის შტრიხი",
+        "Waterfront Street": "სანაპირო ქუჩა"
+      }
+    },
+    "Poti": {
+      "Port Area": {
+        "Port Street": "პორტის ქუჩა",
+        "Seaside Avenue": "ზღვისპირა გამზირი",
+        "Industrial Zone Road": "სამრეწველო ზონის გზა"
+      },
+      "Beachside": {
+        "Beach Boulevard": "პლაჟის ბულვარი",
+        "Marina Street": "მარინას ქუჩა",
+        "Lighthouse Lane": "შუქურის შტრიხი"
+      },
+      "City Center": {
+        "Nikoladze Street": "ნიკოლაძის ქუჩა",
+        "Chavchavadze Street": "ჭავჭავაძის ქუჩა",
+        "Rustaveli Avenue": "რუსთაველის გამზირი",
+        "Freedom Square": "თავისუფლების მოედანი",
+        "Dadiani Street": "დადიანის ქუჩა"
+      },
+      "Maltakva": {
+        "Maltakva Beach Road": "მალტაკვის პლაჟის გზა",
+        "Maltakva Park Street": "მალტაკვის პარკის ქუჩა",
+        "Maltakva Village Street": "მალტაკვის სოფლის ქუჩა"
+      },
+      "Nabada": {
+        "Nabada Street": "ნაბადის ქუჩა",
+        "Port Access Road": "პორტის წვდომის გზა",
+        "Industrial Park Lane": "სამრეწველო პარკის შტრიხი"
+      },
+      "Suburban Areas": {
+        "Tamar Mepe Street": "თამარ მეფის ქუჩა",
+        "Kolkheti Street": "კოლხეთის ქუჩა",
+        "Rioni River Road": "რიონის მდინარის გზა"
+      },
+      "Khobi": {
+        "Khobi Central Street": "ხობის ცენტრალური ქუჩა",
+        "Egrisi Mountain Road": "ეგრისის მთის გზა"
+      },
+      "Ureki": {
+        "Ureki Beach Road": "ურეკის პლაჟის გზა",
+        "Black Sand Avenue": "შავი ქვის გამზირი",
+        "Resort Street": "კურორტის ქუჩა"
+      },
+      "Zugdidi": {
+        "Zugdidi Central Avenue": "ზუგდიდის ცენტრალური გამზირი",
+        "Samegrelo Street": "სამეგრელოს ქუჩა",
+        "Zugdidi Park Road": "ზუგდიდის პარკის გზა"
+      },
+      "Paliastomi Lake District": {
+        "Paliastomi Lake Shore Road": "პალიასტომის ტბის სანაპირო გზა",
+        "Paliastomi Nature Reserve Street": "პალიასტომის ბუნების ნაკრძალის ქუჩა"
+      },
+      "Kolkheti National Park": {
+        "Kolkhida Wetlands Road": "კოლხეთის დაბლობების გზა",
+        "Nature Reserve Path": "ბუნების ნაკრძალის ბილიკი"
+      }
+    },
+    "Borjomi": {
+      "Central Park": {
+        "Park Avenue": "პარკის გამზირი",
+        "Mineral Springs Street": "მინერალური წყლების ქუჩა",
+        "Stalin Street": "სტალინის ქუჩა"
+      },
+      "Resort Area": {
+        "Spa Street": "სპას ქუჩა",
+        "Wellness Avenue": "კეთილდღეობის გამზირი",
+        "Sanatorium Road": "სანატორიუმის გზა"
+      }
+    },
+    "Telavi": {
+      "Old Town": {
+        "King Erekle II Street": "ერეკლე II-ის ქუჩა",
+        "Wine Valley Road": "ღვინის ხეობის გზა",
+        "Fortress Hill Street": "ციხის ბორცვის ქუჩა"
+      },
+      "Wine District": {
+        "Vineyard Lane": "ვენახის შტრიხი",
+        "Cellar Street": "მარანის ქუჩა",
+        "Harvest Road": "მოვლის გზა"
+      }
+    },
+    "Mtskheta": {
+      "Old Town": {
+        "Svetitskhoveli Street": "სვეტიცხოვლის ქუჩა",
+        "Armazi Street": "არმაზის ქუჩა",
+        "Church Hill Road": "ეკლესიის ბორცვის გზა"
+      },
+      "Monastery Area": {
+        "Jvari Monastery Street": "ჯვრის მონასტრის ქუჩა",
+        "Monastic Lane": "მონასტრული შტრიხი",
+        "Pilgrimage Road": "მლოცველობის გზა"
+      }
+    },
+    "Akhaltsikhe": {
+      "Rabati Fortress": {
+        "Fortress Road": "ციხის გზა",
+        "Ahmed-Pasha Street": "აჰმედ-ფაშას ქუჩა",
+        "Old Town Street": "ძველი ქალაქის ქუჩა"
+      },
+      "Cultural District": {
+        "Museum Street": "მუზეუმის ქუჩა",
+        "Art Gallery Lane": "ხელოვნების გალერეის შტრიხი",
+        "Cultural Center Road": "კულტურის ცენტრის გზა"
+      }
+    },
+    "Kvareli": {
+      "Wine District": {
+        "Kindzmarauli Street": "კინძმარაულის ქუჩა",
+        "Winemakers Alley": "ღვინისმაგების შტრიხი",
+        "Lakeview Street": "ტბის ხედის ქუჩა"
+      },
+      "Nature Reserve": {
+        "Forest Trail": "ტყის ბილიკი",
+        "Lake Street": "ტბის ქუჩა",
+        "Wildlife Lane": "ველური ბუნების შტრიხი"
+      }
+    },
+    "Ambrolauri": {
+      "Wine District": {
+        "Khvanchkara Street": "ხვანჩკარის ქუჩა",
+        "Usakhelauri Lane": "უსახელაურის შტრიხი",
+        "Racha Valley Road": "რაჭის ხეობის გზა"
+      },
+      "Mountain Area": {
+        "Alpine Street": "ალპური ქუჩა",
+        "Ski Resort Road": "თოვლიანი კურორტის გზა",
+        "Mountain View Lane": "მთის ხედის შტრიხი"
+      }
+    },
+    "Akhalkalaki": {
+      "Armenian District": {
+        "Yerevan Street": "ერევნის ქუჩა",
+        "Lake Sevan Street": "სევანის ტბის ქუჩა",
+        "Mount Ararat Street": "არარატის მთის ქუჩა"
+      },
+      "Historic Center": {
+        "Ancient Street": "ძველი ქუჩა",
+        "Heritage Lane": "მემკვიდრეობის შტრიხი",
+        "Cultural Road": "კულტურული გზა"
+      }
+    },
+    "Bolnisi": {
+      "German Settlement": {
+        "Katharinenfeld Street": "კათარინენფელდის ქუჩა",
+        "Martin Luther Street": "მარტინ ლუთერის ქუჩა",
+        "Vinegrowers Lane": "ვენახების მეგობრების შტრიხი"
+      },
+      "Industrial Zone": {
+        "Factory Street": "ქარხნის ქუჩა",
+        "Manufacturing Avenue": "წარმოების გამზირი",
+        "Warehouse Lane": "სანაპიროს შტრიხი"
+      }
+    },
+    "Samtredia": {
+      "City Center": {
+        "Rustaveli Street": "რუსთაველის ქუჩა",
+        "Chavchavadze Street": "ჭავჭავაძის ქუჩა",
+        "Tamar Mepe Street": "თამარ მეფის ქუჩა",
+        "Gogebashvili Street": "გოგებაშვილის ქუჩა",
+        "Kostava Street": "კოსტავას ქუჩა"
+      },
+      "Railway District": {
+        "Station Street": "სადგურის ქუჩა",
+        "Railway Workers Street": "რკინიგზელთა ქუჩა",
+        "Depot Street": "დეპოს ქუჩა"
+      },
+      "Industrial Zone": {
+        "Factory Street": "ქარხნის ქუჩა",
+        "Warehouse Lane": "სანაპიროს შტრიხი",
+        "Logistics Avenue": "ლოგისტიკის გამზირი"
+      }
+    },
+    "Khashuri": {
+      "City Center": {
+        "Rustaveli Street": "რუსთაველის ქუჩა",
+        "Chavchavadze Street": "ჭავჭავაძის ქუჩა",
+        "Tsereteli Street": "წერეთლის ქუჩა",
+        "Kostava Street": "კოსტავას ქუჩა",
+        "Queen Tamar Street": "დედოფალ თამარის ქუჩა"
+      },
+      "Surami District": {
+        "Surami Street": "სურამის ქუჩა",
+        "Mineral Water Street": "მინერალური წყლების ქუჩა",
+        "Resort Lane": "კურორტის შტრიხი"
+      },
+      "Railway District": {
+        "Station Street": "სადგურის ქუჩა",
+        "Railway Avenue": "რკინიგზის გამზირი",
+        "Depot Street": "დეპოს ქუჩა"
+      }
+    },
+    "Senaki": {
+      "City Center": {
+        "Rustaveli Street": "რუსთაველის ქუჩა",
+        "Chavchavadze Street": "ჭავჭავაძის ქუჩა",
+        "Kutaisi Street": "ქუთაისის ქუჩა",
+        "Kostava Street": "კოსტავას ქუჩა",
+        "Tamar Mepe Street": "თამარ მეფის ქუჩა"
+      },
+      "Old Town": {
+        "Church Street": "ეკლესიის ქუჩა",
+        "Market Street": "ბაზრის ქუჩა",
+        "Theatre Street": "თეატრის ქუჩა"
+      },
+      "Railway District": {
+        "Station Street": "სადგურის ქუჩა",
+        "Railway Workers Street": "რკინიგზელთა ქუჩა",
+        "Depot Street": "დეპოს ქუჩა"
+      }
+    }
   }
 }

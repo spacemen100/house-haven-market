@@ -1139,5 +1139,704 @@
         "Seaside Promenade": "Приморский променад"
       }
     }
+  },
+  "streets": {
+    "Tbilissi": {
+      "Vake-Saburtalo": {
+        "Chavchavadze Avenue": "Проспект Чавчавадзе",
+        "Pekini Street": "Улица Пекини",
+        "Irakli Abashidze Street": "Улица Ираклия Абашидзе",
+        "Tsereteli Avenue": "Проспект Церетели",
+        "Vazha Pshavela Avenue": "Проспект Важа-Пшавела",
+        "Alexander Kazbegi Avenue": "Проспект Александра Казбеги",
+        "Tamarashvili Street": "Улица Тамарашвили",
+        "Lisi Lake Road": "Дорога к озеру Лиси",
+        "Chitadze Street": "Улица Читадзе",
+        "Grigol Tabidze Street": "Улица Григола Табидзе",
+        "Akaki Tsereteli Street": "Улица Акакия Церетели",
+        "Besiki Street": "Улица Бесики",
+        "Zakaria Paliashvili Street": "Улица Закария Палиашвили"
+      },
+      "Isani-Samgori": {
+        "Ketevan Tsamebuli Avenue": "Проспект Кетеван Цамебули",
+        "Aghmashenebeli Avenue": "Проспект Агмашенебели",
+        "Queen Ketevan Street": "Улица Царицы Кетеван",
+        "Vazha Pshavela Avenue": "Проспект Важа-Пшавела",
+        "Tsereteli Avenue": "Проспект Церетели",
+        "Samgori Street": "Улица Самгори",
+        "Akaki Tsereteli Street": "Улица Акакия Церетели",
+        "Tsinamdzgvrishvili Street": "Улица Цинамдзгвришвили",
+        "Varketili Street": "Улица Варкетили",
+        "Navtlugi Street": "Улица Навтлуги",
+        "Abashvili Street": "Улица Абашвили"
+      },
+      "Didube-Chughureti": {
+        "Merab Kostava Avenue": "Проспект Мераба Костава",
+        "Tsereteli Avenue": "Проспект Церетели",
+        "Aghmashenebeli Avenue": "Проспект Агмашенебели",
+        "Marjanishvili Street": "Улица Марджанишвили",
+        "Zviad Gamsakhurdia Street": "Улица Звиада Гамсахурдия",
+        "Chughureti Street": "Улица Чугурети",
+        "Zubalashvili Street": "Улица Зубалашвили",
+        "Kukia Street": "Улица Кукия",
+        "Didube Street": "Улица Дидубе",
+        "Orbeliani Street": "Улица Орбелиани",
+        "Marjanishvili Street": "Улица Марджанишвили"
+      },
+      "Gldani-Nadzaladevi": {
+        "Guramishvili Avenue": "Проспект Гурамишвили",
+        "Vazha Pshavela Avenue": "Проспект Важа-Пшавела",
+        "Khizanishvili Street": "Улица Хизанишвили",
+        "Nadzaladevi Street": "Улица Надзаладеви",
+        "Gldani Street": "Улица Глдани",
+        "Davit Agmashenebeli Alley": "Аллея Давида Агмашенебели",
+        "Mukhran Machavariani Street": "Улица Мухрана Мачавариани",
+        "Aleksi-Meskhishvili Street": "Улица Алексея-Месхишвили"
+      },
+      "Mtatsminda-Krtsanisi": {
+        "Rustaveli Avenue": "Проспект Руставели",
+        "Mtatsminda Street": "Улица Мтацминда",
+        "Krtsanisi Street": "Улица Крцаниси",
+        "Giorgi Leonidze Street": "Улица Георгия Леонидзе",
+        "Chavchavadze Avenue": "Проспект Чавчавадзе",
+        "Shota Rustaveli Avenue": "Проспект Шоты Руставели",
+        "Leselidze Street": "Улица Леселидзе",
+        "Betlemi Street": "Улица Бетлеми",
+        "Tabukashvili Street": "Улица Табукашвили",
+        "Chonkadze Street": "Улица Чонкадзе"
+      },
+      "Old Tbilisi": {
+        "Kote Abkhazi Street": "Улица Коте Абхази",
+        "Erekle II Street": "Улица Эрекле II",
+        "Leselidze Street": "Улица Леселидзе",
+        "Lado Asatiani Street": "Улица Ладо Асатиани",
+        "Shavteli Street": "Улица Шавтели",
+        "Sioni Street": "Улица Сиони",
+        "Gorgasali Street": "Улица Горгасали"
+      },
+      "Dighomi": {
+        "Didi Dighomi Street": "Улица Диди Дигоми",
+        "Digomi Street": "Улица Дигоми",
+        "Petre Kavtaradze Street": "Улица Петре Кавтарадзе",
+        "Guramishvili Avenue": "Проспект Гурамишвили",
+        "Aghmashenebeli Alley": "Аллея Агмашенебели"
+      },
+      "Avlabari": {
+        "Metekhi Rise": "Подъем Метехи",
+        "Samreklo Street": "Улица Самрекло",
+        "Metekhi Street": "Улица Метехи",
+        "Gorgasali Street": "Улица Горгасали",
+        "Ketevan Tsamebuli Avenue": "Проспект Кетеван Цамебули"
+      },
+      "Vera": {
+        "Melikishvili Avenue": "Проспект Меликишвили",
+        "Janashia Street": "Улица Джанашиа",
+        "Tarkhnishvili Street": "Улица Тархнишвили",
+        "Zandukeli Street": "Улица Зандукели",
+        "Kipshidze Street": "Улица Кипшидзе"
+      },
+      "Sololaki": {
+        "Lado Asatiani Street": "Улица Ладо Асатиани",
+        "Shalva Dadiani Street": "Улица Шалва Дадиани",
+        "Machabeli Street": "Улица Мачабели"
+      },
+      "Ortachala": {
+        "Krtsanisi Street": "Улица Крцаниси",
+        "Gorgasali Street": "Улица Горгасали",
+        "Ortachala Rise": "Подъем Ортачала"
+      },
+      "Lisi": {
+        "Lisi Lake Road": "Дорога к озеру Лиси",
+        "Lisi Hill Street": "Улица Холма Лиси"
+      },
+      "Tskneti": {
+        "Tskneti Highway": "Шоссе Цкнети",
+        "Tskneti Center Street": "Улица Центра Цкнети"
+      },
+      "Tabakhmela": {
+        "Tabakhmela Village Road": "Дорога к деревне Табахмела"
+      },
+      "Kojori": {
+        "Kojori-Tbilisi Road": "Дорога Коджори-Тбилиси"
+      },
+      "Bagebi": {
+        "Bagebi Street": "Улица Багеби",
+        "University Street": "Университетская улица"
+      },
+      "Nutsubidze Plateau": {
+        "Nutsubidze Street": "Улица Нуцубидзе",
+        "Vazha Pshavela Avenue (Segment IV)": "Проспект Важа-Пшавела (Сегмент IV)"
+      },
+      "Temka": {
+        "Temka Street": "Улица Темка",
+        "Khizanishvili Street": "Улица Хизанишвили"
+      },
+      "Lilo": {
+        "Lilo Settlement": "Поселение Лило",
+        "Lilo Airport Road": "Дорога к аэропорту Лило"
+      },
+      "Okrokana": {
+        "Okrokana Road": "Дорога Окрокана"
+      },
+      "Shindisi": {
+        "Shindisi-Tbilisi Road": "Дорога Шиндиси-Тбилиси"
+      },
+      "Tsavkisi": {
+        "Tsavkisi Village Road": "Дорога к деревне Цавкиси"
+      },
+      "Sofelgora": {
+        "Sofelgora Road": "Дорога Софельгора"
+      }
+    },
+    "Batumi": {
+      "City Center": {
+        "Ninoshvili Street": "Улица Ниношвили",
+        "King Parnavaz Street": "Улица Царя Парнаваза",
+        "Chavchavadze Street": "Улица Чавчавадзе",
+        "Seaside Boulevard": "Приморский бульвар",
+        "Memed Abashidze Avenue": "Проспект Мемеда Абашидзе",
+        "Zubalashvili Street": "Улица Зубалашвили",
+        "Gorgiladze Street": "Улица Горгиладзе",
+        "Europe Square": "Площадь Европы",
+        "Piazza Square": "Площадь Пиацца",
+        "May 6 Park Street": "Улица Парка 6 Мая"
+      },
+      "Old Boulevard": {
+        "Batumi Boulevard": "Батумский бульвар",
+        "Zakaria Paliashvili Street": "Улица Закария Палиашвили",
+        "Seaside Promenade": "Приморский променад",
+        "Alphabetic Tower Street": "Улица Алфавитной Башни",
+        "Neptune Square": "Площадь Нептуна",
+        "Dancing Fountains Street": "Улица Танцующих Фонтанов"
+      },
+      "New Boulevard": {
+        "Miracle Park Street": "Улица Парка Чудес",
+        "Chacha Tower Street": "Улица Башни Чача",
+        "Bike Lane": "Велосипедная дорожка",
+        "Skatepark Street": "Улица Скейт-парка"
+      },
+      "Gonio": {
+        "Gonio Fortress Road": "Дорога к крепости Гонио",
+        "Beachside Street": "Улица у пляжа",
+        "Airport Highway": "Шоссе к аэропорту",
+        "Adjara Street": "Улица Аджара",
+        "Ancient Road": "Древняя дорога"
+      },
+      "Makhinjauri": {
+        "Botanical Garden Street": "Улица Ботанического Сада",
+        "Green Cape Road": "Дорога к Зеленому Мысу",
+        "Resort Avenue": "Проспект Курорта",
+        "Mountain View Street": "Улица с видом на горы"
+      },
+      "Bagrationi": {
+        "King Bagration Street": "Улица Царя Багратиона",
+        "Heroes Square": "Площадь Героев",
+        "Victory Street": "Улица Победы",
+        "Military Road": "Военная дорога"
+      },
+      "Port Area": {
+        "Harbor Street": "Улица Гавани",
+        "Ferry Terminal Road": "Дорога к паромному терминалу",
+        "Fisherman's Wharf": "Рыбацкий причал",
+        "Marine Station Street": "Улица Морской Станции"
+      },
+      "Anaria": {
+        "Anaria Beach Street": "Улица Пляжа Анария",
+        "Residential Lane": "Жилая аллея",
+        "Palm Tree Avenue": "Проспект Пальм",
+        "Sunset Boulevard": "Бульвар Заката"
+      },
+      "Industrial Zone": {
+        "Factory Street": "Улица Завода",
+        "Cargo Port Road": "Дорога к грузовому порту",
+        "Railway Access Street": "Улица доступа к железной дороге"
+      },
+      "Historical District": {
+        "Old Batumi Street": "Улица Старого Батуми",
+        "Mosque Street": "Улица Мечети",
+        "Orta Mosque Alley": "Аллея Мечети Орта",
+        "Jewish Quarter Street": "Улица Еврейского Квартала"
+      },
+      "Tamarisi": {
+        "Tamarisi Street": "Улица Тамариси",
+        "Border Road": "Пограничная дорога",
+        "Rustavi Settlement Street": "Улица Поселения Рустави"
+      },
+      "Chakvi": {
+        "Chakvi Highway": "Шоссе Чакви",
+        "Resort Street": "Улица Курорта",
+        "Beachfront Road": "Дорога вдоль пляжа"
+      },
+      "Kobuleti Outskirts": {
+        "Kobuleti-Batumi Highway": "Шоссе Кобулети-Батуми",
+        "Forest Lane": "Лесная аллея",
+        "Seaside Alley": "Приморская аллея"
+      },
+      "Airport Area": {
+        "Batumi International Airport Road": "Дорога к Международному Аэропорту Батуми",
+        "Tbel Abuseridze Street": "Улица Тбела Абусеридзе",
+        "Aviation Street": "Улица Авиации"
+      },
+      "Adlia": {
+        "Adlia Street": "Улица Адлия",
+        "Shalva Inasaridze Street": "Улица Шалвы Инасаридзе",
+        "New Adlia Boulevard": "Новый бульвар Адлия"
+      },
+      "Angisa": {
+        "Angisa Street": "Улица Ангиса",
+        "Sunrise Road": "Дорога Восхода",
+        "Residential Lane": "Жилая аллея"
+      },
+      "Tamar Mephe": {
+        "Tamar Mephe Avenue": "Проспект Тамар Мефе",
+        "Queen Tamar Street": "Улица Царицы Тамар",
+        "Adjara Alley": "Аллея Аджара"
+      },
+      "Green Cape": {
+        "Green Cape Coastal Road": "Прибрежная дорога Зеленого Мыса",
+        "Garden Entrance Street": "Улица Входа в Сад",
+        "Sea View Path": "Тропинка с видом на море"
+      },
+      "Kakhaberi": {
+        "Kakhaberi Street": "Улица Кахабери",
+        "Canal Street": "Улица Канала",
+        "Southern Bay Street": "Улица Южной Бухты"
+      }
+    },
+    "Kutaisi": {
+      "City Center": {
+        "David Agmashenebeli Street": "Улица Давида Агмашенебели",
+        "Shota Rustaveli Street": "Улица Шоты Руставели",
+        "Tsereteli Street": "Улица Церетели",
+        "Queen Tamar Street": "Улица Царицы Тамар",
+        "Vekua Street": "Улица Векуа"
+      },
+      "White Bridge": {
+        "White Bridge Street": "Улица Белого Моста",
+        "Rioni River Street": "Улица Реки Риони",
+        "Colchis Street": "Улица Колхиды"
+      },
+      "Bagrati": {
+        "Bagrati Cathedral Street": "Улица Собора Баграти",
+        "Gelati Monastery Road": "Дорога к Гелатскому Монастырю",
+        "Historical Museum Street": "Улица Исторического Музея"
+      },
+      "Motsameta": {
+        "Motsameta Monastery Street": "Улица Монастыря Моцамета",
+        "River View Street": "Улица с видом на реку",
+        "Monastery Hill Road": "Дорога к Холму Монастыря"
+      },
+      "Gelati": {
+        "Gelati Academy Street": "Улица Академии Гелати",
+        "Science Avenue": "Проспект Науки",
+        "University Lane": "Университетская аллея"
+      },
+      "Sataplia": {
+        "Sataplia Cave Street": "Улица Пещеры Сатаплия",
+        "Dinosaur Park Road": "Дорога к Парку Динозавров",
+        "Nature Reserve Lane": "Аллея Природного Заповедника"
+      },
+      "Tskaltubo": {
+        "Spa Resort Street": "Улица Курорта",
+        "Health Avenue": "Проспект Здоровья",
+        "Sanatorium Lane": "Аллея Санатория"
+      },
+      "Avangard": {
+        "Avangard Street": "Улица Авангард",
+        "Market Lane": "Рыночная аллея",
+        "Station Road": "Дорога к станции"
+      },
+      "Gora": {
+        "Gora Hill Street": "Улица Холма Гора",
+        "Viewpoint Road": "Дорога к Видовой Точке",
+        "Fortress Lane": "Аллея Крепости"
+      },
+      "Red Bridge": {
+        "Red Bridge Street": "Улица Красного Моста",
+        "Bridge Market Road": "Дорога к Рыночному Мосту",
+        "Railway Overpass Street": "Улица Железнодорожного Путепровода"
+      },
+      "Khoni Road Area": {
+        "Khoni Highway": "Шоссе Хони",
+        "Industrial Lane": "Промышленная аллея",
+        "Logistics Street": "Улица Логистики"
+      },
+      "Nikea": {
+        "Nikea Street": "Улица Никеа",
+        "Residential Alley": "Жилая аллея",
+        "Parkview Street": "Улица с видом на парк"
+      },
+      "Chkvishi": {
+        "Village Road": "Деревенская дорога",
+        "River Trail": "Речная тропинка",
+        "Farmland Street": "Улица Сельскохозяйственных Угодий"
+      },
+      "Rioni District": {
+        "Rioni Riverside Street": "Улица Набережной Риони",
+        "Fishing Dock Road": "Дорога к Рыбацкому Доку",
+        "Lower Town Avenue": "Проспект Нижнего Города"
+      },
+      "Mukhrani": {
+        "Mukhrani Street": "Улица Мухрани",
+        "Old Quarter Lane": "Аллея Старого Квартала",
+        "Historic Trail": "Историческая тропинка"
+      },
+      "Tskhenistskali": {
+        "Tskhenistskali River Road": "Дорога к Реке Цхенисцкали",
+        "Bridgeview Street": "Улица с видом на мост",
+        "East Bank Path": "Тропинка Восточного Берега"
+      }
+    },
+    "Rustavi": {
+      "City Center": {
+        "Rustaveli Street": "Улица Руставели",
+        "Shartava Street": "Улица Шартава",
+        "Chavchavadze Street": "Улица Чавчавадзе",
+        "Freedom Square": "Площадь Свободы",
+        "City Hall Street": "Улица Городской Администрации"
+      },
+      "East Zone": {
+        "Rustavi Street": "Улица Рустави",
+        "Metallurgists Street": "Улица Металлургов",
+        "Industrial Road": "Промышленная дорога",
+        "Power Plant Avenue": "Проспект Электростанции"
+      },
+      "West Zone": {
+        "Giorgi Chkondideli Street": "Улица Георгия Чкондидели",
+        "Ilia Chavchavadze Street": "Улица Ильи Чавчавадзе",
+        "Vakhtang Gorgasali Street": "Улица Вахтанга Горгасали",
+        "Mshvidoba Street": "Улица Мира"
+      },
+      "Old Rustavi": {
+        "Beridze Street": "Улица Беридзе",
+        "Shamkorets Street": "Улица Шамкорец",
+        "Old Factory Road": "Дорога к Старой Фабрике"
+      },
+      "New Rustavi": {
+        "New District Street": "Улица Нового Района",
+        "Block A Street": "Улица Блока А",
+        "Modern Avenue": "Современный проспект",
+        "Residential Complex Lane": "Аллея Жилого Комплекса"
+      },
+      "Rustavi Industrial Park": {
+        "Tech Park Street": "Улица Технопарка",
+        "Warehouse Road": "Дорога к Складу",
+        "Logistics Street": "Улица Логистики"
+      },
+      "Krtsanisi District": {
+        "Krtsanisi Road": "Дорога Крцаниси",
+        "Hilltop Street": "Улица Вершины Холма",
+        "Gardabani Border Lane": "Пограничная аллея Гардабани"
+      },
+      "Shavnabada Area": {
+        "Shavnabada Street": "Улица Шавнабада",
+        "Military Base Road": "Дорога к Военной Базе",
+        "South Access Lane": "Аллея Южного Доступа"
+      },
+      "Rustavi Lake Area": {
+        "Lake Promenade": "Набережная Озера",
+        "Waterfront Avenue": "Проспект Набережной",
+        "Picnic Park Road": "Дорога к Парку Пикников"
+      }
+    },
+    "Gori": {
+      "City Center": {
+        "Stalin Avenue": "Проспект Сталина",
+        "Chavchavadze Street": "Улица Чавчавадзе",
+        "Ketskhoveli Street": "Улица Кецховели",
+        "Freedom Square": "Площадь Свободы",
+        "Cultural Center Street": "Улица Культурного Центра"
+      },
+      "Tserovani": {
+        "Tserovani Settlement Street": "Улица Поселения Церовани",
+        "Tserovani Residential Lane": "Жилая аллея Церовани"
+      },
+      "Fortress Area": {
+        "Gori Fortress Street": "Улица Крепости Гори",
+        "Museum Street": "Улица Музея",
+        "Old Fortress Road": "Дорога к Старой Крепости",
+        "Historical District Lane": "Аллея Исторического Района"
+      },
+      "Gori University Area": {
+        "Gori University Street": "Улица Университета Гори",
+        "Science Avenue": "Проспект Науки",
+        "Student Quarter Lane": "Аллея Студенческого Квартала"
+      },
+      "Zemo Gori": {
+        "Zemo Gori Street": "Улица Земо Гори",
+        "Highland District Road": "Дорога Горного Района",
+        "Mountain View Lane": "Аллея с видом на горы"
+      },
+      "Lower Gori": {
+        "Mtkvari River Road": "Дорога к Реке Мтквари",
+        "Suburban Avenue": "Проспект Пригорода",
+        "Industrial Zone Lane": "Аллея Промышленной Зоны"
+      },
+      "Gori Industrial Zone": {
+        "Industrial District Street": "Улица Промышленного Района",
+        "Factory Road": "Дорога к Заводу",
+        "Transportation Hub Lane": "Аллея Транспортного Узла"
+      },
+      "Kakhati District": {
+        "Kakhati Street": "Улица Кахати",
+        "Central Park Road": "Дорога Центрального Парка",
+        "Kakhati Square": "Площадь Кахати"
+      },
+      "Gori Lake Area": {
+        "Lake Promenade": "Набережная Озера",
+        "Picnic Park Road": "Дорога к Парку Пикников",
+        "Lakeside Avenue": "Проспект Озерной Набережной"
+      }
+    },
+    "Zugdidi": {
+      "City Center": {
+        "Dadiani Street": "Улица Дадиани",
+        "Merab Kostava Street": "Улица Мераба Костава",
+        "Rustaveli Street": "Улица Руставели",
+        "Shota Rustaveli Square": "Площадь Шоты Руставели",
+        "Freedom Square": "Площадь Свободы"
+      },
+      "Suburban": {
+        "Tamar Mepe Street": "Улица Царицы Тамар",
+        "Kolkheti Street": "Улица Колхиды",
+        "Kvirike Street": "Улица Квирике",
+        "Kobuleti Road": "Дорога Кобулети",
+        "Mtsvane Kontskhi Street": "Улица Мцване Концхи"
+      },
+      "Dadiani Palace Area": {
+        "Dadiani Palace Street": "Улица Дворца Дадиани",
+        "Park Avenue": "Проспект Парка",
+        "Historical Museum Street": "Улица Исторического Музея"
+      },
+      "Old Town": {
+        "Old Bazaar Street": "Улица Старого Базара",
+        "Tbilisi Street": "Улица Тбилиси",
+        "Rioni River Road": "Дорога к Реке Риони"
+      },
+      "Zugdidi Park Area": {
+        "Zugdidi Park Avenue": "Проспект Парка Зугдиди",
+        "Green Boulevard": "Зеленый бульвар",
+        "Recreational Zone Road": "Дорога к Рекреационной Зоне"
+      },
+      "Industrial Zone": {
+        "Factory Street": "Улица Завода",
+        "Cargo Port Road": "Дорога к Грузовому Порту",
+        "Workshop Avenue": "Проспект Мастерской"
+      },
+      "Zugdidi Port Area": {
+        "Zugdidi Port Road": "Дорога к Порту Зугдиди",
+        "Ferry Terminal Lane": "Аллея Паромного Терминала",
+        "Waterfront Street": "Улица Набережной"
+      }
+    },
+    "Poti": {
+      "Port Area": {
+        "Port Street": "Улица Порта",
+        "Seaside Avenue": "Приморский проспект",
+        "Industrial Zone Road": "Дорога Промышленной Зоны"
+      },
+      "Beachside": {
+        "Beach Boulevard": "Бульвар Пляжа",
+        "Marina Street": "Улица Марины",
+        "Lighthouse Lane": "Аллея Маяка"
+      },
+      "City Center": {
+        "Nikoladze Street": "Улица Николадзе",
+        "Chavchavadze Street": "Улица Чавчавадзе",
+        "Rustaveli Avenue": "Проспект Руставели",
+        "Freedom Square": "Площадь Свободы",
+        "Dadiani Street": "Улица Дадиани"
+      },
+      "Maltakva": {
+        "Maltakva Beach Road": "Дорога к Пляжу Малтаква",
+        "Maltakva Park Street": "Улица Парка Малтаква",
+        "Maltakva Village Street": "Улица Деревни Малтаква"
+      },
+      "Nabada": {
+        "Nabada Street": "Улица Набада",
+        "Port Access Road": "Дорога к Порту",
+        "Industrial Park Lane": "Аллея Промышленного Парка"
+      },
+      "Suburban Areas": {
+        "Tamar Mepe Street": "Улица Царицы Тамар",
+        "Kolkheti Street": "Улица Колхиды",
+        "Rioni River Road": "Дорога к Реке Риони"
+      },
+      "Khobi": {
+        "Khobi Central Street": "Центральная улица Хоби",
+        "Egrisi Mountain Road": "Дорога к Горе Эгриси"
+      },
+      "Ureki": {
+        "Ureki Beach Road": "Дорога к Пляжу Уреки",
+        "Black Sand Avenue": "Проспект Черного Песка",
+        "Resort Street": "Улица Курорта"
+      },
+      "Zugdidi": {
+        "Zugdidi Central Avenue": "Центральный проспект Зугдиди",
+        "Samegrelo Street": "Улица Самегрело",
+        "Zugdidi Park Road": "Дорога к Парку Зугдиди"
+      },
+      "Paliastomi Lake District": {
+        "Paliastomi Lake Shore Road": "Дорога к Берегу Озера Палеастоми",
+        "Paliastomi Nature Reserve Street": "Улица Природного Заповедника Палеастоми"
+      },
+      "Kolkheti National Park": {
+        "Kolkhida Wetlands Road": "Дорога к Водно-Болотным Угодьям Колхиды",
+        "Nature Reserve Path": "Тропинка Природного Заповедника"
+      }
+    },
+    "Borjomi": {
+      "Central Park": {
+        "Park Avenue": "Проспект Парка",
+        "Mineral Springs Street": "Улица Минеральных Источников",
+        "Stalin Street": "Улица Сталина"
+      },
+      "Resort Area": {
+        "Spa Street": "Улица Спа",
+        "Wellness Avenue": "Проспект Благосостояния",
+        "Sanatorium Road": "Дорога к Санаторию"
+      }
+    },
+    "Telavi": {
+      "Old Town": {
+        "King Erekle II Street": "Улица Царя Эрекле II",
+        "Wine Valley Road": "Дорога к Винной Долине",
+        "Fortress Hill Street": "Улица Крепостного Холма"
+      },
+      "Wine District": {
+        "Vineyard Lane": "Аллея Виноградников",
+        "Cellar Street": "Улица Погребов",
+        "Harvest Road": "Дорога Урожая"
+      }
+    },
+    "Mtskheta": {
+      "Old Town": {
+        "Svetitskhoveli Street": "Улица Светицховели",
+        "Armazi Street": "Улица Армази",
+        "Church Hill Road": "Дорога к Церковному Холму"
+      },
+      "Monastery Area": {
+        "Jvari Monastery Street": "Улица Монастыря Джвари",
+        "Monastic Lane": "Монастырская аллея",
+        "Pilgrimage Road": "Дорога Паломничества"
+      }
+    },
+    "Akhaltsikhe": {
+      "Rabati Fortress": {
+        "Fortress Road": "Дорога к Крепости",
+        "Ahmed-Pasha Street": "Улица Ахмеда-Паши",
+        "Old Town Street": "Улица Старого Города"
+      },
+      "Cultural District": {
+        "Museum Street": "Улица Музея",
+        "Art Gallery Lane": "Аллея Художественной Галереи",
+        "Cultural Center Road": "Дорога к Культурному Центру"
+      }
+    },
+    "Kvareli": {
+      "Wine District": {
+        "Kindzmarauli Street": "Улица Киндзмараули",
+        "Winemakers Alley": "Аллея Виноделов",
+        "Lakeview Street": "Улица с видом на озеро"
+      },
+      "Nature Reserve": {
+        "Forest Trail": "Лесная тропинка",
+        "Lake Street": "Улица Озера",
+        "Wildlife Lane": "Аллея Дикой Природы"
+      }
+    },
+    "Ambrolauri": {
+      "Wine District": {
+        "Khvanchkara Street": "Улица Хванчкара",
+        "Usakhelauri Lane": "Аллея Усахелаури",
+        "Racha Valley Road": "Дорога к Долине Рача"
+      },
+      "Mountain Area": {
+        "Alpine Street": "Альпийская улица",
+        "Ski Resort Road": "Дорога к Горнолыжному Курорту",
+        "Mountain View Lane": "Аллея с видом на горы"
+      }
+    },
+    "Akhalkalaki": {
+      "Armenian District": {
+        "Yerevan Street": "Улица Еревана",
+        "Lake Sevan Street": "Улица Озера Севан",
+        "Mount Ararat Street": "Улица Горы Арарат"
+      },
+      "Historic Center": {
+        "Ancient Street": "Древняя улица",
+        "Heritage Lane": "Аллея Наследия",
+        "Cultural Road": "Культурная дорога"
+      }
+    },
+    "Bolnisi": {
+      "German Settlement": {
+        "Katharinenfeld Street": "Улица Катариненфельд",
+        "Martin Luther Street": "Улица Мартина Лютера",
+        "Vinegrowers Lane": "Аллея Виноградарей"
+      },
+      "Industrial Zone": {
+        "Factory Street": "Улица Завода",
+        "Manufacturing Avenue": "Проспект Производства",
+        "Warehouse Lane": "Аллея Склада"
+      }
+    },
+    "Samtredia": {
+      "City Center": {
+        "Rustaveli Street": "Улица Руставели",
+        "Chavchavadze Street": "Улица Чавчавадзе",
+        "Tamar Mepe Street": "Улица Царицы Тамар",
+        "Gogebashvili Street": "Улица Гогебашвили",
+        "Kostava Street": "Улица Костава"
+      },
+      "Railway District": {
+        "Station Street": "Улица Станции",
+        "Railway Workers Street": "Улица Железнодорожников",
+        "Depot Street": "Улица Депо"
+      },
+      "Industrial Zone": {
+        "Factory Street": "Улица Завода",
+        "Warehouse Lane": "Аллея Склада",
+        "Logistics Avenue": "Проспект Логистики"
+      }
+    },
+    "Khashuri": {
+      "City Center": {
+        "Rustaveli Street": "Улица Руставели",
+        "Chavchavadze Street": "Улица Чавчавадзе",
+        "Tsereteli Street": "Улица Церетели",
+        "Kostava Street": "Улица Костава",
+        "Queen Tamar Street": "Улица Царицы Тамар"
+      },
+      "Surami District": {
+        "Surami Street": "Улица Сурами",
+        "Mineral Water Street": "Улица Минеральной Воды",
+        "Resort Lane": "Аллея Курорта"
+      },
+      "Railway District": {
+        "Station Street": "Улица Станции",
+        "Railway Avenue": "Проспект Железной Дороги",
+        "Depot Street": "Улица Депо"
+      }
+    },
+    "Senaki": {
+      "City Center": {
+        "Rustaveli Street": "Улица Руставели",
+        "Chavchavadze Street": "Улица Чавчавадзе",
+        "Kutaisi Street": "Улица Кутаиси",
+        "Kostava Street": "Улица Костава",
+        "Tamar Mepe Street": "Улица Царицы Тамар"
+      },
+      "Old Town": {
+        "Church Street": "Улица Церкви",
+        "Market Street": "Улица Рынка",
+        "Theatre Street": "Улица Театра"
+      },
+      "Railway District": {
+        "Station Street": "Улица Станции",
+        "Railway Workers Street": "Улица Железнодорожников",
+        "Depot Street": "Улица Депо"
+      }
+    }
   }
 }
