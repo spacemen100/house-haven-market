@@ -1255,7 +1255,15 @@ const Properties = () => {
                 </div>
                 <div className="flex justify-between gap-2 mt-2">
                   <div className="flex items-center gap-1">
-                    <span className="text-sm">$</span>
+                    <select
+                      value={currency}
+                      onChange={(e) => setCurrency(e.target.value as Currency)}
+                      className="p-2 border rounded-md"
+                    >
+                      <option value="USD">USD</option>
+                      <option value="GEL">GEL</option>
+                      <option value="EUR">EUR</option>
+                    </select>
                     <input
                       type="text"
                       value={minPriceInput}
@@ -1266,7 +1274,15 @@ const Properties = () => {
                   </div>
                   <span className="text-sm">to</span>
                   <div className="flex items-center gap-1">
-                    <span className="text-sm">$</span>
+                    <select
+                      value={currency}
+                      onChange={(e) => setCurrency(e.target.value as Currency)}
+                      className="p-2 border rounded-md"
+                    >
+                      <option value="USD">USD</option>
+                      <option value="GEL">GEL</option>
+                      <option value="EUR">EUR</option>
+                    </select>
                     <input
                       type="text"
                       value={maxPriceInput}
@@ -1507,7 +1523,15 @@ const Properties = () => {
             </div>
             <div className="flex justify-between gap-2 mt-2">
               <div className="flex items-center gap-1">
-                <span className="text-sm">$</span>
+                <select
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value as Currency)}
+                  className="p-2 border rounded-md"
+                >
+                  <option value="USD">USD</option>
+                  <option value="GEL">GEL</option>
+                  <option value="EUR">EUR</option>
+                </select>
                 <input
                   type="text"
                   value={minPriceInput}
@@ -1518,7 +1542,15 @@ const Properties = () => {
               </div>
               <span className="text-sm">to</span>
               <div className="flex items-center gap-1">
-                <span className="text-sm">$</span>
+                <select
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value as Currency)}
+                  className="p-2 border rounded-md"
+                >
+                  <option value="USD">USD</option>
+                  <option value="GEL">GEL</option>
+                  <option value="EUR">EUR</option>
+                </select>
                 <input
                   type="text"
                   value={maxPriceInput}
