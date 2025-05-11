@@ -22,8 +22,8 @@ export const GEORGIAN_DISTRICTS: DistrictData = {
     "Rustaveli Avenue",
     "Old Tbilisi"
   ],
-  "Batoumi": [
-    "Centre-ville",
+  "Batumi": [
+    "City Center/Centre-ville",
     "Gonio",
     "Makhinjauri",
     "Bagrationi",

@@ -1,6 +1,6 @@
 export const GEORGIAN_CITIES = [
     "Tbilissi",
-    "Batoumi",
+    "Batumi",
     "Koutaïssi",
     "Roustavi",
     "Gori",
