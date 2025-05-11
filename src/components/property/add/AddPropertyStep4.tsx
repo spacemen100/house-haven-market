@@ -29,7 +29,7 @@ const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
 const addressSchema = z.object({
   addressStreet: z.string().optional(),
-  addressCity: z.string().min(1, "La ville est requise"),
+  addressCity: z.string().min(1, "City is required"),
   addressDistrict: z.string().optional(),
   lat: z.number().default(41.7151),
   lng: z.number().default(44.8271),
@@ -105,10 +105,10 @@ const AddPropertyStep4 = ({
 
   const validateFile = (file: File): string | null => {
     if (!ALLOWED_TYPES.includes(file.type)) {
-      return "Type de fichier non supporté. Utilisez JPG, PNG ou WebP.";
+      return "Unsupported file type. Use JPG, PNG, or WebP.";
     }
     if (file.size > MAX_FILE_SIZE) {
-      return "L'image ne doit pas dépasser 5MB.";
+      return "Image should not exceed 5MB.";
     }
     return null;
   };
@@ -118,7 +118,7 @@ const AddPropertyStep4 = ({
       const filesArray = Array.from(e.target.files);
 
       if (images.length + filesArray.length > MAX_IMAGES) {
-        toast.error(`Vous ne pouvez pas ajouter plus de ${MAX_IMAGES} images.`);
+        toast.error(`You cannot add more than ${MAX_IMAGES} images.`);
         return;
       }
 
@@ -165,23 +165,23 @@ const AddPropertyStep4 = ({
       lat: data.lat,
       lng: data.lng
     });
-  
+
     onSubmit();
   };
-  
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
         <div className="mb-8 text-center">
-          <h2 className="text-2xl font-bold">Localisation et photos</h2>
+          <h2 className="text-2xl font-bold">Location and Photos</h2>
           <p className="text-muted-foreground mt-2">
-            Ajoutez la localisation exacte et les photos de votre propriété
+            Add the exact location and photos of your property
           </p>
         </div>
 
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium mb-4">Localisation</h3>
+            <h3 className="text-lg font-medium mb-4">Location</h3>
 
             <div className="mb-6">
               <FormLabel>Property Location</FormLabel>
@@ -198,13 +198,13 @@ const AddPropertyStep4 = ({
                 name="addressCity"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Ville*</FormLabel>
+                    <FormLabel>City*</FormLabel>
                     <FormControl>
                       <select
                         {...field}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <option value="">Sélectionnez une ville</option>
+                        <option value="">Select a city</option>
                         {GEORGIAN_CITIES.map((city) => (
                           <option key={city} value={city}>
                             {city}
@@ -222,14 +222,14 @@ const AddPropertyStep4 = ({
                 name="addressDistrict"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Quartier</FormLabel>
+                    <FormLabel>District</FormLabel>
                     <FormControl>
                       <select
                         {...field}
                         disabled={!selectedCity}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <option value="">Sélectionnez un quartier</option>
+                        <option value="">Select a district</option>
                         {availableDistricts.map((district) => (
                           <option key={district} value={district}>
                             {district}
@@ -247,14 +247,14 @@ const AddPropertyStep4 = ({
                 name="addressStreet"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Rue</FormLabel>
+                    <FormLabel>Street</FormLabel>
                     <FormControl>
                       <select
                         {...field}
                         disabled={!selectedDistrict}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <option value="">Sélectionnez une rue</option>
+                        <option value="">Select a street</option>
                         {availableStreets.map((street) => (
                           <option key={street} value={street}>
                             {street}
@@ -269,9 +269,9 @@ const AddPropertyStep4 = ({
             </div>
 
             <div className="mt-4">
-              <Label>Notes sur la localisation</Label>
+              <Label>Location Notes</Label>
               <Textarea
-                placeholder="Instructions pour trouver la propriété, points de repère..."
+                placeholder="Instructions to find the property, landmarks..."
                 className="min-h-24"
               />
             </div>
@@ -279,7 +279,7 @@ const AddPropertyStep4 = ({
 
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-medium">Photos de la propriété</h3>
+              <h3 className="text-lg font-medium">Property Photos</h3>
               <span className="text-sm text-muted-foreground">
                 {images.length}/{MAX_IMAGES} images
               </span>
@@ -295,7 +295,7 @@ const AddPropertyStep4 = ({
                   disabled={images.length >= MAX_IMAGES}
                 >
                   <Images className="mr-2 h-4 w-4" />
-                  Ajouter des photos
+                  Add Photos
                 </Button>
                 <Input
                   id="images"
@@ -314,7 +314,7 @@ const AddPropertyStep4 = ({
                     <div key={index} className="relative group aspect-square">
                       <img
                         src={url}
-                        alt={`Photo de la propriété ${index + 1}`}
+                        alt={`Property photo ${index + 1}`}
                         className="h-full w-full object-cover rounded-md cursor-pointer"
                         onClick={() => {
                           setPreviewImage(url);
@@ -340,7 +340,7 @@ const AddPropertyStep4 = ({
 
         <div className="flex justify-between">
           <Button type="button" variant="outline" onClick={onBack}>
-            Retour
+            Back
           </Button>
           <Button
             type="submit"
@@ -348,10 +348,10 @@ const AddPropertyStep4 = ({
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Publication...
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Publishing...
               </>
             ) : (
-              "Publier l'annonce"
+              "Publish Listing"
             )}
           </Button>
         </div>
@@ -359,10 +359,10 @@ const AddPropertyStep4 = ({
         <Dialog open={previewDialogOpen} onOpenChange={setPreviewDialogOpen}>
           <DialogContent className="sm:max-w-xl">
             <DialogHeader>
-              <DialogTitle>Aperçu de l'image</DialogTitle>
+              <DialogTitle>Image Preview</DialogTitle>
             </DialogHeader>
             <div className="flex justify-center">
-              <img src={previewImage} alt="Aperçu" className="max-h-[70vh] object-contain" />
+              <img src={previewImage} alt="Preview" className="max-h-[70vh] object-contain" />
             </div>
           </DialogContent>
         </Dialog>
