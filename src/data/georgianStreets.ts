@@ -8,54 +8,82 @@ type StreetData = {
 
 export const GEORGIAN_STREETS: StreetData = {
   "Tbilissi": {
-    "Vake-Saburtalo": [
-      "Chavchavadze Avenue",
-      "Pekini Street",
-      "Irakli Abashidze Street",
-      "Tsereteli Avenue",
-      "Vazha Pshavela Avenue",
-      "Alexander Kazbegi Avenue",
-      "Chitadze Street",
-      "Grigol Tabidze Street",
-      "Akaki Tsereteli Street",
-      "Besiki Street"
-    ],
-    "Isani-Samgori": [
-      "Aghmashenebeli Avenue",
-      "Queen Ketevan Street",
-      "Vazha Pshavela Avenue",
-      "Tsereteli Avenue",
-      "Samgori Street",
-      "Akaki Tsereteli Street",
-      "Tsinamdzgvrishvili Street",
-      "Varketili Street"
-    ],
-    "Didube-Chughureti": [
-      "Merab Kostava Avenue",
-      "Aghmashenebeli Avenue",
-      "Zviad Gamsakhurdia Street",
-      "Chughureti Street",
-      "Didube Street",
-      "Kukia Street",
-      "Orbeliani Street"
-    ],
-    "Gldani-Nadzaladevi": [
-      "Guramishvili Street",
-      "Vazha Pshavela Avenue",
-      "Nadzaladevi Street",
-      "Gldani Street",
-      "Mukhran Machavariani Street",
-      "Aleksi-Meskhishvili Street"
-    ],
-    "Mtatsminda-Krtsanisi": [
-      "Mtatsminda Street",
-      "Krtsanisi Street",
-      "Chavchavadze Avenue",
-      "Shota Rustaveli Avenue",
-      "Leselidze Street",
-      "Betlemi Street"
-    ]
-  },
+  "Vake-Saburtalo": [
+    "Chavchavadze Avenue",
+    "Pekini Street",
+    "Irakli Abashidze Street",
+    "Tsereteli Avenue",
+    "Vazha Pshavela Avenue",
+    "Alexander Kazbegi Avenue",
+    "Chitadze Street",
+    "Grigol Tabidze Street",
+    "Akaki Tsereteli Street",
+    "Besiki Street",
+    "Zakaria Paliashvili Street"
+  ],
+  "Isani-Samgori": [
+    "Aghmashenebeli Avenue",
+    "Queen Ketevan Street",
+    "Vazha Pshavela Avenue",
+    "Tsereteli Avenue",
+    "Samgori Street",
+    "Akaki Tsereteli Street",
+    "Tsinamdzgvrishvili Street",
+    "Varketili Street"
+  ],
+  "Didube-Chughureti": [
+    "Merab Kostava Avenue",
+    "Aghmashenebeli Avenue",
+    "Zviad Gamsakhurdia Street",
+    "Chughureti Street",
+    "Didube Street",
+    "Kukia Street",
+    "Orbeliani Street",
+    "Marjanishvili Street"
+  ],
+  "Gldani-Nadzaladevi": [
+    "Guramishvili Street",
+    "Vazha Pshavela Avenue",
+    "Nadzaladevi Street",
+    "Gldani Street",
+    "Mukhran Machavariani Street",
+    "Aleksi-Meskhishvili Street"
+  ],
+  "Mtatsminda-Krtsanisi": [
+    "Mtatsminda Street",
+    "Krtsanisi Street",
+    "Chavchavadze Avenue",
+    "Shota Rustaveli Avenue",
+    "Leselidze Street",
+    "Betlemi Street"
+  ],
+  "Old Tbilisi": [
+    "Kote Abkhazi Street",
+    "Lado Asatiani Street",
+    "Shavteli Street",
+    "Sioni Street",
+    "Erekle II Street",
+    "Gorgasali Street"
+  ],
+  "Digomi": [
+    "Digomi Street",
+    "Petre Kavtaradze Street",
+    "Didi Digomi Street",
+    "Davit Aghmashenebeli Alley"
+  ],
+  "Avlabari": [
+    "Ketevan Tsamebuli Avenue",
+    "Metekhi Street",
+    "Samreklo Street",
+    "Gorgasali Street"
+  ],
+  "Vera": [
+    "Melikishvili Avenue",
+    "Janashia Street",
+    "Kipshidze Street",
+    "Tarkhnishvili Street"
+  ]
+},
   "Batumi": {
     "City Center": [
       "Ninoshvili Street",
