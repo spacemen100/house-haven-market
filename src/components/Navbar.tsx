@@ -116,7 +116,7 @@ const Navbar = () => {
     <nav className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <div className="text-estate-800 text-2xl font-serif font-bold">House<span className="text-teal-500">Haven</span></div>
+          <div className="text-estate-800 text-2xl font-serif font-bold">House<span className="text-teal-500">სახლი</span></div>
         </Link>
 
         {/* Desktop Navigation */}
@@ -149,7 +149,7 @@ const Navbar = () => {
           </div>
           <div className="relative">
             <Button variant="ghost" className="flex items-center gap-1 text-gray-600 hover:text-gray-800">
-              {t('language')} <ChevronDown size={16} />
+              language/ენა <ChevronDown size={16} />
               <select
                 value={language}
                 onChange={(e) => handleLanguageChange(e.target.value)}
@@ -277,7 +277,7 @@ const Navbar = () => {
             </button>
             <hr className="my-2" />
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-gray-700">{t('language')}</label>
+              <label className="text-sm font-medium text-gray-700">language/ენა</label>
               <select
                 value={language}
                 onChange={(e) => {
