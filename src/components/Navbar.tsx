@@ -1,6 +1,6 @@
 // src/components/Navbar.tsx
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, User, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -12,6 +12,8 @@ import { supabase } from '@/lib/api/supabaseClient';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/LanguageContext';
 import { useCurrency } from '@/CurrencyContext';
+
+type Currency = 'GEL' | 'USD' | 'EUR';
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -31,6 +33,7 @@ const Navbar = () => {
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -106,6 +109,10 @@ const Navbar = () => {
     setIsMenuOpen(false);
   };
 
+  const handleNavigationWithFilter = (type: string) => {
+    navigate(`/properties?type=${type}`);
+  };
+
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container py-4 flex items-center justify-between">
@@ -116,18 +123,30 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
           <div className="flex gap-8">
-            <Link to="/properties?type=sell" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
+            <button
+              onClick={() => handleNavigationWithFilter('sell')}
+              className="text-estate-neutral-700 hover:text-estate-800 font-medium"
+            >
               {t('sell')}
-            </Link>
-            <Link to="/properties?type=lease" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
+            </button>
+            <button
+              onClick={() => handleNavigationWithFilter('lease')}
+              className="text-estate-neutral-700 hover:text-estate-800 font-medium"
+            >
               {t('lease')}
-            </Link>
-            <Link to="/properties?type=rent" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
+            </button>
+            <button
+              onClick={() => handleNavigationWithFilter('rent')}
+              className="text-estate-neutral-700 hover:text-estate-800 font-medium"
+            >
               {t('rent')}
-            </Link>
-            <Link to="/properties?type=daily-rent" className="text-estate-neutral-700 hover:text-estate-800 font-medium">
+            </button>
+            <button
+              onClick={() => handleNavigationWithFilter('daily-rent')}
+              className="text-estate-neutral-700 hover:text-estate-800 font-medium"
+            >
               {t('dailyRent')}
-            </Link>
+            </button>
           </div>
           <div className="relative">
             <Button variant="ghost" className="flex items-center gap-1 text-gray-600 hover:text-gray-800">
@@ -221,34 +240,42 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white py-4 px-6 shadow-lg animate-fade-in">
           <div className="flex flex-col gap-4">
-            <Link
-              to="/properties?type=sell"
+            <button
+              onClick={() => {
+                handleNavigationWithFilter('sell');
+                setIsMenuOpen(false);
+              }}
               className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
-              onClick={() => setIsMenuOpen(false)}
             >
               {t('sell')}
-            </Link>
-            <Link
-              to="/properties?type=lease"
+            </button>
+            <button
+              onClick={() => {
+                handleNavigationWithFilter('lease');
+                setIsMenuOpen(false);
+              }}
               className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
-              onClick={() => setIsMenuOpen(false)}
             >
               {t('lease')}
-            </Link>
-            <Link
-              to="/properties?type=rent"
+            </button>
+            <button
+              onClick={() => {
+                handleNavigationWithFilter('rent');
+                setIsMenuOpen(false);
+              }}
               className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
-              onClick={() => setIsMenuOpen(false)}
             >
               {t('rent')}
-            </Link>
-            <Link
-              to="/properties?type=daily-rent"
+            </button>
+            <button
+              onClick={() => {
+                handleNavigationWithFilter('daily-rent');
+                setIsMenuOpen(false);
+              }}
               className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
-              onClick={() => setIsMenuOpen(false)}
             >
               {t('dailyRent')}
-            </Link>
+            </button>
             <hr className="my-2" />
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium text-gray-700">{t('language')}</label>

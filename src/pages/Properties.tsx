@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Search, Filter, MapPin, SlidersHorizontal, X } from "lucide-react";
 import { Property, PropertyType, ListingType } from "@/types/property";
 import { Button } from "@/components/ui/button";
@@ -13,13 +13,18 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { getPropertiesByType } from "@/lib/api/properties";
 import { useQuery } from "@tanstack/react-query";
+import { useCurrency, Currency } from '@/CurrencyContext';
 
 const Properties = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const listingTypeFromParams = searchParams.get('type');
   const queryParams = new URLSearchParams(location.search);
   const initialListingType = (queryParams.get("type") as ListingType) || "sale";
   const initialSearch = queryParams.get("search") || "";
+
+  const { currency, setCurrency } = useCurrency();
 
   // State for basic filters
   const [searchQuery, setSearchQuery] = useState(initialSearch);
@@ -38,7 +43,6 @@ const Properties = () => {
   const [minM2Input, setMinM2Input] = useState(minM2.toString());
   const [maxM2Input, setMaxM2Input] = useState(maxM2.toString());
   const [sortOption, setSortOption] = useState<string>("recent");
-  const [currency, setCurrency] = useState<string>('USD');
   const [activeTab, setActiveTab] = useState("filters");
 
   const currencyOptions = [
@@ -529,6 +533,31 @@ const Properties = () => {
     }
     navigate(`/properties?${params.toString()}`, { replace: true });
   }, [listingType, searchQuery, navigate]);
+
+  useEffect(() => {
+    if (listingTypeFromParams) {
+      switch (listingTypeFromParams) {
+        case 'sell':
+          setActiveTab('filters');
+          setListingType('sale');
+          break;
+        case 'lease':
+          setActiveTab('filters');
+          setListingType('lease');
+          break;
+        case 'rent':
+          setActiveTab('filters');
+          setListingType('rent');
+          break;
+        case 'daily-rent':
+          setActiveTab('filters');
+          setListingType('rent_by_day');
+          break;
+        default:
+          break;
+      }
+    }
+  }, [listingTypeFromParams]);
 
   // Handler functions
   const handlePropertyTypeChange = (type: PropertyType) => {
@@ -1172,7 +1201,7 @@ const Properties = () => {
           </div>
         ))}
       </div>
-    </div>
+      </div>
   );
 
   // Mobile filters drawer
@@ -1253,14 +1282,12 @@ const Properties = () => {
                 <h4 className="font-medium">Currency</h4>
                 <select
                   value={currency}
-                  onChange={(e) => setCurrency(e.target.value)}
-                  className="w-full border rounded-md px-3 py-2 text-sm"
+                  onChange={(e) => setCurrency(e.target.value as Currency)}
+                  className="p-2 border rounded-md"
                 >
-                  {currencyOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
+                  <option value="GEL">GEL</option>
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
                 </select>
               </div>
 
@@ -1686,8 +1713,6 @@ const Properties = () => {
   return (
     <div>
       <Navbar />
-
-      
 
       {/* Main Content */}
       <div className="container py-8">

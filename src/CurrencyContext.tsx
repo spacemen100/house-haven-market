@@ -65,3 +65,5 @@ export const useCurrency = () => {
   }
   return context;
 };
+
+export type { Currency };
