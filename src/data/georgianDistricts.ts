@@ -1,4 +1,5 @@
 import { GeorgianCity } from "./georgianCities";
+import i18n from 'i18next';
 
 type DistrictData = {
   [key in GeorgianCity]?: string[];
@@ -344,5 +345,8 @@ export const GEORGIAN_DISTRICTS: DistrictData = {
 };
 
 export const getDistrictsForCity = (city: GeorgianCity): string[] => {
-  return GEORGIAN_DISTRICTS[city] || [];
+  const districts = GEORGIAN_DISTRICTS[city] || [];
+  return districts.map(district => 
+    i18n.t(`districts.${city}.${district}`, { defaultValue: district })
+  );
 };

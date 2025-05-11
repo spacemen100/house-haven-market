@@ -1,4 +1,5 @@
 import { GeorgianCity } from "./georgianCities";
+import i18n from 'i18next';
 
 type StreetData = {
   [city in GeorgianCity]?: {
@@ -719,5 +720,14 @@ export const GEORGIAN_STREETS: StreetData = {
 
 
 export const getStreetsForDistrict = (city: GeorgianCity, district: string): string[] => {
-  return GEORGIAN_STREETS[city]?.[district] || [];
+  // Trouver la clé de district originale (non traduite)
+  const rawDistricts = GEORGIAN_DISTRICTS[city] || [];
+  const rawDistrict = rawDistricts.find(d => 
+    i18n.t(`districts.${city}.${d}`, { defaultValue: d }) === district
+  ) || district;
+
+  const streets = GEORGIAN_STREETS[city]?.[rawDistrict] || [];
+  return streets.map(street => 
+    i18n.t(`streets.${city}.${rawDistrict}.${street}`, { defaultValue: street })
+  );
 };
