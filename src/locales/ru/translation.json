@@ -1985,5 +1985,10 @@
   "publishListing": "Опубликовать объявление",
   "myFavorites": "Мои избранные",
   "noFavorites": "У вас пока нет избранных объявлений.",
-  "exploreProperties": "Посмотреть недвижимость"
+  "exploreProperties": "Посмотреть недвижимость",
+  "propertyTitlePlaceholder": "например, Современный дом с 3 спальнями и садом",
+  "georgianLari": "Грузинский лари (₾)",
+  "usDollar": "Доллар США ($)",
+  "euro": "Евро (€)",
+  "ceilingHeightError": "Высота потолка должна быть от 2 до 7 метров."
 }

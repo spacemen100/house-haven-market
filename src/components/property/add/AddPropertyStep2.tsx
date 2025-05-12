@@ -123,7 +123,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
               <FormItem>
                 <FormLabel>{t("propertyTitle")}*</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g. Modern 3 Bedroom House with Garden" {...field} />
+                  <Input placeholder={t("propertyTitlePlaceholder")} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -188,9 +188,9 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="GEL">Georgian Lari (₾)</SelectItem>
-                      <SelectItem value="USD">US Dollar ($)</SelectItem>
-                      <SelectItem value="EUR">Euro (€)</SelectItem>
+                      <SelectItem value="GEL">{t("georgianLari")}</SelectItem>
+                      <SelectItem value="USD">{t("usDollar")}</SelectItem>
+                      <SelectItem value="EUR">{t("euro")}</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -386,7 +386,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
                         if (value < 2 || value > 7) {
                           form.setError("ceiling_height", {
                             type: "manual",
-                            message: "Ceiling height must be between 2 and 7 meters.",
+                            message: t("ceilingHeightError"),
                           });
                         } else {
                           form.clearErrors("ceiling_height");

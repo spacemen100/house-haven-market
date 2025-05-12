@@ -1984,5 +1984,10 @@
   "publishListing": "განცხადების გამოქვეყნება",
   "myFavorites": "ჩემი ფავორიტები",
   "noFavorites": "თქვენ ჯერ არ გაქვთ ფავორიტები.",
-  "exploreProperties": "უძრავი ქონების ნახვა"
+  "exploreProperties": "უძრავი ქონების ნახვა",
+   "propertyTitlePlaceholder": "მაგ. თანამედროვე 3 საძინებელი ოთახი ბაღით",
+  "georgianLari": "ქართული ლარი (₾)",
+  "usDollar": "ამერიკული დოლარი ($)",
+  "euro": "ევრო (€)",
+  "ceilingHeightError": "ჭერის სიმაღლე უნდა იყოს 2-დან 7 მეტრამდე."
 }

@@ -1985,5 +1985,10 @@
   "publishListing": "Publish a listing",
   "myFavorites": "My favorites",
   "noFavorites": "You don't have any favorites yet.",
-  "exploreProperties": "Explore properties"
+  "exploreProperties": "Explore properties",
+  "propertyTitlePlaceholder": "e.g. Modern 3 Bedroom House with Garden",
+  "georgianLari": "Georgian Lari (₾)",
+  "usDollar": "US Dollar ($)",
+  "euro": "Euro (€)",
+  "ceilingHeightError": "Ceiling height must be between 2 and 7 meters."
 }
