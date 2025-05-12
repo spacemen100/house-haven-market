@@ -76,6 +76,21 @@ const AddPropertyStep4 = ({
   const selectedCity = form.watch("addressCity");
   const selectedDistrict = form.watch("addressDistrict");
 
+  // Helper function to get translated city name
+  const getTranslatedCityName = (city: string) => {
+    return t(`cities.${city}`, { defaultValue: city });
+  };
+
+  // Helper function to get translated district name
+  const getTranslatedDistrictName = (district: string) => {
+    return t(`districts.${district}`, { defaultValue: district });
+  };
+
+  // Helper function to get translated street name
+  const getTranslatedStreetName = (street: string) => {
+    return t(`streets.${street}`, { defaultValue: street });
+  };
+
   useEffect(() => {
     if (selectedCity) {
       const districts = getDistrictsForCity(selectedCity as GeorgianCity);
@@ -89,7 +104,7 @@ const AddPropertyStep4 = ({
       form.setValue("addressDistrict", "");
       form.setValue("addressStreet", "");
     }
-  }, [selectedCity, form, language]);
+  }, [selectedCity, form]);
 
   useEffect(() => {
     if (selectedCity && selectedDistrict) {
@@ -105,7 +120,7 @@ const AddPropertyStep4 = ({
       setAvailableStreets([]);
       form.setValue("addressStreet", "");
     }
-  }, [selectedCity, selectedDistrict, form, language]);
+  }, [selectedCity, selectedDistrict, form]);
 
   const validateFile = (file: File): string | null => {
     if (!ALLOWED_TYPES.includes(file.type)) {
@@ -211,7 +226,7 @@ const AddPropertyStep4 = ({
                         <option value="">{t('propertyWizard.step4.selectCity')}</option>
                         {GEORGIAN_CITIES.map((city) => (
                           <option key={city} value={city}>
-                            {t(`cities.${city}`)}
+                            {getTranslatedCityName(city)}
                           </option>
                         ))}
                       </select>
@@ -236,7 +251,7 @@ const AddPropertyStep4 = ({
                         <option value="">{t('propertyWizard.step4.selectDistrict')}</option>
                         {availableDistricts.map((district) => (
                           <option key={district} value={district}>
-                            {district}
+                            {getTranslatedDistrictName(district)}
                           </option>
                         ))}
                       </select>
@@ -261,7 +276,7 @@ const AddPropertyStep4 = ({
                         <option value="">{t('propertyWizard.step4.selectStreet')}</option>
                         {availableStreets.map((street) => (
                           <option key={street} value={street}>
-                            {street}
+                            {getTranslatedStreetName(street)}
                           </option>
                         ))}
                       </select>
