@@ -336,7 +336,7 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
 
   const renderCheckboxGroup = (title: string, items: {id: string, label: string}[]) => (
     <div className="space-y-4">
-      <h3 className="text-lg font-medium">{title}</h3>
+      <h3 className="text-lg font-medium">{t(title)}</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {items.map((item) => (
           <FormField
@@ -351,7 +351,7 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
                     onCheckedChange={field.onChange}
                   />
                 </FormControl>
-                <FormLabel>{item.label}</FormLabel>
+                <FormLabel>{t(item.label)}</FormLabel>
               </FormItem>
             )}
           />
@@ -371,17 +371,17 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
             </p>
           </div>
 
-          {renderCheckboxGroup(t("mainAmenities"), amenities)}
+          {renderCheckboxGroup("mainAmenities", amenities)}
 
-          {renderCheckboxGroup(t("kitchenAppliances"), kitchenAppliances)}
+          {renderCheckboxGroup("kitchenAppliances", kitchenAppliances)}
 
-          {renderCheckboxGroup(t("otherAppliances"), otherAppliances)}
+          {renderCheckboxGroup("otherAppliances", otherAppliances)}
 
-          {renderCheckboxGroup(t("security"), securityFeatures)}
+          {renderCheckboxGroup("security", securityFeatures)}
 
-          {renderCheckboxGroup(t("nearbyFacilities"), nearbyFacilities)}
+          {renderCheckboxGroup("nearbyFacilities", nearbyFacilities)}
 
-          {renderCheckboxGroup(t("rules"), rules)}
+          {renderCheckboxGroup("rules", rules)}
 
           <div className="space-y-4">
             <h3 className="text-lg font-medium">{t("systems")}</h3>
