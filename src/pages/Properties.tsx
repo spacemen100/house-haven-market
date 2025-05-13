@@ -15,7 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useCurrency, Currency } from '@/CurrencyContext';
 import { useTranslation } from 'react-i18next';
 import { supabase } from "@/lib/api/supabaseClient";
-
+import { GEORGIAN_CITIES, GeorgianCity } from "@/data/georgianCities";
 // Types and Interfaces
 export type PropertyType = 'house' | 'apartment' | 'land' | 'commercial';
 export type ListingType = 'sale' | 'rent' | 'rent_by_day' | 'lease';
@@ -178,6 +178,7 @@ export interface CreatePropertyInput {
   has_heater?: boolean;
   has_electric_oven?: boolean;
   has_hair_dryer?: boolean;
+  has_cinema?: boolean;
   has_refrigerator?: boolean;
   has_vacuum_cleaner?: boolean;
   has_dryer?: boolean;
@@ -672,6 +673,7 @@ const Properties = () => {
   const [maxM2Input, setMaxM2Input] = useState(maxM2.toString());
   const [sortOption, setSortOption] = useState<string>("recent");
   const [activeTab, setActiveTab] = useState("filters");
+  const [selectedCities, setSelectedCities] = useState<string[]>([]);
 
   const currencyOptions = [
     { value: 'USD', label: t('currency.usd') },
@@ -951,6 +953,13 @@ const Properties = () => {
       property.m2 >= minM2 && property.m2 <= maxM2
     );
 
+    // City filter
+    if (selectedCities.length > 0) {
+      filtered = filtered.filter(property =>
+        selectedCities.includes(property.address.city)
+      );
+    }
+
     // Features filters
     if (features.hasElevator) {
       filtered = filtered.filter(property => property.has_elevator);
@@ -1154,7 +1163,7 @@ const Properties = () => {
     searchQuery, listingType, propertyTypes, minPrice, maxPrice,
     minBeds, minBaths, minM2, maxM2, features, condition,
     furnitureType, heatingType, parkingType, buildingMaterial,
-    kitchenType, properties, sortOption
+    kitchenType, properties, sortOption, selectedCities
   ]);
 
   // Update URL when listing type or search changes
@@ -1280,6 +1289,7 @@ const Properties = () => {
     setParkingType([]);
     setBuildingMaterial([]);
     setKitchenType([]);
+    setSelectedCities([]);
   };
 
   // Filter options data
@@ -1839,6 +1849,28 @@ const Properties = () => {
     </div>
   );
 
+  const renderCityFilter = (prefix = "") => (
+    <div className="space-y-2">
+      <h4 className="font-medium">{t('filters.city')}</h4>
+      <div className="max-h-60 overflow-y-auto">
+        {GEORGIAN_CITIES.map((city) => (
+          <div key={`${prefix}city-${city}`} className="flex items-center space-x-2">
+            <Checkbox
+              id={`${prefix}city-${city}`}
+              checked={selectedCities.includes(city)}
+              onCheckedChange={() =>
+                handleMultiSelectChange(city, selectedCities, setSelectedCities)
+              }
+            />
+            <Label htmlFor={`${prefix}city-${city}`}>
+              {city}
+            </Label>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
   // Mobile filters drawer
   const renderMobileFilters = () => (
     <div className={`fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden ${isFilterOpen ? 'block' : 'hidden'}`}>
@@ -1872,6 +1904,12 @@ const Properties = () => {
               <div className="space-y-3">
                 <h3 className="font-medium">{t('filters.propertyType')}</h3>
                 {renderPropertyTypeFilter("mobile-")}
+              </div>
+
+              {/* City Filter */}
+              <div className="space-y-3">
+                <h3 className="font-medium">{t('filters.city')}</h3>
+                {renderCityFilter("mobile-")}
               </div>
 
               {/* Price Range */}
@@ -2138,6 +2176,14 @@ const Properties = () => {
           <div className="space-y-3">
             <h4 className="font-medium">{t('filters.propertyType')}</h4>
             {renderPropertyTypeFilter()}
+          </div>
+
+          <hr />
+
+          {/* City Filter */}
+          <div className="space-y-3">
+            <h4 className="font-medium">{t('filters.city')}</h4>
+            {renderCityFilter()}
           </div>
 
           <hr />
