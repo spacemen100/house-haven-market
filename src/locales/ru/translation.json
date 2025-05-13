@@ -1990,5 +1990,133 @@
   "georgianLari": "Грузинский лари (₾)",
   "usDollar": "Доллар США ($)",
   "euro": "Евро (€)",
-  "ceilingHeightError": "Высота потолка должна быть от 2 до 7 метров."
+  "ceilingHeightError": "Высота потолка должна быть от 2 до 7 метров.",
+  "filters": {
+    "filters": "Фильтры",
+    "keywordSearch": "Поиск по ключевым словам",
+    "listingType": "Тип объявления",
+    "propertyType": "Тип недвижимости",
+    "priceRange": "Диапазон цен",
+    "surface": "Площадь",
+    "to": "до",
+    "bedrooms": "Спальни",
+    "any": "Любой",
+    "bathrooms": "Ванные комнаты",
+    "propertyCondition": "Состояние недвижимости",
+    "features": "Особенности",
+    "nearby": "Рядом",
+    "additionalFeatures": "Дополнительные особенности",
+    "furnitureType": "Тип мебели",
+    "heatingType": "Тип отопления",
+    "parkingType": "Тип парковки",
+    "buildingMaterial": "Материал здания",
+    "kitchenType": "Тип кухни",
+    "city": "Город"
+  },
+  "listingType": {
+    "sale": "Продажа",
+    "rent": "Аренда",
+    "rent_by_day": "Посуточная аренда",
+    "lease": "Долгосрочная аренда"
+  },
+  "propertyType": {
+    "house": "Дом",
+    "apartment": "Квартира",
+    "land": "Земля",
+    "commercial": "Коммерческая"
+  },
+  "features": {
+    "elevator": "Лифт",
+    "airConditioning": "Кондиционер",
+    "accessible": "Доступный",
+    "fireplace": "Камин",
+    "internet": "Интернет",
+    "cableTv": "Кабельное ТВ",
+    "petsAllowed": "Разрешены животные",
+    "smokingAllowed": "Разрешено курение",
+    "gas": "Газ",
+    "loggia": "Лоджия",
+    "dishwasher": "Посудомоечная машина",
+    "washingMachine": "Стиральная машина",
+    "gasStove": "Газовая плита",
+    "vent": "Вентиляция",
+    "electricKettle": "Электрический чайник",
+    "inductionOven": "Индукционная плита",
+    "microwave": "Микроволновая печь",
+    "tv": "Телевизор",
+    "coffeeMachine": "Кофемашина",
+    "audioSystem": "Аудиосистема",
+    "heater": "Обогреватель",
+    "electricOven": "Электрическая духовка",
+    "hairDryer": "Фен",
+    "cinema": "Кинотеатр",
+    "refrigerator": "Холодильник",
+    "vacuumCleaner": "Пылесос",
+    "dryer": "Сушилка",
+    "iron": "Утюг",
+    "coDetector": "Датчик угарного газа",
+    "smokeDetector": "Датчик дыма",
+    "evacuationLadder": "Эвакуационная лестница",
+    "fireFightingSystem": "Система пожаротушения",
+    "perimeterCameras": "Периметральные камеры",
+    "alarm": "Сигнализация",
+    "liveProtection": "Живая защита",
+    "lockedEntrance": "Закрытый вход",
+    "lockedYard": "Закрытый двор"
+  },
+  "nearby": {
+    "subway": "Метро",
+    "park": "Парк",
+    "school": "Школа",
+    "busStop": "Автобусная остановка",
+    "bank": "Банк",
+    "supermarket": "Супермаркет",
+    "kindergarten": "Детский сад",
+    "cityCenter": "Центр города",
+    "pharmacy": "Аптека",
+    "greenery": "Зелень",
+    "oldDistrict": "Старый район"
+  },
+  "additionalFeatures": {
+    "satelliteTv": "Спутниковое ТВ",
+    "phoneLine": "Телефонная линия"
+  },
+  "furniture": {
+    "furnished": "Меблированный",
+    "semi_furnished": "Полумеблированный",
+    "unfurnished": "Немеблированный"
+  },
+  "heating": {
+    "central": "Центральное",
+    "electric": "Электрическое",
+    "gas": "Газовое",
+    "wood": "Дровяное"
+  },
+  "parking": {
+    "garage": "Гараж",
+    "underground": "Подземный",
+    "street": "Улица",
+    "carport": "Навес"
+  },
+  "material": {
+    "brick": "Кирпич",
+    "concrete": "Бетон",
+    "wood": "Дерево",
+    "steel": "Сталь"
+  },
+  "kitchen": {
+    "open": "Открытая",
+    "closed": "Закрытая",
+    "kitchenette": "Кухня-ниша",
+    "american": "Американская"
+  },
+  "condition": {
+    "newly_renovated": "Новоотремонтированный",
+    "under_renovation": "В процессе ремонта",
+    "white_frame": "Белый каркас",
+    "green_frame": "Зеленый каркас",
+    "not_renovated": "Неотремонтированный",
+    "black_frame": "Черный каркас",
+    "old_renovation": "Старый ремонт"
+  }
 }

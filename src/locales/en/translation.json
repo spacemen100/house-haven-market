@@ -1990,5 +1990,133 @@
   "georgianLari": "Georgian Lari (₾)",
   "usDollar": "US Dollar ($)",
   "euro": "Euro (€)",
-  "ceilingHeightError": "Ceiling height must be between 2 and 7 meters."
+  "ceilingHeightError": "Ceiling height must be between 2 and 7 meters.",
+  "filters": {
+    "filters": "Filters",
+    "keywordSearch": "Keyword Search",
+    "listingType": "Listing Type",
+    "propertyType": "Property Type",
+    "priceRange": "Price Range",
+    "surface": "Surface",
+    "to": "to",
+    "bedrooms": "Bedrooms",
+    "any": "Any",
+    "bathrooms": "Bathrooms",
+    "propertyCondition": "Property Condition",
+    "features": "Features",
+    "nearby": "Nearby",
+    "additionalFeatures": "Additional Features",
+    "furnitureType": "Furniture Type",
+    "heatingType": "Heating Type",
+    "parkingType": "Parking Type",
+    "buildingMaterial": "Building Material",
+    "kitchenType": "Kitchen Type",
+    "city": "City"
+  },
+  "listingType": {
+    "sale": "Sale",
+    "rent": "Rent",
+    "rent_by_day": "Daily Rent",
+    "lease": "Lease"
+  },
+  "propertyType": {
+    "house": "House",
+    "apartment": "Apartment",
+    "land": "Land",
+    "commercial": "Commercial"
+  },
+  "features": {
+    "elevator": "Elevator",
+    "airConditioning": "Air Conditioning",
+    "accessible": "Accessible",
+    "fireplace": "Fireplace",
+    "internet": "Internet",
+    "cableTv": "Cable TV",
+    "petsAllowed": "Pets Allowed",
+    "smokingAllowed": "Smoking Allowed",
+    "gas": "Gas",
+    "loggia": "Loggia",
+    "dishwasher": "Dishwasher",
+    "washingMachine": "Washing Machine",
+    "gasStove": "Gas Stove",
+    "vent": "Vent",
+    "electricKettle": "Electric Kettle",
+    "inductionOven": "Induction Oven",
+    "microwave": "Microwave",
+    "tv": "TV",
+    "coffeeMachine": "Coffee Machine",
+    "audioSystem": "Audio System",
+    "heater": "Heater",
+    "electricOven": "Electric Oven",
+    "hairDryer": "Hair Dryer",
+    "cinema": "Cinema",
+    "refrigerator": "Refrigerator",
+    "vacuumCleaner": "Vacuum Cleaner",
+    "dryer": "Dryer",
+    "iron": "Iron",
+    "coDetector": "CO Detector",
+    "smokeDetector": "Smoke Detector",
+    "evacuationLadder": "Evacuation Ladder",
+    "fireFightingSystem": "Fire Fighting System",
+    "perimeterCameras": "Perimeter Cameras",
+    "alarm": "Alarm",
+    "liveProtection": "Live Protection",
+    "lockedEntrance": "Locked Entrance",
+    "lockedYard": "Locked Yard"
+  },
+  "nearby": {
+    "subway": "Subway",
+    "park": "Park",
+    "school": "School",
+    "busStop": "Bus Stop",
+    "bank": "Bank",
+    "supermarket": "Supermarket",
+    "kindergarten": "Kindergarten",
+    "cityCenter": "City Center",
+    "pharmacy": "Pharmacy",
+    "greenery": "Greenery",
+    "oldDistrict": "Old District"
+  },
+  "additionalFeatures": {
+    "satelliteTv": "Satellite TV",
+    "phoneLine": "Phone Line"
+  },
+  "furniture": {
+    "furnished": "Furnished",
+    "semi_furnished": "Semi Furnished",
+    "unfurnished": "Unfurnished"
+  },
+  "heating": {
+    "central": "Central",
+    "electric": "Electric",
+    "gas": "Gas",
+    "wood": "Wood"
+  },
+  "parking": {
+    "garage": "Garage",
+    "underground": "Underground",
+    "street": "Street",
+    "carport": "Carport"
+  },
+  "material": {
+    "brick": "Brick",
+    "concrete": "Concrete",
+    "wood": "Wood",
+    "steel": "Steel"
+  },
+  "kitchen": {
+    "open": "Open",
+    "closed": "Closed",
+    "kitchenette": "Kitchenette",
+    "american": "American"
+  },
+  "condition": {
+    "newly_renovated": "Newly Renovated",
+    "under_renovation": "Under Renovation",
+    "white_frame": "White Frame",
+    "green_frame": "Green Frame",
+    "not_renovated": "Not Renovated",
+    "black_frame": "Black Frame",
+    "old_renovation": "Old Renovation"
+  }
 }
