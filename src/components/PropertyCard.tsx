@@ -82,14 +82,14 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             {property.beds > 0 && (
               <div className="flex items-center">
                 <Bed size={18} className="mr-1 text-estate-neutral-500" />
-                <span className="text-sm">{property.beds} Beds</span>
+                <span className="text-sm">{property.beds} {t('Beds')}</span>
               </div>
             )}
             {property.baths > 0 && (
               <div className="flex items-center">
                 <Bath size={18} className="mr-1 text-estate-neutral-500" />
                 <span className="text-sm">
-                  {property.baths} {property.baths === 1 ? "Bath" : "Baths"}
+                  {property.baths} {property.baths === 1 ? t('Bath') : t('Baths')}
                 </span>
               </div>
             )}
@@ -97,8 +97,8 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
               <Square size={18} className="mr-1 text-estate-neutral-500" />
               <span className="text-sm">
                 {property.propertyType === "land"
-                  ? `${(property.m2 / 4046.86).toFixed(2)} acres`
-                  : `${property.m2} m²`}
+                  ? `${(property.m2 / 4046.86).toFixed(2)} ${t('acres')}`
+                  : `${property.m2} ${t('m²')}`}
               </span>
             </div>
           </div>

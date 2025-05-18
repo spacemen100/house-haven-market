@@ -2119,5 +2119,14 @@
     "not_renovated": "Not Renovated",
     "black_frame": "Black Frame",
     "old_renovation": "Old Renovation"
-  }
+  },
+   "forSale": "For Sale",
+  "forRent": "For Rent",
+  "featured": "Featured",
+  "dateNotAvailable": "Date not available",
+  "Beds": "Beds",
+  "Bath": "Bath",
+  "Baths": "Baths",
+  "acres": "acres",
+  "m²": "m²"
 }
