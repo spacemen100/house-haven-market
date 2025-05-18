@@ -1,16 +1,16 @@
-# House Haven Market
+# House სახლი
 
 ## უძრავი ქონება საქართველოში
 
-House Haven Market — ეს არის თანამედროვე პლატფორმა უძრავი ქონების ყიდვის, გაყიდვისა და გაქირავებისთვის საქართველოში. იპოვეთ ბინები, სახლები, კომერციული ფართები და მიწის ნაკვეთები მარტივად და სწრაფად.
+House სახლი — ეს არის თანამედროვე პლატფორმა უძრავი ქონების ყიდვის, გაყიდვისა და გაქირავებისთვის საქართველოში. იპოვეთ ბინები, სახლები, კომერციული ფართები და მიწის ნაკვეთები მარტივად და სწრაფად.
 
 ## Недвижимость в Грузии
 
-House Haven Market — современная платформа для покупки, продажи и аренды недвижимости в Грузии. Найдите квартиры, дома, коммерческие помещения и земельные участки быстро и удобно.
+House სახლი — современная платформа для покупки, продажи и аренды недвижимости в Грузии. Найдите квартиры, дома, коммерческие помещения и земельные участки быстро и удобно.
 
 ## Real Estate in Georgia
 
-House Haven Market is a modern platform for buying, selling, and renting real estate in Georgia. Find apartments, houses, commercial spaces, and land easily and quickly.
+House სახლი is a modern platform for buying, selling, and renting real estate in Georgia. Find apartments, houses, commercial spaces, and land easily and quickly.
 
 ---
 
