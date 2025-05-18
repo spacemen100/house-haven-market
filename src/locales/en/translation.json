@@ -2213,5 +2213,9 @@
   "yes": "Yes",
   "no": "No",
   "sale": "For Sale",
-  "rent_by_day": "Daily Rent"
+  "rent_by_day": "Daily Rent",
+  "propertyHeader": {
+    "backToProperties": "Back to Properties",
+    "month": "month"
+  }
 }

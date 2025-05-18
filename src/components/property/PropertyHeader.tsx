@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Heart, ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCurrency } from '@/CurrencyContext';
+import { useTranslation } from 'react-i18next';
 
 interface PropertyHeaderProps {
   property: Property;
@@ -12,6 +13,7 @@ interface PropertyHeaderProps {
 
 const PropertyHeader = ({ property }: PropertyHeaderProps) => {
   const { formatPrice } = useCurrency();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -21,7 +23,7 @@ const PropertyHeader = ({ property }: PropertyHeaderProps) => {
           className="flex items-center text-estate-neutral-600 hover:text-estate-800 transition-colors"
         >
           <ChevronLeft size={20} />
-          <span>Back to Properties</span>
+          <span>{t('propertyHeader.backToProperties')}</span>
         </Link>
       </div>
 
@@ -39,17 +41,14 @@ const PropertyHeader = ({ property }: PropertyHeaderProps) => {
 
         <div className="flex flex-wrap gap-2 mb-4">
           <Badge className="bg-teal-500 hover:bg-teal-500">
-            {property.listingType === "sale" ? "For Sale" : "For Rent"}
+            {t(`listingType.${property.listingType.toLowerCase()}`)}
           </Badge>
           <Badge className="bg-estate-neutral-700 hover:bg-estate-neutral-700">
-            {property.propertyType === "house" && "House"}
-            {property.propertyType === "apartment" && "Apartment"}
-            {property.propertyType === "land" && "Land"}
-            {property.propertyType === "commercial" && "Commercial"}
+            {t(`propertyType.${property.propertyType.toLowerCase()}`)}
           </Badge>
           <span className="text-2xl font-bold text-estate-800 ml-auto">
             {property.listingType === "rent"
-              ? `${formatPrice(property.price, property.currency)}/month`
+              ? `${formatPrice(property.price, property.currency)}/${t('propertyHeader.month')}`
               : formatPrice(property.price, property.currency)}
           </span>
         </div>

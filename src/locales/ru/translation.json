@@ -2213,5 +2213,9 @@
   "yes": "Да",
   "no": "Нет",
   "sale": "Продается",
-  "rent_by_day": "Посуточная аренда"
+  "rent_by_day": "Посуточная аренда",
+  "propertyHeader": {
+    "backToProperties": "Назад к объектам",
+    "month": "месяц"
+  }
 }
