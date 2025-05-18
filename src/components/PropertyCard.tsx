@@ -62,7 +62,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
           <div className="flex items-center text-estate-neutral-600 mb-3">
             <MapPin size={14} className="mr-1" />
             <p className="text-sm line-clamp-1">
-              {property.address.street}, {t(`cities.${property.address.city}`)}, {property.address.state}
+              {t(`${property.address.street}`)}, {t(`${property.address.district}`)}, {t(`cities.${property.address.city}`)}
             </p>
           </div>
 
