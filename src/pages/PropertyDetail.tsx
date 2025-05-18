@@ -12,11 +12,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, User } from "lucide-react";
 import { useCurrency } from '@/CurrencyContext';
+import { useTranslation } from 'react-i18next';
 
 // Chargement différé du composant de carte
 const PropertyMap = lazy(() => import("@/components/PropertyMap"));
 
 const PropertyDetail = () => {
+    const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [property, setProperty] = useState<Property | null>(null);
@@ -264,7 +266,7 @@ const PropertyDetail = () => {
                     </h3>
                     {property.pricePerM2 && (
                       <p className="text-gray-600">
-                        {formatPrice(property.pricePerM2, property.currency)} per m²
+                        {formatPrice(property.pricePerM2, property.currency)} {t('propertyDetail.pricePerM2')}
                       </p>
                     )}
                   </div>
@@ -282,28 +284,28 @@ const PropertyDetail = () => {
                   <div className="flex items-center gap-2">
                     <Home className="h-5 w-5 text-gray-400" />
                     <div>
-                      <p className="text-sm text-gray-500">Type</p>
+                      <p className="text-sm text-gray-500">{t('propertyDetail.type')}</p>
                       <p className="font-medium">{property.propertyType}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <Ruler className="h-5 w-5 text-gray-400" />
                     <div>
-                      <p className="text-sm text-gray-500">Area</p>
+                      <p className="text-sm text-gray-500">{t('propertyDetail.area')}</p>
                       <p className="font-medium">{property.m2} m²</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <Key className="h-5 w-5 text-gray-400" />
                     <div>
-                      <p className="text-sm text-gray-500">Rooms</p>
+                      <p className="text-sm text-gray-500">{t('propertyDetail.rooms')}</p>
                       <p className="font-medium">{property.rooms}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <Calendar className="h-5 w-5 text-gray-400" />
                     <div>
-                      <p className="text-sm text-gray-500">Year Built</p>
+                      <p className="text-sm text-gray-500">{t('propertyDetail.yearBuilt')}</p>
                       <p className="font-medium">{property.yearBuilt || 'N/A'}</p>
                     </div>
                   </div>
@@ -312,58 +314,58 @@ const PropertyDetail = () => {
 
               {property.description && (
                 <div className="bg-white rounded-xl shadow-sm p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Description</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">{t('propertyDetail.description')}</h3>
                   <p className="text-gray-700 whitespace-pre-line">{property.description}</p>
                 </div>
               )}
 
               <div className="bg-white rounded-xl shadow-sm p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Key Features</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">{t('propertyDetail.keyFeatures')}</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {property.hasElevator && <FeatureBadge icon="🚪" text="Elevator" />}
-                  {property.hasAirConditioning && <FeatureBadge icon="❄️" text="Air Conditioning" />}
-                  {property.hasInternet && <FeatureBadge icon="🌐" text="High-speed Internet" />}
-                  {property.parkingType && <FeatureBadge icon="🚗" text={`Parking: ${property.parkingType}`} />}
-                  {property.hasFireplace && <FeatureBadge icon="🔥" text="Fireplace" />}
-                  {property.isAccessible && <FeatureBadge icon="♿" text="Wheelchair Accessible" />}
-                  {property.hasLoggia && <FeatureBadge icon="🌿" text="Loggia" />}
-                  {property.hasAlarm && <FeatureBadge icon="🚨" text="Security Alarm" />}
+                  {property.hasElevator && <FeatureBadge icon="🚪" text={t('propertyDetail.elevator')} />}
+                  {property.hasAirConditioning && <FeatureBadge icon="❄️" text={t('propertyDetail.airConditioning')} />}
+                  {property.hasInternet && <FeatureBadge icon="🌐" text={t('propertyDetail.highSpeedInternet')} />}
+                  {property.parkingType && <FeatureBadge icon="🚗" text={`${t('propertyDetail.parking')}: ${property.parkingType}`} />}
+                  {property.hasFireplace && <FeatureBadge icon="🔥" text={t('propertyDetail.fireplace')} />}
+                  {property.isAccessible && <FeatureBadge icon="♿" text={t('propertyDetail.wheelchairAccessible')} />}
+                  {property.hasLoggia && <FeatureBadge icon="🌿" text={t('propertyDetail.loggia')} />}
+                  {property.hasAlarm && <FeatureBadge icon="🚨" text={t('propertyDetail.securityAlarm')} />}
                 </div>
               </div>
 
               <div className="bg-white rounded-xl shadow-sm p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Detailed Specifications</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">{t('propertyDetail.detailedSpecifications')}</h3>
                 <div className="space-y-6">
                   <SpecSection
                     icon={<Building className="h-5 w-5 text-cyan-600" />}
-                    title="Building Details"
+                    title={t('propertyDetail.buildingDetails')}
                     items={[
-                      { label: "Building Material", value: property.buildingMaterial || 'N/A' },
-                      { label: "Total Floors", value: property.totalFloors },
-                      { label: "Floor Level", value: property.floorLevel },
-                      { label: "Condition", value: property.condition },
+                      { label: t('propertyDetail.buildingMaterial'), value: property.buildingMaterial || 'N/A' },
+                      { label: t('propertyDetail.totalFloors'), value: property.totalFloors },
+                      { label: t('propertyDetail.floorLevel'), value: property.floorLevel },
+                      { label: t('propertyDetail.condition'), value: property.condition },
                     ]}
                   />
 
                   <SpecSection
                     icon={<Home className="h-5 w-5 text-cyan-600" />}
-                    title="Interior Details"
+                    title={t('propertyDetail.interiorDetails')}
                     items={[
-                      { label: "Bedrooms", value: property.beds },
-                      { label: "Bathrooms", value: property.baths },
-                      { label: "Kitchen Type", value: property.kitchenType },
-                      { label: "Furniture", value: property.furnitureType || 'N/A' },
+                      { label: t('propertyDetail.bedrooms'), value: property.beds },
+                      { label: t('propertyDetail.bathrooms'), value: property.baths },
+                      { label: t('propertyDetail.kitchenType'), value: property.kitchenType },
+                      { label: t('propertyDetail.furniture'), value: property.furnitureType || 'N/A' },
                     ]}
                   />
 
                   <SpecSection
                     icon={<Layers className="h-5 w-5 text-cyan-600" />}
-                    title="Utilities"
+                    title={t('propertyDetail.utilities')}
                     items={[
-                      { label: "Heating", value: property.heatingType || 'N/A' },
-                      { label: "Hot Water", value: property.hotWaterType || 'N/A' },
-                      { label: "Internet", value: property.hasInternet ? "Yes" : "No" },
-                      { label: "Cable TV", value: property.hasCableTV ? "Yes" : "No" },
+                      { label: t('propertyDetail.heating'), value: property.heatingType || 'N/A' },
+                      { label: t('propertyDetail.hotWater'), value: property.hotWaterType || 'N/A' },
+                      { label: t('propertyDetail.internet'), value: property.hasInternet ? "Yes" : "No" },
+                      { label: t('propertyDetail.cableTV'), value: property.hasCableTV ? "Yes" : "No" },
                     ]}
                   />
                 </div>
@@ -372,11 +374,11 @@ const PropertyDetail = () => {
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-cyan-600" />
-                  Location
+                  {t('propertyDetail.location')}
                 </h3>
                 <div className="space-y-3">
                   <p className="text-gray-700">
-                    {property.address.street}, {property.address.city}, {property.address.zip}
+                    {property.address.street}, {t(`districts.${property.address.district}`)}, {t(`cities.${property.address.city}`)}
                   </p>
 
                   <Suspense fallback={
@@ -391,7 +393,7 @@ const PropertyDetail = () => {
                       <PropertyMap
                         lat={property.address.coordinates.lat}
                         lng={property.address.coordinates.lng}
-                        address={`${property.address.street}, ${property.address.city}`}
+                        address={`${property.address.street}, ${t(`districts.${property.address.district}`)}, ${t(`cities.${property.address.city}`)}`}
                       />
                     ) : (
                       <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
@@ -403,13 +405,13 @@ const PropertyDetail = () => {
                     )}
                   </Suspense>
 
-                  <h4 className="font-medium text-gray-900 mt-4">Nearby Places</h4>
+                  <h4 className="font-medium text-gray-900 mt-4">{t('propertyDetail.nearbyPlaces')}</h4>
                   <div className="flex flex-wrap gap-2">
-                    {property.nearBusStop && <Badge variant="outline">🚌 Bus Stop</Badge>}
-                    {property.nearSubway && <Badge variant="outline">🚇 Subway</Badge>}
-                    {property.nearSupermarket && <Badge variant="outline">🛒 Supermarket</Badge>}
-                    {property.nearPark && <Badge variant="outline">🌳 Park</Badge>}
-                    {property.nearSchool && <Badge variant="outline">🏫 School</Badge>}
+                    {property.nearBusStop && <Badge variant="outline">🚌 {t('propertyDetail.busStop')}</Badge>}
+                    {property.nearSubway && <Badge variant="outline">🚇 {t('propertyDetail.subway')}</Badge>}
+                    {property.nearSupermarket && <Badge variant="outline">🛒 {t('propertyDetail.supermarket')}</Badge>}
+                    {property.nearPark && <Badge variant="outline">🌳 {t('propertyDetail.park')}</Badge>}
+                    {property.nearSchool && <Badge variant="outline">🏫 {t('propertyDetail.school')}</Badge>}
                     {property.nearbyPlaces?.map((place, index) => (
                       <Badge key={index} variant="outline">{place}</Badge>
                     ))}
@@ -420,7 +422,7 @@ const PropertyDetail = () => {
 
             <div className="space-y-6">
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Contact Agent</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">{t('propertyDetail.contactAgent')}</h3>
 
                 {property.agentName && (
                   <div className="flex items-center gap-4 mb-6">
@@ -429,10 +431,10 @@ const PropertyDetail = () => {
                     </div>
                     <div>
                       <p className="font-medium text-lg">{property.agentName}</p>
-                      <p className="text-gray-500">Real Estate Agent</p>
+                      <p className="text-gray-500">{t('propertyDetail.realEstateAgent')}</p>
                     </div>
                   </div>
-                )}                
+                )}
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <Phone className="h-4 w-4 text-cyan-600" />
@@ -456,15 +458,13 @@ const PropertyDetail = () => {
                 </div>
               </div>
 
-              
-
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Property Facts</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">{t('propertyDetail.propertyFacts')}</h3>
                 <div className="space-y-4">
-                  <FactItem label="Reference #" value={property.referenceNumber || 'N/A'} />
-                  <FactItem label="Cadastral Code" value={property.cadastralCode || 'N/A'} />
-                  <FactItem label="Listed on" value={new Date(property.createdAt).toLocaleDateString()} />
-                  <FactItem label="Property ID" value={property.id} />
+                  <FactItem label={t('propertyDetail.referenceNumber')} value={property.referenceNumber || 'N/A'} />
+                  <FactItem label={t('propertyDetail.cadastralCode')} value={property.cadastralCode || 'N/A'} />
+                  <FactItem label={t('propertyDetail.listedOn')} value={new Date(property.createdAt).toLocaleDateString()} />
+                  <FactItem label={t('propertyDetail.propertyID')} value={property.id} />
                 </div>
               </div>
             </div>
