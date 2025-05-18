@@ -2218,5 +2218,24 @@
     "backToProperties": "Back to Properties",
     "month": "month"
   },
-  "addListing": "Add Listing"
+  "addListing": "Add Listing",
+  "footer": {
+    "companyDescription": "Your trusted partner in finding the perfect property. Whether buying, selling, or renting, we're here to help you every step of the way.",
+    "quickLinks": "Quick Links",
+    "home": "Home",
+    "buy": "Buy",
+    "rent": "Rent",
+    "sellOrAdvertise": "Sell or Advertise",
+    "dailyRent": "Daily Rent",
+    "contactUs": "Contact Us",
+    "address": "123 Rustaveli Ave, Tbilisi, Georgia",
+    "newsletter": "Newsletter",
+    "newsletterDescription": "Subscribe to our newsletter for the latest property updates.",
+    "emailPlaceholder": "Your email address",
+    "subscribe": "Subscribe",
+    "rightsReserved": "All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "sitemap": "Sitemap"
+  }
 }
