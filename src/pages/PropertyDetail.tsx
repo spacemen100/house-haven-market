@@ -364,8 +364,8 @@ const PropertyDetail = () => {
                     items={[
                       { label: t('propertyDetail.heating'), value: t(`heatingType.${property.heatingType}`) },
                       { label: t('propertyDetail.hotWater'), value: t(`hotWaterType.${property.hotWaterType}`) },
-                      { label: t('propertyDetail.internet'), value: property.hasInternet ? "Yes" : "No" },
-                      { label: t('propertyDetail.cableTV'), value: property.hasCableTV ? "Yes" : "No" },
+                      { label: t('propertyDetail.internet'), value: property.hasInternet ? t('yes') : t('no') },
+                      { label: t('propertyDetail.cableTV'), value: property.hasCableTV ? t('yes') : t('no') },
                     ]}
                   />
                 </div>

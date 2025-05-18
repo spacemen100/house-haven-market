@@ -2195,7 +2195,8 @@
     "central": "Central",
     "electric": "Electric",
     "gas": "Gas",
-    "wood": "Wood"
+    "wood": "Wood",
+    "solar": "Solar"
   },
   "hotWaterType": {
     "central": "Central",
@@ -2208,5 +2209,7 @@
     "concrete": "Concrete",
     "wood": "Wood",
     "steel": "Steel"
-  }
+  },
+  "yes": "Yes",
+  "no": "No"
 }
