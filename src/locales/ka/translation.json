@@ -1985,7 +1985,7 @@
   "myFavorites": "ჩემი ფავორიტები",
   "noFavorites": "თქვენ ჯერ არ გაქვთ ფავორიტები.",
   "exploreProperties": "უძრავი ქონების ნახვა",
-   "propertyTitlePlaceholder": "მაგ. თანამედროვე 3 საძინებელი ოთახი ბაღით",
+  "propertyTitlePlaceholder": "მაგ. თანამედროვე 3 საძინებელი ოთახი ბაღით",
   "georgianLari": "ქართული ლარი (₾)",
   "usDollar": "ამერიკული დოლარი ($)",
   "euro": "ევრო (€)",
@@ -2010,7 +2010,8 @@
     "parkingType": "პარკინგის ტიპი",
     "buildingMaterial": "შენების მასალა",
     "kitchenType": "სამზარეულოს ტიპი",
-    "city": "ქალაქი"
+    "city": "ქალაქი",
+    "title": "ფილტრები"
   },
   "listingType": {
     "sale": "გაყიდვა",

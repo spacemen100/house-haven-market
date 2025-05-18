@@ -2011,7 +2011,8 @@
     "parkingType": "Parking Type",
     "buildingMaterial": "Building Material",
     "kitchenType": "Kitchen Type",
-    "city": "City"
+    "city": "City",
+        "title": "Filters"
   },
   "listingType": {
     "sale": "Sale",

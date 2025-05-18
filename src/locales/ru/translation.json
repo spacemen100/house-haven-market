@@ -2011,7 +2011,8 @@
     "parkingType": "Тип парковки",
     "buildingMaterial": "Материал здания",
     "kitchenType": "Тип кухни",
-    "city": "Город"
+    "city": "Город",
+        "title": "Фильтры"
   },
   "listingType": {
     "sale": "Продажа",
