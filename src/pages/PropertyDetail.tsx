@@ -14,7 +14,6 @@ import { Phone, Mail, User } from "lucide-react";
 import { useCurrency } from '@/CurrencyContext';
 import { useTranslation } from 'react-i18next';
 
-// Chargement différé du composant de carte
 const PropertyMap = lazy(() => import("@/components/PropertyMap"));
 
 const PropertyDetail = () => {
@@ -34,7 +33,6 @@ const PropertyDetail = () => {
           return;
         }
 
-        // Fetch property data with all fields
         const { data: propertyData, error: propertyError } = await supabase
           .from('properties')
           .select('*')
@@ -272,10 +270,10 @@ const PropertyDetail = () => {
                   </div>
                   <div className="flex gap-2">
                     <Badge variant="secondary" className="bg-cyan-100 text-cyan-800">
-                      {property.listingType}
+                      {t(`${property.listingType.toLowerCase()}`)}
                     </Badge>
                     <Badge variant="secondary" className="bg-emerald-100 text-emerald-800">
-                      {property.status}
+                      {t(`${property.status}`)}
                     </Badge>
                   </div>
                 </div>
@@ -285,7 +283,7 @@ const PropertyDetail = () => {
                     <Home className="h-5 w-5 text-gray-400" />
                     <div>
                       <p className="text-sm text-gray-500">{t('propertyDetail.type')}</p>
-                      <p className="font-medium">{property.propertyType}</p>
+                      <p className="font-medium">{t(`propertyType.${property.propertyType.toLowerCase()}`)}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">

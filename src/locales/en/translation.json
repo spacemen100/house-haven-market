@@ -2211,5 +2211,7 @@
     "steel": "Steel"
   },
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "sale": "For Sale",
+  "rent_by_day": "Daily Rent"
 }
