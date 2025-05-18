@@ -198,10 +198,15 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container py-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="text-estate-800 text-2xl font-serif font-bold flex items-center gap-2">
-            House <FlagGeorgia width={24} height={18} /><span className="text-teal-500">სახლი</span>
-            
+        <Link to="/" className="flex flex-col items-center gap-2">
+          <div className="text-estate-800 text-2xl font-serif font-bold flex flex-col items-center gap-2">
+            House
+            <img
+              src="/georgiaflag.png"
+              alt="Georgia Flag"
+              className="w-6 h-4 object-contain"
+            />
+            <span className="text-teal-500">სახლი</span>
           </div>
         </Link>
 
