@@ -2179,5 +2179,34 @@
     "cadastralCode": "Cadastral Code",
     "listedOn": "Listed on",
     "propertyID": "Property ID"
+  },
+  "furnitureType": {
+    "furnished": "Furnished",
+    "semi_furnished": "Semi-Furnished",
+    "unfurnished": "Unfurnished"
+  },
+  "kitchenType": {
+    "open": "Open",
+    "closed": "Closed",
+    "kitchenette": "Kitchenette",
+    "american": "American"
+  },
+  "heatingType": {
+    "central": "Central",
+    "electric": "Electric",
+    "gas": "Gas",
+    "wood": "Wood"
+  },
+  "hotWaterType": {
+    "central": "Central",
+    "electric": "Electric",
+    "gas": "Gas",
+    "solar": "Solar"
+  },
+  "buildingMaterial": {
+    "brick": "Brick",
+    "concrete": "Concrete",
+    "wood": "Wood",
+    "steel": "Steel"
   }
 }

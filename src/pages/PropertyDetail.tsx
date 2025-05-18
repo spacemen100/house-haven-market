@@ -340,10 +340,10 @@ const PropertyDetail = () => {
                     icon={<Building className="h-5 w-5 text-cyan-600" />}
                     title={t('propertyDetail.buildingDetails')}
                     items={[
-                      { label: t('propertyDetail.buildingMaterial'), value: property.buildingMaterial || 'N/A' },
+                      { label: t('propertyDetail.buildingMaterial'), value: t(`buildingMaterial.${property.buildingMaterial}`) },
                       { label: t('propertyDetail.totalFloors'), value: property.totalFloors },
                       { label: t('propertyDetail.floorLevel'), value: property.floorLevel },
-                      { label: t('propertyDetail.condition'), value: property.condition },
+                      { label: t('propertyDetail.condition'), value: t(`condition.${property.condition}`) },
                     ]}
                   />
 
@@ -353,8 +353,8 @@ const PropertyDetail = () => {
                     items={[
                       { label: t('propertyDetail.bedrooms'), value: property.beds },
                       { label: t('propertyDetail.bathrooms'), value: property.baths },
-                      { label: t('propertyDetail.kitchenType'), value: property.kitchenType },
-                      { label: t('propertyDetail.furniture'), value: property.furnitureType || 'N/A' },
+                      { label: t('propertyDetail.kitchenType'), value: t(`kitchenType.${property.kitchenType}`) },
+                      { label: t('propertyDetail.furniture'), value: t(`furnitureType.${property.furnitureType}`) },
                     ]}
                   />
 
@@ -362,8 +362,8 @@ const PropertyDetail = () => {
                     icon={<Layers className="h-5 w-5 text-cyan-600" />}
                     title={t('propertyDetail.utilities')}
                     items={[
-                      { label: t('propertyDetail.heating'), value: property.heatingType || 'N/A' },
-                      { label: t('propertyDetail.hotWater'), value: property.hotWaterType || 'N/A' },
+                      { label: t('propertyDetail.heating'), value: t(`heatingType.${property.heatingType}`) },
+                      { label: t('propertyDetail.hotWater'), value: t(`hotWaterType.${property.hotWaterType}`) },
                       { label: t('propertyDetail.internet'), value: property.hasInternet ? "Yes" : "No" },
                       { label: t('propertyDetail.cableTV'), value: property.hasCableTV ? "Yes" : "No" },
                     ]}

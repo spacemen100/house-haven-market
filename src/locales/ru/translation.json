@@ -2179,5 +2179,34 @@
     "cadastralCode": "Кадастровый код",
     "listedOn": "Размещено",
     "propertyID": "ID недвижимости"
+  },
+  "furnitureType": {
+    "furnished": "Меблированный",
+    "semi_furnished": "Полумеблированный",
+    "unfurnished": "Без мебели"
+  },
+  "kitchenType": {
+    "open": "Открытый",
+    "closed": "Закрытый",
+    "kitchenette": "Кухня-ниша",
+    "american": "Американский"
+  },
+  "heatingType": {
+    "central": "Центральное",
+    "electric": "Электрическое",
+    "gas": "Газовое",
+    "wood": "Дровяное"
+  },
+  "hotWaterType": {
+    "central": "Центральное",
+    "electric": "Электрическое",
+    "gas": "Газовое",
+    "solar": "Солнечное"
+  },
+  "buildingMaterial": {
+    "brick": "Кирпич",
+    "concrete": "Бетон",
+    "wood": "Дерево",
+    "steel": "Сталь"
   }
 }
