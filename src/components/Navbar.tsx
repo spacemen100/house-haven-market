@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, ChevronDown } from 'lucide-react';
+import { Menu, X, User, ChevronDown, Globe, Banknote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -147,33 +147,65 @@ const Navbar = () => {
               {t('dailyRent')}
             </button>
           </div>
-          <div className="relative">
-            <Button variant="ghost" className="flex items-center gap-1 text-gray-600 hover:text-gray-800">
-              language/ენა <ChevronDown size={16} />
-              <select
-                value={language}
-                onChange={(e) => handleLanguageChange(e.target.value)}
-                className="absolute inset-0 opacity-0 cursor-pointer"
-              >
-                <option value="en">English</option>
-                <option value="ru">Русский</option>
-                <option value="ka">ქართული</option>
-              </select>
+
+          {/* Language Selector */}
+          <div className="relative group">
+            <Button variant="ghost" className="flex items-center gap-2 px-3 py-2 bg-estate-50 hover:bg-estate-100 rounded-lg transition-colors">
+              <Globe className="h-5 w-5 text-teal-600" />
+              <span className="font-medium text-estate-800">
+                {language === 'en' ? 'EN' : language === 'ru' ? 'RU' : 'KA'}
+              </span>
+              <ChevronDown className="h-4 w-4 text-estate-600 group-hover:rotate-180 transition-transform" />
             </Button>
+            <div className="absolute right-0 mt-1 w-40 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 z-50 hidden group-hover:block">
+              <button
+                onClick={() => handleLanguageChange('en')}
+                className={`flex items-center w-full px-4 py-2 text-sm ${language === 'en' ? 'bg-teal-50 text-teal-800' : 'text-gray-700 hover:bg-gray-100'}`}
+              >
+                <span className="mr-2">🇬🇧</span> English
+              </button>
+              <button
+                onClick={() => handleLanguageChange('ru')}
+                className={`flex items-center w-full px-4 py-2 text-sm ${language === 'ru' ? 'bg-teal-50 text-teal-800' : 'text-gray-700 hover:bg-gray-100'}`}
+              >
+                <span className="mr-2">🇷🇺</span> Русский
+              </button>
+              <button
+                onClick={() => handleLanguageChange('ka')}
+                className={`flex items-center w-full px-4 py-2 text-sm ${language === 'ka' ? 'bg-teal-50 text-teal-800' : 'text-gray-700 hover:bg-gray-100'}`}
+              >
+                <span className="mr-2">🇬🇪</span> ქართული
+              </button>
+            </div>
           </div>
-          <div className="relative">
-            <Button variant="ghost" className="flex items-center gap-1 text-gray-600 hover:text-gray-800">
-              {currency} <ChevronDown size={16} />
-              <select
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value as Currency)}
-                className="absolute inset-0 opacity-0 cursor-pointer"
-              >
-                <option value="GEL">GEL</option>
-                <option value="USD">USD</option>
-                <option value="EUR">EUR</option>
-              </select>
+
+          {/* Currency Selector */}
+          <div className="relative group">
+            <Button variant="ghost" className="flex items-center gap-2 px-3 py-2 bg-estate-50 hover:bg-estate-100 rounded-lg transition-colors">
+              <Banknote className="h-5 w-5 text-teal-600" />
+              <span className="font-medium text-estate-800">{currency}</span>
+              <ChevronDown className="h-4 w-4 text-estate-600 group-hover:rotate-180 transition-transform" />
             </Button>
+            <div className="absolute right-0 mt-1 w-32 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 z-50 hidden group-hover:block">
+              <button
+                onClick={() => setCurrency('GEL')}
+                className={`flex items-center w-full px-4 py-2 text-sm ${currency === 'GEL' ? 'bg-teal-50 text-teal-800' : 'text-gray-700 hover:bg-gray-100'}`}
+              >
+                <span className="mr-2">🇬🇪</span> GEL
+              </button>
+              <button
+                onClick={() => setCurrency('USD')}
+                className={`flex items-center w-full px-4 py-2 text-sm ${currency === 'USD' ? 'bg-teal-50 text-teal-800' : 'text-gray-700 hover:bg-gray-100'}`}
+              >
+                <span className="mr-2">🇺🇸</span> USD
+              </button>
+              <button
+                onClick={() => setCurrency('EUR')}
+                className={`flex items-center w-full px-4 py-2 text-sm ${currency === 'EUR' ? 'bg-teal-50 text-teal-800' : 'text-gray-700 hover:bg-gray-100'}`}
+              >
+                <span className="mr-2">🇪🇺</span> EUR
+              </button>
+            </div>
           </div>
         </div>
 
@@ -275,23 +307,67 @@ const Navbar = () => {
             >
               {t('dailyRent')}
             </button>
-            <hr className="my-2" />
-            <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-gray-700">language/ენა</label>
-              <select
-                value={language}
-                onChange={(e) => {
-                  handleLanguageChange(e.target.value);
-                  setIsMenuOpen(false);
-                }}
-                className="p-2 border rounded-md"
-              >
-                <option value="en">English</option>
-                <option value="ru">Русский</option>
-                <option value="ka">ქართული</option>
-              </select>
+
+            <div className="flex flex-col gap-4 mt-4">
+              <div>
+                <h3 className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                  <Globe className="h-4 w-4" /> {t('language')}
+                </h3>
+                <div className="grid grid-cols-3 gap-2">
+                  <button
+                    onClick={() => handleLanguageChange('en')}
+                    className={`py-2 rounded-md flex flex-col items-center ${language === 'en' ? 'bg-teal-100 text-teal-800' : 'bg-gray-100'}`}
+                  >
+                    <span className="text-lg">🇬🇧</span>
+                    <span className="text-xs mt-1">EN</span>
+                  </button>
+                  <button
+                    onClick={() => handleLanguageChange('ru')}
+                    className={`py-2 rounded-md flex flex-col items-center ${language === 'ru' ? 'bg-teal-100 text-teal-800' : 'bg-gray-100'}`}
+                  >
+                    <span className="text-lg">🇷🇺</span>
+                    <span className="text-xs mt-1">RU</span>
+                  </button>
+                  <button
+                    onClick={() => handleLanguageChange('ka')}
+                    className={`py-2 rounded-md flex flex-col items-center ${language === 'ka' ? 'bg-teal-100 text-teal-800' : 'bg-gray-100'}`}
+                  >
+                    <span className="text-lg">🇬🇪</span>
+                    <span className="text-xs mt-1">KA</span>
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                  <Banknote className="h-4 w-4" /> {t('currency')}
+                </h3>
+                <div className="grid grid-cols-3 gap-2">
+                  <button
+                    onClick={() => setCurrency('GEL')}
+                    className={`py-2 rounded-md flex flex-col items-center ${currency === 'GEL' ? 'bg-teal-100 text-teal-800' : 'bg-gray-100'}`}
+                  >
+                    <span className="text-lg">🇬🇪</span>
+                    <span className="text-xs mt-1">GEL</span>
+                  </button>
+                  <button
+                    onClick={() => setCurrency('USD')}
+                    className={`py-2 rounded-md flex flex-col items-center ${currency === 'USD' ? 'bg-teal-100 text-teal-800' : 'bg-gray-100'}`}
+                  >
+                    <span className="text-lg">🇺🇸</span>
+                    <span className="text-xs mt-1">USD</span>
+                  </button>
+                  <button
+                    onClick={() => setCurrency('EUR')}
+                    className={`py-2 rounded-md flex flex-col items-center ${currency === 'EUR' ? 'bg-teal-100 text-teal-800' : 'bg-gray-100'}`}
+                  >
+                    <span className="text-lg">🇪🇺</span>
+                    <span className="text-xs mt-1">EUR</span>
+                  </button>
+                </div>
+              </div>
             </div>
-            <hr className="my-2" />
+
             <div className="flex flex-col gap-2">
               {isLoggedIn ? (
                 <>
