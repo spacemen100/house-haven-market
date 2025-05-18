@@ -40,25 +40,7 @@ const Hero = () => {
             </Button>
           </div>
 
-          {/* Property Stats */}
-          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div>
-              <p className="text-4xl font-bold">2.5K+</p>
-              <p className="text-estate-neutral-200">{t('properties')}</p>
-            </div>
-            <div>
-              <p className="text-4xl font-bold">1.8K+</p>
-              <p className="text-estate-neutral-200">{t('happyCustomers')}</p>
-            </div>
-            <div>
-              <p className="text-4xl font-bold">100+</p>
-              <p className="text-estate-neutral-200">{t('awardsWon')}</p>
-            </div>
-            <div>
-              <p className="text-4xl font-bold">50+</p>
-              <p className="text-estate-neutral-200">{t('cities')}</p>
-            </div>
-          </div>
+          
         </div>
       </div>
     </div>
