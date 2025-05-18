@@ -1,0 +1,25 @@
+{
+  "name": "House სახლი",
+  "short_name": "House სახლი",
+  "description": "უძრავი ქონება საქართველოში. Buy, sell, and rent real estate in Georgia: apartments, houses, commercial spaces, and land.",
+  "lang": "ka",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0f766e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/public/favicon.ico",
+      "sizes": "48x48 64x64 96x96 128x128 256x256",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/public/georgiaflag.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png"
+    }
+  ],
+  "scope": "/",
+  "dir": "ltr"
+}
