@@ -18,7 +18,7 @@ import { useTranslation } from 'react-i18next';
 const PropertyMap = lazy(() => import("@/components/PropertyMap"));
 
 const PropertyDetail = () => {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [property, setProperty] = useState<Property | null>(null);
@@ -377,8 +377,8 @@ const PropertyDetail = () => {
                   {t('propertyDetail.location')}
                 </h3>
                 <div className="space-y-3">
-                  <p className="text-gray-700">
-                    {property.address.street}, {t(`districts.${property.address.district}`)}, {t(`cities.${property.address.city}`)}
+                  <p className="text-sm line-clamp-1">
+                    {t(`${property.address.street}`)}, {t(`${property.address.district}`)}, {t(`cities.${property.address.city}`)}
                   </p>
 
                   <Suspense fallback={
