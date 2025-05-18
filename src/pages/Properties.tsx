@@ -1863,7 +1863,7 @@ const Properties = () => {
               }
             />
             <Label htmlFor={`${prefix}city-${city}`}>
-              {city}
+              {t(`cities.${city}`)}
             </Label>
           </div>
         ))}
