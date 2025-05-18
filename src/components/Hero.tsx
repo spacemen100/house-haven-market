@@ -6,14 +6,7 @@ import { useTranslation } from "react-i18next";
 
 const Hero = () => {
   const { t } = useTranslation();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [propertyType, setPropertyType] = useState("all");
   const navigate = useNavigate();
-
-  const handleSearch = (e: FormEvent) => {
-    e.preventDefault();
-    navigate(`/properties?search=${searchQuery}&type=${propertyType}`);
-  };
 
   return (
     <div className="relative bg-estate-800 py-16 md:py-24 lg:py-32">
@@ -36,46 +29,15 @@ const Hero = () => {
             {t('heroSubtitle')}
           </p>
 
-          {/* Search Form */}
-          <div className="bg-white p-4 md:p-6 rounded-lg shadow-lg max-w-3xl mx-auto">
-            <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <Search
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-estate-neutral-400"
-                    size={20}
-                  />
-                  <input
-                    type="text"
-                    placeholder={t('searchPlaceholder')}
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="input-search pl-10"
-                  />
-                </div>
-              </div>
-
-              <div className="md:w-40">
-                <select
-                  value={propertyType}
-                  onChange={(e) => setPropertyType(e.target.value)}
-                  className="input-search"
-                >
-                  <option value="all">{t('allTypes')}</option>
-                  <option value="house">{t('houses')}</option>
-                  <option value="apartment">{t('apartments')}</option>
-                  <option value="land">{t('land')}</option>
-                  <option value="commercial">{t('commercial')}</option>
-                </select>
-              </div>
-
-              <Button
-                type="submit"
-                className="bg-teal-500 hover:bg-teal-600 text-white px-8 py-3 rounded-md font-medium"
-              >
-                {t('search')}
-              </Button>
-            </form>
+          {/* Add Listing Button */}
+          <div className="max-w-md mx-auto">
+            <Button
+              onClick={() => navigate("/sell")}
+              className="bg-teal-500 hover:bg-teal-600 text-white px-8 py-6 text-lg md:text-xl rounded-lg font-bold w-full"
+              size="lg"
+            >
+              {t('addListing')}
+            </Button>
           </div>
 
           {/* Property Stats */}
