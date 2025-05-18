@@ -5,7 +5,7 @@ import { MapPin, Bed, Bath, Square, Calendar } from "lucide-react";
 import { Property } from "@/types/property";
 import { Badge } from "@/components/ui/badge";
 import { useCurrency } from "@/CurrencyContext";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 import { format, parseISO } from "date-fns";
 
 interface PropertyCardProps {
@@ -18,11 +18,11 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
 
   const getFormattedDate = () => {
     try {
-      if (typeof property.createdAt === 'string') {
-        return format(parseISO(property.createdAt), 'MMM d, yyyy');
+      if (typeof property.created_at === 'string') {
+        return format(parseISO(property.created_at), 'MMM d, yyyy');
       }
-      if (property.createdAt instanceof Date) {
-        return format(property.createdAt, 'MMM d, yyyy');
+      if (property.created_at instanceof Date) {
+        return format(property.created_at, 'MMM d, yyyy');
       }
       return t('dateNotAvailable');
     } catch (error) {
@@ -37,12 +37,12 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
         {/* Property Image */}
         <div className="relative h-56 overflow-hidden">
           <img
-            src={property.images[0]}
+            src={property.images?.[0]}
             alt={property.title}
             className="w-full h-full object-cover transition-transform hover:scale-105"
           />
           <Badge className="absolute top-3 left-3 bg-teal-500 hover:bg-teal-500">
-            {property.listingType === "sale" ? t('forSale') : t('forRent')}
+            {property.listing_type === "sale" ? t('forSale') : t('forRent')}
           </Badge>
           {property.featured && (
             <Badge className="absolute top-3 right-3 bg-estate-800 hover:bg-estate-800">
@@ -62,13 +62,13 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
           <div className="flex items-center text-estate-neutral-600 mb-3">
             <MapPin size={14} className="mr-1" />
             <p className="text-sm line-clamp-1">
-              {property.address.street}, {property.address.city}, {property.address.state}
+              {property.address.street}, {t(`cities.${property.address.city}`)}, {property.address.state}
             </p>
           </div>
 
           <div className="flex justify-between items-center mb-2">
             <p className="text-lg font-bold text-estate-800">
-              {property.listingType === "rent"
+              {property.listing_type === "rent"
                 ? `${formatPrice(property.price, property.currency)}/month`
                 : formatPrice(property.price, property.currency)}
             </p>
@@ -96,7 +96,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             <div className="flex items-center">
               <Square size={18} className="mr-1 text-estate-neutral-500" />
               <span className="text-sm">
-                {property.propertyType === "land"
+                {property.property_type === "land"
                   ? `${(property.m2 / 4046.86).toFixed(2)} ${t('acres')}`
                   : `${property.m2} ${t('m²')}`}
               </span>
