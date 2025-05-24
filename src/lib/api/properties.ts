@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/api/supabaseClient";
 import { Property } from "@/types/property";
 import { toast } from "sonner";
+import { getUserProfile, updateUserProfile } from "@/lib/profiles";
 
 export interface CreatePropertyInput {
   title: string;
@@ -418,21 +419,164 @@ export const getMyProperties = async (): Promise<Property[]> => {
 };
 
 export const getLikedProperties = async (): Promise<Property[]> => {
-  return [];
+  try {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
+      toast.error("User not authenticated. Cannot fetch liked properties.");
+      // Depending on strictness, you might throw an error or simply return empty.
+      // For a "get" operation, returning empty might be more graceful for the UI.
+      return []; 
+    }
+
+    const profile = await getUserProfile(user.id);
+    if (!profile) {
+      toast.error("User profile not found. Cannot fetch liked properties.");
+      return [];
+    }
+
+    const likedPropertyIds = profile.liked_properties;
+
+    if (!likedPropertyIds || likedPropertyIds.length === 0) {
+      // No liked properties, return empty array. No toast needed for this normal case.
+      return [];
+    }
+
+    // Fetch properties based on the liked_property_ids
+    // Ensure the select query is comprehensive, similar to getProperties
+    const { data: properties, error: propertiesError } = await supabase
+      .from('properties')
+      .select(`
+        *,
+        property_amenities (amenity),
+        property_equipment (equipment),
+        property_images (image_url, is_primary),
+        property_internet_tv (option_name),
+        property_storage (storage_type),
+        property_security (security_feature),
+        property_nearby_places (place_name),
+        property_online_services (service_name)
+      `)
+      .in('id', likedPropertyIds);
+
+    if (propertiesError) {
+      console.error('Error fetching liked properties:', propertiesError);
+      toast.error("Failed to fetch liked properties. Please try again.");
+      throw propertiesError; // Or return []
+    }
+
+    if (!properties) {
+      // This case might occur if IDs were in liked_properties but none were found (e.g., deleted)
+      return [];
+    }
+
+    return properties.map(transformProperty);
+
+  } catch (error) {
+    console.error('Error in getLikedProperties:', error);
+    // Avoid showing a generic toast if specific ones were shown above
+    // However, if it's an unexpected error, a generic one might be okay.
+    // For now, let's assume specific toasts are handled or this is a fallback.
+    if (!(error instanceof Error && (error.message.includes("User not authenticated") || error.message.includes("User profile not found")))) {
+        toast.error("An unexpected error occurred while fetching liked properties.");
+    }
+    return []; // Return empty array on any error
+  }
 };
 
 export const likeProperty = async (propertyId: string) => {
-  toast.success("Property added to favorites");
-  return true;
+  try {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
+      toast.error("User not authenticated");
+      throw new Error("User not authenticated");
+    }
+
+    const profile = await getUserProfile(user.id);
+    if (!profile) {
+      toast.error("User profile not found");
+      throw new Error("User profile not found");
+    }
+
+    const likedProperties = profile.liked_properties || [];
+
+    if (!likedProperties.includes(propertyId)) {
+      likedProperties.push(propertyId);
+      await updateUserProfile(user.id, { liked_properties: likedProperties });
+      toast.success("Property added to favorites");
+      return { success: true, liked_properties: likedProperties };
+    } else {
+      toast.info("Property already in favorites");
+      return { success: true, liked_properties: likedProperties }; // Or indicate it was already liked
+    }
+  } catch (error) {
+    console.error('Error liking property:', error);
+    toast.error("Failed to like property. Please try again.");
+    // throw error; // Or return an error object: return { success: false, error: error.message };
+    return { success: false, error: error instanceof Error ? error.message : String(error) };
+  }
 };
 
 export const unlikeProperty = async (propertyId: string) => {
-  toast.success("Property removed from favorites");
-  return true;
+  try {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
+      toast.error("User not authenticated");
+      throw new Error("User not authenticated");
+    }
+
+    const profile = await getUserProfile(user.id);
+    if (!profile) {
+      toast.error("User profile not found");
+      throw new Error("User profile not found");
+    }
+
+    let likedProperties = profile.liked_properties || [];
+
+    const propertyIndex = likedProperties.indexOf(propertyId);
+
+    if (propertyIndex > -1) {
+      likedProperties.splice(propertyIndex, 1); // Remove the propertyId
+      await updateUserProfile(user.id, { liked_properties: likedProperties });
+      toast.success("Property removed from favorites");
+      return { success: true, liked_properties: likedProperties };
+    } else {
+      toast.info("Property not found in favorites");
+      return { success: true, liked_properties: likedProperties }; // Or indicate it was not found
+    }
+  } catch (error) {
+    console.error('Error unliking property:', error);
+    toast.error("Failed to unlike property. Please try again.");
+    return { success: false, error: error instanceof Error ? error.message : String(error) };
+  }
 };
 
 export const checkIfLiked = async (propertyId: string): Promise<boolean> => {
-  return false;
+  try {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
+      console.warn("checkIfLiked: User not authenticated.");
+      return false;
+    }
+
+    const profile = await getUserProfile(user.id);
+    if (!profile) {
+      console.warn(`checkIfLiked: User profile not found for user ID: ${user.id}`);
+      return false;
+    }
+
+    const likedProperties = profile.liked_properties || [];
+
+    if (!Array.isArray(likedProperties)) {
+      console.error(`checkIfLiked: liked_properties is not an array for user ID: ${user.id}`, likedProperties);
+      return false; // Or handle as an error state if appropriate
+    }
+    
+    return likedProperties.includes(propertyId);
+
+  } catch (error) {
+    console.error('Error in checkIfLiked:', error);
+    return false;
+  }
 };
 
 export const deleteProperty = async (propertyId: string) => {
