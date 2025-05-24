@@ -1,12 +1,16 @@
 // src/components/PropertyCard.tsx
 import React from "react";
 import { Link } from "react-router-dom";
-import { MapPin, Bed, Bath, Square, Calendar } from "lucide-react";
+import { MapPin, Bed, Bath, Square, Calendar, Heart } from "lucide-react";
 import { Property } from "@/types/property";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { useCurrency } from "@/CurrencyContext";
 import { useTranslation } from "react-i18next";
 import { format, parseISO } from "date-fns";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { likeProperty, unlikeProperty, checkIfLiked } from "@/lib/api/properties";
+import { toast } from "sonner";
 
 interface PropertyCardProps {
   property: Property;
@@ -15,6 +19,64 @@ interface PropertyCardProps {
 const PropertyCard = ({ property }: PropertyCardProps) => {
   const { t } = useTranslation();
   const { formatPrice } = useCurrency();
+  const queryClient = useQueryClient();
+
+  const { data: isLiked, isLoading: isLoadingLikedStatus } = useQuery({
+    queryKey: ['likedStatus', property.id],
+    queryFn: () => checkIfLiked(property.id),
+    enabled: !!property.id,
+    staleTime: 300000, // 5 minutes
+    refetchOnWindowFocus: false,
+  });
+
+  const likeMutation = useMutation({
+    mutationFn: likeProperty,
+    onSuccess: (data) => {
+      if (data && data.success) {
+        toast.success("Property added to favorites!");
+        queryClient.invalidateQueries({ queryKey: ['likedStatus', property.id] });
+        queryClient.invalidateQueries({ queryKey: ['liked-properties'] });
+      } else {
+        toast.error(data?.error || "Failed to like property.");
+      }
+    },
+    onError: (error: any) => {
+      console.error("Error liking property:", error);
+      toast.error(error.message || "An unexpected error occurred while liking.");
+    }
+  });
+
+  const unlikeMutation = useMutation({
+    mutationFn: unlikeProperty,
+    onSuccess: (data) => {
+      if (data && data.success) {
+        toast.success("Property removed from favorites!");
+        queryClient.invalidateQueries({ queryKey: ['likedStatus', property.id] });
+        queryClient.invalidateQueries({ queryKey: ['liked-properties'] });
+      } else {
+        toast.error(data?.error || "Failed to unlike property.");
+      }
+    },
+    onError: (error: any) => {
+      console.error("Error unliking property:", error);
+      toast.error(error.message || "An unexpected error occurred while unliking.");
+    }
+  });
+
+  const handleLikeToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault(); // Prevent Link navigation
+    event.stopPropagation(); // Stop event bubbling
+
+    if (isLoadingLikedStatus || likeMutation.isPending || unlikeMutation.isPending) {
+      return; // Do nothing if still loading or a mutation is in progress
+    }
+
+    if (isLiked) {
+      unlikeMutation.mutate(property.id);
+    } else {
+      likeMutation.mutate(property.id);
+    }
+  };
 
   const getFormattedDate = () => {
     try {
@@ -41,11 +103,28 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             alt={property.title}
             className="w-full h-full object-cover transition-transform hover:scale-105"
           />
-          <Badge className="absolute top-3 left-3 bg-teal-500 hover:bg-teal-500">
+          <Badge className="absolute top-3 left-3 bg-teal-500 hover:bg-teal-500 z-10">
             {property.listingType === "sale" ? t('forSale') : t('forRent')}
           </Badge>
+          
+          <Button
+            size="icon"
+            variant="ghost"
+            className="absolute top-2 right-2 z-10 bg-white/80 hover:bg-white rounded-full p-2"
+            onClick={handleLikeToggle}
+            disabled={isLoadingLikedStatus || likeMutation.isPending || unlikeMutation.isPending}
+            title={isLiked ? t('unlike') : t('like')}
+          >
+            <Heart
+              size={20}
+              className={`transition-colors ${
+                isLiked ? "fill-red-500 text-red-500" : "text-gray-700"
+              }`}
+            />
+          </Button>
+
           {property.featured && (
-            <Badge className="absolute top-3 right-3 bg-estate-800 hover:bg-estate-800">
+            <Badge className="absolute top-12 right-3 bg-estate-800 hover:bg-estate-800 z-10">
               {t('featured')}
             </Badge>
           )}
