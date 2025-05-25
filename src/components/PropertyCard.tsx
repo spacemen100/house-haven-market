@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { MapPin, Bed, Bath, Square, Calendar, Heart } from "lucide-react";
 import { Property } from "@/types/property";
 import { Badge } from "@/components/ui/badge";
+import MissingImagePlaceholder from "@/components/ui/MissingImagePlaceholder"; // Added import
 import { useCurrency } from "@/CurrencyContext";
 import { useTranslation } from 'react-i18next';
 import { format, parseISO } from "date-fns";
@@ -101,11 +102,15 @@ const PropertyCard = ({ property, userLikedProperties }: PropertyCardProps) => {
       <div className="property-card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
         {/* Property Image */}
         <div className="relative h-56 overflow-hidden">
-          <img
-            src={property.images?.[0]}
-            alt={property.title}
-            className="w-full h-full object-cover transition-transform hover:scale-105"
-          />
+          {(!property.images || property.images.length === 0 || !property.images[0]) ? (
+            <MissingImagePlaceholder className="w-full h-full object-cover" />
+          ) : (
+            <img
+              src={property.images[0]} // If check passes, images[0] is safe
+              alt={property.title}
+              className="w-full h-full object-cover transition-transform hover:scale-105"
+            />
+          )}
           <Badge className="absolute top-3 left-3 bg-teal-500 hover:bg-teal-500">
             {property.listing_type === "sale" ? t('forSale') : t('forRent')}
           </Badge>
