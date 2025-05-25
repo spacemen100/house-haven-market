@@ -36,12 +36,14 @@ const Hero = () => {
         <CarouselContent className="h-full">
           {carouselImages.map((src, index) => (
             <CarouselItem key={index} className="h-full">
-              <div
-                className="h-full bg-cover bg-center"
-                style={{
-                  backgroundImage: `url(${src})`,
-                }}
-              />
+              {/* Ensure the CarouselItem itself and this immediate child div correctly propagate height */}
+              <div className="h-full"> 
+                <img
+                  src={src}
+                  alt={`Carousel image ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </CarouselItem>
           ))}
         </CarouselContent>
