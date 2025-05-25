@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"; // Added useState
 import { Property } from "@/types/property";
 import PropertyCard from "@/components/PropertyCard";
 import { supabase } from "../integrations/supabase/client"; // Added supabase import
-import { getUserProfile } from "../lib/profiles"; // Added getUserProfile import
+import { getUserProfile } from "@/lib/profiles"; // Path alias updated
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
