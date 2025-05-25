@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { useCurrency } from "@/CurrencyContext";
 import { useTranslation } from 'react-i18next';
 import { format, parseISO } from "date-fns";
-import { supabase } from "../../integrations/supabase/client"; // Adjusted path
+import { supabase } from "@/integrations/supabase/client"; // Path alias updated
 import { getUserProfile, updateUserProfile } from "../../lib/profiles"; // Adjusted path
 
 interface PropertyCardProps {
