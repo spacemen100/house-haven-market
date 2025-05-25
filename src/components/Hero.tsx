@@ -1,24 +1,52 @@
-import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 const Hero = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const carouselImages = Array.from(
+    { length: 14 },
+    (_, i) => `/photohomepagecaroussel (${i + 1}).jpg`
+  );
+
   return (
     <div className="relative bg-estate-800 py-16 md:py-24 lg:py-32">
-      {/* Background Image with Overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1605146769289-440113cc3d00?auto=format&fit=crop&q=80&w=3270&ixlib=rb-4.0.3')",
-          opacity: "0.3",
+      <Carousel
+        opts={{
+          align: "start",
+          loop: true,
         }}
-      ></div>
+        plugins={[
+          Autoplay({
+            delay: 5000,
+          }),
+        ]}
+        className="absolute inset-0 w-full h-full"
+      >
+        <CarouselContent className="h-full">
+          {carouselImages.map((src, index) => (
+            <CarouselItem key={index} className="h-full">
+              <div
+                className="h-full bg-cover bg-center"
+                style={{
+                  backgroundImage: `url(${src})`,
+                }}
+              />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <div className="absolute inset-0 bg-black opacity-30"></div> {/* Overlay */}
+      </Carousel>
 
       <div className="container relative z-10">
         <div className="text-center text-white max-w-4xl mx-auto">
@@ -39,8 +67,6 @@ const Hero = () => {
               {t('addListing')}
             </Button>
           </div>
-
-          
         </div>
       </div>
     </div>
