@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/api/supabaseClient";
 import { Property } from "@/types/property";
 import { toast } from "sonner";
+import { getUserProfile } from "@/lib/profiles"; // Added import
 
 export interface CreatePropertyInput {
   title: string;
@@ -415,7 +416,61 @@ export const getMyProperties = async (): Promise<Property[]> => {
 };
 
 export const getLikedProperties = async (): Promise<Property[]> => {
-  return [];
+  try {
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (authError) {
+      console.error('Authentication error fetching liked properties:', authError.message);
+      // toast.error("Authentication error. Please log in."); // Consider if toast is appropriate here
+      return [];
+    }
+    if (!user) {
+      // console.log('User not authenticated, cannot fetch liked properties.');
+      // toast.error("Please log in to see your liked properties."); // Consider if toast is appropriate here
+      return [];
+    }
+
+    const profile = await getUserProfile(user.id);
+
+    if (!profile || !profile.liked_properties || profile.liked_properties.length === 0) {
+      // console.log('No liked properties found for this user or profile error.');
+      return []; // No liked property IDs found or profile issue
+    }
+
+    const likedPropertyIDs = profile.liked_properties;
+
+    const { data: propertiesData, error: propertiesError } = await supabase
+      .from('properties')
+      .select(`
+        *,
+        property_amenities (amenity),
+        property_equipment (equipment),
+        property_images (image_url, is_primary),
+        property_internet_tv (option_name),
+        property_storage (storage_type),
+        property_security (security_feature),
+        property_nearby_places (place_name),
+        property_online_services (service_name)
+      `)
+      .in('id', likedPropertyIDs);
+
+    if (propertiesError) {
+      console.error('Error fetching liked properties details:', propertiesError.message);
+      toast.error("Failed to fetch details of liked properties.");
+      return [];
+    }
+
+    if (!propertiesData) {
+      return [];
+    }
+
+    return propertiesData.map(transformProperty);
+
+  } catch (error: any) {
+    console.error('Unexpected error in getLikedProperties:', error.message);
+    toast.error("An unexpected error occurred while fetching liked properties.");
+    return [];
+  }
 };
 
 export const likeProperty = async (propertyId: string) => {

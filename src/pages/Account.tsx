@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react"; // Added useState
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { getUserProfile } from "@/lib/profiles"; // Added getUserProfile
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PropertyCard from "@/components/PropertyCard";
 import { useQuery } from "@tanstack/react-query";
@@ -40,6 +41,27 @@ const Account = () => {
     queryKey: ['liked-properties'],
     queryFn: getLikedProperties,
   });
+
+  const [currentUserLikedPropertyIds, setCurrentUserLikedPropertyIds] = useState<string[] | null>(null);
+
+  useEffect(() => {
+    const fetchProfileLikedIds = async () => {
+      if (user?.id) { // Check if user object and user.id is available
+        try {
+          const profile = await getUserProfile(user.id);
+          setCurrentUserLikedPropertyIds(profile?.liked_properties || []);
+        } catch (error) {
+          console.error("Error fetching user profile for liked property IDs in Account:", error);
+          setCurrentUserLikedPropertyIds([]);
+        }
+      } else if (user === null) { // Explicitly null means auth check complete, no user
+           setCurrentUserLikedPropertyIds([]);
+      }
+      // If user is undefined (still loading), do nothing yet, wait for user query to complete
+    };
+
+    fetchProfileLikedIds();
+  }, [user]); // Dependency array includes 'user' from the useQuery
 
   return (
     <div>
@@ -112,10 +134,14 @@ const Account = () => {
                 <div className="flex justify-center py-8">
                   <p>{t("loading")}</p>
                 </div>
-              ) : likedProperties.length > 0 ? (
+              ) : currentUserLikedPropertyIds !== null && likedProperties.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {likedProperties.map((property: Property) => (
-                    <PropertyCard key={property.id} property={property} />
+                    <PropertyCard
+                      key={property.id}
+                      property={property}
+                      userLikedProperties={currentUserLikedPropertyIds}
+                    />
                   ))}
                 </div>
               ) : (

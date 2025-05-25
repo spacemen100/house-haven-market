@@ -2,6 +2,7 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { getUserProfile, updateUserProfile } from "@/lib/profiles"; // Added imports
 import { Property } from "@/types/property";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -22,8 +23,45 @@ const PropertyDetail = () => {
   const navigate = useNavigate();
   const [property, setProperty] = useState<Property | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isLiked, setIsLiked] = useState(false); // Replaced isFavorite
+  const [isLoadingLike, setIsLoadingLike] = useState(false); // Added
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null); // Added
   const { formatPrice } = useCurrency();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+            setCurrentUserId(user.id);
+        } else {
+            setCurrentUserId(null); // Explicitly set to null if no user
+        }
+    };
+    fetchUser();
+  }, []); // Runs once on mount
+
+  useEffect(() => {
+    const fetchInitialLikeStatus = async () => {
+      if (property && currentUserId) { // Ensure property and user ID are available
+        try {
+          const userProfile = await getUserProfile(currentUserId);
+          if (userProfile && userProfile.liked_properties) {
+            setIsLiked(userProfile.liked_properties.includes(property.id));
+          } else {
+            setIsLiked(false);
+          }
+        } catch (error) {
+          console.error("Error fetching user profile for like status:", error);
+          setIsLiked(false);
+        }
+      } else if (!currentUserId) { 
+          // If no user is logged in, ensure isLiked is false
+          setIsLiked(false);
+      }
+    };
+
+    fetchInitialLikeStatus();
+  }, [property, currentUserId]); // Re-run if property or currentUserId changes
 
   useEffect(() => {
     const fetchPropertyDetails = async () => {
@@ -195,6 +233,38 @@ const PropertyDetail = () => {
     window.scrollTo(0, 0);
   }, [id, navigate]);
 
+  const handleLikeToggle = async () => {
+    if (isLoadingLike || !currentUserId || !property) return; // Ensure property is also available
+
+    setIsLoadingLike(true);
+    try {
+      const profile = await getUserProfile(currentUserId);
+      const liked_properties = profile?.liked_properties || [];
+      let updatedLikedProperties: string[];
+
+      if (isLiked) {
+        updatedLikedProperties = liked_properties.filter(id => id !== property.id);
+      } else {
+        // Ensure property.id is not already in the array before adding
+        if (!liked_properties.includes(property.id)) {
+          updatedLikedProperties = [...liked_properties, property.id];
+        } else {
+          updatedLikedProperties = [...liked_properties]; // Already there, no change
+        }
+      }
+
+      await updateUserProfile(currentUserId, { liked_properties: updatedLikedProperties });
+      setIsLiked(!isLiked);
+      // Optionally, refetch liked properties for other parts of the app or use a global state.
+      // For now, just updating local state is fine for the button itself.
+    } catch (error) {
+      console.error("Error toggling like status on detail page:", error);
+      // Optionally, show a toast notification to the user
+    } finally {
+      setIsLoadingLike(false);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex flex-col">
@@ -239,9 +309,9 @@ const PropertyDetail = () => {
         <div className="container py-8">
           <div className="flex justify-between items-start mb-6">
             <PropertyHeader property={property} />
-            <div className="flex gap-2">
-              <Button variant="outline" size="icon" onClick={() => setIsFavorite(!isFavorite)}>
-                <Heart className={`h-4 w-4 ${isFavorite ? 'fill-rose-500 text-rose-500' : ''}`} />
+            <div className="flex gap-3">
+              <Button variant="outline" size="icon" onClick={handleLikeToggle} disabled={isLoadingLike || !currentUserId}>
+                <Heart className={`h-4 w-4 ${isLiked ? 'fill-rose-500 text-rose-500' : 'text-gray-500'}`} />
               </Button>
               <Button variant="outline" size="icon">
                 <Share2 className="h-4 w-4" />

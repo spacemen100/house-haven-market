@@ -1,6 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react"; // Added useState
 import { Property } from "@/types/property";
 import PropertyCard from "@/components/PropertyCard";
+import { supabase } from "../integrations/supabase/client"; // Added supabase import
+import { getUserProfile } from "../lib/profiles"; // Added getUserProfile import
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +14,7 @@ import { useTranslation } from "react-i18next";
 const NewestProperties = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  const [userLikedProperties, setUserLikedProperties] = useState<string[] | null>(null); // Added state
 
   console.log("Initializing NewestProperties component");
 
@@ -19,6 +22,24 @@ const NewestProperties = () => {
     queryKey: ['newest-properties'],
     queryFn: getNewestProperties,
   });
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          const profile = await getUserProfile(user.id);
+          setUserLikedProperties(profile?.liked_properties || []);
+        } else {
+          setUserLikedProperties([]);
+        }
+      } catch (error) {
+        console.error("Error fetching user profile for newest properties likes:", error);
+        setUserLikedProperties([]);
+      }
+    };
+    fetchProfile();
+  }, []);
 
   // Debug logs
   useEffect(() => {
@@ -69,11 +90,12 @@ const NewestProperties = () => {
           </div>
         ) : properties.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {properties.slice(0, 3).map((property) => (
+            {userLikedProperties !== null && properties.slice(0, 3).map((property) => (
               <PropertyCard
                 key={property.id}
                 property={property}
-                showListingType
+                userLikedProperties={userLikedProperties}
+                // showListingType prop removed as it's not a valid prop for PropertyCard
               />
             ))}
           </div>

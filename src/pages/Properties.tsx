@@ -15,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useCurrency, Currency } from '@/CurrencyContext';
 import { useTranslation } from 'react-i18next';
 import { supabase } from "@/lib/api/supabaseClient";
+import { getUserProfile } from "@/lib/profiles"; // Added import
 import { GEORGIAN_CITIES, GeorgianCity } from "@/data/georgianCities";
 // Types and Interfaces
 export type PropertyType = 'house' | 'apartment' | 'land' | 'commercial';
@@ -674,6 +675,7 @@ const Properties = () => {
   const [sortOption, setSortOption] = useState<string>("recent");
   const [activeTab, setActiveTab] = useState("filters");
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
+  const [userLikedProperties, setUserLikedProperties] = useState<string[] | null>(null); // Added state
 
   const currencyOptions = [
     { value: 'USD', label: t('currency.usd') },
@@ -834,6 +836,24 @@ const Properties = () => {
     queryKey: ['properties', listingType],
     queryFn: () => getPropertiesByType(listingType),
   });
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          const profile = await getUserProfile(user.id);
+          setUserLikedProperties(profile?.liked_properties || []);
+        } else {
+          setUserLikedProperties([]); // No user logged in
+        }
+      } catch (error) {
+        console.error("Error fetching user profile for liked properties:", error);
+        setUserLikedProperties([]); // Error case
+      }
+    };
+    fetchProfile();
+  }, []); // Empty dependency array to run once on mount
 
   useEffect(() => {
     setMinPriceInput(minPrice.toString());
@@ -2491,8 +2511,8 @@ const Properties = () => {
               </div>
             ) : filteredProperties.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredProperties.map((property) => (
-                  <PropertyCard key={property.id} property={property} />
+                {userLikedProperties !== null && filteredProperties.map((property) => (
+                  <PropertyCard key={property.id} property={property} userLikedProperties={userLikedProperties} />
                 ))}
               </div>
             ) : (
