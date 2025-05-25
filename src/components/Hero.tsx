@@ -20,7 +20,7 @@ const Hero = () => {
   );
 
   return (
-    <div className="relative bg-estate-800 py-16 md:py-24 lg:py-32">
+    <div className="relative bg-estate-800 py-16 md:py-24 lg:py-32 overflow-hidden">
       <Carousel
         opts={{
           align: "start",
