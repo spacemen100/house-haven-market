@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"; // Added useState
 import { Property } from "@/types/property";
 import PropertyCard from "@/components/PropertyCard";
-import { supabase } from "../integrations/supabase/client"; // Added supabase import
+import { supabase } from "@/integrations/supabase/client"; // Path alias updated
 import { getUserProfile } from "@/lib/profiles"; // Path alias updated
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
