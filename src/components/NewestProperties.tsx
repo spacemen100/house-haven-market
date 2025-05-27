@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"; // Added useState
+import { useEffect, useState } from "react";
 import { Property } from "@/types/property";
 import PropertyCard from "@/components/PropertyCard";
 import { supabase } from "@/integrations/supabase/client"; // Path alias updated
@@ -14,7 +14,8 @@ import { useTranslation } from "react-i18next";
 const NewestProperties = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  const [userLikedProperties, setUserLikedProperties] = useState<string[] | null>(null); // Added state
+  const [userLikedProperties, setUserLikedProperties] = useState<string[] | null>(null);
+  const [visiblePropertiesCount, setVisiblePropertiesCount] = useState(6);
 
   console.log("Initializing NewestProperties component");
 
@@ -72,7 +73,7 @@ const NewestProperties = () => {
 
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((n) => (
+            {[1, 2, 3, 4, 5, 6].map((n) => (
               <div key={n} className="space-y-4">
                 <Skeleton className="h-48 w-full rounded-lg" />
                 <Skeleton className="h-6 w-3/4" />
@@ -89,16 +90,28 @@ const NewestProperties = () => {
             <p className="text-red-500">{t('newestProperties.error')}: {error.message}</p>
           </div>
         ) : properties.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {userLikedProperties !== null && properties.slice(0, 3).map((property) => (
-              <PropertyCard
-                key={property.id}
-                property={property}
-                userLikedProperties={userLikedProperties}
-                // showListingType prop removed as it's not a valid prop for PropertyCard
-              />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {userLikedProperties !== null && properties.slice(0, visiblePropertiesCount).map((property) => (
+                <PropertyCard
+                  key={property.id}
+                  property={property}
+                  userLikedProperties={userLikedProperties}
+                  // showListingType prop removed as it's not a valid prop for PropertyCard
+                />
+              ))}
+            </div>
+            {visiblePropertiesCount < properties.length && (
+              <div className="mt-8 text-center">
+                <Button
+                  variant="outline"
+                  onClick={() => setVisiblePropertiesCount(prevCount => prevCount + 6)}
+                >
+                  {t('newestProperties.seeMore', "See more")}
+                </Button>
+              </div>
+            )}
+          </>
         ) : (
           <div className="text-center py-8">
             <p>{t('newestProperties.noProperties')}</p>
