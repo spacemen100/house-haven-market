@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, ChevronDown } from 'lucide-react';
+import { Menu, X, User, ChevronDown, Home, Key, Users, CalendarDays, LogIn, LogOut, UserPlus, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
@@ -102,6 +103,8 @@ const Navbar = () => {
   const { language, changeLanguage } = useLanguage();
   const { currency, setCurrency } = useCurrency();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLangPopoverOpen, setIsLangPopoverOpen] = useState(false);
+  const [isCurrencyPopoverOpen, setIsCurrencyPopoverOpen] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
   const [formData, setFormData] = useState({
@@ -188,7 +191,14 @@ const Navbar = () => {
 
   const handleLanguageChange = (lng: string) => {
     changeLanguage(lng);
-    setIsMenuOpen(false);
+    setIsMenuOpen(false); // For mobile menu
+    setIsLangPopoverOpen(false); // Close popover on selection
+  };
+
+  const handleCurrencyChange = (curr: Currency) => {
+    setCurrency(curr);
+    setIsCurrencyPopoverOpen(false); // Close popover on selection
+    setIsMenuOpen(false); // For mobile menu consistency
   };
 
   const handleNavigationWithFilter = (type: string) => {
@@ -197,9 +207,9 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="container py-4 flex items-center justify-between">
-        <Link to="/" className="flex flex-col items-center gap-2">
-          <div className="text-estate-800 text-2xl font-serif font-bold flex flex-col items-center gap-2">
+      <div className="container py-3 flex items-center justify-between">
+        <Link to="/" className="flex flex-col items-center gap-1">
+          <div className="text-estate-800 text-2xl font-serif font-bold flex flex-col items-center gap-1">
             House
             <img
               src="/georgiaflag.png"
@@ -211,44 +221,50 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          <div className="flex gap-8">
+        <div className="hidden md:flex items-center gap-6">
+          <div className="flex gap-6">
             <button
               onClick={() => handleNavigationWithFilter('sell')}
-              className="text-estate-neutral-700 hover:text-estate-800 font-medium"
+              className="text-estate-neutral-700 hover:text-estate-800 font-medium flex items-center gap-2"
             >
+              <Home size={18} />
               {t('sell')}
             </button>
             <button
               onClick={() => handleNavigationWithFilter('lease')}
-              className="text-estate-neutral-700 hover:text-estate-800 font-medium"
+              className="text-estate-neutral-700 hover:text-estate-800 font-medium flex items-center gap-2"
             >
+              <Key size={18} />
               {t('lease')}
             </button>
             <button
               onClick={() => handleNavigationWithFilter('rent')}
-              className="text-estate-neutral-700 hover:text-estate-800 font-medium"
+              className="text-estate-neutral-700 hover:text-estate-800 font-medium flex items-center gap-2"
             >
+              <Users size={18} />
               {t('rent')}
             </button>
             <button
               onClick={() => handleNavigationWithFilter('daily-rent')}
-              className="text-estate-neutral-700 hover:text-estate-800 font-medium"
+              className="text-estate-neutral-700 hover:text-estate-800 font-medium flex items-center gap-2"
             >
+              <CalendarDays size={18} />
               {t('dailyRent')}
             </button>
           </div>
 
           {/* Language Selector */}
-          <div className="relative group">
-            <Button variant="ghost" className="flex items-center gap-2 px-3 py-2 bg-estate-50 hover:bg-estate-100 rounded-lg transition-colors">
-              {language === 'en' ? <FlagUSA /> : language === 'ru' ? <FlagRussia /> : <FlagGeorgia />}
-              <span className="font-medium text-estate-800">
-                {language === 'en' ? 'EN' : language === 'ru' ? 'RU' : 'KA'}
-              </span>
-              <ChevronDown className="h-4 w-4 text-estate-600 group-hover:rotate-180 transition-transform" />
-            </Button>
-            <div className="absolute right-0 mt-1 w-40 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 z-50 hidden group-hover:block">
+          <Popover open={isLangPopoverOpen} onOpenChange={setIsLangPopoverOpen}>
+            <PopoverTrigger asChild>
+              <Button variant="ghost" className="flex items-center gap-2 px-3 py-2 bg-estate-50 hover:bg-estate-100 rounded-lg transition-colors">
+                {language === 'en' ? <FlagUSA /> : language === 'ru' ? <FlagRussia /> : <FlagGeorgia />}
+                <span className="font-medium text-estate-800">
+                  {language === 'en' ? 'EN' : language === 'ru' ? 'RU' : 'KA'}
+                </span>
+                <ChevronDown className={`h-4 w-4 text-estate-600 transition-transform ${isLangPopoverOpen ? 'rotate-180' : ''}`} />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-40 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 z-50">
               <button
                 onClick={() => handleLanguageChange('en')}
                 className={`flex items-center w-full px-4 py-2 text-sm ${language === 'en' ? 'bg-teal-50 text-teal-800' : 'text-gray-700 hover:bg-gray-100'}`}
@@ -270,40 +286,42 @@ const Navbar = () => {
                 <FlagGeorgia className="mr-3" />
                 <span>ქართული</span>
               </button>
-            </div>
-          </div>
+            </PopoverContent>
+          </Popover>
 
           {/* Currency Selector */}
-          <div className="relative group">
-            <Button variant="ghost" className="flex items-center gap-2 px-3 py-2 bg-estate-50 hover:bg-estate-100 rounded-lg transition-colors">
-              {currency === 'GEL' ? <FlagGeorgia /> : currency === 'USD' ? <FlagUSA /> : <FlagEU />}
-              <span className="font-medium text-estate-800">{currency}</span>
-              <ChevronDown className="h-4 w-4 text-estate-600 group-hover:rotate-180 transition-transform" />
-            </Button>
-            <div className="absolute right-0 mt-1 w-40 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 z-50 hidden group-hover:block">
+          <Popover open={isCurrencyPopoverOpen} onOpenChange={setIsCurrencyPopoverOpen}>
+            <PopoverTrigger asChild>
+              <Button variant="ghost" className="flex items-center gap-2 px-3 py-2 bg-estate-50 hover:bg-estate-100 rounded-lg transition-colors">
+                {currency === 'GEL' ? <FlagGeorgia /> : currency === 'USD' ? <FlagUSA /> : <FlagEU />}
+                <span className="font-medium text-estate-800">{currency}</span>
+                <ChevronDown className={`h-4 w-4 text-estate-600 transition-transform ${isCurrencyPopoverOpen ? 'rotate-180' : ''}`} />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-40 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 z-50">
               <button
-                onClick={() => setCurrency('GEL')}
+                onClick={() => handleCurrencyChange('GEL')}
                 className={`flex items-center w-full px-4 py-2 text-sm ${currency === 'GEL' ? 'bg-teal-50 text-teal-800' : 'text-gray-700 hover:bg-gray-100'}`}
               >
                 <FlagGeorgia className="mr-3" />
                 <span>GEL</span>
               </button>
               <button
-                onClick={() => setCurrency('USD')}
+                onClick={() => handleCurrencyChange('USD')}
                 className={`flex items-center w-full px-4 py-2 text-sm ${currency === 'USD' ? 'bg-teal-50 text-teal-800' : 'text-gray-700 hover:bg-gray-100'}`}
               >
                 <FlagUSA className="mr-3" />
                 <span>USD</span>
               </button>
               <button
-                onClick={() => setCurrency('EUR')}
+                onClick={() => handleCurrencyChange('EUR')}
                 className={`flex items-center w-full px-4 py-2 text-sm ${currency === 'EUR' ? 'bg-teal-50 text-teal-800' : 'text-gray-700 hover:bg-gray-100'}`}
               >
                 <FlagEU className="mr-3" />
                 <span>EUR</span>
               </button>
-            </div>
-          </div>
+            </PopoverContent>
+          </Popover>
         </div>
 
         <div className="hidden md:flex items-center gap-4">
@@ -317,9 +335,10 @@ const Navbar = () => {
               </Button>
               <Button
                 variant="outline"
-                className="text-red-500 border-red-500 hover:bg-red-50"
+                className="text-red-500 border-red-500 hover:bg-red-50 flex items-center gap-2"
                 onClick={handleLogout}
               >
+                <LogOut size={18} />
                 {t('logout')}
               </Button>
             </>
@@ -329,28 +348,32 @@ const Navbar = () => {
                 <DialogTrigger asChild>
                   <Button
                     variant="outline"
-                    className="flex gap-2"
+                    className="flex items-center gap-2"
                     onClick={() => setAuthMode('login')}
                   >
-                    <User size={18} />
+                    <LogIn size={18} />
                     <span>{t('login')}</span>
                   </Button>
                 </DialogTrigger>
                 <Button
                   variant="ghost"
-                  className="text-teal-600 hover:text-teal-700"
+                  className="text-teal-600 hover:text-teal-700 flex items-center gap-2"
                   onClick={() => {
                     setIsAuthDialogOpen(true);
                     setAuthMode('signup');
                   }}
                 >
+                  <UserPlus size={18} />
                   {t('signup')}
                 </Button>
               </Dialog>
             </>
           )}
-          <Button asChild className="bg-teal-500 hover:bg-teal-600">
-            <Link to="/sell">{t('addListing')}</Link>
+          <Button asChild className="bg-teal-500 hover:bg-teal-600 flex items-center gap-2">
+            <Link to="/sell">
+              <PlusCircle size={18} />
+              {t('addListing')}
+            </Link>
           </Button>
         </div>
 
@@ -367,14 +390,15 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-white py-4 px-6 shadow-lg animate-fade-in">
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             <button
               onClick={() => {
                 handleNavigationWithFilter('sell');
                 setIsMenuOpen(false);
               }}
-              className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
+              className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium flex items-center gap-2"
             >
+              <Home size={18} />
               {t('sell')}
             </button>
             <button
@@ -382,8 +406,9 @@ const Navbar = () => {
                 handleNavigationWithFilter('lease');
                 setIsMenuOpen(false);
               }}
-              className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
+              className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium flex items-center gap-2"
             >
+              <Key size={18} />
               {t('lease')}
             </button>
             <button
@@ -391,8 +416,9 @@ const Navbar = () => {
                 handleNavigationWithFilter('rent');
                 setIsMenuOpen(false);
               }}
-              className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
+              className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium flex items-center gap-2"
             >
+              <Users size={18} />
               {t('rent')}
             </button>
             <button
@@ -400,8 +426,9 @@ const Navbar = () => {
                 handleNavigationWithFilter('daily-rent');
                 setIsMenuOpen(false);
               }}
-              className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium"
+              className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium flex items-center gap-2"
             >
+              <CalendarDays size={18} />
               {t('dailyRent')}
             </button>
 
@@ -411,21 +438,21 @@ const Navbar = () => {
                 <div className="grid grid-cols-3 gap-2">
                   <button
                     onClick={() => handleLanguageChange('en')}
-                    className={`py-3 rounded-md flex flex-col items-center ${language === 'en' ? 'bg-teal-100 text-teal-800' : 'bg-gray-100'}`}
+                    className={`py-3 rounded-md flex flex-col items-center transition-colors ${language === 'en' ? 'bg-teal-100 text-teal-800' : 'bg-estate-50 hover:bg-estate-100'}`}
                   >
                     <FlagUSA width={24} height={18} />
                     <span className="text-xs mt-1">English</span>
                   </button>
                   <button
                     onClick={() => handleLanguageChange('ru')}
-                    className={`py-3 rounded-md flex flex-col items-center ${language === 'ru' ? 'bg-teal-100 text-teal-800' : 'bg-gray-100'}`}
+                    className={`py-3 rounded-md flex flex-col items-center transition-colors ${language === 'ru' ? 'bg-teal-100 text-teal-800' : 'bg-estate-50 hover:bg-estate-100'}`}
                   >
                     <FlagRussia width={24} height={18} />
                     <span className="text-xs mt-1">Русский</span>
                   </button>
                   <button
                     onClick={() => handleLanguageChange('ka')}
-                    className={`py-3 rounded-md flex flex-col items-center ${language === 'ka' ? 'bg-teal-100 text-teal-800' : 'bg-gray-100'}`}
+                    className={`py-3 rounded-md flex flex-col items-center transition-colors ${language === 'ka' ? 'bg-teal-100 text-teal-800' : 'bg-estate-50 hover:bg-estate-100'}`}
                   >
                     <FlagGeorgia width={24} height={18} />
                     <span className="text-xs mt-1">ქართული</span>
@@ -437,22 +464,22 @@ const Navbar = () => {
                 <h3 className="text-sm font-medium text-gray-700 mb-2">{t('currency')}</h3>
                 <div className="grid grid-cols-3 gap-2">
                   <button
-                    onClick={() => setCurrency('GEL')}
-                    className={`py-3 rounded-md flex flex-col items-center ${currency === 'GEL' ? 'bg-teal-100 text-teal-800' : 'bg-gray-100'}`}
+                    onClick={() => handleCurrencyChange('GEL')}
+                    className={`py-3 rounded-md flex flex-col items-center transition-colors ${currency === 'GEL' ? 'bg-teal-100 text-teal-800' : 'bg-estate-50 hover:bg-estate-100'}`}
                   >
                     <FlagGeorgia width={24} height={18} />
                     <span className="text-xs mt-1">GEL</span>
                   </button>
                   <button
-                    onClick={() => setCurrency('USD')}
-                    className={`py-3 rounded-md flex flex-col items-center ${currency === 'USD' ? 'bg-teal-100 text-teal-800' : 'bg-gray-100'}`}
+                    onClick={() => handleCurrencyChange('USD')}
+                    className={`py-3 rounded-md flex flex-col items-center transition-colors ${currency === 'USD' ? 'bg-teal-100 text-teal-800' : 'bg-estate-50 hover:bg-estate-100'}`}
                   >
                     <FlagUSA width={24} height={18} />
                     <span className="text-xs mt-1">USD</span>
                   </button>
                   <button
-                    onClick={() => setCurrency('EUR')}
-                    className={`py-3 rounded-md flex flex-col items-center ${currency === 'EUR' ? 'bg-teal-100 text-teal-800' : 'bg-gray-100'}`}
+                    onClick={() => handleCurrencyChange('EUR')}
+                    className={`py-3 rounded-md flex flex-col items-center transition-colors ${currency === 'EUR' ? 'bg-teal-100 text-teal-800' : 'bg-estate-50 hover:bg-estate-100'}`}
                   >
                     <FlagEU width={24} height={18} />
                     <span className="text-xs mt-1">EUR</span>
@@ -472,12 +499,13 @@ const Navbar = () => {
                   </Button>
                   <Button
                     variant="outline"
-                    className="text-red-500 border-red-500 hover:bg-red-50"
+                    className="text-red-500 border-red-500 hover:bg-red-50 flex items-center gap-2 justify-center"
                     onClick={() => {
                       handleLogout();
                       setIsMenuOpen(false);
                     }}
                   >
+                    <LogOut size={18} />
                     {t('logout')}
                   </Button>
                 </>
@@ -485,31 +513,35 @@ const Navbar = () => {
                 <>
                   <Button
                     variant="outline"
-                    className="flex gap-2 justify-center"
+                    className="flex items-center gap-2 justify-center"
                     onClick={() => {
                       setIsAuthDialogOpen(true);
                       setAuthMode('login');
                       setIsMenuOpen(false);
                     }}
                   >
-                    <User size={18} />
+                    <LogIn size={18} />
                     <span>{t('login')}</span>
                   </Button>
                   <Button
                     variant="ghost"
-                    className="text-teal-600 hover:text-teal-700"
+                    className="text-teal-600 hover:text-teal-700 flex items-center gap-2 justify-center"
                     onClick={() => {
                       setIsAuthDialogOpen(true);
                       setAuthMode('signup');
                       setIsMenuOpen(false);
                     }}
                   >
+                    <UserPlus size={18} />
                     {t('signup')}
                   </Button>
                 </>
               )}
-              <Button asChild className="bg-teal-500 hover:bg-teal-600">
-                <Link to="/sell" onClick={() => setIsMenuOpen(false)}>{t('addListing')}</Link>
+              <Button asChild className="bg-teal-500 hover:bg-teal-600 flex items-center gap-2 justify-center">
+                <Link to="/sell" onClick={() => setIsMenuOpen(false)}>
+                  <PlusCircle size={18} />
+                  {t('addListing')}
+                </Link>
               </Button>
             </div>
           </div>
