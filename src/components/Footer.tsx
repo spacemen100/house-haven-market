@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Company Info */}
           <div>
-            <div className="text-2xl font-serif font-bold mb-6">House<span className="text-teal-500">სახლი</span></div>
+            <div className="text-2xl font-serif font-bold mb-6">Annonces Immobilières<span className="text-teal-500">Région Lyonnaise</span></div>
             <p className="text-estate-neutral-200 mb-6">
               {t('footer.companyDescription')}
             </p>
@@ -60,7 +60,7 @@ const Footer = () => {
 
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-estate-neutral-300 text-sm">
-            © 2025 Houseსახლი. {t('footer.rightsReserved')}
+            © 2025 Annonces Immobilières Région Lyonnaise. {t('footer.rightsReserved')}
           </p>
           <div className="flex gap-6 mt-4 md:mt-0">
             <Link to="/privacy" className="text-estate-neutral-300 hover:text-teal-500 text-sm">
