@@ -4,6 +4,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import translationEN from './locales/en/translation.json';
 import translationRU from './locales/ru/translation.json';
 import translationKA from './locales/ka/translation.json';
+import translationFR from './locales/fr/translation.json'; // Ajouter cette ligne
 
 i18n
   .use(LanguageDetector)
@@ -18,6 +19,9 @@ i18n
       },
       ru: {
         translation: translationRU
+      },
+      fr: {
+        translation: translationFR // Ajouter cette section
       }
     },
     detection: {
@@ -26,14 +30,15 @@ i18n
       // Fallback personnalisé pour la détection
       convertDetectedLanguage: (lng) => {
         // Si la langue détectée n'est pas supportée, retourner 'ka'
-        return ['ka', 'en', 'ru'].includes(lng) ? lng : 'ka';
+        return ['ka', 'en', 'ru', 'fr'].includes(lng) ? lng : 'ka'; // Ajouter 'fr'
       }
     },
     lng: 'ka', // Langue par défaut explicite
-    supportedLngs: ['ka', 'en', 'ru'], // Langues supportées (ordre important)
+    supportedLngs: ['ka', 'en', 'ru', 'fr'], // Ajouter 'fr' aux langues supportées
     fallbackLng: {
       'en': ['ka'], // Si traduction anglaise manque, utiliser géorgien
       'ru': ['ka'], // Si traduction russe manque, utiliser géorgien
+      'fr': ['en', 'ka'], // Si traduction française manque, utiliser anglais puis géorgien
       'default': ['en'] // Fallback ultime (ne devrait jamais arriver)
     },
     load: 'languageOnly', // Ne pas charger les variantes régionales (ex: fr-CA)

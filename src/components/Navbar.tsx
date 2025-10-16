@@ -31,12 +31,8 @@ const FlagGeorgia = ({ width = 20, height = 15 }) => (
     xmlns="http://www.w3.org/2000/svg"
   >
     <rect width="60" height="30" fill="#fff" />
-
-    {/* Grande croix rouge centrale */}
     <rect x="26" y="0" width="8" height="30" fill="#d40000" />
     <rect x="0" y="11" width="60" height="8" fill="#d40000" />
-
-    {/* Croix bolnur-katskhuri dans chaque coin */}
     <g transform="translate(10, 7)">
       <Cross />
     </g>
@@ -51,21 +47,6 @@ const FlagGeorgia = ({ width = 20, height = 15 }) => (
     </g>
   </svg>
 );
-
-const Cross = () => (
-  <>
-    {/* Croix principale */}
-    <rect x="-1" y="-3" width="2" height="6" fill="#d40000" />
-    <rect x="-3" y="-1" width="6" height="2" fill="#d40000" />
-
-    {/* Petits bras pour style bolnur */}
-    <rect x="-0.5" y="-5" width="1" height="2" fill="#d40000" />
-    <rect x="-0.5" y="3" width="1" height="2" fill="#d40000" />
-    <rect x="-5" y="-0.5" width="2" height="1" fill="#d40000" />
-    <rect x="3" y="-0.5" width="2" height="1" fill="#d40000" />
-  </>
-);
-
 
 const FlagUSA = ({ width = 20, height = 15 }) => (
   <svg viewBox="0 0 60 30" width={width} height={height} className="flex-shrink-0">
@@ -87,6 +68,14 @@ const FlagUSA = ({ width = 20, height = 15 }) => (
   </svg>
 );
 
+const FlagFrance = ({ width = 20, height = 15 }) => (
+  <svg viewBox="0 0 60 30" width={width} height={height} className="flex-shrink-0">
+    <rect width="20" height="30" x="0" fill="#002395"/>
+    <rect width="20" height="30" x="20" fill="#fff"/>
+    <rect width="20" height="30" x="40" fill="#ed2939"/>
+  </svg>
+);
+
 const FlagEU = ({ width = 20, height = 15 }) => (
   <svg viewBox="0 0 60 30" width={width} height={height} className="flex-shrink-0">
     <rect width="60" height="30" fill="#003399"/>
@@ -94,6 +83,17 @@ const FlagEU = ({ width = 20, height = 15 }) => (
     <circle cx="30" cy="15" r="6" fill="#003399"/>
     <circle cx="30" cy="15" r="4" fill="#ffcc00"/>
   </svg>
+);
+
+const Cross = () => (
+  <>
+    <rect x="-1" y="-3" width="2" height="6" fill="#d40000" />
+    <rect x="-3" y="-1" width="6" height="2" fill="#d40000" />
+    <rect x="-0.5" y="-5" width="1" height="2" fill="#d40000" />
+    <rect x="-0.5" y="3" width="1" height="2" fill="#d40000" />
+    <rect x="-5" y="-0.5" width="2" height="1" fill="#d40000" />
+    <rect x="3" y="-0.5" width="2" height="1" fill="#d40000" />
+  </>
 );
 
 type Currency = 'GEL' | 'USD' | 'EUR';
@@ -191,18 +191,40 @@ const Navbar = () => {
 
   const handleLanguageChange = (lng: string) => {
     changeLanguage(lng);
-    setIsMenuOpen(false); // For mobile menu
-    setIsLangPopoverOpen(false); // Close popover on selection
+    setIsMenuOpen(false);
+    setIsLangPopoverOpen(false);
   };
 
   const handleCurrencyChange = (curr: Currency) => {
     setCurrency(curr);
-    setIsCurrencyPopoverOpen(false); // Close popover on selection
-    setIsMenuOpen(false); // For mobile menu consistency
+    setIsCurrencyPopoverOpen(false);
+    setIsMenuOpen(false);
   };
 
   const handleNavigationWithFilter = (type: string) => {
     navigate(`/properties?type=${type}`);
+  };
+
+  // Fonction pour obtenir le drapeau en fonction de la langue
+  const getLanguageFlag = (lng: string) => {
+    switch (lng) {
+      case 'en': return <FlagUSA />;
+      case 'ru': return <FlagRussia />;
+      case 'fr': return <FlagFrance />;
+      case 'ka': return <FlagGeorgia />;
+      default: return <FlagGeorgia />;
+    }
+  };
+
+  // Fonction pour obtenir le texte de la langue
+  const getLanguageText = (lng: string) => {
+    switch (lng) {
+      case 'en': return 'EN';
+      case 'ru': return 'RU';
+      case 'fr': return 'FR';
+      case 'ka': return 'KA';
+      default: return 'KA';
+    }
   };
 
   return (
@@ -257,20 +279,27 @@ const Navbar = () => {
           <Popover open={isLangPopoverOpen} onOpenChange={setIsLangPopoverOpen}>
             <PopoverTrigger asChild>
               <Button variant="ghost" className="flex items-center gap-2 px-3 py-2 bg-estate-50 hover:bg-estate-100 rounded-lg transition-colors">
-                {language === 'en' ? <FlagUSA /> : language === 'ru' ? <FlagRussia /> : <FlagGeorgia />}
+                {getLanguageFlag(language)}
                 <span className="font-medium text-estate-800">
-                  {language === 'en' ? 'EN' : language === 'ru' ? 'RU' : 'KA'}
+                  {getLanguageText(language)}
                 </span>
                 <ChevronDown className={`h-4 w-4 text-estate-600 transition-transform ${isLangPopoverOpen ? 'rotate-180' : ''}`} />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-40 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 z-50">
+            <PopoverContent className="w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 z-50">
               <button
                 onClick={() => handleLanguageChange('en')}
                 className={`flex items-center w-full px-4 py-2 text-sm ${language === 'en' ? 'bg-teal-50 text-teal-800' : 'text-gray-700 hover:bg-gray-100'}`}
               >
                 <FlagUSA className="mr-3" />
                 <span>English</span>
+              </button>
+              <button
+                onClick={() => handleLanguageChange('fr')}
+                className={`flex items-center w-full px-4 py-2 text-sm ${language === 'fr' ? 'bg-teal-50 text-teal-800' : 'text-gray-700 hover:bg-gray-100'}`}
+              >
+                <FlagFrance className="mr-3" />
+                <span>Français</span>
               </button>
               <button
                 onClick={() => handleLanguageChange('ru')}
@@ -435,13 +464,20 @@ const Navbar = () => {
             <div className="flex flex-col gap-4 mt-4">
               <div>
                 <h3 className="text-sm font-medium text-gray-700 mb-2">{t('language')}</h3>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-4 gap-2">
                   <button
                     onClick={() => handleLanguageChange('en')}
                     className={`py-3 rounded-md flex flex-col items-center transition-colors ${language === 'en' ? 'bg-teal-100 text-teal-800' : 'bg-estate-50 hover:bg-estate-100'}`}
                   >
                     <FlagUSA width={24} height={18} />
                     <span className="text-xs mt-1">English</span>
+                  </button>
+                  <button
+                    onClick={() => handleLanguageChange('fr')}
+                    className={`py-3 rounded-md flex flex-col items-center transition-colors ${language === 'fr' ? 'bg-teal-100 text-teal-800' : 'bg-estate-50 hover:bg-estate-100'}`}
+                  >
+                    <FlagFrance width={24} height={18} />
+                    <span className="text-xs mt-1">Français</span>
                   </button>
                   <button
                     onClick={() => handleLanguageChange('ru')}
