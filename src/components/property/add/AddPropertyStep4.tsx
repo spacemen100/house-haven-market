@@ -19,7 +19,7 @@ import {
   FormControl,
   FormMessage
 } from "@/components/ui/form";
-import { FRENCH_CITIES, GeorgianCity } from "@/data/georgianCities";
+import { FRENCH_CITIES, FrenchCity } from "@/data/georgianCities";
 import { getDistrictsForCity } from "@/data/georgianDistricts";
 import { getStreetsForDistrict } from "@/data/georgianStreets";
 import { useTranslation } from 'react-i18next';
@@ -93,7 +93,7 @@ const AddPropertyStep4 = ({
 
   useEffect(() => {
     if (selectedCity) {
-      const districts = getDistrictsForCity(selectedCity as GeorgianCity);
+      const districts = getDistrictsForCity(selectedCity as FrenchCity);
       setAvailableDistricts(districts);
       if (!districts.includes(form.getValues("addressDistrict"))) {
         form.setValue("addressDistrict", "");
@@ -109,7 +109,7 @@ const AddPropertyStep4 = ({
   useEffect(() => {
     if (selectedCity && selectedDistrict) {
       const streets = getStreetsForDistrict(
-        selectedCity as GeorgianCity,
+        selectedCity as FrenchCity,
         selectedDistrict
       );
       setAvailableStreets(streets);

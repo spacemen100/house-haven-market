@@ -1,9 +1,9 @@
-import { GeorgianCity } from "./georgianCities";
+import { FrenchCity } from "./georgianCities";
 import i18n from 'i18next';
 import { GEORGIAN_DISTRICTS } from "./georgianDistricts";  // Add this line
 
 type StreetData = {
-  [city in GeorgianCity]?: {
+  [city in FrenchCity]?: {
     [district: string]: string[];
   };
 };
@@ -720,7 +720,7 @@ export const GEORGIAN_STREETS: StreetData = {
 
 
 
-export const getStreetsForDistrict = (city: GeorgianCity, district: string): string[] => {
+export const getStreetsForDistrict = (city: FrenchCity, district: string): string[] => {
   // Trouver la clé de district originale (non traduite)
   const rawDistricts = GEORGIAN_DISTRICTS[city] || [];
   const rawDistrict = rawDistricts.find(d => 
