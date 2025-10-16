@@ -23,21 +23,11 @@ const FlagFrance = ({ width = 20, height = 15 }) => (
 const FlagUK = ({ width = 20, height = 15 }) => (
   <svg viewBox="0 0 60 30" width={width} height={height} className="flex-shrink-0">
     <rect width="60" height="30" fill="#012169"/>
-    <rect width="60" height="2" y="4" fill="#fff"/>
-    <rect width="60" height="2" y="8" fill="#fff"/>
-    <rect width="60" height="2" y="12" fill="#fff"/>
-    <rect width="60" height="2" y="16" fill="#fff"/>
-    <rect width="60" height="2" y="20" fill="#fff"/>
-    <rect width="60" height="2" y="24" fill="#fff"/>
-    <rect width="25" height="14" fill="#c8102e"/>
-    <rect width="2" height="30" x="10" fill="#fff"/>
-    <rect width="2" height="30" x="16" fill="#fff"/>
-    <rect width="2" height="30" x="22" fill="#fff"/>
-    <rect width="2" height="30" x="28" fill="#fff"/>
-    <rect width="2" height="30" x="34" fill="#fff"/>
-    <rect width="2" height="30" x="40" fill="#fff"/>
-    <rect width="2" height="30" x="46" fill="#fff"/>
-    <rect width="2" height="30" x="52" fill="#fff"/>
+    <path d="M6,0 L6,30 M12,0 L12,30 M18,0 L18,30 M24,0 L24,30 M30,0 L30,30 M36,0 L36,30 M42,0 L42,30 M48,0 L48,30 M54,0 L54,30 M0,6 L60,6 M0,12 L60,12 M0,18 L60,18 M0,24 L60,24" fill="none" stroke="#fff" strokeWidth="2"/>
+    <path d="M0,0 L60,30 M60,0 L0,30" fill="none" stroke="#c8102e" strokeWidth="4"/>
+    <path d="M24,0 L36,0 L36,6 L60,6 L60,18 L36,18 L36,30 L24,30 L24,18 L0,18 L0,6 L24,6 Z" fill="#c8102e"/>
+    <path d="M25,0 L35,0 L35,7 L60,7 L60,17 L35,17 L35,30 L25,30 L25,17 L0,17 L0,7 L25,7 Z" fill="#fff"/>
+    <path d="M25,1 L34,1 L34,8 L59,8 L59,16 L34,16 L34,29 L26,29 L26,16 L1,16 L1,8 L26,8 Z" fill="#c8102e"/>
   </svg>
 );
 
@@ -83,7 +73,7 @@ const Navbar = () => {
     setFormData(prev => ({ ...prev, [id]: value }));
   };
 
-  const handleEmailLogin = async (e: React.FormFormEvent) => {
+  const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const success = await signInWithEmail(formData.email, formData.password);
 
