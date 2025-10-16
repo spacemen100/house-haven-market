@@ -16,7 +16,7 @@ import { useCurrency, Currency } from '@/CurrencyContext';
 import { useTranslation } from 'react-i18next';
 import { supabase } from "@/lib/api/supabaseClient";
 import { getUserProfile } from "@/lib/profiles"; // Added import
-import { FRENCH_CITIES, FrenchCity } from "@/data/georgianCities";
+import { FRENCH_CITIES, FrenchCity } from "@/data/FrenchCities";
 // Types and Interfaces
 export type PropertyType = 'house' | 'apartment' | 'land' | 'commercial';
 export type ListingType = 'sale' | 'rent' | 'rent_by_day' | 'lease';

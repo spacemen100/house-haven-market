@@ -19,8 +19,8 @@ import {
   FormControl,
   FormMessage
 } from "@/components/ui/form";
-import { FRENCH_CITIES, FrenchCity } from "@/data/georgianCities";
-import { getDistrictsForCity } from "@/data/georgianDistricts";
+import { FRENCH_CITIES, FrenchCity } from "@/data/FrenchCities";
+import { getDistrictsForCity } from "@/data/FrenchDistricts";
 import { getStreetsForDistrict } from "@/data/georgianStreets";
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/LanguageContext';

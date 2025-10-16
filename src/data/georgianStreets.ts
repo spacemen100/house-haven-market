@@ -1,6 +1,6 @@
-import { FrenchCity } from "./georgianCities";
+import { FrenchCity } from "./FrenchCities";
 import i18n from 'i18next';
-import { GEORGIAN_DISTRICTS } from "./georgianDistricts";  // Add this line
+import { GEORGIAN_DISTRICTS } from "./FrenchDistricts";  // Add this line
 
 type StreetData = {
   [city in FrenchCity]?: {
