@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/form";
 import { FRENCH_CITIES, FrenchCity } from "@/data/FrenchCities";
 import { getDistrictsForCity } from "@/data/FrenchDistricts";
-import { getStreetsForDistrict } from "@/data/georgianStreets";
+import { getStreetsForDistrict } from "@/data/FrenchStreets";
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/LanguageContext';
 

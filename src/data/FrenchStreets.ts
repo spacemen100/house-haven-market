@@ -306,7 +306,7 @@ export const FRENCH_STREETS: StreetData = {
     ]
   },
 
-  "Toulouse": [
+  "Toulouse": {
     "Arnaud Bernard": [
       "Rue du Taur",
       "Rue des Filatiers",
