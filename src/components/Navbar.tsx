@@ -11,7 +11,6 @@ import { signInWithEmail, signUpWithEmail, signOut } from '@/lib/api/auth';
 import { supabase } from '@/lib/api/supabaseClient';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/LanguageContext';
-import { useCurrency } from '@/CurrencyContext';
 
 const FlagFrance = ({ width = 20, height = 15 }) => (
   <svg viewBox="0 0 60 30" width={width} height={height} className="flex-shrink-0">
@@ -42,19 +41,9 @@ const FlagUK = ({ width = 20, height = 15 }) => (
   </svg>
 );
 
-const FlagEU = ({ width = 20, height = 15 }) => (
-  <svg viewBox="0 0 60 30" width={width} height={height} className="flex-shrink-0">
-    <rect width="60" height="30" fill="#003399"/>
-    <circle cx="30" cy="15" r="8" fill="#ffcc00"/>
-    <circle cx="30" cy="15" r="6" fill="#003399"/>
-    <circle cx="30" cy="15" r="4" fill="#ffcc00"/>
-  </svg>
-);
-
 const Navbar = () => {
   const { t } = useTranslation();
   const { language, changeLanguage } = useLanguage();
-  const { currency } = useCurrency();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLangPopoverOpen, setIsLangPopoverOpen] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
@@ -94,7 +83,7 @@ const Navbar = () => {
     setFormData(prev => ({ ...prev, [id]: value }));
   };
 
-  const handleEmailLogin = async (e: React.FormEvent) => {
+  const handleEmailLogin = async (e: React.FormFormEvent) => {
     e.preventDefault();
     const success = await signInWithEmail(formData.email, formData.password);
 
@@ -201,12 +190,6 @@ const Navbar = () => {
               <CalendarDays size={18} />
               {t('dailyRent')}
             </button>
-          </div>
-
-          {/* Currency Display (seulement EUR) */}
-          <div className="flex items-center gap-2 px-3 py-2 bg-estate-50 rounded-lg">
-            <FlagEU />
-            <span className="font-medium text-estate-800">EUR</span>
           </div>
 
           {/* Language Selector */}
@@ -348,17 +331,6 @@ const Navbar = () => {
             </button>
 
             <div className="flex flex-col gap-4 mt-4">
-              {/* Currency Display (seulement EUR) */}
-              <div>
-                <h3 className="text-sm font-medium text-gray-700 mb-2">{t('currency')}</h3>
-                <div className="flex justify-center">
-                  <div className="py-3 px-6 rounded-md bg-estate-50 flex flex-col items-center">
-                    <FlagEU width={24} height={18} />
-                    <span className="text-sm mt-1 font-medium">EUR</span>
-                  </div>
-                </div>
-              </div>
-
               {/* Language Selector */}
               <div>
                 <h3 className="text-sm font-medium text-gray-700 mb-2">{t('language')}</h3>
