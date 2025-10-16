@@ -1,6 +1,6 @@
 import { FrenchCity } from "./FrenchCities";
 import i18n from 'i18next';
-import { GEORGIAN_DISTRICTS } from "./FrenchDistricts";  // Add this line
+import { FRENCH_DISTRICTS } from "./FrenchDistricts";
 
 type StreetData = {
   [city in FrenchCity]?: {
@@ -8,726 +8,553 @@ type StreetData = {
   };
 };
 
-export const GEORGIAN_STREETS: StreetData = {
-  "Tbilissi": {
-    "Vake-Saburtalo": [
-      "Chavchavadze Avenue",
-      "Pekini Street",
-      "Irakli Abashidze Street",
-      "Tsereteli Avenue",
-      "Vazha Pshavela Avenue",
-      "Alexander Kazbegi Avenue",
-      "Tamarashvili Street",
-      "Lisi Lake Road",
-      "Chitadze Street",
-      "Grigol Tabidze Street",
-      "Akaki Tsereteli Street",
-      "Besiki Street",
-      "Zakaria Paliashvili Street"
+export const FRENCH_STREETS: StreetData = {
+  "Paris": {
+    "1er arrondissement - Louvre": [
+      "Rue de Rivoli",
+      "Avenue de l'Opéra",
+      "Rue Saint-Honoré",
+      "Place Vendôme",
+      "Rue du Louvre",
+      "Quai du Louvre",
+      "Rue de la Paix",
+      "Rue des Pyramides",
+      "Rue Saint-Denis",
+      "Rue de la Ferronnerie"
     ],
-    "Isani-Samgori": [
-      "Ketevan Tsamebuli Avenue",
-      "Aghmashenebeli Avenue",
-      "Queen Ketevan Street",
-      "Vazha Pshavela Avenue",
-      "Tsereteli Avenue",
-      "Samgori Street",
-      "Akaki Tsereteli Street",
-      "Tsinamdzgvrishvili Street",
-      "Varketili Street",
-      "Navtlugi Street",
-      "Abashvili Street"
+    "2e arrondissement - Bourse": [
+      "Rue Montmartre",
+      "Rue du Quatre-Septembre",
+      "Rue de la Banque",
+      "Rue Réaumur",
+      "Rue Saint-Denis",
+      "Rue Saint-Fiacre",
+      "Rue du Mail",
+      "Rue de la Jussienne",
+      "Rue d'Aboukir",
+      "Rue de Cléry"
     ],
-    "Didube-Chughureti": [
-      "Merab Kostava Avenue",
-      "Tsereteli Avenue",
-      "Aghmashenebeli Avenue",
-      "Marjanishvili Street",
-      "Zviad Gamsakhurdia Street",
-      "Chughureti Street",
-      "Zubalashvili Street",
-      "Kukia Street",
-      "Didube Street",
-      "Kukia Street",
-      "Orbeliani Street",
-      "Marjanishvili Street"
+    "3e arrondissement - Temple": [
+      "Rue de Bretagne",
+      "Rue des Archives",
+      "Rue Vieille-du-Temple",
+      "Rue du Temple",
+      "Rue des Francs-Bourgeois",
+      "Rue de Turenne",
+      "Rue de Saintonge",
+      "Rue de Picardie",
+      "Rue Charlot",
+      "Rue du Parc-Royal"
     ],
-    "Gldani-Nadzaladevi": [
-      "Guramishvili Avenue",
-      "Vazha Pshavela Avenue",
-      "Khizanishvili Street",
-      "Nadzaladevi Street",
-      "Gldani Street",
-      "Davit Agmashenebeli Alley",
-      "Mukhran Machavariani Street",
-      "Aleksi-Meskhishvili Street"
+    "4e arrondissement - Hôtel-de-Ville": [
+      "Rue de Rivoli",
+      "Rue Saint-Antoine",
+      "Rue des Rosiers",
+      "Rue Vieille-du-Temple",
+      "Quai de l'Hôtel-de-Ville",
+      "Place des Vosges",
+      "Rue du Roi-de-Sicile",
+      "Rue Saint-Paul",
+      "Rue des Jardins-Saint-Paul",
+      "Rue François-Miron"
     ],
-    "Mtatsminda-Krtsanisi": [
-      "Rustaveli Avenue",
-      "Mtatsminda Street",
-      "Krtsanisi Street",
-      "Giorgi Leonidze Street",
-      "Chavchavadze Avenue",
-      "Shota Rustaveli Avenue",
-      "Leselidze Street",
-      "Betlemi Street",
-      "Tabukashvili Street",
-      "Chonkadze Street"
+    "5e arrondissement - Panthéon": [
+      "Boulevard Saint-Michel",
+      "Rue Mouffetard",
+      "Rue Saint-Jacques",
+      "Place de la Contrescarpe",
+      "Rue des Écoles",
+      "Rue Claude-Bernard",
+      "Rue du Cardinal-Lemoine",
+      "Rue de la Montagne-Sainte-Geneviève",
+      "Rue Descartes",
+      "Rue de l'Estrapade"
     ],
-    "Old Tbilisi": [
-      "Kote Abkhazi Street",
-      "Erekle II Street",
-      "Leselidze Street",
-      "Lado Asatiani Street",
-      "Shavteli Street",
-      "Sioni Street",
-      "Shavteli Street",
-      "Gorgasali Street"
+    "Le Marais": [
+      "Rue des Francs-Bourgeois",
+      "Rue Vieille-du-Temple",
+      "Rue du Temple",
+      "Rue des Archives",
+      "Rue de Turenne",
+      "Rue de Sévigné",
+      "Rue Pavée",
+      "Rue des Rosiers",
+      "Rue du Roi-de-Sicile",
+      "Rue Saint-Antoine"
     ],
-    "Dighomi": [
-      "Didi Dighomi Street",
-      "Digomi Street",
-      "Petre Kavtaradze Street",
-      "Guramishvili Avenue",
-      "Aghmashenebeli Alley"
+    "Saint-Germain-des-Prés": [
+      "Boulevard Saint-Germain",
+      "Rue de Rennes",
+      "Rue du Four",
+      "Rue de Buci",
+      "Rue de Seine",
+      "Rue Bonaparte",
+      "Rue des Saints-Pères",
+      "Rue de l'Université",
+      "Rue du Vieux-Colombier",
+      "Rue de l'Abbaye"
     ],
-    "Avlabari": [
-      "Metekhi Rise",
-      "Samreklo Street",
-      "Metekhi Street",
-      "Gorgasali Street",
-      "Ketevan Tsamebuli Avenue"
+    "Quartier Latin": [
+      "Boulevard Saint-Michel",
+      "Rue Mouffetard",
+      "Rue Saint-Jacques",
+      "Rue des Écoles",
+      "Rue du Cardinal-Lemoine",
+      "Rue de la Montagne-Sainte-Geneviève",
+      "Rue Claude-Bernard",
+      "Rue du Pot-de-Fer",
+      "Rue Lacépède",
+      "Rue Linné"
     ],
-    "Vera": [
-      "Melikishvili Avenue",
-      "Janashia Street",
-      "Tarkhnishvili Street",
-      "Zandukeli Street",
-      "Kipshidze Street",
-      "Tarkhnishvili Street"
+    "Champs-Élysées": [
+      "Avenue des Champs-Élysées",
+      "Avenue Montaigne",
+      "Avenue George-V",
+      "Rue du Faubourg-Saint-Honoré",
+      "Rue de la Boétie",
+      "Rue de Ponthieu",
+      "Rue de Berri",
+      "Rue Washington",
+      "Rue de Bassano",
+      "Rue Galilée"
     ],
-    "Sololaki": [
-      "Lado Asatiani Street",
-      "Shalva Dadiani Street",
-      "Machabeli Street"
-    ],
-    "Ortachala": [
-      "Krtsanisi Street",
-      "Gorgasali Street",
-      "Ortachala Rise"
-    ],
-
-    "Lisi": [
-      "Lisi Lake Road",
-      "Lisi Hill Street"
-    ],
-    "Tskneti": [
-      "Tskneti Highway",
-      "Tskneti Center Street"
-    ],
-    "Tabakhmela": [
-      "Tabakhmela Village Road"
-    ],
-    "Kojori": [
-      "Kojori-Tbilisi Road"
-    ],
-    "Bagebi": [
-      "Bagebi Street",
-      "University Street"
-    ],
-    "Nutsubidze Plateau": [
-      "Nutsubidze Street",
-      "Vazha Pshavela Avenue (Segment IV)"
-    ],
-    "Temka": [
-      "Temka Street",
-      "Khizanishvili Street"
-    ],
-    "Lilo": [
-      "Lilo Settlement",
-      "Lilo Airport Road"
-    ],
-    "Okrokana": [
-      "Okrokana Road"
-    ],
-    "Shindisi": [
-      "Shindisi-Tbilisi Road"
-    ],
-    "Tsavkisi": [
-      "Tsavkisi Village Road"
-    ],
-    "Sofelgora": [
-      "Sofelgora Road"
+    "Montmartre": [
+      "Rue Lepic",
+      "Rue des Abbesses",
+      "Rue Caulaincourt",
+      "Rue Saint-Vincent",
+      "Rue du Mont-Cenis",
+      "Rue Cortot",
+      "Rue Norvins",
+      "Rue des Saules",
+      "Rue de l'Abreuvoir",
+      "Place du Tertre"
     ]
   },
 
-  "Batumi": {
-    "City Center": [
-      "Ninoshvili Street",
-      "King Parnavaz Street",
-      "Chavchavadze Street",
-      "Seaside Boulevard",
-      "Memed Abashidze Avenue",
-      "Zubalashvili Street",
-      "Gorgiladze Street",
-      "Europe Square",
-      "Piazza Square",
-      "May 6 Park Street"
+  "Marseille": {
+    "Vieux-Port": [
+      "Quai du Port",
+      "Quai de Rive-Neuve",
+      "La Canebière",
+      "Rue Saint-Ferréol",
+      "Rue de la République",
+      "Rue Paradis",
+      "Cours Belsunce",
+      "Rue Breteuil",
+      "Rue Grignan",
+      "Rue Sainte"
     ],
-    "Old Boulevard": [
-      "Batumi Boulevard",
-      "Zakaria Paliashvili Street",
-      "Seaside Promenade",
-      "Alphabetic Tower Street",
-      "Neptune Square",
-      "Dancing Fountains Street"
+    "Le Panier": [
+      "Rue du Panier",
+      "Rue du Petit-Puits",
+      "Rue des Moulins",
+      "Rue du Refuge",
+      "Rue des Repenties",
+      "Rue du Lacydon",
+      "Place de Lenche",
+      "Rue du Baignoir",
+      "Rue des Pistoles",
+      "Rue du Chantier"
     ],
-    "New Boulevard": [
-      "Miracle Park Street",
-      "Chacha Tower Street",
-      "Bike Lane",
-      "Skatepark Street"
+    "Notre-Dame-de-la-Garde": [
+      "Boulevard Notre-Dame",
+      "Rue du Commandant-Rolland",
+      "Rue du Docteur-Jean-Fiolle",
+      "Rue Fort-du-Sanctuaire",
+      "Rue du Vallon-des-Auffes",
+      "Rue des Catalans",
+      "Rue du Onze-Novembre",
+      "Rue du Docteur-Gérard",
+      "Rue des Peintres",
+      "Rue du Vallon-de-l'Oratoire"
     ],
-    "Gonio": [
-      "Gonio Fortress Road",
-      "Beachside Street",
-      "Airport Highway",
-      "Adjara Street",
-      "Ancient Road"
+    "Les Calanques": [
+      "Corniche du Président-John-Fitzgerald-Kennedy",
+      "Avenue de la Corriche",
+      "Route des Calanques",
+      "Boulevard de la Corderie",
+      "Rue du Vallon-de-l'Oriol",
+      "Rue des Goudes",
+      "Rue du Sormiou",
+      "Rue de la Cayolle",
+      "Rue de Montredon",
+      "Rue du Commandant-de-Larminat"
     ],
-    "Makhinjauri": [
-      "Botanical Garden Street",
-      "Green Cape Road",
-      "Resort Avenue",
-      "Mountain View Street"
+    "Prado": [
+      "Avenue du Prado",
+      "Boulevard Michelet",
+      "Rue du Commandant-Rolland",
+      "Rue Saint-Barnabé",
+      "Rue du Docteur-Charles-Delacroix",
+      "Rue du Borde",
+      "Rue de Lodi",
+      "Rue du Docteur-Julien",
+      "Rue du Baretty",
+      "Rue Saint-Pierre"
     ],
-    "Bagrationi": [
-      "King Bagration Street",
-      "Heroes Square",
-      "Victory Street",
-      "Military Road"
+    "Endoume": [
+      "Rue d'Endoume",
+      "Rue du Vallon-des-Auffes",
+      "Rue des Peintres-Roux",
+      "Rue du Docteur-Fiolle",
+      "Rue du Onze-Novembre",
+      "Rue du Vallon-de-l'Oratoire",
+      "Rue des Catalans",
+      "Rue du Fort-Saint-Nicolas",
+      "Rue du Pharo",
+      "Rue des Bergers"
     ],
-    "Port Area": [
-      "Harbor Street",
-      "Ferry Terminal Road",
-      "Fisherman's Wharf",
-      "Marine Station Street"
+    "Cours Julien": [
+      "Cours Julien",
+      "Rue des Trois-Rois",
+      "Rue des Trois-Mages",
+      "Rue d'Aubagne",
+      "Rue de la Palud",
+      "Rue du Musée",
+      "Rue des Petites-Maries",
+      "Rue Pastoret",
+      "Rue des Minimes",
+      "Rue des Bernardines"
     ],
-    "Anaria": [
-      "Anaria Beach Street",
-      "Residential Lane",
-      "Palm Tree Avenue",
-      "Sunset Boulevard"
-    ],
-    "Industrial Zone": [
-      "Factory Street",
-      "Cargo Port Road",
-      "Railway Access Street"
-    ],
-    "Historical District": [
-      "Old Batumi Street",
-      "Mosque Street",
-      "Orta Mosque Alley",
-      "Jewish Quarter Street"
-    ],
-    "Tamarisi": [
-      "Tamarisi Street",
-      "Border Road",
-      "Rustavi Settlement Street"
-    ],
-    "Chakvi": [
-      "Chakvi Highway",
-      "Resort Street",
-      "Beachfront Road"
-    ],
-    "Kobuleti Outskirts": [
-      "Kobuleti-Batumi Highway",
-      "Forest Lane",
-      "Seaside Alley"
-    ],
-    "Airport Area": [
-      "Batumi International Airport Road",
-      "Tbel Abuseridze Street",
-      "Aviation Street"
-    ],
-    "Adlia": [
-      "Adlia Street",
-      "Shalva Inasaridze Street",
-      "New Adlia Boulevard"
-    ],
-    "Angisa": [
-      "Angisa Street",
-      "Sunrise Road",
-      "Residential Lane"
-    ],
-    "Tamar Mephe": [
-      "Tamar Mephe Avenue",
-      "Queen Tamar Street",
-      "Adjara Alley"
-    ],
-    "Green Cape": [
-      "Green Cape Coastal Road",
-      "Garden Entrance Street",
-      "Sea View Path"
-    ],
-    "Kakhaberi": [
-      "Kakhaberi Street",
-      "Canal Street",
-      "Southern Bay Street"
+    "La Plaine": [
+      "Place Jean-Jaurès",
+      "Rue du Faubourg-du-Cours",
+      "Rue des Chapeliers",
+      "Rue des Trois-Frères-Carasso",
+      "Rue du Théâtre-Français",
+      "Rue de la Palud",
+      "Rue des Feuillants",
+      "Rue des Convalescents",
+      "Rue des Petites-Maries",
+      "Rue d'Aix"
     ]
   },
 
-  // ... (keep other cities as they were)
-  "Kutaisi": {
-    "City Center": [
-      "David Agmashenebeli Street",
-      "Shota Rustaveli Street",
-      "Tsereteli Street",
-      "Queen Tamar Street",
-      "Vekua Street"
+  "Lyon": {
+    "Presqu'île": [
+      "Rue de la République",
+      "Rue du Président-Édouard-Herriot",
+      "Rue de Brest",
+      "Rue Gasparin",
+      "Rue de la Barre",
+      "Place Bellecour",
+      "Place des Terreaux",
+      "Rue du Plat",
+      "Rue Mercière",
+      "Quai Saint-Antoine"
     ],
-    "White Bridge": [
-      "White Bridge Street",
-      "Rioni River Street",
-      "Colchis Street"
+    "Vieux Lyon": [
+      "Rue Saint-Jean",
+      "Rue du Bœuf",
+      "Rue des Trois-Maries",
+      "Rue Lainerie",
+      "Rue Tramassac",
+      "Rue de la Bombarde",
+      "Rue du Palais-de-Justice",
+      "Rue de la Juiverie",
+      "Montée du Gourguillon",
+      "Montée Saint-Barthélémy"
     ],
-    "Bagrati": [
-      "Bagrati Cathedral Street",
-      "Gelati Monastery Road",
-      "Historical Museum Street"
+    "Croix-Rousse": [
+      "Boulevard de la Croix-Rousse",
+      "Montée de la Grande-Côte",
+      "Rue des Capucins",
+      "Rue d'Austerlitz",
+      "Rue Burdeau",
+      "Rue des Tables-Claudiennes",
+      "Rue des Fantasques",
+      "Rue des Pierres-Plantées",
+      "Rue des Chartreux",
+      "Rue Imbert-Colomès"
     ],
-    "Motsameta": [
-      "Motsameta Monastery Street",
-      "River View Street",
-      "Monastery Hill Road"
+    "Part-Dieu": [
+      "Rue Garibaldi",
+      "Rue de la Villette",
+      "Rue Servient",
+      "Rue Paul-Bert",
+      "Rue Moncey",
+      "Rue de Bonnel",
+      "Rue du Dauphiné",
+      "Rue de la Part-Dieu",
+      "Rue de l'Épi-de-Blé",
+      "Rue de la Vigne"
     ],
-    "Gelati": [
-      "Gelati Academy Street",
-      "Science Avenue",
-      "University Lane"
+    "Confluence": [
+      "Quai Perrache",
+      "Quai Rambaud",
+      "Rue Paul-Montrochet",
+      "Rue de la Confluence",
+      "Rue Smith",
+      "Rue des Docks",
+      "Rue de l'Annonciade",
+      "Rue Delandine",
+      "Rue Sainte-Blandine",
+      "Rue de la Charité"
     ],
-    "Sataplia": [
-      "Sataplia Cave Street",
-      "Dinosaur Park Road",
-      "Nature Reserve Lane"
-    ],
-    "Tskaltubo": [
-      "Spa Resort Street",
-      "Health Avenue",
-      "Sanatorium Lane"
-    ],
-    "Avangard": [
-      "Avangard Street",
-      "Market Lane",
-      "Station Road"
-    ],
-    "Gora": [
-      "Gora Hill Street",
-      "Viewpoint Road",
-      "Fortress Lane"
-    ],
-    "Red Bridge": [
-      "Red Bridge Street",
-      "Bridge Market Road",
-      "Railway Overpass Street"
-    ],
-    "Khoni Road Area": [
-      "Khoni Highway",
-      "Industrial Lane",
-      "Logistics Street"
-    ],
-    "Nikea": [
-      "Nikea Street",
-      "Residential Alley",
-      "Parkview Street"
-    ],
-    "Chkvishi": [
-      "Village Road",
-      "River Trail",
-      "Farmland Street"
-    ],
-    "Rioni District": [
-      "Rioni Riverside Street",
-      "Fishing Dock Road",
-      "Lower Town Avenue"
-    ],
-    "Mukhrani": [
-      "Mukhrani Street",
-      "Old Quarter Lane",
-      "Historic Trail"
-    ],
-    "Tskhenistskali": [
-      "Tskhenistskali River Road",
-      "Bridgeview Street",
-      "East Bank Path"
+    "Gerland": [
+      "Avenue Jean-Jaurès",
+      "Rue Marcel-Mérieux",
+      "Rue du Docteur-Émile-Roux",
+      "Rue de l'Université",
+      "Rue du Professeur-Pierre-Marion",
+      "Rue du Professeur-Grignard",
+      "Rue du Docteur-Fleming",
+      "Rue du Docteur-Calmette",
+      "Rue du Professeur-Beauvisage",
+      "Rue du Professeur-Zimmern"
     ]
   },
 
-  "Rustavi": {
-    "City Center": [
-      "Rustaveli Street",
-      "Shartava Street",
-      "Chavchavadze Street",
-      "Freedom Square",
-      "City Hall Street"
+  "Toulouse": [
+    "Arnaud Bernard": [
+      "Rue du Taur",
+      "Rue des Filatiers",
+      "Rue des Lois",
+      "Rue de la Bourse",
+      "Rue des Chapeliers",
+      "Rue des Blanchers",
+      "Rue du Poids-de-l'Huile",
+      "Rue des Gestes",
+      "Rue de la Trésorerie",
+      "Rue des Marchands"
     ],
-    "East Zone": [
-      "Rustavi Street",
-      "Metallurgists Street",
-      "Industrial Road",
-      "Power Plant Avenue"
+    "Capitole": [
+      "Place du Capitole",
+      "Rue du Taur",
+      "Rue d'Alsace-Lorraine",
+      "Rue de la Pomme",
+      "Rue des Changes",
+      "Rue Saint-Rome",
+      "Rue du Poids-de-l'Huile",
+      "Rue des Filatiers",
+      "Rue des Lois",
+      "Rue du Languedoc"
     ],
-    "West Zone": [
-      "Giorgi Chkondideli Street",
-      "Ilia Chavchavadze Street",
-      "Vakhtang Gorgasali Street",
-      "Mshvidoba Street"
+    "Saint-Cyprien": [
+      "Allée Charles-de-Fitte",
+      "Rue de la République",
+      "Rue de Gascogne",
+      "Rue des Anges",
+      "Rue de Rémusat",
+      "Rue de la Concorde",
+      "Rue de Cugnaux",
+      "Rue du Béarnais",
+      "Rue du Lot",
+      "Rue de la Chaîne"
     ],
-    "Old Rustavi": [
-      "Beridze Street",
-      "Shamkorets Street",
-      "Old Factory Road"
+    "Carmes": [
+      "Rue des Couteliers",
+      "Rue des Polinaires",
+      "Rue des Salenques",
+      "Rue du Languedoc",
+      "Rue de la Dalbade",
+      "Rue de la Fonderie",
+      "Rue des Marchands",
+      "Rue des Filatiers",
+      "Rue des Gestes",
+      "Rue du Poids-de-l'Huile"
     ],
-    "New Rustavi": [
-      "New District Street",
-      "Block A Street",
-      "Modern Avenue",
-      "Residential Complex Lane"
+    "Saint-Étienne": [
+      "Rue de la Dalbade",
+      "Rue du Parlement",
+      "Rue des Fleurs",
+      "Rue des Arts",
+      "Rue de la Bourse",
+      "Rue des Puits-Creusés",
+      "Rue du Languedoc",
+      "Rue des Couteliers",
+      "Rue des Polinaires",
+      "Rue des Salenques"
     ],
-    "Rustavi Industrial Park": [
-      "Tech Park Street",
-      "Warehouse Road",
-      "Logistics Street"
-    ],
-    "Krtsanisi District": [
-      "Krtsanisi Road",
-      "Hilltop Street",
-      "Gardabani Border Lane"
-    ],
-    "Shavnabada Area": [
-      "Shavnabada Street",
-      "Military Base Road",
-      "South Access Lane"
-    ],
-    "Rustavi Lake Area": [
-      "Lake Promenade",
-      "Waterfront Avenue",
-      "Picnic Park Road"
+    "Saint-Aubin": [
+      "Rue du Faubourg-Saint-Aubin",
+      "Rue de la Colombette",
+      "Rue des Amidonniers",
+      "Rue de la Grave",
+      "Rue des Salenques",
+      "Rue de la Bourse",
+      "Rue des Filatiers",
+      "Rue des Gestes",
+      "Rue du Poids-de-l'Huile",
+      "Rue des Marchands"
     ]
   },
 
-  "Gori": {
-    "City Center": [
-      "Stalin Avenue",
-      "Chavchavadze Street",
-      "Ketskhoveli Street",
-      "Freedom Square",
-      "Cultural Center Street"
+  "Nice": {
+    "Vieux Nice": [
+      "Cours Saleya",
+      "Rue Saint-François-de-Paule",
+      "Rue de la Préfecture",
+      "Rue Droite",
+      "Rue de la Poissonnerie",
+      "Rue Benoît-Bunico",
+      "Rue de la Loge",
+      "Rue de la Terrasse",
+      "Rue du Jésus",
+      "Rue de la Boucherie"
     ],
-    "Tserovani": [
-      "Tserovani Settlement Street",
-      "Tserovani Residential Lane"
+    "Promenade des Anglais": [
+      "Promenade des Anglais",
+      "Avenue de la Californie",
+      "Avenue des Phocéens",
+      "Avenue de Suède",
+      "Avenue de Verdun",
+      "Boulevard Gambetta",
+      "Rue de France",
+      "Rue de la Buffa",
+      "Rue Meyerbeer",
+      "Rue de Rivoli"
     ],
-    "Fortress Area": [
-      "Gori Fortress Street",
-      "Museum Street",
-      "Old Fortress Road",
-      "Historical District Lane"
+    "Carré d'Or": [
+      "Avenue de Suède",
+      "Avenue de Verdun",
+      "Rue de France",
+      "Rue de la Buffa",
+      "Rue Meyerbeer",
+      "Rue du Congrès",
+      "Rue de la Tour",
+      "Rue Maccarani",
+      "Rue de Belgique",
+      "Rue d'Angleterre"
     ],
-    "Gori University Area": [
-      "Gori University Street",
-      "Science Avenue",
-      "Student Quarter Lane"
+    "Libération": [
+      "Avenue de la Libération",
+      "Boulevard de l'Armée-des-Alpes",
+      "Rue Arson",
+      "Rue de Lépante",
+      "Rue de la Mantega",
+      "Rue Smolett",
+      "Rue Rossini",
+      "Rue Paganini",
+      "Rue Berlioz",
+      "Rue Verdi"
     ],
-    "Zemo Gori": [
-      "Zemo Gori Street",
-      "Highland District Road",
-      "Mountain View Lane"
-    ],
-    "Lower Gori": [
-      "Mtkvari River Road",
-      "Suburban Avenue",
-      "Industrial Zone Lane"
-    ],
-    "Gori Industrial Zone": [
-      "Industrial District Street",
-      "Factory Road",
-      "Transportation Hub Lane"
-    ],
-    "Kakhati District": [
-      "Kakhati Street",
-      "Central Park Road",
-      "Kakhati Square"
-    ],
-    "Gori Lake Area": [
-      "Lake Promenade",
-      "Picnic Park Road",
-      "Lakeside Avenue"
+    "Port Lympia": [
+      "Quai des Deux-Emmanuel",
+      "Quai Lunel",
+      "Quai du Commerce",
+      "Rue Cassini",
+      "Rue Bavastro",
+      "Rue Ségurane",
+      "Rue de la Providence",
+      "Rue de la Terrasse",
+      "Rue Bonaparte",
+      "Rue de la Préfecture"
     ]
   },
 
-  "Zugdidi": {
-    "City Center": [
-      "Dadiani Street",
-      "Merab Kostava Street",
-      "Rustaveli Street",
-      "Shota Rustaveli Square",
-      "Freedom Square"
+  "Nantes": {
+    "Centre-ville": [
+      "Rue Crébillon",
+      "Rue de la Fosse",
+      "Rue du Calvaire",
+      "Rue du Château",
+      "Rue de la Barillerie",
+      "Rue des Carmes",
+      "Rue de Verdun",
+      "Rue de Strasbourg",
+      "Rue de l'Héronnière",
+      "Rue du Maréchal-de-Lattre-de-Tassigny"
     ],
-    "Suburban": [
-      "Tamar Mepe Street",
-      "Kolkheti Street",
-      "Kvirike Street",
-      "Kobuleti Road",
-      "Mtsvane Kontskhi Street"
+    "Île de Nantes": [
+      "Boulevard Léon-Bureau",
+      "Quai des Antilles",
+      "Quai de la Loire",
+      "Rue Henri-Gautier",
+      "Rue des Usines",
+      "Rue de l'Île-Mabon",
+      "Rue des Bâteliers",
+      "Rue des Chantiers",
+      "Rue des Docks",
+      "Rue des Trentemoult"
     ],
-    "Dadiani Palace Area": [
-      "Dadiani Palace Street",
-      "Park Avenue",
-      "Historical Museum Street"
+    "Malakoff": [
+      "Rue de Malakoff",
+      "Rue du Coudray",
+      "Rue des Hauts-Pavés",
+      "Rue de la Contrie",
+      "Rue des Dervallières",
+      "Rue du Landreau",
+      "Rue de la Bourgeonnière",
+      "Rue des Rochettes",
+      "Rue de la Charbonnière",
+      "Rue des Garettes"
     ],
-    "Old Town": [
-      "Old Bazaar Street",
-      "Tbilisi Street",
-      "Rioni River Road"
-    ],
-    "Zugdidi Park Area": [
-      "Zugdidi Park Avenue",
-      "Green Boulevard",
-      "Recreational Zone Road"
-    ],
-    "Industrial Zone": [
-      "Factory Street",
-      "Cargo Port Road",
-      "Workshop Avenue"
-    ],
-    "Zugdidi Port Area": [
-      "Zugdidi Port Road",
-      "Ferry Terminal Lane",
-      "Waterfront Street"
+    "Doulon": [
+      "Rue de Doulon",
+      "Rue du Landreau",
+      "Rue des Rochettes",
+      "Rue de la Charbonnière",
+      "Rue des Garettes",
+      "Rue de la Contrie",
+      "Rue des Dervallières",
+      "Rue des Hauts-Pavés",
+      "Rue du Coudray",
+      "Rue de Malakoff"
     ]
   },
-  "Poti": {
-    "Port Area": [
-      "Port Street",
-      "Seaside Avenue",
-      "Industrial Zone Road"
+
+  "Montpellier": {
+    "Écusson": [
+      "Rue de la Loge",
+      "Rue du Palais",
+      "Rue de l'Ancien-Courrier",
+      "Rue des Étuves",
+      "Rue de l'Argenterie",
+      "Rue du Bras-de-Fer",
+      "Rue du Pila-Saint-Gély",
+      "Rue de la Valfère",
+      "Rue du Plan-d'Agde",
+      "Rue de la Vieille"
     ],
-    "Beachside": [
-      "Beach Boulevard",
-      "Marina Street",
-      "Lighthouse Lane"
+    "Antigone": [
+      "Place du Nombre-d'Or",
+      "Place du Thessalie",
+      "Place du Millénaire",
+      "Place de l'École",
+      "Place de la Comédie",
+      "Place de la Défense",
+      "Place de la Révolution",
+      "Place de la Démocratie",
+      "Place des Martyrs-de-la-Résistance",
+      "Place des Arceaux"
     ],
-    "City Center": [
-      "Nikoladze Street",
-      "Chavchavadze Street",
-      "Rustaveli Avenue",
-      "Freedom Square",
-      "Dadiani Street"
+    "Port Marianne": [
+      "Rue de la Chenaie",
+      "Rue des Violettes",
+      "Rue des Jacinthes",
+      "Rue des Pivoines",
+      "Rue des Lilas",
+      "Rue des Magnolias",
+      "Rue des Camélias",
+      "Rue des Glycines",
+      "Rue des Hortensias",
+      "Rue des Pâquerettes"
     ],
-    "Maltakva": [
-      "Maltakva Beach Road",
-      "Maltakva Park Street",
-      "Maltakva Village Street"
-    ],
-    "Nabada": [
-      "Nabada Street",
-      "Port Access Road",
-      "Industrial Park Lane"
-    ],
-    "Suburban Areas": [
-      "Tamar Mepe Street",
-      "Kolkheti Street",
-      "Rioni River Road"
-    ],
-    "Khobi": [
-      "Khobi Central Street",
-      "Egrisi Mountain Road"
-    ],
-    "Ureki": [
-      "Ureki Beach Road",
-      "Black Sand Avenue",
-      "Resort Street"
-    ],
-    "Zugdidi": [
-      "Zugdidi Central Avenue",
-      "Samegrelo Street",
-      "Zugdidi Park Road"
-    ],
-    "Paliastomi Lake District": [
-      "Paliastomi Lake Shore Road",
-      "Paliastomi Nature Reserve Street"
-    ],
-    "Kolkheti National Park": [
-      "Kolkhida Wetlands Road",
-      "Nature Reserve Path"
-    ]
-  },
-  "Borjomi": {
-    "Central Park": [
-      "Park Avenue",
-      "Mineral Springs Street",
-      "Stalin Street"
-    ],
-    "Resort Area": [
-      "Spa Street",
-      "Wellness Avenue",
-      "Sanatorium Road"
-    ]
-  },
-  "Telavi": {
-    "Old Town": [
-      "King Erekle II Street",
-      "Wine Valley Road",
-      "Fortress Hill Street"
-    ],
-    "Wine District": [
-      "Vineyard Lane",
-      "Cellar Street",
-      "Harvest Road"
-    ]
-  },
-  "Mtskheta": {
-    "Old Town": [
-      "Svetitskhoveli Street",
-      "Armazi Street",
-      "Church Hill Road"
-    ],
-    "Monastery Area": [
-      "Jvari Monastery Street",
-      "Monastic Lane",
-      "Pilgrimage Road"
-    ]
-  },
-  "Akhaltsikhe": {
-    "Rabati Fortress": [
-      "Fortress Road",
-      "Ahmed-Pasha Street",
-      "Old Town Street"
-    ],
-    "Cultural District": [
-      "Museum Street",
-      "Art Gallery Lane",
-      "Cultural Center Road"
-    ]
-  },
-  "Kvareli": {
-    "Wine District": [
-      "Kindzmarauli Street",
-      "Winemakers Alley",
-      "Lakeview Street"
-    ],
-    "Nature Reserve": [
-      "Forest Trail",
-      "Lake Street",
-      "Wildlife Lane"
-    ]
-  },
-  "Ambrolauri": {
-    "Wine District": [
-      "Khvanchkara Street",
-      "Usakhelauri Lane",
-      "Racha Valley Road"
-    ],
-    "Mountain Area": [
-      "Alpine Street",
-      "Ski Resort Road",
-      "Mountain View Lane"
-    ]
-  },
-  "Akhalkalaki": {
-    "Armenian District": [
-      "Yerevan Street",
-      "Lake Sevan Street",
-      "Mount Ararat Street"
-    ],
-    "Historic Center": [
-      "Ancient Street",
-      "Heritage Lane",
-      "Cultural Road"
-    ]
-  },
-  "Bolnisi": {
-    "German Settlement": [
-      "Katharinenfeld Street",
-      "Martin Luther Street",
-      "Vinegrowers Lane"
-    ],
-    "Industrial Zone": [
-      "Factory Street",
-      "Manufacturing Avenue",
-      "Warehouse Lane"
-    ]
-  },
-  "Samtredia": {
-    "City Center": [
-      "Rustaveli Street",
-      "Chavchavadze Street",
-      "Tamar Mepe Street",
-      "Gogebashvili Street",
-      "Kostava Street"
-    ],
-    "Railway District": [
-      "Station Street",
-      "Railway Workers Street",
-      "Depot Street"
-    ],
-    "Industrial Zone": [
-      "Factory Street",
-      "Warehouse Lane",
-      "Logistics Avenue"
-    ]
-  },
-  "Khashuri": {
-    "City Center": [
-      "Rustaveli Street",
-      "Chavchavadze Street",
-      "Tsereteli Street",
-      "Kostava Street",
-      "Queen Tamar Street"
-    ],
-    "Surami District": [
-      "Surami Street",
-      "Mineral Water Street",
-      "Resort Lane"
-    ],
-    "Railway District": [
-      "Station Street",
-      "Railway Avenue",
-      "Depot Street"
-    ]
-  },
-  "Senaki": {
-    "City Center": [
-      "Rustaveli Street",
-      "Chavchavadze Street",
-      "Kutaisi Street",
-      "Kostava Street",
-      "Tamar Mepe Street"
-    ],
-    "Old Town": [
-      "Church Street",
-      "Market Street",
-      "Theatre Street"
-    ],
-    "Railway District": [
-      "Station Street",
-      "Railway Workers Street",
-      "Depot Street"
+    "Millénaire": [
+      "Avenue du Millénaire",
+      "Rue de la Chenaie",
+      "Rue des Violettes",
+      "Rue des Jacinthes",
+      "Rue des Pivoines",
+      "Rue des Lilas",
+      "Rue des Magnolias",
+      "Rue des Camélias",
+      "Rue des Glycines",
+      "Rue des Hortensias"
     ]
   }
 };
 
-
-
 export const getStreetsForDistrict = (city: FrenchCity, district: string): string[] => {
   // Trouver la clé de district originale (non traduite)
-  const rawDistricts = GEORGIAN_DISTRICTS[city] || [];
+  const rawDistricts = FRENCH_DISTRICTS[city] || [];
   const rawDistrict = rawDistricts.find(d => 
     i18n.t(`districts.${city}.${d}`, { defaultValue: d }) === district
   ) || district;
 
-  const streets = GEORGIAN_STREETS[city]?.[rawDistrict] || [];
+  const streets = FRENCH_STREETS[city]?.[rawDistrict] || [];
   return streets.map(street => 
     i18n.t(`streets.${city}.${rawDistrict}.${street}`, { defaultValue: street })
   );
