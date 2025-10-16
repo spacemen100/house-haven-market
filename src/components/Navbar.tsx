@@ -54,7 +54,7 @@ const FlagEU = ({ width = 20, height = 15 }) => (
 const Navbar = () => {
   const { t } = useTranslation();
   const { language, changeLanguage } = useLanguage();
-  const { currency } = useCurrency(); // Plus de setCurrency car on a seulement EUR
+  const { currency } = useCurrency();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLangPopoverOpen, setIsLangPopoverOpen] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
@@ -151,12 +151,10 @@ const Navbar = () => {
     navigate(`/properties?type=${type}`);
   };
 
-  // Fonction pour obtenir le drapeau en fonction de la langue
   const getLanguageFlag = (lng: string) => {
     return lng === 'en' ? <FlagUK /> : <FlagFrance />;
   };
 
-  // Fonction pour obtenir le texte de la langue
   const getLanguageText = (lng: string) => {
     return lng === 'en' ? 'EN' : 'FR';
   };
@@ -164,11 +162,11 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container py-3 flex items-center justify-between">
-        <Link to="/" className="flex flex-col items-center gap-1">
-          <div className="text-estate-800 text-2xl font-serif font-bold flex flex-col items-center gap-1">
-            House
-            <FlagEU width={24} height={18} />
-            <span className="text-teal-500">Real Estate</span>
+        {/* Logo et nom du site */}
+        <Link to="/" className="flex flex-col items-start">
+          <div className="text-estate-800 font-serif font-bold flex flex-col">
+            <div className="text-2xl leading-tight">Annonces Immobilières</div>
+            <div className="text-lg text-teal-600 leading-tight">Région Lyonnaise</div>
           </div>
         </Link>
 
