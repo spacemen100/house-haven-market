@@ -2,26 +2,18 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import translationEN from './locales/en/translation.json';
-import translationRU from './locales/ru/translation.json';
-import translationKA from './locales/ka/translation.json';
-import translationFR from './locales/fr/translation.json'; // Ajouter cette ligne
+import translationFR from './locales/fr/translation.json';
 
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources: {
-      ka: {
-        translation: translationKA
+      fr: {
+        translation: translationFR
       },
       en: {
         translation: translationEN
-      },
-      ru: {
-        translation: translationRU
-      },
-      fr: {
-        translation: translationFR // Ajouter cette section
       }
     },
     detection: {
@@ -29,23 +21,21 @@ i18n
       caches: ['localStorage'],
       // Fallback personnalisé pour la détection
       convertDetectedLanguage: (lng) => {
-        // Si la langue détectée n'est pas supportée, retourner 'ka'
-        return ['ka', 'en', 'ru', 'fr'].includes(lng) ? lng : 'ka'; // Ajouter 'fr'
+        // Si la langue détectée n'est pas supportée, retourner 'fr'
+        return ['fr', 'en'].includes(lng) ? lng : 'fr';
       }
     },
-    lng: 'ka', // Langue par défaut explicite
-    supportedLngs: ['ka', 'en', 'ru', 'fr'], // Ajouter 'fr' aux langues supportées
+    lng: 'fr', // Langue par défaut explicite - Français
+    supportedLngs: ['fr', 'en'], // Langues supportées
     fallbackLng: {
-      'en': ['ka'], // Si traduction anglaise manque, utiliser géorgien
-      'ru': ['ka'], // Si traduction russe manque, utiliser géorgien
-      'fr': ['en', 'ka'], // Si traduction française manque, utiliser anglais puis géorgien
-      'default': ['en'] // Fallback ultime (ne devrait jamais arriver)
+      'en': ['fr'], // Si traduction anglaise manque, utiliser français
+      'default': ['fr'] // Fallback ultime
     },
-    load: 'languageOnly', // Ne pas charger les variantes régionales (ex: fr-CA)
+    load: 'languageOnly', // Ne pas charger les variantes régionales
     interpolation: {
       escapeValue: false
     },
-    debug: process.env.NODE_ENV === 'development' // Mode debug seulement en dev
+    debug: process.env.NODE_ENV === 'development'
   });
 
 export default i18n;

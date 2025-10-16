@@ -1,58 +1,52 @@
 // src/contexts/CurrencyContext.tsx
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-type Currency = 'GEL' | 'USD' | 'EUR';
+// On ne garde qu'EUR comme devise
+type Currency = 'EUR';
 
 interface CurrencyContextType {
   currency: Currency;
-  setCurrency: (currency: Currency) => void;
-  convertPrice: (price: number, fromCurrency?: Currency) => number;
-  formatPrice: (price: number, fromCurrency?: Currency) => string;
+  // setCurrency est supprimé car on a une seule devise
+  convertPrice: (price: number, fromCurrency?: string) => number;
+  formatPrice: (price: number, fromCurrency?: string) => string;
 }
 
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
-// Conversion rates
+// Taux de conversion vers EUR uniquement
 const conversionRates = {
-  GEL: {
-    GEL: 1,
-    USD: 1 / 2.75, // 1 GEL = 1 / 2.75 USD
-    EUR: 1 / 3.12, // 1 GEL = 1 / 3.12 EUR
-  },
-  USD: {
-    GEL: 2.75, // 1 USD = 2.75 GEL
-    USD: 1,
-    EUR: 2.75 / 3.12, // 1 USD = 2.75 / 3.12 EUR
-  },
-  EUR: {
-    GEL: 3.12, // 1 EUR = 3.12 GEL
-    USD: 3.12 / 2.75, // 1 EUR = 3.12 / 2.75 USD
-    EUR: 1,
-  },
+  GEL: 0.32,   // 1 GEL = 0.32 EUR
+  USD: 0.92,   // 1 USD = 0.92 EUR
+  EUR: 1,      // 1 EUR = 1 EUR
+  // Vous pouvez ajouter d'autres devises si nécessaire
 };
 
 export const CurrencyProvider = ({ children }: { children: ReactNode }) => {
-  const [currency, setCurrency] = useState<Currency>('GEL');
+  const [currency] = useState<Currency>('EUR'); // Fixé à EUR
 
-  const convertPrice = (price: number, fromCurrency: Currency = 'GEL') => {
-    // Ensure fromCurrency is valid
+  const convertPrice = (price: number, fromCurrency: string = 'GEL') => {
+    // S'assurer que fromCurrency est valide, sinon utiliser GEL par défaut
     const validFromCurrency = fromCurrency in conversionRates ? fromCurrency : 'GEL';
-    // Convert the price from the source currency to the target currency
-    return price * conversionRates[validFromCurrency][currency];
+    // Convertir le prix de la devise source vers EUR
+    return price * conversionRates[validFromCurrency as keyof typeof conversionRates];
   };
 
-  const formatPrice = (price: number, fromCurrency: Currency = 'GEL') => {
+  const formatPrice = (price: number, fromCurrency: string = 'GEL') => {
     const convertedPrice = convertPrice(price, fromCurrency);
-    return new Intl.NumberFormat(undefined, {
+    return new Intl.NumberFormat('fr-FR', {
       style: 'currency',
-      currency,
+      currency: 'EUR',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
     }).format(convertedPrice);
   };
 
   return (
-    <CurrencyContext.Provider value={{ currency, setCurrency, convertPrice, formatPrice }}>
+    <CurrencyContext.Provider value={{ 
+      currency, 
+      convertPrice, 
+      formatPrice 
+    }}>
       {children}
     </CurrencyContext.Provider>
   );
