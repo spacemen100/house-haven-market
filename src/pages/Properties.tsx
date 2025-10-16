@@ -16,7 +16,7 @@ import { useCurrency, Currency } from '@/CurrencyContext';
 import { useTranslation } from 'react-i18next';
 import { supabase } from "@/lib/api/supabaseClient";
 import { getUserProfile } from "@/lib/profiles"; // Added import
-import { GEORGIAN_CITIES, GeorgianCity } from "@/data/georgianCities";
+import { FRENCH_CITIES, GeorgianCity } from "@/data/georgianCities";
 // Types and Interfaces
 export type PropertyType = 'house' | 'apartment' | 'land' | 'commercial';
 export type ListingType = 'sale' | 'rent' | 'rent_by_day' | 'lease';
@@ -1873,7 +1873,7 @@ const Properties = () => {
     <div className="space-y-2">
       <h4 className="font-medium">{t('filters.city')}</h4>
       <div className="max-h-60 overflow-y-auto">
-        {GEORGIAN_CITIES.map((city) => (
+        {FRENCH_CITIES.map((city) => (
           <div key={`${prefix}city-${city}`} className="flex items-center space-x-2">
             <Checkbox
               id={`${prefix}city-${city}`}
