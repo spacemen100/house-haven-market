@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import Sell from "./pages/Sell";
 import Account from "./pages/Account";
 import VerificationError from "./pages/VerificationError";
+import MovingServicesWrapper from "./pages/MovingServices"; // Import the new component
 import { supabase } from "@/lib/api/supabaseClient";
 import { useEffect, useState } from "react";
 import { CurrencyProvider } from '@/CurrencyContext';
@@ -48,6 +49,7 @@ const App = () => {
               <Route path="/property/:id" element={<PropertyDetail />} />
               <Route path="/properties" element={<Properties />} />
               <Route path="/sell" element={<Sell />} />
+              <Route path="/moving-services" element={<MovingServicesWrapper />} /> 
               <Route
                 path="/account"
                 element={user ? <Account /> : <Navigate to="/" replace />}

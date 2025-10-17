@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, ChevronDown, Home, Key, Users, CalendarDays, LogIn, LogOut, UserPlus, PlusCircle } from 'lucide-react';
+import { Menu, X, User, ChevronDown, Home, Key, Users, CalendarDays, LogIn, LogOut, UserPlus, PlusCircle, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
@@ -180,6 +180,13 @@ const Navbar = () => {
               <CalendarDays size={18} />
               {t('dailyRent')}
             </button>
+            <Link
+              to="/moving-services"
+              className="text-estate-neutral-700 hover:text-estate-800 font-medium flex items-center gap-2"
+            >
+              <Truck size={18} />
+              {t('movingServices')}
+            </Link>
           </div>
 
           {/* Language Selector */}
@@ -319,6 +326,14 @@ const Navbar = () => {
               <CalendarDays size={18} />
               {t('dailyRent')}
             </button>
+            <Link
+              to="/moving-services"
+              onClick={() => setIsMenuOpen(false)}
+              className="py-2 text-estate-neutral-700 hover:text-estate-800 font-medium flex items-center gap-2"
+            >
+              <Truck size={18} />
+              {t('movingServices')}
+            </Link>
 
             <div className="flex flex-col gap-4 mt-4">
               {/* Language Selector */}
