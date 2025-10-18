@@ -157,8 +157,8 @@ const MovingServices: React.FC = () => {
   };
 
   const handleRequestCallback = () => {
-    if (!formData.phone) {
-      toast.error('Veuillez entrer votre numéro de téléphone.');
+    if (!formData.phone && !formData.email) {
+      toast.error('Veuillez entrer votre numéro de téléphone ou votre email.');
       return;
     }
     // Here you would typically send the data to a backend
@@ -398,9 +398,10 @@ const MovingServices: React.FC = () => {
                 </div>
 
                 <div className="mt-6">
-                    <Label htmlFor="phone">Entrez votre numéro pour être rappelé</Label>
-                    <div className="flex gap-2 mt-2">
-                        <Input id="phone" type="tel" value={formData.phone} onChange={(e) => handleInputChange('phone', e.target.value)} placeholder="Votre numéro de téléphone" className="flex-grow" />
+                    <Label>Entrez votre numéro pour être rappelé et/ou votre mail</Label>
+                    <div className="flex flex-col gap-2 mt-2">
+                        <Input id="phone" type="tel" value={formData.phone} onChange={(e) => handleInputChange('phone', e.target.value)} placeholder="Votre numéro de téléphone" />
+                        <Input id="email" type="email" value={formData.email} onChange={(e) => handleInputChange('email', e.target.value)} placeholder="Votre email" />
                         <Button onClick={handleRequestCallback}>Demander un rappel</Button>
                     </div>
                 </div>
