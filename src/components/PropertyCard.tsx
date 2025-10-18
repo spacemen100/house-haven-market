@@ -6,7 +6,6 @@ import { Property } from "@/types/property";
 import { Badge } from "@/components/ui/badge";
 import MissingImagePlaceholder from "@/components/ui/MissingImagePlaceholder"; // Added import
 import { useCurrency } from "@/CurrencyContext";
-import { useTranslation } from 'react-i18next';
 import { format, parseISO } from "date-fns";
 import { supabase } from "@/integrations/supabase/client"; // Path alias updated
 import { getUserProfile, updateUserProfile } from "@/lib/profiles"; // Path alias updated
@@ -17,7 +16,6 @@ interface PropertyCardProps {
 }
 
 const PropertyCard = ({ property, userLikedProperties }: PropertyCardProps) => {
-  const { t } = useTranslation();
   const { formatPrice } = useCurrency();
   const [isLiked, setIsLiked] = useState(false);
   const [isLoadingLike, setIsLoadingLike] = useState(false);
@@ -90,10 +88,10 @@ const PropertyCard = ({ property, userLikedProperties }: PropertyCardProps) => {
       if (property.created_at instanceof Date) {
         return format(property.created_at, 'MMM d, yyyy');
       }
-      return t('dateNotAvailable');
+      return "Date non disponible";
     } catch (error) {
       console.error('Error formatting date:', error);
-      return t('dateNotAvailable');
+      return "Date non disponible";
     }
   };
 
@@ -112,13 +110,13 @@ const PropertyCard = ({ property, userLikedProperties }: PropertyCardProps) => {
             />
           )}
           <Badge className="absolute top-3 left-3 bg-teal-500 hover:bg-teal-500">
-            {property.listing_type === "sale" ? t('forSale') : t('forRent')}
+            {property.listing_type === "sale" ? "À vendre" : "À louer"}
           </Badge>
           <button
             onClick={handleLikeToggle}
             disabled={isLoadingLike}
             className="absolute top-2 right-2 m-1 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 disabled:opacity-50 z-10"
-            aria-label={isLiked ? t('unlikeProperty') : t('likeProperty')}
+            aria-label={isLiked ? "Ne plus aimer" : "Aimer"}
           >
             <Heart
               size={20}
@@ -128,12 +126,12 @@ const PropertyCard = ({ property, userLikedProperties }: PropertyCardProps) => {
           </button>
           {property.featured && !currentUserId && ( // Hide featured badge if like button is shown for logged in users for spacing
             <Badge className="absolute top-3 right-3 bg-estate-800 hover:bg-estate-800">
-              {t('featured')}
+              En vedette
             </Badge>
           )}
            {property.featured && currentUserId && ( // Show featured badge differently if user is logged in
             <Badge className="absolute top-12 right-3 bg-estate-800 hover:bg-estate-800">
-              {t('featured')}
+              En vedette
             </Badge>
           )}
         </div>
@@ -149,7 +147,7 @@ const PropertyCard = ({ property, userLikedProperties }: PropertyCardProps) => {
           <div className="flex items-center text-estate-neutral-600 mb-3">
             <MapPin size={14} className="mr-1" />
             <p className="text-sm line-clamp-1">
-              {t(`${property.address.street}`)}, {t(`${property.address.district}`)}, {t(`cities.${property.address.city}`)}
+              {property.address.street}, {property.address.district}, {property.address.city}
             </p>
           </div>
 
@@ -169,14 +167,14 @@ const PropertyCard = ({ property, userLikedProperties }: PropertyCardProps) => {
             {property.beds > 0 && (
               <div className="flex items-center">
                 <Bed size={18} className="mr-1 text-estate-neutral-500" />
-                <span className="text-sm">{property.beds} {t('Beds')}</span>
+                <span className="text-sm">{property.beds} Chambres</span>
               </div>
             )}
             {property.baths > 0 && (
               <div className="flex items-center">
                 <Bath size={18} className="mr-1 text-estate-neutral-500" />
                 <span className="text-sm">
-                  {property.baths} {property.baths === 1 ? t('Bath') : t('Baths')}
+                  {property.baths} {property.baths === 1 ? "Salle de bain" : "Salles de bain"}
                 </span>
               </div>
             )}
@@ -184,8 +182,8 @@ const PropertyCard = ({ property, userLikedProperties }: PropertyCardProps) => {
               <Square size={18} className="mr-1 text-estate-neutral-500" />
               <span className="text-sm">
                 {property.property_type === "land"
-                  ? `${(property.m2 / 4046.86).toFixed(2)} ${t('acres')}`
-                  : `${property.m2} ${t('m²')}`}
+                  ? `${(property.m2 / 4046.86).toFixed(2)} acres`
+                  : `${property.m2} m²`}
               </span>
             </div>
           </div>

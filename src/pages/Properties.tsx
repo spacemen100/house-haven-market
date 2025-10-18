@@ -13,7 +13,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useQuery } from "@tanstack/react-query";
 import { useCurrency, Currency } from '@/CurrencyContext';
-import { useTranslation } from 'react-i18next';
+
 import { supabase } from "@/lib/api/supabaseClient";
 import { getUserProfile } from "@/lib/profiles"; // Added import
 import { FRENCH_CITIES, FrenchCity } from "@/data/FrenchCities";
@@ -439,11 +439,11 @@ export const createProperty = async (input: CreatePropertyInput) => {
 
     await Promise.all(relatedDataPromises);
 
-    toast.success("Property listing created successfully!");
+    toast.success("Annonce immobilière créée avec succès !");
     return property;
   } catch (error) {
     console.error('Error creating property:', error);
-    toast.error("Failed to create property listing. Please try again.");
+    toast.error("Échec de la création de l'annonce immobilière. Veuillez réessayer.");
     throw error;
   }
 };
@@ -474,7 +474,7 @@ export const getProperties = async (type?: ListingType): Promise<Property[]> => 
     return properties.map(transformProperty);
   } catch (error) {
     console.error('Error fetching properties:', error);
-    toast.error("Failed to fetch properties. Please try again.");
+    toast.error("Échec de la récupération des propriétés. Veuillez réessayer.");
     return [];
   }
 };
@@ -504,7 +504,7 @@ export const getFeaturedProperties = async (): Promise<Property[]> => {
     return properties.map(transformProperty);
   } catch (error) {
     console.error('Error fetching featured properties:', error);
-    toast.error("Failed to fetch featured properties. Please try again.");
+    toast.error("Échec de la récupération des propriétés en vedette. Veuillez réessayer.");
     return [];
   }
 };
@@ -534,7 +534,7 @@ export const getMyProperties = async (): Promise<Property[]> => {
     return properties.map(transformProperty);
   } catch (error) {
     console.error('Error fetching user properties:', error);
-    toast.error("Failed to fetch your properties. Please try again.");
+    toast.error("Échec de la récupération de vos propriétés. Veuillez réessayer.");
     return [];
   }
 };
@@ -544,12 +544,12 @@ export const getLikedProperties = async (): Promise<Property[]> => {
 };
 
 export const likeProperty = async (propertyId: string) => {
-  toast.success("Property added to favorites");
+  toast.success("Propriété ajoutée aux favoris");
   return true;
 };
 
 export const unlikeProperty = async (propertyId: string) => {
-  toast.success("Property removed from favorites");
+  toast.success("Propriété supprimée des favoris");
   return true;
 };
 
@@ -585,11 +585,11 @@ export const deleteProperty = async (propertyId: string) => {
 
     if (error) throw error;
 
-    toast.success("Property deleted successfully");
+    toast.success("Propriété supprimée avec succès");
     return true;
   } catch (error) {
     console.error('Error deleting property:', error);
-    toast.error("Failed to delete property");
+    toast.error("Échec de la suppression de la propriété");
     return false;
   }
 };
@@ -638,14 +638,13 @@ export const getNewestProperties = async (): Promise<Property[]> => {
     return properties.map(transformProperty);
   } catch (error) {
     console.error('Error fetching newest properties:', error);
-    toast.error("Failed to fetch newest properties. Please try again.");
+    toast.error("Échec de la récupération des dernières propriétés. Veuillez réessayer.");
     return [];
   }
 };
 
 // Properties Component
 const Properties = () => {
-  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -678,9 +677,9 @@ const Properties = () => {
   const [userLikedProperties, setUserLikedProperties] = useState<string[] | null>(null); // Added state
 
   const currencyOptions = [
-    { value: 'USD', label: t('currency.usd') },
-    { value: 'EUR', label: t('currency.eur') },
-    { value: 'GEL', label: t('currency.gel') },
+    { value: 'USD', label: "USD" },
+    { value: 'EUR', label: "EUR" },
+    { value: 'GEL', label: "GEL" },
   ];
 
   const formatPrice = (price: number, currency: string) => {
@@ -697,10 +696,10 @@ const Properties = () => {
 
   // Listing type buttons with translations
   const listingTypeButtons = [
-    { value: "sale", label: t('listingType.sale') },
-    { value: "rent", label: t('listingType.rent') },
-    { value: "rent_by_day", label: t('listingType.rent_by_day') },
-    { value: "lease", label: t('listingType.lease') }
+    { value: "sale", label: "À vendre" },
+    { value: "rent", label: "À louer" },
+    { value: "rent_by_day", label: "Location journalière" },
+    { value: "lease", label: "À céder" }
   ];
 
   const handleListingTypeChange = (value: ListingType) => {
@@ -790,12 +789,12 @@ const Properties = () => {
   const [kitchenType, setKitchenType] = useState<string[]>([]);
 
   const sortOptions = [
-    { value: "recent", label: t('sort.recent') },
-    { value: "oldest", label: t('sort.oldest') },
-    { value: "price-asc", label: t('sort.price_asc') },
-    { value: "price-desc", label: t('sort.price_desc') },
-    { value: "m2-asc", label: t('sort.m2_asc') },
-    { value: "m2-desc", label: t('sort.m2_desc') },
+    { value: "recent", label: "Plus récent" },
+    { value: "oldest", label: "Plus ancien" },
+    { value: "price-asc", label: "Prix croissant" },
+    { value: "price-desc", label: "Prix décroissant" },
+    { value: "m2-asc", label: "Surface croissante" },
+    { value: "m2-desc", label: "Surface décroissante" },
   ];
 
   const sortProperties = (properties: Property[]) => {
@@ -1314,54 +1313,54 @@ const Properties = () => {
 
   // Filter options data
   const propertyTypeOptions = [
-    { id: "house", label: t('propertyType.house') },
-    { id: "apartment", label: t('propertyType.apartment') },
-    { id: "land", label: t('propertyType.land') },
-    { id: "commercial", label: t('propertyType.commercial') },
+    { id: "house", label: "Maison" },
+    { id: "apartment", label: "Appartement" },
+    { id: "land", label: "Terrain" },
+    { id: "commercial", label: "Commercial" },
   ];
 
   const conditionOptions = [
-    { id: "newly_renovated", label: t('condition.newly_renovated') },
-    { id: "under_renovation", label: t('condition.under_renovation') },
-    { id: "white_frame", label: t('condition.white_frame') },
-    { id: "green_frame", label: t('condition.green_frame') },
-    { id: "not_renovated", label: t('condition.not_renovated') },
-    { id: "black_frame", label: t('condition.black_frame') },
-    { id: "old_renovation", label: t('condition.old_renovation') },
+    { id: "newly_renovated", label: "Rénové récemment" },
+    { id: "under_renovation", label: "En cours de rénovation" },
+    { id: "white_frame", label: "Cadre blanc" },
+    { id: "green_frame", label: "Cadre vert" },
+    { id: "not_renovated", label: "Non rénové" },
+    { id: "black_frame", label: "Cadre noir" },
+    { id: "old_renovation", label: "Ancienne rénovation" },
   ];
 
   const furnitureOptions = [
-    { id: "furnished", label: t('furniture.furnished') },
-    { id: "semi_furnished", label: t('furniture.semi_furnished') },
-    { id: "unfurnished", label: t('furniture.unfurnished') },
+    { id: "furnished", label: "Meublé" },
+    { id: "semi_furnished", label: "Semi-meublé" },
+    { id: "unfurnished", label: "Non meublé" },
   ];
 
   const heatingOptions = [
-    { id: "central", label: t('heating.central') },
-    { id: "electric", label: t('heating.electric') },
-    { id: "gas", label: t('heating.gas') },
-    { id: "wood", label: t('heating.wood') },
+    { id: "central", label: "Central" },
+    { id: "electric", label: "Électrique" },
+    { id: "gas", label: "Gaz" },
+    { id: "wood", label: "Bois" },
   ];
 
   const parkingOptions = [
-    { id: "garage", label: t('parking.garage') },
-    { id: "underground", label: t('parking.underground') },
-    { id: "street", label: t('parking.street') },
-    { id: "carport", label: t('parking.carport') },
+    { id: "garage", label: "Garage" },
+    { id: "underground", label: "Souterrain" },
+    { id: "street", label: "Rue" },
+    { id: "carport", label: "Abri voiture" },
   ];
 
   const buildingMaterialOptions = [
-    { id: "brick", label: t('material.brick') },
-    { id: "concrete", label: t('material.concrete') },
-    { id: "wood", label: t('material.wood') },
-    { id: "steel", label: t('material.steel') },
+    { id: "brick", label: "Brique" },
+    { id: "concrete", label: "Béton" },
+    { id: "wood", label: "Bois" },
+    { id: "steel", label: "Acier" },
   ];
 
   const kitchenTypeOptions = [
-    { id: "open", label: t('kitchen.open') },
-    { id: "closed", label: t('kitchen.closed') },
-    { id: "kitchenette", label: t('kitchen.kitchenette') },
-    { id: "american", label: t('kitchen.american') },
+    { id: "open", label: "Ouverte" },
+    { id: "closed", label: "Fermée" },
+    { id: "kitchenette", label: "Kitchenette" },
+    { id: "american", label: "Américaine" },
   ];
 
   const renderPropertyTypeFilter = (prefix = "") => (
@@ -1415,7 +1414,7 @@ const Properties = () => {
           checked={features.hasElevator}
           onCheckedChange={() => handleFeatureChange("hasElevator")}
         />
-        <label htmlFor={`${prefix}elevator`} className="text-sm">{t('features.elevator')}</label>
+        <label htmlFor={`${prefix}elevator`} className="text-sm">{"Ascenseur"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1423,7 +1422,7 @@ const Properties = () => {
           checked={features.hasAirConditioning}
           onCheckedChange={() => handleFeatureChange("hasAirConditioning")}
         />
-        <label htmlFor={`${prefix}ac`} className="text-sm">{t('features.airConditioning')}</label>
+        <label htmlFor={`${prefix}ac`} className="text-sm">{"Climatisation"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1431,7 +1430,7 @@ const Properties = () => {
           checked={features.isAccessible}
           onCheckedChange={() => handleFeatureChange("isAccessible")}
         />
-        <label htmlFor={`${prefix}accessible`} className="text-sm">{t('features.accessible')}</label>
+        <label htmlFor={`${prefix}accessible`} className="text-sm">{"Accessible"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1439,7 +1438,7 @@ const Properties = () => {
           checked={features.hasFireplace}
           onCheckedChange={() => handleFeatureChange("hasFireplace")}
         />
-        <label htmlFor={`${prefix}fireplace`} className="text-sm">{t('features.fireplace')}</label>
+        <label htmlFor={`${prefix}fireplace`} className="text-sm">{"Cheminée"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1447,7 +1446,7 @@ const Properties = () => {
           checked={features.hasInternet}
           onCheckedChange={() => handleFeatureChange("hasInternet")}
         />
-        <label htmlFor={`${prefix}internet`} className="text-sm">{t('features.internet')}</label>
+        <label htmlFor={`${prefix}internet`} className="text-sm">{"Internet"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1455,7 +1454,7 @@ const Properties = () => {
           checked={features.hasCableTV}
           onCheckedChange={() => handleFeatureChange("hasCableTV")}
         />
-        <label htmlFor={`${prefix}cable-tv`} className="text-sm">{t('features.cableTv')}</label>
+        <label htmlFor={`${prefix}cable-tv`} className="text-sm">{"Télévision par câble"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1463,7 +1462,7 @@ const Properties = () => {
           checked={features.allowsPets}
           onCheckedChange={() => handleFeatureChange("allowsPets")}
         />
-        <label htmlFor={`${prefix}pets`} className="text-sm">{t('features.petsAllowed')}</label>
+        <label htmlFor={`${prefix}pets`} className="text-sm">{"Animaux acceptés"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1471,7 +1470,7 @@ const Properties = () => {
           checked={features.allowsSmoking}
           onCheckedChange={() => handleFeatureChange("allowsSmoking")}
         />
-        <label htmlFor={`${prefix}smoking`} className="text-sm">{t('features.smokingAllowed')}</label>
+        <label htmlFor={`${prefix}smoking`} className="text-sm">{"Fumeurs acceptés"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1479,7 +1478,7 @@ const Properties = () => {
           checked={features.hasGas}
           onCheckedChange={() => handleFeatureChange("hasGas")}
         />
-        <label htmlFor={`${prefix}gas`} className="text-sm">{t('features.gas')}</label>
+        <label htmlFor={`${prefix}gas`} className="text-sm">{"Gaz"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1487,7 +1486,7 @@ const Properties = () => {
           checked={features.hasLoggia}
           onCheckedChange={() => handleFeatureChange("hasLoggia")}
         />
-        <label htmlFor={`${prefix}loggia`} className="text-sm">{t('features.loggia')}</label>
+        <label htmlFor={`${prefix}loggia`} className="text-sm">{"Loggia"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1495,7 +1494,7 @@ const Properties = () => {
           checked={features.hasDishwasher}
           onCheckedChange={() => handleFeatureChange("hasDishwasher")}
         />
-        <label htmlFor={`${prefix}dishwasher`} className="text-sm">{t('features.dishwasher')}</label>
+        <label htmlFor={`${prefix}dishwasher`} className="text-sm">{"Lave-vaisselle"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1503,7 +1502,7 @@ const Properties = () => {
           checked={features.hasWashingMachine}
           onCheckedChange={() => handleFeatureChange("hasWashingMachine")}
         />
-        <label htmlFor={`${prefix}washing-machine`} className="text-sm">{t('features.washingMachine')}</label>
+        <label htmlFor={`${prefix}washing-machine`} className="text-sm">{"Lave-linge"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1511,7 +1510,7 @@ const Properties = () => {
           checked={features.hasGasStove}
           onCheckedChange={() => handleFeatureChange("hasGasStove")}
         />
-        <label htmlFor={`${prefix}gas-stove`} className="text-sm">{t('features.gasStove')}</label>
+        <label htmlFor={`${prefix}gas-stove`} className="text-sm">{"Cuisinière à gaz"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1519,7 +1518,7 @@ const Properties = () => {
           checked={features.hasVent}
           onCheckedChange={() => handleFeatureChange("hasVent")}
         />
-        <label htmlFor={`${prefix}vent`} className="text-sm">{t('features.vent')}</label>
+        <label htmlFor={`${prefix}vent`} className="text-sm">{"Ventilation"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1527,7 +1526,7 @@ const Properties = () => {
           checked={features.hasElectricKettle}
           onCheckedChange={() => handleFeatureChange("hasElectricKettle")}
         />
-        <label htmlFor={`${prefix}electric-kettle`} className="text-sm">{t('features.electricKettle')}</label>
+        <label htmlFor={`${prefix}electric-kettle`} className="text-sm">{"Bouilloire électrique"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1535,7 +1534,7 @@ const Properties = () => {
           checked={features.hasInductionOven}
           onCheckedChange={() => handleFeatureChange("hasInductionOven")}
         />
-        <label htmlFor={`${prefix}induction-oven`} className="text-sm">{t('features.inductionOven')}</label>
+        <label htmlFor={`${prefix}induction-oven`} className="text-sm">{"Four à induction"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1543,7 +1542,7 @@ const Properties = () => {
           checked={features.hasMicrowave}
           onCheckedChange={() => handleFeatureChange("hasMicrowave")}
         />
-        <label htmlFor={`${prefix}microwave`} className="text-sm">{t('features.microwave')}</label>
+        <label htmlFor={`${prefix}microwave`} className="text-sm">{"Micro-ondes"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1551,7 +1550,7 @@ const Properties = () => {
           checked={features.hasTv}
           onCheckedChange={() => handleFeatureChange("hasTv")}
         />
-        <label htmlFor={`${prefix}tv`} className="text-sm">{t('features.tv')}</label>
+        <label htmlFor={`${prefix}tv`} className="text-sm">{"Télévision"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1559,7 +1558,7 @@ const Properties = () => {
           checked={features.hasCoffeeMachine}
           onCheckedChange={() => handleFeatureChange("hasCoffeeMachine")}
         />
-        <label htmlFor={`${prefix}coffee-machine`} className="text-sm">{t('features.coffeeMachine')}</label>
+        <label htmlFor={`${prefix}coffee-machine`} className="text-sm">{"Machine à café"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1567,7 +1566,7 @@ const Properties = () => {
           checked={features.hasAudioSystem}
           onCheckedChange={() => handleFeatureChange("hasAudioSystem")}
         />
-        <label htmlFor={`${prefix}audio-system`} className="text-sm">{t('features.audioSystem')}</label>
+        <label htmlFor={`${prefix}audio-system`} className="text-sm">{"Système audio"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1575,7 +1574,7 @@ const Properties = () => {
           checked={features.hasHeater}
           onCheckedChange={() => handleFeatureChange("hasHeater")}
         />
-        <label htmlFor={`${prefix}heater`} className="text-sm">{t('features.heater')}</label>
+        <label htmlFor={`${prefix}heater`} className="text-sm">{"Chauffage"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1583,7 +1582,7 @@ const Properties = () => {
           checked={features.hasElectricOven}
           onCheckedChange={() => handleFeatureChange("hasElectricOven")}
         />
-        <label htmlFor={`${prefix}electric-oven`} className="text-sm">{t('features.electricOven')}</label>
+        <label htmlFor={`${prefix}electric-oven`} className="text-sm">{"Four électrique"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1591,7 +1590,7 @@ const Properties = () => {
           checked={features.hasHairDryer}
           onCheckedChange={() => handleFeatureChange("hasHairDryer")}
         />
-        <label htmlFor={`${prefix}hair-dryer`} className="text-sm">{t('features.hairDryer')}</label>
+        <label htmlFor={`${prefix}hair-dryer`} className="text-sm">{"Sèche-cheveux"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1599,7 +1598,7 @@ const Properties = () => {
           checked={features.hasCinema}
           onCheckedChange={() => handleFeatureChange("hasCinema")}
         />
-        <label htmlFor={`${prefix}cinema`} className="text-sm">{t('features.cinema')}</label>
+        <label htmlFor={`${prefix}cinema`} className="text-sm">{"Cinéma"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1607,7 +1606,7 @@ const Properties = () => {
           checked={features.hasRefrigerator}
           onCheckedChange={() => handleFeatureChange("hasRefrigerator")}
         />
-        <label htmlFor={`${prefix}refrigerator`} className="text-sm">{t('features.refrigerator')}</label>
+        <label htmlFor={`${prefix}refrigerator`} className="text-sm">{"Réfrigérateur"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1615,7 +1614,7 @@ const Properties = () => {
           checked={features.hasVacuumCleaner}
           onCheckedChange={() => handleFeatureChange("hasVacuumCleaner")}
         />
-        <label htmlFor={`${prefix}vacuum-cleaner`} className="text-sm">{t('features.vacuumCleaner')}</label>
+        <label htmlFor={`${prefix}vacuum-cleaner`} className="text-sm">{"Aspirateur"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1623,7 +1622,7 @@ const Properties = () => {
           checked={features.hasDryer}
           onCheckedChange={() => handleFeatureChange("hasDryer")}
         />
-        <label htmlFor={`${prefix}dryer`} className="text-sm">{t('features.dryer')}</label>
+        <label htmlFor={`${prefix}dryer`} className="text-sm">{"Sèche-linge"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1631,7 +1630,7 @@ const Properties = () => {
           checked={features.hasIron}
           onCheckedChange={() => handleFeatureChange("hasIron")}
         />
-        <label htmlFor={`${prefix}iron`} className="text-sm">{t('features.iron')}</label>
+        <label htmlFor={`${prefix}iron`} className="text-sm">{"Fer à repasser"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1639,7 +1638,7 @@ const Properties = () => {
           checked={features.hasCoDetector}
           onCheckedChange={() => handleFeatureChange("hasCoDetector")}
         />
-        <label htmlFor={`${prefix}co-detector`} className="text-sm">{t('features.coDetector')}</label>
+        <label htmlFor={`${prefix}co-detector`} className="text-sm">{"Détecteur de CO"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1647,7 +1646,7 @@ const Properties = () => {
           checked={features.hasSmokeDetector}
           onCheckedChange={() => handleFeatureChange("hasSmokeDetector")}
         />
-        <label htmlFor={`${prefix}smoke-detector`} className="text-sm">{t('features.smokeDetector')}</label>
+        <label htmlFor={`${prefix}smoke-detector`} className="text-sm">{"Détecteur de fumée"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1655,7 +1654,7 @@ const Properties = () => {
           checked={features.hasEvacuationLadder}
           onCheckedChange={() => handleFeatureChange("hasEvacuationLadder")}
         />
-        <label htmlFor={`${prefix}evacuation-ladder`} className="text-sm">{t('features.evacuationLadder')}</label>
+        <label htmlFor={`${prefix}evacuation-ladder`} className="text-sm">{"Échelle d'évacuation"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1663,7 +1662,7 @@ const Properties = () => {
           checked={features.hasFireFightingSystem}
           onCheckedChange={() => handleFeatureChange("hasFireFightingSystem")}
         />
-        <label htmlFor={`${prefix}fire-fighting-system`} className="text-sm">{t('features.fireFightingSystem')}</label>
+        <label htmlFor={`${prefix}fire-fighting-system`} className="text-sm">{"Système anti-incendie"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1671,7 +1670,7 @@ const Properties = () => {
           checked={features.hasPerimeterCameras}
           onCheckedChange={() => handleFeatureChange("hasPerimeterCameras")}
         />
-        <label htmlFor={`${prefix}perimeter-cameras`} className="text-sm">{t('features.perimeterCameras')}</label>
+        <label htmlFor={`${prefix}perimeter-cameras`} className="text-sm">{"Caméras périmétriques"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1679,7 +1678,7 @@ const Properties = () => {
           checked={features.hasAlarm}
           onCheckedChange={() => handleFeatureChange("hasAlarm")}
         />
-        <label htmlFor={`${prefix}alarm`} className="text-sm">{t('features.alarm')}</label>
+        <label htmlFor={`${prefix}alarm`} className="text-sm">{"Alarme"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1687,7 +1686,7 @@ const Properties = () => {
           checked={features.hasLiveProtection}
           onCheckedChange={() => handleFeatureChange("hasLiveProtection")}
         />
-        <label htmlFor={`${prefix}live-protection`} className="text-sm">{t('features.liveProtection')}</label>
+        <label htmlFor={`${prefix}live-protection`} className="text-sm">{"Protection en direct"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1695,7 +1694,7 @@ const Properties = () => {
           checked={features.hasLockedEntrance}
           onCheckedChange={() => handleFeatureChange("hasLockedEntrance")}
         />
-        <label htmlFor={`${prefix}locked-entrance`} className="text-sm">{t('features.lockedEntrance')}</label>
+        <label htmlFor={`${prefix}locked-entrance`} className="text-sm">{"Entrée sécurisée"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1703,7 +1702,7 @@ const Properties = () => {
           checked={features.hasLockedYard}
           onCheckedChange={() => handleFeatureChange("hasLockedYard")}
         />
-        <label htmlFor={`${prefix}locked-yard`} className="text-sm">{t('features.lockedYard')}</label>
+        <label htmlFor={`${prefix}locked-yard`} className="text-sm">{"Cour sécurisée"}</label>
       </div>
     </div>
   );
@@ -1716,7 +1715,7 @@ const Properties = () => {
           checked={features.nearSubway}
           onCheckedChange={() => handleFeatureChange("nearSubway")}
         />
-        <label htmlFor={`${prefix}subway`} className="text-sm">{t('nearby.subway')}</label>
+        <label htmlFor={`${prefix}subway`} className="text-sm">{"Métro"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1724,7 +1723,7 @@ const Properties = () => {
           checked={features.nearPark}
           onCheckedChange={() => handleFeatureChange("nearPark")}
         />
-        <label htmlFor={`${prefix}park`} className="text-sm">{t('nearby.park')}</label>
+        <label htmlFor={`${prefix}park`} className="text-sm">{"Parc"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1732,7 +1731,7 @@ const Properties = () => {
           checked={features.nearSchool}
           onCheckedChange={() => handleFeatureChange("nearSchool")}
         />
-        <label htmlFor={`${prefix}school`} className="text-sm">{t('nearby.school')}</label>
+        <label htmlFor={`${prefix}school`} className="text-sm">{"École"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1740,7 +1739,7 @@ const Properties = () => {
           checked={features.nearBusStop}
           onCheckedChange={() => handleFeatureChange("nearBusStop")}
         />
-        <label htmlFor={`${prefix}bus-stop`} className="text-sm">{t('nearby.busStop')}</label>
+        <label htmlFor={`${prefix}bus-stop`} className="text-sm">{"Arrêt de bus"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1748,7 +1747,7 @@ const Properties = () => {
           checked={features.nearBank}
           onCheckedChange={() => handleFeatureChange("nearBank")}
         />
-        <label htmlFor={`${prefix}bank`} className="text-sm">{t('nearby.bank')}</label>
+        <label htmlFor={`${prefix}bank`} className="text-sm">{"Banque"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1756,7 +1755,7 @@ const Properties = () => {
           checked={features.nearSupermarket}
           onCheckedChange={() => handleFeatureChange("nearSupermarket")}
         />
-        <label htmlFor={`${prefix}supermarket`} className="text-sm">{t('nearby.supermarket')}</label>
+        <label htmlFor={`${prefix}supermarket`} className="text-sm">{"Supermarché"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1764,7 +1763,7 @@ const Properties = () => {
           checked={features.nearKindergarten}
           onCheckedChange={() => handleFeatureChange("nearKindergarten")}
         />
-        <label htmlFor={`${prefix}kindergarten`} className="text-sm">{t('nearby.kindergarten')}</label>
+        <label htmlFor={`${prefix}kindergarten`} className="text-sm">{"Jardin d'enfants"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1772,7 +1771,7 @@ const Properties = () => {
           checked={features.nearCityCenter}
           onCheckedChange={() => handleFeatureChange("nearCityCenter")}
         />
-        <label htmlFor={`${prefix}city-center`} className="text-sm">{t('nearby.cityCenter')}</label>
+        <label htmlFor={`${prefix}city-center`} className="text-sm">{"Centre-ville"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1780,7 +1779,7 @@ const Properties = () => {
           checked={features.nearPharmacy}
           onCheckedChange={() => handleFeatureChange("nearPharmacy")}
         />
-        <label htmlFor={`${prefix}pharmacy`} className="text-sm">{t('nearby.pharmacy')}</label>
+        <label htmlFor={`${prefix}pharmacy`} className="text-sm">{"Pharmacie"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1788,7 +1787,7 @@ const Properties = () => {
           checked={features.nearGreenery}
           onCheckedChange={() => handleFeatureChange("nearGreenery")}
         />
-        <label htmlFor={`${prefix}greenery`} className="text-sm">{t('nearby.greenery')}</label>
+        <label htmlFor={`${prefix}greenery`} className="text-sm">{"Verdure"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1796,7 +1795,7 @@ const Properties = () => {
           checked={features.nearOldDistrict}
           onCheckedChange={() => handleFeatureChange("nearOldDistrict")}
         />
-        <label htmlFor={`${prefix}old-district`} className="text-sm">{t('nearby.oldDistrict')}</label>
+        <label htmlFor={`${prefix}old-district`} className="text-sm">{"Vieux quartier"}</label>
       </div>
     </div>
   );
@@ -1809,7 +1808,7 @@ const Properties = () => {
           checked={features.hasSatelliteTv}
           onCheckedChange={() => handleFeatureChange("hasSatelliteTv")}
         />
-        <label htmlFor={`${prefix}satellite-tv`} className="text-sm">{t('additionalFeatures.satelliteTv')}</label>
+        <label htmlFor={`${prefix}satellite-tv`} className="text-sm">{"TV satellite"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1817,21 +1816,21 @@ const Properties = () => {
           checked={features.hasPhoneLine}
           onCheckedChange={() => handleFeatureChange("hasPhoneLine")}
         />
-        <label htmlFor={`${prefix}phone-line`} className="text-sm">{t('additionalFeatures.phoneLine')}</label>
+        <label htmlFor={`${prefix}phone-line`} className="text-sm">{"Ligne téléphonique"}</label>
       </div>
     </div>
   );
 
   const renderKeywordSearch = () => (
     <div className="space-y-4">
-      <h3 className="font-medium">{t('filters.keywordSearch')}</h3>
+      <h3 className="font-medium">{"Recherche par mot-clé"}</h3>
       <div className="flex bg-white rounded-lg p-3">
         <div className="flex items-center pl-3 text-estate-neutral-400">
           <Search size={20} />
         </div>
         <input
           type="text"
-          placeholder={t('filters.keywordPlaceholder')}
+          placeholder="Rechercher par titre, adresse, ville..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="flex-1 py-2 px-3 outline-none"
@@ -1871,7 +1870,7 @@ const Properties = () => {
 
   const renderCityFilter = (prefix = "") => (
     <div className="space-y-2">
-      <h4 className="font-medium">{t('filters.city')}</h4>
+      <h4 className="font-medium">{"Ville"}</h4>
       <div className="max-h-60 overflow-y-auto">
         {FRENCH_CITIES.map((city) => (
           <div key={`${prefix}city-${city}`} className="flex items-center space-x-2">
@@ -1883,7 +1882,7 @@ const Properties = () => {
               }
             />
             <Label htmlFor={`${prefix}city-${city}`}>
-              {t(`cities.${city}`)}
+              {city}
             </Label>
           </div>
         ))}
@@ -1896,7 +1895,7 @@ const Properties = () => {
     <div className={`fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden ${isFilterOpen ? 'block' : 'hidden'}`}>
       <div className="absolute right-0 top-0 bottom-0 w-full max-w-sm bg-white p-6 overflow-y-auto animate-slide-up">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold">{t('filters.title')}</h2>
+          <h2 className="text-2xl font-semibold">{"Filtres"}</h2>
           <Button
             variant="ghost"
             size="icon"
@@ -1909,32 +1908,32 @@ const Properties = () => {
 
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="filters">{t('filters.filters')}</TabsTrigger>
-            <TabsTrigger value="keyword">{t('filters.keywordSearch')}</TabsTrigger>
+            <TabsTrigger value="filters">{"Filtres"}</TabsTrigger>
+            <TabsTrigger value="keyword">{"Recherche par mot-clé"}</TabsTrigger>
           </TabsList>
           <TabsContent value="filters">
             <div className="space-y-6">
               {/* Listing Type */}
               <div className="space-y-3">
-                <h3 className="font-medium">{t('filters.listingType')}</h3>
+                <h3 className="font-medium">{"Type d'annonce"}</h3>
                 {renderListingTypeFilter()}
               </div>
 
               {/* Property Type */}
               <div className="space-y-3">
-                <h3 className="font-medium">{t('filters.propertyType')}</h3>
+                <h3 className="font-medium">{"Type de propriété"}</h3>
                 {renderPropertyTypeFilter("mobile-")}
               </div>
 
               {/* City Filter */}
               <div className="space-y-3">
-                <h3 className="font-medium">{t('filters.city')}</h3>
+                <h3 className="font-medium">{"Ville"}</h3>
                 {renderCityFilter("mobile-")}
               </div>
 
               {/* Price Range */}
               <div className="space-y-3">
-                <h4 className="font-medium">{t('filters.priceRange')}</h4>
+                <h4 className="font-medium">{"Fourchette de prix"}</h4>
                 <div className="px-2">
                   <Slider
                     value={[minPrice, maxPrice]}
@@ -1988,7 +1987,7 @@ const Properties = () => {
               </div>
 
               <div className="space-y-3">
-                <h4 className="font-medium">{t('filters.currency')}</h4>
+                <h4 className="font-medium">{"Devise"}</h4>
                 <select
                   value={currency}
                   onChange={(e) => setCurrency(e.target.value as Currency)}
@@ -2002,7 +2001,7 @@ const Properties = () => {
 
               {/* Surface (m²) */}
               <div className="space-y-3">
-                <h3 className="font-medium">{t('filters.surface')}</h3>
+                <h3 className="font-medium">{"Surface (m²)"}</h3>
                 <div className="px-2">
                   <Slider
                     value={[minM2, maxM2]}
@@ -2025,7 +2024,7 @@ const Properties = () => {
                     />
                     <span className="text-sm">m²</span>
                   </div>
-                  <span className="text-sm">{t('filters.to')}</span>
+                  <span className="text-sm">{"à"}</span>
                   <div className="flex items-center gap-1">
                     <input
                       type="text"
@@ -2041,7 +2040,7 @@ const Properties = () => {
 
               {/* Bedrooms */}
               <div className="space-y-3">
-                <h3 className="font-medium">{t('filters.bedrooms')}</h3>
+                <h3 className="font-medium">{"Chambres"}</h3>
                 <div className="flex flex-wrap gap-2">
                   {[0, 1, 2, 3, 4].map(num => (
                     <Button
@@ -2051,7 +2050,7 @@ const Properties = () => {
                       size="sm"
                       onClick={() => setMinBeds(num)}
                     >
-                      {num === 0 ? t('filters.any') : `${num}+`}
+                      {num === 0 ? "Indifférent" : `${num}+`}
                     </Button>
                   ))}
                 </div>
@@ -2059,7 +2058,7 @@ const Properties = () => {
 
               {/* Bathrooms */}
               <div className="space-y-3">
-                <h3 className="font-medium">{t('filters.bathrooms')}</h3>
+                <h3 className="font-medium">{"Salles de bain"}</h3>
                 <div className="flex flex-wrap gap-2">
                   {[0, 1, 2, 3].map(num => (
                     <Button
@@ -2069,7 +2068,7 @@ const Properties = () => {
                       size="sm"
                       onClick={() => setMinBaths(num)}
                     >
-                      {num === 0 ? t('filters.any') : `${num}+`}
+                      {num === 0 ? "Indifférent" : `${num}+`}
                     </Button>
                   ))}
                 </div>
@@ -2077,25 +2076,25 @@ const Properties = () => {
 
               {/* Property Condition */}
               <div className="space-y-3">
-                <h3 className="font-medium">{t('filters.propertyCondition')}</h3>
+                <h3 className="font-medium">{"État de la propriété"}</h3>
                 {renderConditionFilter("mobile-")}
               </div>
 
               {/* Features */}
               <div className="space-y-3">
-                <h3 className="font-medium">{t('filters.features')}</h3>
+                <h3 className="font-medium">{"Caractéristiques"}</h3>
                 {renderFeaturesFilter("mobile-")}
               </div>
 
               {/* Nearby */}
               <div className="space-y-3">
-                <h3 className="font-medium">{t('filters.nearby')}</h3>
+                <h3 className="font-medium">{"À proximité"}</h3>
                 {renderNearbyFilter("mobile-")}
               </div>
 
               {/* Additional Features */}
               <div className="space-y-3">
-                <h3 className="font-medium">{t('filters.additionalFeatures')}</h3>
+                <h3 className="font-medium">{"Fonctionnalités supplémentaires"}</h3>
                 {renderAdditionalFeaturesFilter("mobile-")}
               </div>
 
@@ -2104,7 +2103,7 @@ const Properties = () => {
                 furnitureOptions,
                 furnitureType,
                 setFurnitureType,
-                t('filters.furnitureType'),
+                "Type de mobilier",
                 "mobile-"
               )}
 
@@ -2113,7 +2112,7 @@ const Properties = () => {
                 heatingOptions,
                 heatingType,
                 setHeatingType,
-                t('filters.heatingType'),
+                "Type de chauffage",
                 "mobile-"
               )}
 
@@ -2122,7 +2121,7 @@ const Properties = () => {
                 parkingOptions,
                 parkingType,
                 setParkingType,
-                t('filters.parkingType'),
+                "Type de parking",
                 "mobile-"
               )}
 
@@ -2131,7 +2130,7 @@ const Properties = () => {
                 buildingMaterialOptions,
                 buildingMaterial,
                 setBuildingMaterial,
-                t('filters.buildingMaterial'),
+                "Matériau de construction",
                 "mobile-"
               )}
 
@@ -2140,7 +2139,7 @@ const Properties = () => {
                 kitchenTypeOptions,
                 kitchenType,
                 setKitchenType,
-                t('filters.kitchenType'),
+                "Type de cuisine",
                 "mobile-"
               )}
 
@@ -2151,13 +2150,13 @@ const Properties = () => {
                   className="flex-1"
                   onClick={handleClearFilters}
                 >
-                  {t('filters.clearAll')}
+                  {"Effacer tout"}
                 </Button>
                 <Button
                   className="flex-1 bg-teal-500 hover:bg-teal-600"
                   onClick={() => setIsFilterOpen(false)}
                 >
-                  {t('filters.showResults')}
+                  {"Afficher les résultats"}
                 </Button>
               </div>
             </div>
@@ -2175,18 +2174,18 @@ const Properties = () => {
     <div className="hidden lg:block w-80 h-fit bg-white rounded-lg p-6 shadow-sm border border-estate-neutral-100 space-y-6 sticky top-4">
       <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
         <Filter size={20} />
-        <span>{t('filters.title')}</span>
+        <span>{"Filtres"}</span>
       </h3>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="flex w-full">
-          <TabsTrigger value="filters" className="flex-1">{t('filters.filters')}</TabsTrigger>
-          <TabsTrigger value="keyword" className="flex-1">{t('filters.keywordSearch')}</TabsTrigger>
+          <TabsTrigger value="filters" className="flex-1">{"Filtres"}</TabsTrigger>
+          <TabsTrigger value="keyword" className="flex-1">{"Recherche par mot-clé"}</TabsTrigger>
         </TabsList>
         <TabsContent value="filters">
           {/* Listing Type */}
           <div className="space-y-3">
-            <h4 className="font-medium">{t('filters.listingType')}</h4>
+            <h4 className="font-medium">{"Type d'annonce"}</h4>
             {renderListingTypeFilter()}
           </div>
 
@@ -2194,7 +2193,7 @@ const Properties = () => {
 
           {/* Property Type */}
           <div className="space-y-3">
-            <h4 className="font-medium">{t('filters.propertyType')}</h4>
+            <h4 className="font-medium">{"Type de propriété"}</h4>
             {renderPropertyTypeFilter()}
           </div>
 
@@ -2202,7 +2201,7 @@ const Properties = () => {
 
           {/* City Filter */}
           <div className="space-y-3">
-            <h4 className="font-medium">{t('filters.city')}</h4>
+            <h4 className="font-medium">{"Ville"}</h4>
             {renderCityFilter()}
           </div>
 
@@ -2210,7 +2209,7 @@ const Properties = () => {
 
           {/* Price Range */}
           <div className="space-y-3">
-            <h3 className="font-medium">{t('filters.priceRange')}</h3>
+            <h3 className="font-medium">{"Fourchette de prix"}</h3>
             <div className="px-2">
               <Slider
                 value={[minPrice, maxPrice]}
@@ -2267,7 +2266,7 @@ const Properties = () => {
 
           {/* Surface (m²) */}
           <div className="space-y-3">
-            <h4 className="font-medium">{t('filters.surface')}</h4>
+            <h4 className="font-medium">{"Surface (m²)"}</h4>
             <div className="px-2">
               <Slider
                 value={[minM2, maxM2]}
@@ -2290,7 +2289,7 @@ const Properties = () => {
                 />
                 <span className="text-sm">m²</span>
               </div>
-              <span className="text-sm">{t('filters.to')}</span>
+              <span className="text-sm">{"à"}</span>
               <div className="flex items-center gap-1">
                 <input
                   type="text"
@@ -2308,7 +2307,7 @@ const Properties = () => {
 
           {/* Bedrooms */}
           <div className="space-y-3">
-            <h4 className="font-medium">{t('filters.bedrooms')}</h4>
+            <h4 className="font-medium">{"Chambres"}</h4>
             <div className="flex flex-wrap gap-2">
               {[0, 1, 2, 3, 4].map(num => (
                 <Button
@@ -2318,7 +2317,7 @@ const Properties = () => {
                   size="sm"
                   onClick={() => setMinBeds(num)}
                 >
-                  {num === 0 ? t('filters.any') : `${num}+`}
+                  {num === 0 ? "Indifférent" : `${num}+`}
                 </Button>
               ))}
             </div>
@@ -2328,7 +2327,7 @@ const Properties = () => {
 
           {/* Bathrooms */}
           <div className="space-y-3">
-            <h4 className="font-medium">{t('filters.bathrooms')}</h4>
+            <h4 className="font-medium">{"Salles de bain"}</h4>
             <div className="flex flex-wrap gap-2">
               {[0, 1, 2, 3].map(num => (
                 <Button
@@ -2338,7 +2337,7 @@ const Properties = () => {
                   size="sm"
                   onClick={() => setMinBaths(num)}
                 >
-                  {num === 0 ? t('filters.any') : `${num}+`}
+                  {num === 0 ? "Indifférent" : `${num}+`}
                 </Button>
               ))}
             </div>
@@ -2348,7 +2347,7 @@ const Properties = () => {
 
           {/* Property Condition */}
           <div className="space-y-3">
-            <h4 className="font-medium">{t('filters.propertyCondition')}</h4>
+            <h4 className="font-medium">{"État de la propriété"}</h4>
             {renderConditionFilter()}
           </div>
 
@@ -2356,7 +2355,7 @@ const Properties = () => {
 
           {/* Features */}
           <div className="space-y-3">
-            <h4 className="font-medium">{t('filters.features')}</h4>
+            <h4 className="font-medium">{"Caractéristiques"}</h4>
             {renderFeaturesFilter()}
           </div>
 
@@ -2364,7 +2363,7 @@ const Properties = () => {
 
           {/* Nearby */}
           <div className="space-y-3">
-            <h4 className="font-medium">{t('filters.nearby')}</h4>
+            <h4 className="font-medium">{"À proximité"}</h4>
             {renderNearbyFilter()}
           </div>
 
@@ -2372,7 +2371,7 @@ const Properties = () => {
 
           {/* Additional Features */}
           <div className="space-y-3">
-            <h4 className="font-medium">{t('filters.additionalFeatures')}</h4>
+            <h4 className="font-medium">{"Fonctionnalités supplémentaires"}</h4>
             {renderAdditionalFeaturesFilter()}
           </div>
 
@@ -2383,7 +2382,7 @@ const Properties = () => {
             furnitureOptions,
             furnitureType,
             setFurnitureType,
-            t('filters.furnitureType')
+            "Type de mobilier"
           )}
 
           <hr />
@@ -2393,7 +2392,7 @@ const Properties = () => {
             heatingOptions,
             heatingType,
             setHeatingType,
-            t('filters.heatingType')
+            "Type de chauffage"
           )}
 
           <hr />
@@ -2403,7 +2402,7 @@ const Properties = () => {
             parkingOptions,
             parkingType,
             setParkingType,
-            t('filters.parkingType')
+            "Type de parking"
           )}
 
           <hr />
@@ -2413,7 +2412,7 @@ const Properties = () => {
             buildingMaterialOptions,
             buildingMaterial,
             setBuildingMaterial,
-            t('filters.buildingMaterial')
+            "Matériau de construction"
           )}
 
           <hr />
@@ -2423,7 +2422,7 @@ const Properties = () => {
             kitchenTypeOptions,
             kitchenType,
             setKitchenType,
-            t('filters.kitchenType')
+            "Type de cuisine"
           )}
 
           <hr />
@@ -2433,7 +2432,7 @@ const Properties = () => {
             className="w-full"
             onClick={handleClearFilters}
           >
-            {t('filters.clearAll')}
+            {"Effacer tout"}
           </Button>
         </TabsContent>
         <TabsContent value="keyword">
@@ -2453,7 +2452,7 @@ const Properties = () => {
           {/* Mobile filter toggle */}
           <div className="lg:hidden flex justify-between items-center mb-4">
             <div className="text-lg font-semibold">
-              {filteredProperties.length} {t('propertiesFound')}
+              {filteredProperties.length} {"propriétés trouvées"}
             </div>
             <Button
               variant="outline"
@@ -2461,7 +2460,7 @@ const Properties = () => {
               onClick={() => setIsFilterOpen(true)}
             >
               <Filter size={18} />
-              <span>{t('filters.title')}</span>
+              <span>{"Filtres"}</span>
             </Button>
           </div>
 
@@ -2475,7 +2474,7 @@ const Properties = () => {
           <div className="flex-1">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-semibold">
-                {isLoading ? t('loading') : `${filteredProperties.length} ${t('propertiesFound')}`}
+                {isLoading ? "Chargement..." : `${filteredProperties.length} ${"propriétés trouvées"}`}
               </h2>
               <div className="relative">
                 <select
@@ -2517,12 +2516,12 @@ const Properties = () => {
               </div>
             ) : (
               <div className="bg-white rounded-lg p-8 text-center border border-estate-neutral-200">
-                <h3 className="text-xl font-semibold mb-2">{t('noProperties.title')}</h3>
+                <h3 className="text-xl font-semibold mb-2">{"Aucune propriété trouvée"}</h3>
                 <p className="text-estate-neutral-600 mb-4">
-                  {t('noProperties.description')}
+                  {"Ajustez vos filtres ou réinitialisez-les pour voir plus de propriétés."}
                 </p>
                 <Button variant="outline" onClick={handleClearFilters}>
-                  {t('filters.clearAll')}
+                  {"Effacer tout"}
                 </Button>
               </div>
             )}

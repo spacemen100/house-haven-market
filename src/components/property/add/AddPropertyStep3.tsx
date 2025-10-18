@@ -12,77 +12,77 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useTranslation } from "react-i18next";
+
 
 const amenities = [
-  { id: "has_elevator", label: "Elevator" },
+  { id: "has_elevator", label: "Ascenseur" },
   { id: "has_ventilation", label: "Ventilation" },
-  { id: "has_air_conditioning", label: "Air Conditioning" },
+  { id: "has_air_conditioning", label: "Climatisation" },
   { id: "is_accessible", label: "Accessible" },
-  { id: "has_gas", label: "Gas" },
+  { id: "has_gas", label: "Gaz" },
   { id: "has_loggia", label: "Loggia" },
-  { id: "has_fireplace", label: "Fireplace" },
+  { id: "has_fireplace", label: "Cheminée" },
   { id: "has_internet", label: "Internet" },
-  { id: "has_cable_tv", label: "Cable TV" },
-  { id: "has_satellite_tv", label: "Satellite TV" },
-  { id: "has_phone_line", label: "Phone Line" },
+  { id: "has_cable_tv", label: "Télévision par câble" },
+  { id: "has_satellite_tv", label: "Télévision par satellite" },
+  { id: "has_phone_line", label: "Ligne téléphonique" },
   { id: "has_vent", label: "Ventilation" },
-  { id: "has_cinema", label: "Home Cinema" },
+  { id: "has_cinema", label: "Home Cinéma" },
 ];
 
 const kitchenAppliances = [
-  { id: "has_dishwasher", label: "Dishwasher" },
-  { id: "has_gas_stove", label: "Gas Stove" },
-  { id: "has_electric_kettle", label: "Electric Kettle" },
-  { id: "has_induction_oven", label: "Induction Oven" },
-  { id: "has_microwave", label: "Microwave" },
-  { id: "has_electric_oven", label: "Electric Oven" },
+  { id: "has_dishwasher", label: "Lave-vaisselle" },
+  { id: "has_gas_stove", label: "Cuisinière à gaz" },
+  { id: "has_electric_kettle", label: "Bouilloire électrique" },
+  { id: "has_induction_oven", label: "Four à induction" },
+  { id: "has_microwave", label: "Micro-ondes" },
+  { id: "has_electric_oven", label: "Four électrique" },
 ];
 
 const otherAppliances = [
-  { id: "has_washing_machine", label: "Washing Machine" },
-  { id: "has_tv", label: "TV" },
-  { id: "has_coffee_machine", label: "Coffee Machine" },
-  { id: "has_audio_system", label: "Audio System" },
-  { id: "has_heater", label: "Heater" },
-  { id: "has_hair_dryer", label: "Hair Dryer" },
-  { id: "has_refrigerator", label: "Refrigerator" },
-  { id: "has_vacuum_cleaner", label: "Vacuum Cleaner" },
-  { id: "has_dryer", label: "Dryer" },
-  { id: "has_iron", label: "Iron" },
+  { id: "has_washing_machine", label: "Lave-linge" },
+  { id: "has_tv", label: "Télévision" },
+  { id: "has_coffee_machine", label: "Machine à café" },
+  { id: "has_audio_system", label: "Système audio" },
+  { id: "has_heater", label: "Chauffage" },
+  { id: "has_hair_dryer", label: "Sèche-cheveux" },
+  { id: "has_refrigerator", label: "Réfrigérateur" },
+  { id: "has_vacuum_cleaner", label: "Aspirateur" },
+  { id: "has_dryer", label: "Sèche-linge" },
+  { id: "has_iron", label: "Fer à repasser" },
 ];
 
 const securityFeatures = [
-  { id: "has_co_detector", label: "CO Detector" },
-  { id: "has_smoke_detector", label: "Smoke Detector" },
-  { id: "has_evacuation_ladder", label: "Evacuation Ladder" },
-  { id: "has_fire_fighting_system", label: "Fire Fighting System" },
-  { id: "has_perimeter_cameras", label: "Perimeter Cameras" },
-  { id: "has_alarm", label: "Alarm" },
-  { id: "has_live_protection", label: "Live Protection" },
-  { id: "has_locked_entrance", label: "Locked Entrance" },
-  { id: "has_locked_yard", label: "Locked Yard" },
+  { id: "has_co_detector", label: "Détecteur de CO" },
+  { id: "has_smoke_detector", label: "Détecteur de fumée" },
+  { id: "has_evacuation_ladder", label: "Échelle d'évacuation" },
+  { id: "has_fire_fighting_system", label: "Système anti-incendie" },
+  { id: "has_perimeter_cameras", label: "Caméras périmétriques" },
+  { id: "has_alarm", label: "Alarme" },
+  { id: "has_live_protection", label: "Protection en direct" },
+  { id: "has_locked_entrance", label: "Entrée sécurisée" },
+  { id: "has_locked_yard", label: "Cour sécurisée" },
 ];
 
 const nearbyFacilities = [
-  { id: "near_bus_stop", label: "Bus Stop" },
-  { id: "near_bank", label: "Bank" },
-  { id: "near_subway", label: "Subway" },
-  { id: "near_supermarket", label: "Supermarket" },
-  { id: "near_kindergarten", label: "Kindergarten" },
-  { id: "near_city_center", label: "City Center" },
-  { id: "near_pharmacy", label: "Pharmacy" },
-  { id: "near_greenery", label: "Greenery" },
-  { id: "near_park", label: "Park" },
-  { id: "near_shopping_centre", label: "Shopping Centre" },
-  { id: "near_school", label: "School" },
-  { id: "near_old_district", label: "Old District" },
+  { id: "near_bus_stop", label: "Arrêt de bus" },
+  { id: "near_bank", label: "Banque" },
+  { id: "near_subway", label: "Métro" },
+  { id: "near_supermarket", label: "Supermarché" },
+  { id: "near_kindergarten", label: "Jardin d'enfants" },
+  { id: "near_city_center", label: "Centre-ville" },
+  { id: "near_pharmacy", label: "Pharmacie" },
+  { id: "near_greenery", label: "Espaces verts" },
+  { id: "near_park", label: "Parc" },
+  { id: "near_shopping_centre", label: "Centre commercial" },
+  { id: "near_school", label: "École" },
+  { id: "near_old_district", label: "Vieux quartier" },
 ];
 
 const rules = [
-  { id: "allows_pets", label: "Pets Allowed" },
-  { id: "allows_parties", label: "Parties Allowed" },
-  { id: "allows_smoking", label: "Smoking Allowed" },
+  { id: "allows_pets", label: "Animaux autorisés" },
+  { id: "allows_parties", label: "Fêtes autorisées" },
+  { id: "allows_smoking", label: "Fumeurs autorisés" },
 ];
 
 const formSchema = z.object({
@@ -170,7 +170,6 @@ interface AddPropertyStep3Props {
 }
 
 const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
-  const { t } = useTranslation();
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -293,7 +292,7 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
 
   const renderCheckboxGroup = (title: string, items: {id: string, label: string}[]) => (
     <div className="space-y-4">
-      <h3 className="text-lg font-medium">{t(title)}</h3>
+      <h3 className="text-lg font-medium">{title}</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {items.map((item) => (
           <FormField
@@ -308,7 +307,7 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
                     onCheckedChange={field.onChange}
                   />
                 </FormControl>
-                <FormLabel>{t(item.label)}</FormLabel>
+                <FormLabel>{item.label}</FormLabel>
               </FormItem>
             )}
           />
@@ -322,45 +321,45 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="space-y-6">
           <div className="mb-8 text-center">
-            <h2 className="text-2xl font-bold">{t("amenitiesAndServices")}</h2>
+            <h2 className="text-2xl font-bold">{"Commodités et Services"}</h2>
             <p className="text-muted-foreground mt-2">
-              {t("selectAmenities")}
+              {"Sélectionnez les commodités et services disponibles dans votre propriété."}
             </p>
           </div>
 
-          {renderCheckboxGroup("mainAmenities", amenities)}
+          {renderCheckboxGroup("Principales commodités", amenities)}
 
-          {renderCheckboxGroup("kitchenAppliances", kitchenAppliances)}
+          {renderCheckboxGroup("Appareils de cuisine", kitchenAppliances)}
 
-          {renderCheckboxGroup("otherAppliances", otherAppliances)}
+          {renderCheckboxGroup("Autres appareils", otherAppliances)}
 
-          {renderCheckboxGroup("security", securityFeatures)}
+          {renderCheckboxGroup("Sécurité", securityFeatures)}
 
-          {renderCheckboxGroup("nearbyFacilities", nearbyFacilities)}
+          {renderCheckboxGroup("Installations à proximité", nearbyFacilities)}
 
-          {renderCheckboxGroup("rules", rules)}
+          {renderCheckboxGroup("Règles", rules)}
 
           <div className="space-y-4">
-            <h3 className="text-lg font-medium">{t("systems")}</h3>
+            <h3 className="text-lg font-medium">{"Systèmes"}</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <FormField
                 control={form.control}
                 name="heating_type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("heatingType")}</FormLabel>
+                    <FormLabel>{"Type de chauffage"}</FormLabel>
                     <FormControl>
                       <select
                         {...field}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <option value="">{t("select")}</option>
-                        <option value="central">{t("central")}</option>
-                        <option value="electric">{t("electric")}</option>
-                        <option value="gas">{t("gas")}</option>
-                        <option value="wood">{t("wood")}</option>
-                        <option value="solar">{t("solar")}</option>
-                        <option value="none">{t("none")}</option>
+                        <option value="">{"Sélectionner"}</option>
+                        <option value="central">{"Central"}</option>
+                        <option value="electric">{"Électrique"}</option>
+                        <option value="gas">{"Gaz"}</option>
+                        <option value="wood">{"Bois"}</option>
+                        <option value="solar">{"Solaire"}</option>
+                        <option value="none">{"Aucun"}</option>
                       </select>
                     </FormControl>
                     <FormMessage />
@@ -373,18 +372,18 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
                 name="hot_water_type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("hotWaterType")}</FormLabel>
+                    <FormLabel>{"Type d'eau chaude"}</FormLabel>
                     <FormControl>
                       <select
                         {...field}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <option value="">{t("select")}</option>
-                        <option value="central">{t("central")}</option>
-                        <option value="electric">{t("electric")}</option>
-                        <option value="gas">{t("gas")}</option>
-                        <option value="solar">{t("solar")}</option>
-                        <option value="none">{t("none")}</option>
+                        <option value="">{"Sélectionner"}</option>
+                        <option value="central">{"Central"}</option>
+                        <option value="electric">{"Électrique"}</option>
+                        <option value="gas">{"Gaz"}</option>
+                        <option value="solar">{"Solaire"}</option>
+                        <option value="none">{"Aucun"}</option>
                       </select>
                     </FormControl>
                     <FormMessage />
@@ -397,17 +396,17 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
                 name="parking_type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("parkingType")}</FormLabel>
+                    <FormLabel>{"Type de parking"}</FormLabel>
                     <FormControl>
                       <select
                         {...field}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <option value="">{t("select")}</option>
-                        <option value="street">{t("street")}</option>
-                        <option value="garage">{t("garage")}</option>
-                        <option value="underground">{t("underground")}</option>
-                        <option value="none">{t("none")}</option>
+                        <option value="">{"Sélectionner"}</option>
+                        <option value="street">{"Rue"}</option>
+                        <option value="garage">{"Garage"}</option>
+                        <option value="underground">{"Souterrain"}</option>
+                        <option value="none">{"Aucun"}</option>
                       </select>
                     </FormControl>
                     <FormMessage />
@@ -420,17 +419,17 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
                 name="building_material"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("buildingMaterial")}</FormLabel>
+                    <FormLabel>{"Matériau de construction"}</FormLabel>
                     <FormControl>
                       <select
                         {...field}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <option value="">{t("select")}</option>
-                        <option value="brick">{t("brick")}</option>
-                        <option value="concrete">{t("concrete")}</option>
-                        <option value="wood">{t("wood")}</option>
-                        <option value="combined">{t("combined")}</option>
+                        <option value="">{"Sélectionner"}</option>
+                        <option value="brick">{"Brique"}</option>
+                        <option value="concrete">{"Béton"}</option>
+                        <option value="wood">{"Bois"}</option>
+                        <option value="combined">{"Combiné"}</option>
                       </select>
                     </FormControl>
                     <FormMessage />
@@ -443,16 +442,16 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
                 name="furniture_type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("furnitureType")}</FormLabel>
+                    <FormLabel>{"Type de mobilier"}</FormLabel>
                     <FormControl>
                       <select
                         {...field}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <option value="">{t("select")}</option>
-                        <option value="furnished">{t("furnished")}</option>
-                        <option value="semi_furnished">{t("semiFurnished")}</option>
-                        <option value="unfurnished">{t("unfurnished")}</option>
+                        <option value="">{"Sélectionner"}</option>
+                        <option value="furnished">{"Meublé"}</option>
+                        <option value="semi_furnished">{"Semi-meublé"}</option>
+                        <option value="unfurnished">{"Non meublé"}</option>
                       </select>
                     </FormControl>
                     <FormMessage />
@@ -465,16 +464,16 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
                 name="storeroom_type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("storeroomType")}</FormLabel>
+                    <FormLabel>{"Type de débarras"}</FormLabel>
                     <FormControl>
                       <select
                         {...field}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <option value="">{t("select")}</option>
-                        <option value="internal">{t("internal")}</option>
-                        <option value="external">{t("external")}</option>
-                        <option value="none">{t("none")}</option>
+                        <option value="">{"Sélectionner"}</option>
+                        <option value="internal">{"Interne"}</option>
+                        <option value="external">{"Externe"}</option>
+                        <option value="none">{"Aucun"}</option>
                       </select>
                     </FormControl>
                     <FormMessage />
@@ -487,9 +486,9 @@ const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
 
         <div className="flex justify-between">
           <Button type="button" variant="outline" onClick={onBack}>
-            {t("back")}
+            {"Retour"}
           </Button>
-          <Button type="submit">{t("nextStep")}</Button>
+          <Button type="submit">{"Étape suivante"}</Button>
         </div>
       </form>
     </Form>

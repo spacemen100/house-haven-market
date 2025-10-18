@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Heart, ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCurrency } from '@/CurrencyContext';
-import { useTranslation } from 'react-i18next';
 
 interface PropertyHeaderProps {
   property: Property;
@@ -13,7 +12,16 @@ interface PropertyHeaderProps {
 
 const PropertyHeader = ({ property }: PropertyHeaderProps) => {
   const { formatPrice } = useCurrency();
-  const { t } = useTranslation();
+
+  const listingTypes: { [key: string]: string } = {
+    sale: "Vente",
+    rent: "Location",
+  };
+
+  const propertyTypes: { [key: string]: string } = {
+    apartment: "Appartement",
+    house: "Maison",
+  };
 
   return (
     <>
@@ -23,7 +31,7 @@ const PropertyHeader = ({ property }: PropertyHeaderProps) => {
           className="flex items-center text-estate-neutral-600 hover:text-estate-800 transition-colors"
         >
           <ChevronLeft size={20} />
-          <span>{t('propertyHeader.backToProperties')}</span>
+          <span>Retour aux propriétés</span>
         </Link>
       </div>
 
@@ -41,14 +49,14 @@ const PropertyHeader = ({ property }: PropertyHeaderProps) => {
 
         <div className="flex flex-wrap gap-2 mb-4">
           <Badge className="bg-teal-500 hover:bg-teal-500">
-            {t(`listingType.${property.listingType.toLowerCase()}`)}
+            {listingTypes[property.listingType.toLowerCase()]}
           </Badge>
           <Badge className="bg-estate-neutral-700 hover:bg-estate-neutral-700">
-            {t(`propertyType.${property.propertyType.toLowerCase()}`)}
+            {propertyTypes[property.propertyType.toLowerCase()]}
           </Badge>
           <span className="text-2xl font-bold text-estate-800 ml-auto">
             {property.listingType === "rent"
-              ? `${formatPrice(property.price, property.currency)}/${t('propertyHeader.month')}`
+              ? `${formatPrice(property.price, property.currency)}/mois`
               : formatPrice(property.price, property.currency)}
           </span>
         </div>

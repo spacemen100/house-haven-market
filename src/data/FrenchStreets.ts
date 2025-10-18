@@ -1,5 +1,4 @@
 import { FrenchCity } from "./FrenchCities";
-import i18n from 'i18next';
 import { FRENCH_DISTRICTS } from "./FrenchDistricts";
 
 type StreetData = {

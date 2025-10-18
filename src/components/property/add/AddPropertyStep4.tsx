@@ -22,30 +22,6 @@ import {
 import { FRENCH_CITIES, FrenchCity } from "@/data/FrenchCities";
 import { getDistrictsForCity } from "@/data/FrenchDistricts";
 import { getStreetsForDistrict } from "@/data/FrenchStreets";
-import { useTranslation } from 'react-i18next';
-import { useLanguage } from '@/LanguageContext';
-
-const MAX_IMAGES = 10;
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
-
-const addressSchema = z.object({
-  addressStreet: z.string().optional(),
-  addressCity: z.string().min(1, "City is required"),
-  addressDistrict: z.string().optional(),
-  lat: z.number().default(41.7151),
-  lng: z.number().default(44.8271),
-});
-
-type AddressFormValues = z.infer<typeof addressSchema>;
-
-interface AddPropertyStep4Props {
-  onBack: () => void;
-  formData: Partial<CreatePropertyInput>;
-  isSubmitting: boolean;
-  onSubmit: () => void;
-}
-
 const AddPropertyStep4 = ({
   onBack,
   formData,
@@ -59,8 +35,6 @@ const AddPropertyStep4 = ({
   const [mapDialogOpen, setMapDialogOpen] = useState(false);
   const [availableDistricts, setAvailableDistricts] = useState<string[]>([]);
   const [availableStreets, setAvailableStreets] = useState<string[]>([]);
-  const { t } = useTranslation();
-  const { language } = useLanguage();
 
   const form = useForm<AddressFormValues>({
     resolver: zodResolver(addressSchema),
@@ -75,21 +49,6 @@ const AddPropertyStep4 = ({
 
   const selectedCity = form.watch("addressCity");
   const selectedDistrict = form.watch("addressDistrict");
-
-  // Helper function to get translated city name
-  const getTranslatedCityName = (city: string) => {
-    return t(`cities.${city}`, { defaultValue: city });
-  };
-
-  // Helper function to get translated district name
-  const getTranslatedDistrictName = (district: string) => {
-    return t(`districts.${district}`, { defaultValue: district });
-  };
-
-  // Helper function to get translated street name
-  const getTranslatedStreetName = (street: string) => {
-    return t(`streets.${street}`, { defaultValue: street });
-  };
 
   useEffect(() => {
     if (selectedCity) {
@@ -124,10 +83,10 @@ const AddPropertyStep4 = ({
 
   const validateFile = (file: File): string | null => {
     if (!ALLOWED_TYPES.includes(file.type)) {
-      return t('errors.unsupportedFileType');
+      return "Type de fichier non pris en charge.";
     }
     if (file.size > MAX_FILE_SIZE) {
-      return t('errors.fileSizeExceeded');
+      return "La taille du fichier dépasse la limite de 5 Mo.";
     }
     return null;
   };
@@ -137,7 +96,7 @@ const AddPropertyStep4 = ({
       const filesArray = Array.from(e.target.files);
 
       if (images.length + filesArray.length > MAX_IMAGES) {
-        toast.error(t('errors.maxImagesExceeded', { max: MAX_IMAGES }));
+        toast.error(`Vous ne pouvez pas télécharger plus de ${MAX_IMAGES} images.`);
         return;
       }
 
@@ -192,18 +151,18 @@ const AddPropertyStep4 = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
         <div className="mb-8 text-center">
-          <h2 className="text-2xl font-bold">{t('propertyWizard.step4.title')}</h2>
+          <h2 className="text-2xl font-bold">{"Localisation et Photos"}</h2>
           <p className="text-muted-foreground mt-2">
-            {t('propertyWizard.step4.subtitle')}
+            {"Dernière étape ! Ajoutez la localisation de votre propriété et quelques photos."}
           </p>
         </div>
 
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium mb-4">{t('propertyWizard.step4.locationTitle')}</h3>
+            <h3 className="text-lg font-medium mb-4">{"Localisation de la propriété"}</h3>
 
             <div className="mb-6">
-              <FormLabel>{t('propertyWizard.step4.propertyLocation')}</FormLabel>
+              <FormLabel>{"Localisation sur la carte"}</FormLabel>
               <LocationMap
                 initialLat={form.getValues("lat")}
                 initialLng={form.getValues("lng")}
@@ -217,16 +176,16 @@ const AddPropertyStep4 = ({
                 name="addressCity"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('propertyWizard.step4.city')}*</FormLabel>
+                    <FormLabel>{"Ville"}*</FormLabel>
                     <FormControl>
                       <select
                         {...field}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <option value="">{t('propertyWizard.step4.selectCity')}</option>
+                        <option value="">{"Sélectionner une ville"}</option>
                         {FRENCH_CITIES.map((city) => (
                           <option key={city} value={city}>
-                            {getTranslatedCityName(city)}
+                            {city}
                           </option>
                         ))}
                       </select>
@@ -241,17 +200,17 @@ const AddPropertyStep4 = ({
                 name="addressDistrict"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('propertyWizard.step4.district')}</FormLabel>
+                    <FormLabel>{"Quartier"}</FormLabel>
                     <FormControl>
                       <select
                         {...field}
                         disabled={!selectedCity}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <option value="">{t('propertyWizard.step4.selectDistrict')}</option>
+                        <option value="">{"Sélectionner un quartier"}</option>
                         {availableDistricts.map((district) => (
                           <option key={district} value={district}>
-                            {getTranslatedDistrictName(district)}
+                            {district}
                           </option>
                         ))}
                       </select>
@@ -266,17 +225,17 @@ const AddPropertyStep4 = ({
                 name="addressStreet"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('propertyWizard.step4.street')}</FormLabel>
+                    <FormLabel>{"Rue"}</FormLabel>
                     <FormControl>
                       <select
                         {...field}
                         disabled={!selectedDistrict}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <option value="">{t('propertyWizard.step4.selectStreet')}</option>
+                        <option value="">{"Sélectionner une rue"}</option>
                         {availableStreets.map((street) => (
                           <option key={street} value={street}>
-                            {getTranslatedStreetName(street)}
+                            {street}
                           </option>
                         ))}
                       </select>
@@ -288,9 +247,9 @@ const AddPropertyStep4 = ({
             </div>
 
             <div className="mt-4">
-              <Label>{t('propertyWizard.step4.locationNotes')}</Label>
+              <Label>{"Notes de localisation"}</Label>
               <Textarea
-                placeholder={t('propertyWizard.step4.locationNotesPlaceholder')}
+                placeholder="Ex: Près du parc central, à côté de l'école primaire..."
                 className="min-h-24"
               />
             </div>
@@ -298,9 +257,9 @@ const AddPropertyStep4 = ({
 
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-medium">{t('propertyWizard.step4.photosTitle')}</h3>
+              <h3 className="text-lg font-medium">{"Photos de la propriété"}</h3>
               <span className="text-sm text-muted-foreground">
-                {images.length}/{MAX_IMAGES} {t('propertyWizard.step4.images')}
+                {images.length}/{MAX_IMAGES} {"images"}
               </span>
             </div>
 
@@ -314,7 +273,7 @@ const AddPropertyStep4 = ({
                   disabled={images.length >= MAX_IMAGES}
                 >
                   <Images className="mr-2 h-4 w-4" />
-                  {t('propertyWizard.step4.addPhotos')}
+                  {"Ajouter des photos"}
                 </Button>
                 <Input
                   id="images"
@@ -333,7 +292,7 @@ const AddPropertyStep4 = ({
                     <div key={index} className="relative group aspect-square">
                       <img
                         src={url}
-                        alt={t('propertyWizard.step4.propertyPhotoAlt', { index: index + 1 })}
+                        alt={`Photo de la propriété ${index + 1}`}
                         className="h-full w-full object-cover rounded-md cursor-pointer"
                         onClick={() => {
                           setPreviewImage(url);
@@ -359,7 +318,7 @@ const AddPropertyStep4 = ({
 
         <div className="flex justify-between">
           <Button type="button" variant="outline" onClick={onBack}>
-            {t('common.back')}
+            {"Retour"}
           </Button>
           <Button
             type="submit"
@@ -367,10 +326,10 @@ const AddPropertyStep4 = ({
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t('propertyWizard.step4.publishing')}
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> {"Publication..."}
               </>
             ) : (
-              t('propertyWizard.step4.publishListing')
+              "Publier l'annonce"
             )}
           </Button>
         </div>
@@ -378,10 +337,10 @@ const AddPropertyStep4 = ({
         <Dialog open={previewDialogOpen} onOpenChange={setPreviewDialogOpen}>
           <DialogContent className="sm:max-w-xl">
             <DialogHeader>
-              <DialogTitle>{t('propertyWizard.step4.imagePreview')}</DialogTitle>
+              <DialogTitle>{"Aperçu de l'image"}</DialogTitle>
             </DialogHeader>
             <div className="flex justify-center">
-              <img src={previewImage} alt={t('propertyWizard.step4.previewAlt')} className="max-h-[70vh] object-contain" />
+              <img src={previewImage} alt={"Aperçu de l'image"} className="max-h-[70vh] object-contain" />
             </div>
           </DialogContent>
         </Dialog>

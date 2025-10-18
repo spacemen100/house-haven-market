@@ -6,24 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { useTranslation } from "react-i18next";
-
-const formSchema = z.object({
-  listing_type: z.enum(["sale", "rent", "rent_by_day", "lease"], {
-    required_error: "You must select an ad type",
-  }),
-  property_type: z.enum(["house", "apartment", "land", "commercial"], {
-    required_error: "You must select a property type",
-  }),
-});
-
-interface PropertyTypeStepProps {
-  onNext: (data: z.infer<typeof formSchema>) => void;
-  onBack?: () => void;
-}
-
 const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) => {
-  const { t } = useTranslation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -41,9 +24,9 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="space-y-6">
           <div className="mb-8 text-center">
-            <h2 className="text-2xl font-bold">{t("listingType")}</h2>
+            <h2 className="text-2xl font-bold">{"Type d'annonce"}</h2>
             <p className="text-muted-foreground mt-2">
-              {t("selectTransactionType")}
+              {"Sélectionnez le type de transaction et le type de propriété."}
             </p>
           </div>
 
@@ -52,7 +35,7 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
             name="listing_type"
             render={({ field }) => (
               <FormItem className="space-y-4">
-                <FormLabel>{t("listingType")}*</FormLabel>
+                <FormLabel>{"Type d'annonce"}*</FormLabel>
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
@@ -65,7 +48,7 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                         htmlFor="sale"
                         className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
-                        <span className="font-medium">{t("forSale")}</span>
+                        <span className="font-medium">{"À vendre"}</span>
                       </Label>
                     </div>
                     <div>
@@ -74,7 +57,7 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                         htmlFor="rent"
                         className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
-                        <span className="font-medium">{t("forRent")}</span>
+                        <span className="font-medium">{"À louer"}</span>
                       </Label>
                     </div>
                     <div>
@@ -83,7 +66,7 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                         htmlFor="rent_by_day"
                         className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
-                        <span className="font-medium">{t("dailyRent")}</span>
+                        <span className="font-medium">{"Location journalière"}</span>
                       </Label>
                     </div>
                     <div>
@@ -92,7 +75,7 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                         htmlFor="lease"
                         className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
-                        <span className="font-medium">{t("commercialLease")}</span>
+                        <span className="font-medium">{"Bail commercial"}</span>
                       </Label>
                     </div>
                   </RadioGroup>
@@ -107,7 +90,7 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
             name="property_type"
             render={({ field }) => (
               <FormItem className="space-y-4">
-                <FormLabel>{t("propertyType")}*</FormLabel>
+                <FormLabel>{"Type de propriété"}*</FormLabel>
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
@@ -120,7 +103,7 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                         htmlFor="house"
                         className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
-                        <span className="font-medium">{t("house")}</span>
+                        <span className="font-medium">{"Maison"}</span>
                       </Label>
                     </div>
                     <div>
@@ -129,7 +112,7 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                         htmlFor="apartment"
                         className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
-                        <span className="font-medium">{t("apartment")}</span>
+                        <span className="font-medium">{"Appartement"}</span>
                       </Label>
                     </div>
                     <div>
@@ -138,7 +121,7 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                         htmlFor="land"
                         className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
-                        <span className="font-medium">{t("land")}</span>
+                        <span className="font-medium">{"Terrain"}</span>
                       </Label>
                     </div>
                     <div>
@@ -147,7 +130,7 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                         htmlFor="commercial"
                         className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
-                        <span className="font-medium">{t("commercialProperty")}</span>
+                        <span className="font-medium">{"Propriété commerciale"}</span>
                       </Label>
                     </div>
                   </RadioGroup>
@@ -161,10 +144,10 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
         <div className="flex justify-between">
           {onBack && (
             <Button type="button" variant="outline" onClick={onBack}>
-              {t("back")}
+              {"Retour"}
             </Button>
           )}
-          <Button type="submit">{t("next")}</Button>
+          <Button type="submit">{"Suivant"}</Button>
         </div>
       </form>
     </Form>

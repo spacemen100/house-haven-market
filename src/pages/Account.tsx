@@ -11,10 +11,7 @@ import { supabase } from "@/lib/api/supabaseClient";
 import { toast } from "sonner";
 import { handleAuthError } from "@/lib/api/auth";
 import { useLocation } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-
 const Account = () => {
-  const { t } = useTranslation();
   const location = useLocation();
 
   useEffect(() => {
@@ -82,7 +79,7 @@ const Account = () => {
           )}
           <div>
             <h1 className="text-3xl font-bold text-estate-800">
-              {user?.user_metadata?.full_name || t("myAccount")}
+              {user?.user_metadata?.full_name || "Mon compte"}
             </h1>
             <p className="text-estate-neutral-600">
               {user?.email}
@@ -92,17 +89,17 @@ const Account = () => {
 
         <Tabs defaultValue="published" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="published">{t("myListings")}</TabsTrigger>
-            <TabsTrigger value="liked">{t("favorites")}</TabsTrigger>
+            <TabsTrigger value="published">{"Mes annonces"}</TabsTrigger>
+            <TabsTrigger value="liked">{"Favoris"}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="published">
             <div className="py-4">
-              <h2 className="text-xl font-semibold mb-4">{t("myPublishedListings")}</h2>
+              <h2 className="text-xl font-semibold mb-4">{"Mes annonces publiées"}</h2>
 
               {loadingMyProperties ? (
                 <div className="flex justify-center py-8">
-                  <p>{t("loading")}</p>
+                  <p>{"Chargement..."}</p>
                 </div>
               ) : myProperties.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -113,13 +110,13 @@ const Account = () => {
               ) : (
                 <div className="bg-white rounded-lg p-8 text-center border border-estate-neutral-200">
                   <p className="text-estate-neutral-600">
-                    {t("noPublishedListings")}
+                    {"Vous n'avez pas encore publié d'annonces."}
                   </p>
                   <a
                     href="/sell"
                     className="text-teal-500 hover:text-teal-600 font-medium mt-2 inline-block"
                   >
-                    {t("publishListing")}
+                    {"Publier une annonce"}
                   </a>
                 </div>
               )}
@@ -128,11 +125,11 @@ const Account = () => {
 
           <TabsContent value="liked">
             <div className="py-4">
-              <h2 className="text-xl font-semibold mb-4">{t("myFavorites")}</h2>
+              <h2 className="text-xl font-semibold mb-4">{"Mes favoris"}</h2>
 
               {loadingLikedProperties ? (
                 <div className="flex justify-center py-8">
-                  <p>{t("loading")}</p>
+                  <p>{"Chargement..."}</p>
                 </div>
               ) : currentUserLikedPropertyIds !== null && likedProperties.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -147,13 +144,13 @@ const Account = () => {
               ) : (
                 <div className="bg-white rounded-lg p-8 text-center border border-estate-neutral-200">
                   <p className="text-estate-neutral-600">
-                    {t("noFavorites")}
+                    {"Vous n'avez pas encore de favoris."}
                   </p>
                   <a
                     href="/properties"
                     className="text-teal-500 hover:text-teal-600 font-medium mt-2 inline-block"
                   >
-                    {t("exploreProperties")}
+                    {"Explorer les propriétés"}
                   </a>
                 </div>
               )}

@@ -13,13 +13,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CreatePropertyInput } from '@/lib/api/properties';
-import { useTranslation } from "react-i18next";
 
 const propertyStep1Schema = z.object({
-  phone_number: z.string().min(6, "Phone number too short").max(20, "Phone number too long"),
-  contactEmail: z.string().email("Invalid email address").optional().or(z.literal('')),
+  phone_number: z.string().min(6, "Numéro de téléphone trop court").max(20, "Numéro de téléphone trop long"),
+  contactEmail: z.string().email("Adresse e-mail invalide").optional().or(z.literal('')),
   instagramHandle: z.string().optional(),
-  facebookUrl: z.string().url("Invalid URL").optional().or(z.literal('')),
+  facebookUrl: z.string().url("URL invalide").optional().or(z.literal('')),
   twitterHandle: z.string().optional(),
   reference_number: z.string().optional(),
 });
@@ -30,7 +29,6 @@ interface AddPropertyStep1Props {
 }
 
 const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) => {
-  const { t } = useTranslation();
   const form = useForm<z.infer<typeof propertyStep1Schema>>({
     resolver: zodResolver(propertyStep1Schema),
     defaultValues: {
@@ -72,9 +70,9 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <div className="mb-8 text-center">
-          <h2 className="text-2xl font-bold">{t("additionalInformation")}</h2>
+          <h2 className="text-2xl font-bold">Informations supplémentaires</h2>
           <p className="text-muted-foreground mt-2">
-            {t("provideAdditionalInformation")}
+            Fournissez des informations supplémentaires pour votre annonce.
           </p>
         </div>
 
@@ -84,9 +82,9 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
             name="phone_number"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("phoneNumber")}*</FormLabel>
+                <FormLabel>Numéro de téléphone*</FormLabel>
                 <FormControl>
-                  <Input placeholder={t("yourContactNumber")} {...field} />
+                  <Input placeholder="Votre numéro de contact" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -98,9 +96,9 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
             name="contactEmail"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("contactEmail")}</FormLabel>
+                <FormLabel>Email de contact</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder={t("emailForContacts")} {...field} />
+                  <Input type="email" placeholder="Email pour les contacts" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -112,16 +110,16 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
             name="reference_number"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("referenceNumber")}</FormLabel>
+                <FormLabel>Numéro de référence</FormLabel>
                 <FormControl>
-                  <Input placeholder={t("internalReference")} {...field} readOnly />
+                  <Input placeholder="Référence interne" {...field} readOnly />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          <h3 className="text-lg font-medium mt-6">{t("socialMedia")}</h3>
+          <h3 className="text-lg font-medium mt-6">Réseaux sociaux</h3>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <FormField
@@ -129,9 +127,9 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
               name="instagramHandle"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("instagram")}</FormLabel>
+                  <FormLabel>Instagram</FormLabel>
                   <FormControl>
-                    <Input placeholder={t("yourInstagramUsername")} {...field} />
+                    <Input placeholder="Votre nom d'utilisateur Instagram" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -143,9 +141,9 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
               name="facebookUrl"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("facebook")}</FormLabel>
+                  <FormLabel>Facebook</FormLabel>
                   <FormControl>
-                    <Input placeholder={t("linkToYourProfile")} {...field} />
+                    <Input placeholder="Lien vers votre profil" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -157,9 +155,9 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
               name="twitterHandle"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("twitter")}</FormLabel>
+                  <FormLabel>Twitter</FormLabel>
                   <FormControl>
-                    <Input placeholder={t("yourTwitterUsername")} {...field} />
+                    <Input placeholder="Votre nom d'utilisateur Twitter" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -175,10 +173,10 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) =
               variant="outline"
               onClick={onBack}
             >
-              {t("back")}
+              Retour
             </Button>
           )}
-          <Button type="submit" className={onBack ? "" : "w-full"}>{t("next")}</Button>
+          <Button type="submit" className={onBack ? "" : "w-full"}>Suivant</Button>
         </div>
       </form>
     </Form>

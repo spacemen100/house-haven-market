@@ -21,17 +21,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signInWithEmail, signUpWithEmail } from "@/lib/api/auth";
-import { useTranslation } from "react-i18next";
-
 const Sell = () => {
-  const { t } = useTranslation();
   const steps = [
-    { number: 1, label: t("authentication") },
-    { number: 2, label: t("adType") },
-    { number: 3, label: t("basicInformation") },
-    { number: 4, label: t("features1") },
-    { number: 5, label: t("location") },
-    { number: 6, label: t("publish") }
+    { number: 1, label: "Authentification" },
+    { number: 2, label: "Type d'annonce" },
+    { number: 3, label: "Informations de base" },
+    { number: 4, label: "Caractéristiques" },
+    { number: 5, label: "Localisation" },
+    { number: 6, label: "Publier" }
   ];
 
   const [step, setStep] = useState(1);
@@ -85,7 +82,7 @@ const Sell = () => {
         twitter: "",
         facebook: ""
       });
-      toast.success(t("loginSuccess"));
+      toast.success("Connexion réussie");
     }
   };
 
@@ -121,7 +118,7 @@ const Sell = () => {
         twitter: "",
         facebook: ""
       });
-      toast.success(t("signupSuccess"));
+      toast.success("Inscription réussie");
     }
   };
 
@@ -138,10 +135,10 @@ const Sell = () => {
       await createProperty(finalData as CreatePropertyInput);
       setFormData({});
       setStep(1);
-      toast.success(t("adPublishedSuccessfully"));
+      toast.success("Annonce publiée avec succès");
     } catch (error) {
       console.error('Error submitting form:', error);
-      toast.error(t("errorPublishingAd"));
+      toast.error("Erreur lors de la publication de l'annonce");
     } finally {
       setIsSubmitting(false);
     }
@@ -149,21 +146,21 @@ const Sell = () => {
 
   const renderAuthStep = () => (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-center">{t("getStarted")}</h2>
+      <h2 className="text-2xl font-bold text-center">{"Commencer"}</h2>
       <p className="text-center text-gray-600">
         {user
-          ? t("readyToPublish")
-          : t("logInOrCreateAccount")}
+          ? "Prêt à publier votre annonce ?"
+          : "Connectez-vous ou créez un compte pour continuer."}
       </p>
 
       {user ? (
         <div className="space-y-4">
-          <p className="text-center">{t("welcome")} : {user.email || "User"}!</p>
+          <p className="text-center">{"Bienvenue"} : {user.email || "User"}!</p>
           <Button
             className="w-full bg-teal-500 hover:bg-teal-600"
             onClick={() => setStep(2)}
           >
-            {t("continueToPropertyDetails")}
+            {"Continuer vers les détails de la propriété"}
           </Button>
         </div>
       ) : (
@@ -174,7 +171,7 @@ const Sell = () => {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background px-2 text-muted-foreground">
-                {t("logInWithEmail")}
+                {"Connectez-vous avec votre email"}
               </span>
             </div>
           </div>
@@ -187,7 +184,7 @@ const Sell = () => {
               setIsAuthDialogOpen(true);
             }}
           >
-            {t("logIn")}
+            {"Se connecter"}
           </Button>
 
           <Button
@@ -198,7 +195,7 @@ const Sell = () => {
               setIsAuthDialogOpen(true);
             }}
           >
-            {t("createAccount")}
+            {"Créer un compte"}
           </Button>
         </div>
       )}
@@ -212,10 +209,10 @@ const Sell = () => {
         <section className="relative py-16 bg-estate-800">
           <div className="container text-center text-white">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif mb-4">
-              {t("publishRealEstateAd")}
+              {"Publier une annonce immobilière"}
             </h1>
             <p className="text-lg md:text-xl max-w-2xl mx-auto text-slate-200">
-              {t("fillInformation")}
+              {"Remplissez les informations ci-dessous pour publier votre annonce."}
             </p>
           </div>
         </section>
@@ -298,29 +295,29 @@ const Sell = () => {
         <DialogContent className="max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-estate-800">
-              {authMode === "login" ? t("logIn") : t("createAccount")}
+              {authMode === "login" ? "Se connecter" : "Créer un compte"}
             </DialogTitle>
           </DialogHeader>
 
           <div className="space-y-4">
             <form onSubmit={authMode === "login" ? handleEmailLogin : handleEmailSignUp} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">{t("email")}</Label>
+                <Label htmlFor="email">{"Email"}</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder={t("enterEmail")}
+                  placeholder="Entrez votre email"
                   value={authFormData.email}
                   onChange={handleAuthInputChange}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">{t("password")}</Label>
+                <Label htmlFor="password">{"Mot de passe"}</Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder={t("enterPassword")}
+                  placeholder="Entrez votre mot de passe"
                   value={authFormData.password}
                   onChange={handleAuthInputChange}
                   required
@@ -330,27 +327,27 @@ const Sell = () => {
               {authMode === "signup" && (
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="phone">{t("phone")}</Label>
+                    <Label htmlFor="phone">{"Téléphone"}</Label>
                     <Input
                       id="phone"
                       type="tel"
-                      placeholder={t("enterPhone")}
+                      placeholder="Entrez votre numéro de téléphone"
                       value={authFormData.phone}
                       onChange={handleAuthInputChange}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="address">{t("address")}</Label>
+                    <Label htmlFor="address">{"Adresse"}</Label>
                     <Input
                       id="address"
                       type="text"
-                      placeholder={t("enterAddress")}
+                      placeholder="Entrez votre adresse"
                       value={authFormData.address}
                       onChange={handleAuthInputChange}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="instagram">{t("instagram")}</Label>
+                    <Label htmlFor="instagram">{"Instagram"}</Label>
                     <Input
                       id="instagram"
                       type="text"
@@ -360,7 +357,7 @@ const Sell = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="twitter">{t("twitter")}</Label>
+                    <Label htmlFor="twitter">{"Twitter"}</Label>
                     <Input
                       id="twitter"
                       type="text"
@@ -370,11 +367,11 @@ const Sell = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="facebook">{t("facebook")}</Label>
+                    <Label htmlFor="facebook">{"Facebook"}</Label>
                     <Input
                       id="facebook"
                       type="text"
-                      placeholder={t("linkToProfile")}
+                      placeholder="Lien vers votre profil"
                       value={authFormData.facebook}
                       onChange={handleAuthInputChange}
                     />
@@ -383,31 +380,31 @@ const Sell = () => {
               )}
 
               <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600">
-                {authMode === "login" ? t("logIn") : t("signup")}
+                {authMode === "login" ? "Se connecter" : "S'inscrire"}
               </Button>
             </form>
 
             <div className="text-center text-sm">
               {authMode === "login" ? (
                 <>
-                  {t("noAccount")}{" "}
+                  {"Vous n'avez pas de compte ?"}{" "}
                   <button
                     type="button"
                     className="text-teal-600 hover:underline"
                     onClick={() => setAuthMode("signup")}
                   >
-                    {t("signup")}
+                    {"S'inscrire"}
                   </button>
                 </>
               ) : (
                 <>
-                  {t("haveAccount")}{" "}
+                  {"Vous avez déjà un compte ?"}{" "}
                   <button
                     type="button"
                     className="text-teal-600 hover:underline"
                     onClick={() => setAuthMode("login")}
                   >
-                    {t("login")}
+                    {"Se connecter"}
                   </button>
                 </>
               )}

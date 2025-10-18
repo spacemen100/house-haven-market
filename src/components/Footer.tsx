@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin } from "lucide-react";
-import { useTranslation } from "react-i18next";
 
 const Footer = () => {
-  const { t } = useTranslation();
-
   return (
     <footer className="bg-estate-800 text-white relative z-20">
       <div className="container py-12 md:py-16">
@@ -13,7 +10,7 @@ const Footer = () => {
           <div>
             <div className="text-2xl font-serif font-bold mb-6">Annonces Immobilières<span className="text-teal-500">Région Lyonnaise</span></div>
             <p className="text-estate-neutral-200 mb-6">
-              {t('footer.companyDescription')}
+              Votre agence immobilière de confiance dans la région lyonnaise, offrant des services personnalisés pour l'achat, la vente et la location.
             </p>
             <div className="flex gap-4">
               <a href="#" className="text-estate-neutral-200 hover:text-teal-500">
@@ -33,22 +30,22 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-6">{t('footer.quickLinks')}</h3>
+            <h3 className="text-lg font-semibold mb-6">Liens rapides</h3>
             <ul className="space-y-3">
               <li>
-                <Link to="/" className="text-estate-neutral-200 hover:text-teal-500">{t('footer.home')}</Link>
+                <Link to="/" className="text-estate-neutral-200 hover:text-teal-500">Accueil</Link>
               </li>
               <li>
-                <Link to="/properties?type=sale" className="text-estate-neutral-200 hover:text-teal-500">{t('footer.buy')}</Link>
+                <Link to="/properties?type=sale" className="text-estate-neutral-200 hover:text-teal-500">Acheter</Link>
               </li>
               <li>
-                <Link to="/properties?type=rent" className="text-estate-neutral-200 hover:text-teal-500">{t('footer.rent')}</Link>
+                <Link to="/properties?type=rent" className="text-estate-neutral-200 hover:text-teal-500">Louer</Link>
               </li>
               <li>
-                <Link to="/sell" className="text-estate-neutral-200 hover:text-teal-500">{t('footer.sellOrAdvertise')}</Link>
+                <Link to="/sell" className="text-estate-neutral-200 hover:text-teal-500">Vendre / Annoncer</Link>
               </li>
               <li>
-                <Link to="/properties?type=rent_by_day" className="text-estate-neutral-200 hover:text-teal-500">{t('footer.dailyRent')}</Link>
+                <Link to="/properties?type=rent_by_day" className="text-estate-neutral-200 hover:text-teal-500">Location à la journée</Link>
               </li>
             </ul>
           </div>
@@ -60,17 +57,17 @@ const Footer = () => {
 
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-estate-neutral-300 text-sm">
-            © 2025 Annonces Immobilières Région Lyonnaise. {t('footer.rightsReserved')}
+            © 2025 Annonces Immobilières Région Lyonnaise. Tous droits réservés.
           </p>
           <div className="flex gap-6 mt-4 md:mt-0">
             <Link to="/privacy" className="text-estate-neutral-300 hover:text-teal-500 text-sm">
-              {t('footer.privacyPolicy')}
+              Politique de confidentialité
             </Link>
             <Link to="/terms" className="text-estate-neutral-300 hover:text-teal-500 text-sm">
-              {t('footer.terms')}
+              Conditions d'utilisation
             </Link>
             <Link to="/sitemap" className="text-estate-neutral-300 hover:text-teal-500 text-sm">
-              {t('footer.sitemap')}
+              Plan du site
             </Link>
           </div>
         </div>

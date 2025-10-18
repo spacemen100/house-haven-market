@@ -1,6 +1,4 @@
 import { FrenchCity } from "./frenchCities";
-import i18n from 'i18next';
-
 type DistrictData = {
   [key in FrenchCity]?: string[];
 };
@@ -436,7 +434,5 @@ export const FRENCH_DISTRICTS: DistrictData = {
 
 export const getDistrictsForCity = (city: FrenchCity): string[] => {
   const districts = FRENCH_DISTRICTS[city] || [];
-  return districts.map(district => 
-    i18n.t(`districts.${city}.${district}`, { defaultValue: district })
-  );
+  return districts;
 };

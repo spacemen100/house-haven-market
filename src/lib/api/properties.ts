@@ -572,3 +572,32 @@ export const getNewestProperties = async (): Promise<Property[]> => {
     return [];
   }
 };
+
+export const getPropertyById = async (id: string): Promise<Property | null> => {
+  try {
+    const { data: property, error } = await supabase
+      .from('properties')
+      .select(`
+        *,
+        property_amenities (amenity),
+        property_equipment (equipment),
+        property_images (image_url, is_primary),
+        property_internet_tv (option_name),
+        property_storage (storage_type),
+        property_security (security_feature),
+        property_nearby_places (place_name),
+        property_online_services (service_name)
+      `)
+      .eq('id', id)
+      .single();
+
+    if (error) throw error;
+    if (!property) return null;
+
+    return transformProperty(property);
+  } catch (error) {
+    console.error('Error fetching property by ID:', error);
+    toast.error("Failed to fetch property details. Please try again.");
+    return null;
+  }
+};

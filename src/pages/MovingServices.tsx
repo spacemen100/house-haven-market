@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,7 +11,6 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const MovingServices: React.FC = () => {
-  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -92,7 +90,7 @@ const MovingServices: React.FC = () => {
   const calculateCost = () => {
     const { volume, distance, departureFloor, arrivalFloor, formula, departurePortage, arrivalPortage, departureFurnitureLift, arrivalFurnitureLift, departureParkingAuth, arrivalParkingAuth } = formData;
     if (!volume || !distance) {
-      toast.error(t('movingServices.errors.fillFields'));
+      toast.error('Veuillez remplir les champs de volume et de distance.');
       return;
     }
 
@@ -144,27 +142,27 @@ const MovingServices: React.FC = () => {
     setEstimatedCost(totalCost);
 
     setCostBreakdown([
-        { name: t('movingServices.costBreakdown.base'), value: baseCost },
-        { name: t('movingServices.costBreakdown.volume'), value: volumeCost },
-        { name: t('movingServices.costBreakdown.distance'), value: distanceCost },
-        { name: t('movingServices.costBreakdown.departureFloor'), value: departureFloorCost },
-        { name: t('movingServices.costBreakdown.arrivalFloor'), value: arrivalFloorCost },
-        { name: t('movingServices.costBreakdown.departurePortage'), value: departurePortageCost },
-        { name: t('movingServices.costBreakdown.arrivalPortage'), value: arrivalPortageCost },
-        { name: t('movingServices.costBreakdown.departureFurnitureLift'), value: departureFurnitureLiftCost },
-        { name: t('movingServices.costBreakdown.arrivalFurnitureLift'), value: arrivalFurnitureLiftCost },
-        { name: t('movingServices.costBreakdown.departureParkingAuth'), value: departureParkingAuthCost },
-        { name: t('movingServices.costBreakdown.arrivalParkingAuth'), value: arrivalParkingAuthCost },
+        { name: 'Coût de base', value: baseCost },
+        { name: 'Coût du volume', value: volumeCost },
+        { name: 'Coût de la distance', value: distanceCost },
+        { name: 'Coût étage départ', value: departureFloorCost },
+        { name: 'Coût étage arrivée', value: arrivalFloorCost },
+        { name: 'Coût portage départ', value: departurePortageCost },
+        { name: 'Coût portage arrivée', value: arrivalPortageCost },
+        { name: 'Coût monte-meuble départ', value: departureFurnitureLiftCost },
+        { name: 'Coût monte-meuble arrivée', value: arrivalFurnitureLiftCost },
+        { name: 'Coût stationnement départ', value: departureParkingAuthCost },
+        { name: 'Coût stationnement arrivée', value: arrivalParkingAuthCost },
     ]);
   };
 
   const handleRequestCallback = () => {
     if (!formData.phone) {
-      toast.error(t('movingServices.errors.enterPhone'));
+      toast.error('Veuillez entrer votre numéro de téléphone.');
       return;
     }
     // Here you would typically send the data to a backend
-    toast.success(t('movingServices.callbackSuccess'));
+    toast.success('Votre demande de rappel a été envoyée avec succès !');
     setFormData({
         firstName: '',
         lastName: '',
@@ -195,52 +193,52 @@ const MovingServices: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">{t('movingServices.title')}</h1>
-      <p className="mb-8">{t('movingServices.description')}</p>
+      <h1 className="text-3xl font-bold mb-4">Services de déménagement</h1>
+      <p className="mb-8">Obtenez une estimation gratuite pour votre déménagement. Remplissez le formulaire ci-dessous et nous vous contacterons dans les plus brefs délais.</p>
 
       <Card className="max-w-4xl mx-auto">
         <CardHeader>
-          <CardTitle>{t('movingServices.formTitle')}</CardTitle>
+          <CardTitle>Demande de devis de déménagement</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-8">
             <div>
-                <h2 className="text-2xl font-bold mb-4">{t('movingServices.generalInfo')}</h2>
+                <h2 className="text-2xl font-bold mb-4">Informations générales</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                        <Label htmlFor="firstName">{t('movingServices.firstName')}</Label>
+                        <Label htmlFor="firstName">Prénom</Label>
                         <Input id="firstName" value={formData.firstName} onChange={(e) => handleInputChange('firstName', e.target.value)} />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="lastName">{t('movingServices.lastName')}</Label>
+                        <Label htmlFor="lastName">Nom</Label>
                         <Input id="lastName" value={formData.lastName} onChange={(e) => handleInputChange('lastName', e.target.value)} />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="email">{t('movingServices.email')}</Label>
+                        <Label htmlFor="email">Email</Label>
                         <Input id="email" type="email" value={formData.email} onChange={(e) => handleInputChange('email', e.target.value)} />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="phone">{t('movingServices.phone')}</Label>
+                        <Label htmlFor="phone">Téléphone</Label>
                         <Input id="phone" type="tel" value={formData.phone} onChange={(e) => handleInputChange('phone', e.target.value)} />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="movingDate">{t('movingServices.movingDate')}</Label>
+                        <Label htmlFor="movingDate">Date du déménagement</Label>
                         <Input id="movingDate" type="date" value={formData.movingDate} onChange={(e) => handleInputChange('movingDate', e.target.value)} />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="volume">{t('movingServices.volume')}</Label>
+                        <Label htmlFor="volume">Volume (m³)</Label>
                         <Input id="volume" type="number" value={formData.volume} onChange={(e) => handleInputChange('volume', e.target.value)} placeholder="e.g., 20" />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="formula">{t('movingServices.formula')}</Label>
+                        <Label htmlFor="formula">Formule</Label>
                         <Select onValueChange={(value) => handleInputChange('formula', value)} defaultValue={formData.formula}>
                             <SelectTrigger>
-                                <SelectValue placeholder={t('movingServices.selectFormula')} />
+                                <SelectValue placeholder="Sélectionnez une formule" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="Economique">{t('movingServices.formulas.economique')}</SelectItem>
-                                <SelectItem value="Standard">{t('movingServices.formulas.standard')}</SelectItem>
-                                <SelectItem value="Confort">{t('movingServices.formulas.confort')}</SelectItem>
+                                <SelectItem value="Economique">Economique</SelectItem>
+                                <SelectItem value="Standard">Standard</SelectItem>
+                                <SelectItem value="Confort">Confort</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
@@ -249,24 +247,24 @@ const MovingServices: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <h2 className="text-2xl font-bold mb-4">{t('movingServices.departure')}</h2>
+                    <h2 className="text-2xl font-bold mb-4">Logement de départ</h2>
                     <div className="space-y-4">
                         <Autocomplete
-                            label={t('movingServices.currentAddress')}
-                            placeholder={t('movingServices.currentAddressPlaceholder')}
+                            label="Adresse de départ"
+                            placeholder="Entrez votre adresse de départ"
                             onPlaceChanged={(place) => handleInputChange('currentAddress', place)}
                             value={formData.currentAddress}
                             onChange={(value) => handleInputChange('currentAddress', value)}
                         />
                         <div className="space-y-2">
-                            <Label htmlFor="departureFloor">{t('movingServices.floor')}</Label>
+                            <Label htmlFor="departureFloor">Etage</Label>
                             <Select onValueChange={(value) => handleInputChange('departureFloor', value)} defaultValue={formData.departureFloor}>
                                 <SelectTrigger>
-                                    <SelectValue placeholder={t('movingServices.selectFloor')} />
+                                    <SelectValue placeholder="Sélectionnez un étage" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="Maison">{t('movingServices.floors.maison')}</SelectItem>
-                                    <SelectItem value="Rez-de-chaussée">{t('movingServices.floors.rez-de-chaussee')}</SelectItem>
+                                    <SelectItem value="Maison">Maison</SelectItem>
+                                    <SelectItem value="Rez-de-chaussée">Rez-de-chaussée</SelectItem>
                                     <SelectItem value="1">1</SelectItem>
                                     <SelectItem value="2">2</SelectItem>
                                     <SelectItem value="3">3</SelectItem>
@@ -277,13 +275,13 @@ const MovingServices: React.FC = () => {
                         </div>
                         <div className="flex items-center space-x-2">
                             <Switch id="departureElevator" checked={formData.departureElevator} onCheckedChange={(checked) => handleInputChange('departureElevator', checked)} />
-                            <Label htmlFor="departureElevator">{t('movingServices.elevator')}</Label>
+                            <Label htmlFor="departureElevator">Ascenseur</Label>
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="departurePortage">{t('movingServices.portage')}</Label>
+                            <Label htmlFor="departurePortage">Portage</Label>
                             <Select onValueChange={(value) => handleInputChange('departurePortage', value)} defaultValue={formData.departurePortage}>
                                 <SelectTrigger>
-                                    <SelectValue placeholder={t('movingServices.selectPortage')} />
+                                    <SelectValue placeholder="Sélectionnez la distance de portage" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="0-10m">0-10m</SelectItem>
@@ -295,34 +293,34 @@ const MovingServices: React.FC = () => {
                         </div>
                         <div className="flex items-center space-x-2">
                             <Switch id="departureFurnitureLift" checked={formData.departureFurnitureLift} onCheckedChange={(checked) => handleInputChange('departureFurnitureLift', checked)} />
-                            <Label htmlFor="departureFurnitureLift">{t('movingServices.furnitureLift')}</Label>
+                            <Label htmlFor="departureFurnitureLift">Monte-meuble</Label>
                         </div>
                         <div className="flex items-center space-x-2">
                             <Switch id="departureParkingAuth" checked={formData.departureParkingAuth} onCheckedChange={(checked) => handleInputChange('departureParkingAuth', checked)} />
-                            <Label htmlFor="departureParkingAuth">{t('movingServices.parkingAuth')}</Label>
+                            <Label htmlFor="departureParkingAuth">Autorisation de stationnement</Label>
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    <h2 className="text-2xl font-bold mb-4">{t('movingServices.arrival')}</h2>
+                    <h2 className="text-2xl font-bold mb-4">Logement d'arrivée</h2>
                     <div className="space-y-4">
                         <Autocomplete
-                            label={t('movingServices.newAddress')}
-                            placeholder={t('movingServices.newAddressPlaceholder')}
+                            label="Adresse d'arrivée"
+                            placeholder="Entrez votre adresse d'arrivée"
                             onPlaceChanged={(place) => handleInputChange('newAddress', place)}
                             value={formData.newAddress}
                             onChange={(value) => handleInputChange('newAddress', value)}
                         />
                         <div className="space-y-2">
-                            <Label htmlFor="arrivalFloor">{t('movingServices.floor')}</Label>
+                            <Label htmlFor="arrivalFloor">Etage</Label>
                             <Select onValueChange={(value) => handleInputChange('arrivalFloor', value)} defaultValue={formData.arrivalFloor}>
                                 <SelectTrigger>
-                                    <SelectValue placeholder={t('movingServices.selectFloor')} />
+                                    <SelectValue placeholder="Sélectionnez un étage" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="Maison">{t('movingServices.floors.maison')}</SelectItem>
-                                    <SelectItem value="Rez-de-chaussée">{t('movingServices.floors.rez-de-chaussee')}</SelectItem>
+                                    <SelectItem value="Maison">Maison</SelectItem>
+                                    <SelectItem value="Rez-de-chaussée">Rez-de-chaussée</SelectItem>
                                     <SelectItem value="1">1</SelectItem>
                                     <SelectItem value="2">2</SelectItem>
                                     <SelectItem value="3">3</SelectItem>
@@ -333,13 +331,13 @@ const MovingServices: React.FC = () => {
                         </div>
                         <div className="flex items-center space-x-2">
                             <Switch id="arrivalElevator" checked={formData.arrivalElevator} onCheckedChange={(checked) => handleInputChange('arrivalElevator', checked)} />
-                            <Label htmlFor="arrivalElevator">{t('movingServices.elevator')}</Label>
+                            <Label htmlFor="arrivalElevator">Ascenseur</Label>
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="arrivalPortage">{t('movingServices.portage')}</Label>
+                            <Label htmlFor="arrivalPortage">Portage</Label>
                             <Select onValueChange={(value) => handleInputChange('arrivalPortage', value)} defaultValue={formData.arrivalPortage}>
                                 <SelectTrigger>
-                                    <SelectValue placeholder={t('movingServices.selectPortage')} />
+                                    <SelectValue placeholder="Sélectionnez la distance de portage" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="0-10m">0-10m</SelectItem>
@@ -351,31 +349,31 @@ const MovingServices: React.FC = () => {
                         </div>
                         <div className="flex items-center space-x-2">
                             <Switch id="arrivalFurnitureLift" checked={formData.arrivalFurnitureLift} onCheckedChange={(checked) => handleInputChange('arrivalFurnitureLift', checked)} />
-                            <Label htmlFor="arrivalFurnitureLift">{t('movingServices.furnitureLift')}</Label>
+                            <Label htmlFor="arrivalFurnitureLift">Monte-meuble</Label>
                         </div>
                         <div className="flex items-center space-x-2">
                             <Switch id="arrivalParkingAuth" checked={formData.arrivalParkingAuth} onCheckedChange={(checked) => handleInputChange('arrivalParkingAuth', checked)} />
-                            <Label htmlFor="arrivalParkingAuth">{t('movingServices.parkingAuth')}</Label>
+                            <Label htmlFor="arrivalParkingAuth">Autorisation de stationnement</Label>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div className="space-y-2">
-                <Label htmlFor="distance">{t('movingServices.distance')}</Label>
+                <Label htmlFor="distance">Distance estimée (km)</Label>
                 <Input id="distance" type="number" value={formData.distance} onChange={(e) => handleInputChange('distance', e.target.value)} placeholder="e.g., 50" readOnly={isDistanceLocked} />
                 <div className="flex items-center space-x-2">
                     <Switch id="distance-lock" checked={!isDistanceLocked} onCheckedChange={() => setIsDistanceLocked(!isDistanceLocked)} />
-                    <Label htmlFor="distance-lock">{t('movingServices.unlockDistance')}</Label>
+                    <Label htmlFor="distance-lock">Modifier la distance</Label>
                 </div>
             </div>
 
-            <Button onClick={calculateCost} className="w-full">{t('movingServices.calculate')}</Button>
+            <Button onClick={calculateCost} className="w-full">Calculer le devis</Button>
 
             {estimatedCost !== null && costBreakdown && (
               <div className="text-center pt-4">
-                <p className="font-bold text-lg">{t('movingServices.estimatedCost')}: {estimatedCost.toFixed(2)} €</p>
-                <p className="text-sm text-gray-500 mb-4">{t('movingServices.costDisclaimer')}</p>
+                <p className="font-bold text-lg">Coût estimé: {estimatedCost.toFixed(2)} €</p>
+                <p className="text-sm text-gray-500 mb-4">Ce coût est une estimation et peut varier.</p>
                 
                 <div className="flex flex-col md:flex-row items-center justify-center gap-8">
                     <div className="flex-1 flex justify-center items-center">
@@ -400,10 +398,10 @@ const MovingServices: React.FC = () => {
                 </div>
 
                 <div className="mt-6">
-                    <Label htmlFor="phone">{t('movingServices.phoneLabel')}</Label>
+                    <Label htmlFor="phone">Entrez votre numéro pour être rappelé</Label>
                     <div className="flex gap-2 mt-2">
-                        <Input id="phone" type="tel" value={formData.phone} onChange={(e) => handleInputChange('phone', e.target.value)} placeholder={t('movingServices.phonePlaceholder')} className="flex-grow" />
-                        <Button onClick={handleRequestCallback}>{t('movingServices.requestCallback')}</Button>
+                        <Input id="phone" type="tel" value={formData.phone} onChange={(e) => handleInputChange('phone', e.target.value)} placeholder="Votre numéro de téléphone" className="flex-grow" />
+                        <Button onClick={handleRequestCallback}>Demander un rappel</Button>
                     </div>
                 </div>
               </div>

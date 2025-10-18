@@ -54,3 +54,6 @@ npm run build
 ### Contact
 - Email: info@househaven.ge
 - Tbilisi, Georgia
+
+echo 'export GOOGLE_CLOUD_PROJECT="strange-anchor-475015-r6"' >> ~/.bashrc
+

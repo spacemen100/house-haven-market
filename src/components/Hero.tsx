@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useTranslation } from "react-i18next";
 import {
   Carousel,
   CarouselContent,
@@ -11,7 +10,6 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 
 const Hero = () => {
-  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const carouselImages = Array.from(
@@ -53,10 +51,10 @@ const Hero = () => {
       <div className="container relative z-10">
         <div className="text-center text-white max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            {t('heroTitle')}
+            Trouvez la maison de vos rêves
           </h1>
           <p className="text-lg md:text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-            {t('heroSubtitle')}
+            Nous vous aidons à trouver la maison de vos rêves. Parcourez notre catalogue de propriétés et trouvez celle qui vous convient le mieux.
           </p>
 
           {/* Add Listing Button */}
@@ -66,7 +64,7 @@ const Hero = () => {
               className="bg-teal-500 hover:bg-teal-600 text-white px-8 py-6 text-lg md:text-xl rounded-lg font-bold w-full"
               size="lg"
             >
-              {t('addListing')}
+              Ajouter une annonce
             </Button>
           </div>
         </div>

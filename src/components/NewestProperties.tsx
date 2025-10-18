@@ -9,11 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { getNewestProperties } from "@/lib/api/properties";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useTranslation } from "react-i18next";
 
 const NewestProperties = () => {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
   const [userLikedProperties, setUserLikedProperties] = useState<string[] | null>(null);
   const [visiblePropertiesCount, setVisiblePropertiesCount] = useState(6);
 
@@ -60,14 +58,14 @@ const NewestProperties = () => {
       <div className="container">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-2xl md:text-3xl font-bold text-estate-800">
-            {t('newestProperties.title')}
+            Les nouveautés
           </h2>
           <Button
             variant="link"
             className="text-estate-800 hover:no-underline p-0"
             onClick={() => navigate("/properties")}
           >
-            {t('newestProperties.viewAll')} <ArrowRight className="ml-2" size={18} />
+            Voir tout <ArrowRight className="ml-2" size={18} />
           </Button>
         </div>
 
@@ -87,7 +85,7 @@ const NewestProperties = () => {
           </div>
         ) : error ? (
           <div className="text-center py-8">
-            <p className="text-red-500">{t('newestProperties.error')}: {error.message}</p>
+            <p className="text-red-500">Erreur: {error.message}</p>
           </div>
         ) : properties.length > 0 ? (
           <>
@@ -107,14 +105,14 @@ const NewestProperties = () => {
                   variant="outline"
                   onClick={() => setVisiblePropertiesCount(prevCount => prevCount + 6)}
                 >
-                  {t('newestProperties.seeMore', "See more")}
+                  Voir plus
                 </Button>
               </div>
             )}
           </>
         ) : (
           <div className="text-center py-8">
-            <p>{t('newestProperties.noProperties')}</p>
+            <p>Aucune propriété trouvée.</p>
           </div>
         )}
       </div>
