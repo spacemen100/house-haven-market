@@ -297,7 +297,7 @@ export const createProperty = async (input: CreatePropertyInput) => {
         title: input.title,
         description: input.description,
         price: input.price,
-        currency: input.currency || 'GEL',
+        currency: 'EUR',
         phone_number: input.phone_number,
         cadastral_code: input.cadastral_code,
         property_type: input.propertyType,
@@ -653,7 +653,7 @@ const Properties = () => {
   const initialListingType = (queryParams.get("type") as ListingType) || "sale";
   const initialSearch = queryParams.get("search") || "";
 
-  const { currency, setCurrency } = useCurrency();
+  const { currency, formatPrice } = useCurrency();
 
   // State for basic filters
   const [searchQuery, setSearchQuery] = useState(initialSearch);
@@ -676,30 +676,15 @@ const Properties = () => {
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const [userLikedProperties, setUserLikedProperties] = useState<string[] | null>(null); // Added state
 
-  const currencyOptions = [
-    { value: 'USD', label: "USD" },
-    { value: 'EUR', label: "EUR" },
-    { value: 'GEL', label: "GEL" },
-  ];
 
-  const formatPrice = (price: number, currency: string) => {
-    let locale = 'en-US';
-    if (currency === 'EUR') locale = 'fr-FR';
-    if (currency === 'GEL') locale = 'ka-GE';
-
-    return new Intl.NumberFormat(locale, {
-      style: 'currency',
-      currency: currency,
-      maximumFractionDigits: currency === 'GEL' ? 2 : 0
-    }).format(price);
-  };
+  
 
   // Listing type buttons with translations
   const listingTypeButtons = [
     { value: "sale", label: "À vendre" },
     { value: "rent", label: "À louer" },
     { value: "rent_by_day", label: "Location journalière" },
-    { value: "lease", label: "À céder" }
+    { value: "lease", label: "Bail à céder" }
   ];
 
   const handleListingTypeChange = (value: ListingType) => {
@@ -839,7 +824,7 @@ const Properties = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+      const { data: { user } } = await supabase.auth.getUser();
         if (user) {
           const profile = await getUserProfile(user.id);
           setUserLikedProperties(profile?.liked_properties || []);
@@ -1948,56 +1933,26 @@ const Properties = () => {
                 <div className="flex justify-between gap-2 mt-2">
                   <div className="flex items-center gap-1">
                     <input
-                      type="text"
-                      value={minPriceInput}
-                      onChange={handleMinPriceInputChange}
-                      onBlur={handlePriceBlur}
-                      className="w-20 border rounded px-2 py-1 text-sm"
+                      type="number"
+                      value={minPrice}
+                      onChange={(e) => setMinPrice(Number(e.target.value))}
+                      className="w-24 border rounded px-2 py-1 text-sm"
                     />
-                    <select
-                      value={currency}
-                      onChange={(e) => setCurrency(e.target.value as Currency)}
-                      className="p-2 border rounded-md"
-                    >
-                      <option value="USD">$</option>
-                      <option value="GEL">₾</option>
-                      <option value="EUR">€</option>
-                    </select>
+                    <span>€</span>
                   </div>
-
                   <div className="flex items-center gap-1">
                     <input
-                      type="text"
-                      value={maxPriceInput}
-                      onChange={handleMaxPriceInputChange}
-                      onBlur={handlePriceBlur}
-                      className="w-20 border rounded px-2 py-1 text-sm"
+                      type="number"
+                      value={maxPrice}
+                      onChange={(e) => setMaxPrice(Number(e.target.value))}
+                      className="w-24 border rounded px-2 py-1 text-sm"
                     />
-                    <select
-                      value={currency}
-                      onChange={(e) => setCurrency(e.target.value as Currency)}
-                      className="p-2 border rounded-md"
-                    >
-                      <option value="USD">$</option>
-                      <option value="GEL">₾</option>
-                      <option value="EUR">€</option>
-                    </select>
+                    <span>€</span>
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-3">
-                <h4 className="font-medium">{"Devise"}</h4>
-                <select
-                  value={currency}
-                  onChange={(e) => setCurrency(e.target.value as Currency)}
-                  className="p-2 border rounded-md"
-                >
-                  <option value="GEL">₾</option>
-                  <option value="USD">$</option>
-                  <option value="EUR">€</option>
-                </select>
-              </div>
+              
 
               {/* Surface (m²) */}
               <div className="space-y-3">
@@ -2221,45 +2176,12 @@ const Properties = () => {
                 }}
               />
             </div>
-            <div className="flex justify-between gap-2 mt-2">
-              <div className="flex items-center gap-1">
-                <input
-                  type="text"
-                  value={minPriceInput}
-                  onChange={handleMinPriceInputChange}
-                  onBlur={handlePriceBlur}
-                  className="w-20 border rounded px-2 py-1 text-sm"
-                />
-                <select
-                  value={currency}
-                  onChange={(e) => setCurrency(e.target.value as Currency)}
-                  className="p-2 border rounded-md"
-                >
-                  <option value="USD">$</option>
-                  <option value="GEL">₾</option>
-                  <option value="EUR">€</option>
-                </select>
-              </div>
-
-              <div className="flex items-center gap-1">
-                <input
-                  type="text"
-                  value={maxPriceInput}
-                  onChange={handleMaxPriceInputChange}
-                  onBlur={handlePriceBlur}
-                  className="w-20 border rounded px-2 py-1 text-sm"
-                />
-                <select
-                  value={currency}
-                  onChange={(e) => setCurrency(e.target.value as Currency)}
-                  className="p-2 border rounded-md"
-                >
-                  <option value="USD">$</option>
-                  <option value="GEL">₾</option>
-                  <option value="EUR">€</option>
-                </select>
-              </div>
-            </div>
+                  <div className="flex justify-between items-center">
+                    <input type="number" value={minPrice} onChange={(e) => setMinPrice(Number(e.target.value))} className="w-24 border rounded px-2 py-1" />
+                    <span>-</span>
+                    <input type="number" value={maxPrice} onChange={(e) => setMaxPrice(Number(e.target.value))} className="w-24 border rounded px-2 py-1" />
+                    <span>€</span>
+                  </div>
           </div>
 
           <hr />
