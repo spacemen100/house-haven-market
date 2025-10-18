@@ -21,16 +21,14 @@ import {
 } from "@/components/ui/form";
 import { FRENCH_CITIES, FrenchCity } from "@/data/FrenchCities";
 import { getDistrictsForCity } from "@/data/FrenchDistricts";
-import { getStreetsForDistrict } from "@/data/FrenchStreets";
+import Autocomplete from "@/components/Autocomplete";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_IMAGES = 10;
 
 const addressSchema = z.object({
-  addressStreet: z.string().min(1, "L'adresse est requise"),
-  addressCity: z.string().min(1, "La ville est requise"),
-  addressDistrict: z.string().optional(),
+  address: z.string().min(1, "L'adresse est requise"),
   lat: z.number(),
   lng: z.number(),
 });
@@ -54,54 +52,46 @@ const AddPropertyStep4 = ({
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [previewDialogOpen, setPreviewDialogOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
-  const [mapDialogOpen, setMapDialogOpen] = useState(false);
-  const [availableDistricts, setAvailableDistricts] = useState<string[]>([]);
-  const [availableStreets, setAvailableStreets] = useState<string[]>([]);
 
   const form = useForm<AddressFormValues>({
     resolver: zodResolver(addressSchema),
     defaultValues: {
-      addressStreet: formData.address_street || "",
-      addressCity: formData.address_city || "",
-      addressDistrict: formData.address_district || "",
-      lat: formData.lat || 41.7151,
-      lng: formData.lng || 44.8271,
+      address: formData.address_street ? `${formData.address_street}, ${formData.address_district}, ${formData.address_city}` : "",
+      lat: formData.lat || 45.764043,
+      lng: formData.lng || 4.835659,
     },
   });
 
-  const selectedCity = form.watch("addressCity");
-  const selectedDistrict = form.watch("addressDistrict");
-
-  useEffect(() => {
-    if (selectedCity) {
-      const districts = getDistrictsForCity(selectedCity as FrenchCity);
-      setAvailableDistricts(districts);
-      if (!districts.includes(form.getValues("addressDistrict"))) {
-        form.setValue("addressDistrict", "");
-        form.setValue("addressStreet", "");
-      }
-    } else {
-      setAvailableDistricts([]);
-      form.setValue("addressDistrict", "");
-      form.setValue("addressStreet", "");
+  const handlePlaceSelect = (place: google.maps.places.PlaceResult) => {
+    if (place.geometry && place.geometry.location) {
+      form.setValue("lat", place.geometry.location.lat());
+      form.setValue("lng", place.geometry.location.lng());
     }
-  }, [selectedCity, form]);
-
-  useEffect(() => {
-    if (selectedCity && selectedDistrict) {
-      const streets = getStreetsForDistrict(
-        selectedCity as FrenchCity,
-        selectedDistrict
-      );
-      setAvailableStreets(streets);
-      if (!streets.includes(form.getValues("addressStreet"))) {
-        form.setValue("addressStreet", "");
-      }
-    } else {
-      setAvailableStreets([]);
-      form.setValue("addressStreet", "");
+    if (place.address_components) {
+      const address = {
+        street: "",
+        city: "",
+        district: "",
+      };
+      place.address_components.forEach((component) => {
+        if (component.types.includes("route")) {
+          address.street = component.long_name;
+        }
+        if (component.types.includes("locality")) {
+          address.city = component.long_name;
+        }
+        if (component.types.includes("sublocality_level_1")) {
+          address.district = component.long_name;
+        }
+      });
+      form.setValue("address", `${address.street}, ${address.district}, ${address.city}`);
+      Object.assign(formData, {
+        address_street: address.street,
+        address_city: address.city,
+        address_district: address.district,
+      });
     }
-  }, [selectedCity, selectedDistrict, form]);
+  };
 
   const validateFile = (file: File): string | null => {
     if (!ALLOWED_TYPES.includes(file.type)) {
@@ -159,9 +149,6 @@ const AddPropertyStep4 = ({
   const handleSubmit = (data: AddressFormValues) => {
     Object.assign(formData, {
       images,
-      address_street: data.addressStreet,
-      address_city: data.addressCity,
-      address_district: data.addressDistrict,
       lat: data.lat,
       lng: data.lng
     });
@@ -192,81 +179,13 @@ const AddPropertyStep4 = ({
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <FormField
-                control={form.control}
-                name="addressCity"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{"Ville"}*</FormLabel>
-                    <FormControl>
-                      <select
-                        {...field}
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      >
-                        <option value="">{"Sélectionner une ville"}</option>
-                        {FRENCH_CITIES.map((city) => (
-                          <option key={city} value={city}>
-                            {city}
-                          </option>
-                        ))}
-                      </select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="addressDistrict"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{"Quartier"}</FormLabel>
-                    <FormControl>
-                      <select
-                        {...field}
-                        disabled={!selectedCity}
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      >
-                        <option value="">{"Sélectionner un quartier"}</option>
-                        {availableDistricts.map((district) => (
-                          <option key={district} value={district}>
-                            {district}
-                          </option>
-                        ))}
-                      </select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="addressStreet"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{"Rue"}</FormLabel>
-                    <FormControl>
-                      <select
-                        {...field}
-                        disabled={!selectedDistrict}
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      >
-                        <option value="">{"Sélectionner une rue"}</option>
-                        {availableStreets.map((street) => (
-                          <option key={street} value={street}>
-                            {street}
-                          </option>
-                        ))}
-                      </select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+            <Autocomplete
+              label="Adresse"
+              placeholder="Entrez l'adresse de la propriété"
+              onPlaceChanged={handlePlaceSelect}
+              value={form.watch("address")}
+              onChange={(value) => form.setValue("address", value)}
+            />
 
             <div className="mt-4">
               <Label>{"Notes de localisation"}</Label>

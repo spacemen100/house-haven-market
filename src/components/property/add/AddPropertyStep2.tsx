@@ -21,9 +21,6 @@ const formSchema = z.object({
   title: z.string().min(5, "Le titre doit contenir au moins 5 caractères"),
   description: z.string().min(10, "La description doit contenir au moins 10 caractères"),
   price: z.coerce.number().positive("Le prix doit être un nombre positif"),
-  currency: z.enum(["GEL", "USD", "EUR"], {
-    required_error: "Veuillez sélectionner une devise",
-  }),
   beds: z.coerce.number().int().min(0, "Le nombre de lits doit être supérieur ou égal à 0"),
   baths: z.coerce.number().int().min(0, "Le nombre de salles de bain doit être supérieur ou égal à 0"),
   m2: z.coerce.number().positive("La surface doit être un nombre positif"),
@@ -44,7 +41,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 interface AddPropertyStep2Props {
   onBack: () => void;
-  onNext: (data: FormValues) => void;
+  onNext: (data: FormValues & { currency: string }) => void;
   initialValues?: Partial<FormValues>;
 }
 
@@ -55,7 +52,6 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
       title: "",
       description: "",
       price: 0,
-      currency: "GEL",
       beds: 0,
       baths: 0,
       m2: 0,
@@ -81,7 +77,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
         title: data.title,
         description: data.description,
         price: data.price,
-        currency: data.currency,
+        currency: "EUR",
         beds: data.beds,
         baths: data.baths,
         m2: data.m2,
@@ -162,35 +158,9 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
                       />
                     </FormControl>
                     <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-muted-foreground">
-                      {form.watch("currency")}
+                      EUR
                     </div>
                   </div>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="currency"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{"Devise"}*</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Sélectionner une devise" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="GEL">{"Lari Géorgien"}</SelectItem>
-                      <SelectItem value="USD">{"Dollar Américain"}</SelectItem>
-                      <SelectItem value="EUR">{"Euro"}</SelectItem>
-                    </SelectContent>
-                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

@@ -20,8 +20,9 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signInWithEmail, signUpWithEmail } from "@/lib/api/auth";
-const Sell = () => {
+import { Wrapper } from "@googlemaps/react-wrapper";
+
+const SellPage = () => {
   const steps = [
     { number: 1, label: "Authentification" },
     { number: 2, label: "Type d'annonce" },
@@ -415,5 +416,14 @@ const Sell = () => {
     </div>
   );
 };
+
+const Sell = () => {
+    const apiKey = "AIzaSyAjAs9O5AqVbaCZth-QDJm4KJfoq2ZzgUI";
+    return (
+        <Wrapper apiKey={apiKey} libraries={["places"]}>
+            <SellPage />
+        </Wrapper>
+    )
+}
 
 export default Sell;

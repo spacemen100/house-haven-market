@@ -32,9 +32,9 @@ export const getUserProfile = async (userId: string) => {
   const { data, error } = await supabase
     .from('profiles')
     .select('*')
-    .eq('user_id', userId)
-    .single();
+    .eq('user_id', userId);
 
   if (error) throw error;
-  return data;
+  if (!data || data.length === 0) return null;
+  return data[0];
 };
