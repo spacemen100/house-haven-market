@@ -5,14 +5,14 @@ import { Button } from "@/components/ui/button";
 
 const categories = [
   {
-    title: "Buy a Home",
+    title: "Acheter une maison",
     description: "Find your place with an immersive photo experience and the most listings, including things you won't find anywhere else.",
     icon: <Home size={24} className="text-teal-500" />,
     link: "/properties?type=sale",
     image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=2946&ixlib=rb-4.0.3"
   },
   {
-    title: "Rent a Home",
+    title: "Louer une maison",
     description: "We're creating a seamless online experience – from shopping on the largest rental network, to applying, to paying rent.",
     icon: <Building size={24} className="text-teal-500" />,
     link: "/properties?type=rent",
@@ -20,8 +20,7 @@ const categories = [
   },
   {
     title: "Sell Your Property",
-    description: "No matter what path you take to sell your home, we can help you navigate a successful sale.",
-    icon: <MapPin size={24} className="text-teal-500" />,
+          description: "Quel que soit le chemin que vous empruntez pour vendre votre maison, nous pouvons vous aider à naviguer vers une vente réussie.",    icon: <MapPin size={24} className="text-teal-500" />,
     link: "/sell",
     image: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&q=80&w=2960&ixlib=rb-4.0.3"
   }

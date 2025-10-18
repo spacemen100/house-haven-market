@@ -35,7 +35,7 @@ export const properties: Property[] = [
     totalFloors: 2,
     yearBuilt: 2019,
     featured: true,
-    amenities: ["Pool", "Outdoor Kitchen", "Home Office", "Smart Home"],
+    amenities: ["Pool", "Outdoor Kitchen", "Bureau à domicile", "Maison intelligente"],
     hasElevator: false,
     hasVentilation: true,
     hasAirConditioning: true,
@@ -93,7 +93,7 @@ export const properties: Property[] = [
     hasVentilation: true,
     hasAirConditioning: true,
     equipment: ["Washer/Dryer", "Dishwasher", "Smart Appliances"],
-    internetTV: ["Fiber Internet", "Smart Home Hub"],
+    internetTV: ["Fiber Internet", "Hub maison intelligente"],
     storage: ["Storage Unit", "Bike Storage"],
     security: ["24/7 Doorman", "Security Cameras"],
     isAccessible: true,
@@ -157,7 +157,7 @@ export const properties: Property[] = [
   {
     id: "5",
     title: "Luxury Waterfront Estate",
-    description: "Spectacular waterfront estate featuring breathtaking views, private dock, infinity pool, and luxury finishes throughout. This home offers the ultimate in luxury living with smart home technology, home theater, wine cellar, and spa-like bathrooms.",
+    description: "Spectaculaire propriété au bord de l'eau offrant des vues à couper le souffle, un quai privé, une piscine à débordement et des finitions de luxe partout. Cette maison offre le summum du luxe avec une technologie de maison intelligente, un cinéma maison, une cave à vin et des salles de bains de type spa.",
     price: 3800000,
     address: {
       street: "100 Lakeshore Drive",
@@ -177,7 +177,7 @@ export const properties: Property[] = [
     yearBuilt: 2017,
     agentName: "David Thompson",
     agentPhone: "(555) 222-3333",
-    amenities: ["Waterfront", "Pool", "Wine Cellar", "Home Theater", "Boat Dock"]
+    amenities: ["Waterfront", "Pool", "Wine Cellar", "Cinéma maison", "Boat Dock"]
   },
   {
     id: "6",

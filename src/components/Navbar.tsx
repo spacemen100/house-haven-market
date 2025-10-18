@@ -389,7 +389,7 @@ const Navbar = () => {
                     <Input
                       id="instagram"
                       type="text"
-                      placeholder="@yourusername"
+                      placeholder="@votrenomdutilisateur"
                       value={formData.instagram}
                       onChange={handleInputChange}
                     />
@@ -399,7 +399,7 @@ const Navbar = () => {
                     <Input
                       id="twitter"
                       type="text"
-                      placeholder="@yourusername"
+                      placeholder="@votrenomdutilisateur"
                       value={formData.twitter}
                       onChange={handleInputChange}
                     />

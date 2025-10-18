@@ -6,6 +6,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+
+const formSchema = z.object({
+  listing_type: z.enum(["sale", "rent", "rent_by_day", "lease"], {
+    required_error: "Veuillez sélectionner un type d'annonce",
+  }),
+  property_type: z.enum(["house", "apartment", "land", "commercial"], {
+    required_error: "Veuillez sélectionner un type de propriété",
+  }),
+});
+
+interface PropertyTypeStepProps {
+  onNext: (data: z.infer<typeof formSchema>) => void;
+  onBack?: () => void;
+}
+
 const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

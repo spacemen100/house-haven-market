@@ -35,19 +35,14 @@ const NotFound = () => {
         
         <h1 className="text-6xl font-bold text-gray-800 mb-2">404</h1>
         
-        {/* Messages multilingues */}
         <div className="space-y-2 mb-4">
           <p className="text-xl font-semibold text-gray-700">
-            <span className="block">Page Not Found</span>
-            <span className="block text-lg text-gray-600">Страница не найдена</span>
-            <span className="block text-lg text-gray-600">გვერდი ვერ მოიძებნა</span>
+            <span className="block">Page non trouvée</span>
           </p>
         </div>
         
         <p className="text-gray-600 mb-6 space-y-2">
-          <span className="block">Oops! The page you're looking for doesn't exist.</span>
-          <span className="block">Упс! Страница, которую вы ищете, не существует.</span>
-          <span className="block">უკაცრავად! გვერდი, რომელსაც ეძებთ, არ არსებობს.</span>
+          <span className="block">Oups ! La page que vous recherchez n'existe pas.</span>
         </p>
         
         <div className="flex flex-col sm:flex-row justify-center gap-3">
@@ -56,21 +51,21 @@ const NotFound = () => {
             variant="outline"
             className="border-indigo-500 text-indigo-500 hover:bg-indigo-50"
           >
-            <span className="hidden sm:inline">Go Back</span>
-            <span className="sm:hidden">Back</span>
+            <span className="hidden sm:inline">Retour</span>
+            <span className="sm:hidden">Retour</span>
           </Button>
           <Button
             onClick={() => navigate("/")}
             className="bg-indigo-600 hover:bg-indigo-700"
           >
-            <span className="hidden sm:inline">Return to Home</span>
-            <span className="sm:hidden">Home</span>
+            <span className="hidden sm:inline">Retour à l'accueil</span>
+            <span className="sm:hidden">Accueil</span>
           </Button>
         </div>
         
         <div className="mt-8 pt-6 border-t border-gray-200">
           <p className="text-sm text-gray-500">
-            Tried to access: <code className="bg-gray-100 px-2 py-1 rounded">{location.pathname}</code>
+            Tentative d'accès à : <code className="bg-gray-100 px-2 py-1 rounded">{location.pathname}</code>
           </p>
         </div>
       </div>

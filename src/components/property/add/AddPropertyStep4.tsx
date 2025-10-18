@@ -22,6 +22,28 @@ import {
 import { FRENCH_CITIES, FrenchCity } from "@/data/FrenchCities";
 import { getDistrictsForCity } from "@/data/FrenchDistricts";
 import { getStreetsForDistrict } from "@/data/FrenchStreets";
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const MAX_IMAGES = 10;
+
+const addressSchema = z.object({
+  addressStreet: z.string().min(1, "L'adresse est requise"),
+  addressCity: z.string().min(1, "La ville est requise"),
+  addressDistrict: z.string().optional(),
+  lat: z.number(),
+  lng: z.number(),
+});
+
+type AddressFormValues = z.infer<typeof addressSchema>;
+
+interface AddPropertyStep4Props {
+  onBack: () => void;
+  formData: Partial<CreatePropertyInput>;
+  isSubmitting: boolean;
+  onSubmit: () => void;
+}
+
 const AddPropertyStep4 = ({
   onBack,
   formData,

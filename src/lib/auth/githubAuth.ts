@@ -15,7 +15,7 @@ export const initiateGitHubLogin = () => {
     sessionStorage.setItem('preAuthUrl', window.location.href);
     window.location.href = GITHUB_AUTH_URL;
   } catch (error) {
-    toast.error("Failed to initiate GitHub login");
+    toast.error("Échec de l'initialisation de la connexion GitHub");
     console.error("GitHub login initiation error:", error);
     throw error;
   }
@@ -52,7 +52,7 @@ export const handleGitHubCallback = async (code: string): Promise<{email: string
       avatar: userData.avatar || '',
     };
   } catch (error) {
-    toast.error("GitHub authentication failed");
+    toast.error("L'authentification GitHub a échoué");
     console.error("GitHub callback error:", error);
     return null;
   }
@@ -71,5 +71,5 @@ export const checkGitHubAuth = (): boolean => {
 export const githubLogout = (): void => {
   localStorage.removeItem('githubAuthToken');
   localStorage.removeItem('githubUserEmail');
-  toast.success("Successfully logged out");
+  toast.success("Déconnexion réussie");
 };

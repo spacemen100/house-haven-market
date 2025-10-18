@@ -24,11 +24,11 @@ const VerificationError = () => {
     switch (errorType) {
       case "access_denied":
         if (location.hash.includes("otp_expired")) {
-          return "The email verification link has expired.";
+          return "Le lien de vérification par e-mail a expiré.";
         }
-        return "Access denied. You don't have permission to access this resource.";
+        return "Accès refusé. Vous n'avez pas la permission d'accéder à cette ressource.";
       default:
-        return errorDescription || "An error occurred during verification.";
+        return errorDescription || "Une erreur s'est produite lors de la vérification.";
     }
   };
 
@@ -42,7 +42,7 @@ const VerificationError = () => {
               <AlertTriangle className="h-8 w-8 text-amber-600" />
             </div>
             
-            <h1 className="text-2xl font-bold text-estate-800">Verification Error</h1>
+            <h1 className="text-2xl font-bold text-estate-800">Erreur de vérification</h1>
             
             <p className="text-estate-neutral-600">
               {getErrorMessage()}
@@ -51,7 +51,7 @@ const VerificationError = () => {
             <div className="space-y-3 w-full mt-4">
               <Button asChild className="w-full bg-teal-500 hover:bg-teal-600">
                 <Link to="/">
-                  Back to Home
+                  Retour à l'accueil
                 </Link>
               </Button>
               <Button 
@@ -66,7 +66,7 @@ const VerificationError = () => {
                     window.location.href = "/account";
                   }}
                 >
-                  Try Again
+                  Réessayer
                 </a>
               </Button>
             </div>

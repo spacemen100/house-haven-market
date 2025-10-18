@@ -314,11 +314,11 @@ export const createProperty = async (input: CreatePropertyInput) => {
 
     await Promise.all(relatedDataPromises);
 
-    toast.success("Property listing created successfully!");
+    toast.success("Annonce immobilière créée avec succès !");
     return property;
   } catch (error) {
     console.error('Error creating property:', error);
-    toast.error("Failed to create property listing. Please try again.");
+    toast.error("Échec de la création de l'annonce immobilière. Veuillez réessayer.");
     throw error;
   }
 };
@@ -350,7 +350,7 @@ export const getProperties = async (type?: 'sale' | 'rent' | 'rent_by_day' | 'le
     return properties.map(transformProperty);
   } catch (error) {
     console.error('Error fetching properties:', error);
-    toast.error("Failed to fetch properties. Please try again.");
+    toast.error("Échec de la récupération des propriétés. Veuillez réessayer.");
     return [];
   }
 };
@@ -380,7 +380,7 @@ export const getFeaturedProperties = async (): Promise<Property[]> => {
     return properties.map(transformProperty);
   } catch (error) {
     console.error('Error fetching featured properties:', error);
-    toast.error("Failed to fetch featured properties. Please try again.");
+    toast.error("Échec de la récupération des propriétés en vedette. Veuillez réessayer.");
     return [];
   }
 };
@@ -410,7 +410,7 @@ export const getMyProperties = async (): Promise<Property[]> => {
     return properties.map(transformProperty);
   } catch (error) {
     console.error('Error fetching user properties:', error);
-    toast.error("Failed to fetch your properties. Please try again.");
+    toast.error("Échec de la récupération de vos propriétés. Veuillez réessayer.");
     return [];
   }
 };
@@ -456,7 +456,7 @@ export const getLikedProperties = async (): Promise<Property[]> => {
 
     if (propertiesError) {
       console.error('Error fetching liked properties details:', propertiesError.message);
-      toast.error("Failed to fetch details of liked properties.");
+      toast.error("Échec de la récupération des détails des propriétés aimées.");
       return [];
     }
 
@@ -468,18 +468,18 @@ export const getLikedProperties = async (): Promise<Property[]> => {
 
   } catch (error: any) {
     console.error('Unexpected error in getLikedProperties:', error.message);
-    toast.error("An unexpected error occurred while fetching liked properties.");
+    toast.error("Une erreur inattendue s'est produite lors de la récupération des propriétés aimées.");
     return [];
   }
 };
 
 export const likeProperty = async (propertyId: string) => {
-  toast.success("Property added to favorites");
+  toast.success("Propriété ajoutée aux favoris");
   return true;
 };
 
 export const unlikeProperty = async (propertyId: string) => {
-  toast.success("Property removed from favorites");
+  toast.success("Propriété supprimée des favoris");
   return true;
 };
 
@@ -515,11 +515,11 @@ export const deleteProperty = async (propertyId: string) => {
 
     if (error) throw error;
 
-    toast.success("Property deleted successfully");
+    toast.success("Propriété supprimée avec succès");
     return true;
   } catch (error) {
     console.error('Error deleting property:', error);
-    toast.error("Failed to delete property");
+    toast.error("Échec de la suppression de la propriété");
     return false;
   }
 };
@@ -597,7 +597,7 @@ export const getPropertyById = async (id: string): Promise<Property | null> => {
     return transformProperty(property);
   } catch (error) {
     console.error('Error fetching property by ID:', error);
-    toast.error("Failed to fetch property details. Please try again.");
+    toast.error("Échec de la récupération des détails de la propriété. Veuillez réessayer.");
     return null;
   }
 };
