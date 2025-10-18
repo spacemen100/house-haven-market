@@ -12,6 +12,7 @@ import Sell from "./pages/Sell";
 import Account from "./pages/Account";
 import VerificationError from "./pages/VerificationError";
 import MovingServicesWrapper from "./pages/MovingServices"; // Import the new component
+import EditProperty from "./pages/EditProperty"; // Import EditProperty
 import { supabase } from "@/lib/api/supabaseClient";
 import { useEffect, useState } from "react";
 import { CurrencyProvider } from './CurrencyContext';
@@ -55,6 +56,7 @@ const App = () => {
                   element={<Account />}
                 />
                 <Route path="/verification-error" element={<VerificationError />} />
+                <Route path="/edit-property/:propertyId" element={<EditProperty />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"; // Added useState
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { getUserProfile } from "@/lib/profiles"; // Added getUserProfile
+import { getUserProfile } from "@/lib/profiles";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PropertyCard from "@/components/PropertyCard";
 import { useQuery } from "@tanstack/react-query";
@@ -10,9 +10,17 @@ import { Property } from "@/types/property";
 import { supabase } from "@/lib/api/supabaseClient";
 import { toast } from "sonner";
 import { handleAuthError } from "@/lib/api/auth";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteProperty } from "@/lib/api/properties";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+
 const Account = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [propertyToDelete, setPropertyToDelete] = useState<string | null>(null);
 
   useEffect(() => {
     // Check for auth errors in hash
@@ -33,6 +41,35 @@ const Account = () => {
     queryKey: ['my-properties'],
     queryFn: getMyProperties,
   });
+
+  const deletePropertyMutation = useMutation({
+    mutationFn: deleteProperty,
+    onSuccess: () => {
+      toast.success("Propriété supprimée avec succès");
+      queryClient.invalidateQueries({ queryKey: ['my-properties'] });
+      setIsDeleteDialogOpen(false);
+      setPropertyToDelete(null);
+    },
+    onError: (error) => {
+      toast.error("Échec de la suppression de la propriété");
+      console.error("Error deleting property:", error);
+    },
+  });
+
+  const handleEdit = (propertyId: string) => {
+    navigate(`/edit-property/${propertyId}`);
+  };
+
+  const handleDelete = (propertyId: string) => {
+    setPropertyToDelete(propertyId);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (propertyToDelete) {
+      deletePropertyMutation.mutate(propertyToDelete);
+    }
+  };
 
   return (
     <div>
@@ -77,7 +114,13 @@ const Account = () => {
               ) : myProperties.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {myProperties.map((property: Property) => (
-                    <PropertyCard key={property.id} property={property} />
+                    <PropertyCard
+                      key={property.id}
+                      property={property}
+                      isEditable={true}
+                      onEdit={handleEdit}
+                      onDelete={handleDelete}
+                    />
                   ))}
                 </div>
               ) : (
@@ -99,6 +142,21 @@ const Account = () => {
       </div>
 
       <Footer />
+
+      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Êtes-vous absolument sûr ?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Cette action ne peut pas être annulée. Cela supprimera définitivement votre annonce immobilière de nos serveurs.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Annuler</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete}>Continuer</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

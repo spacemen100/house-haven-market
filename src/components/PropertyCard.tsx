@@ -8,11 +8,16 @@ import MissingImagePlaceholder from "@/components/ui/MissingImagePlaceholder"; /
 import { useCurrency } from "@/CurrencyContext";
 import { format, parseISO } from "date-fns";
 
+import { Button } from "@/components/ui/button"; // Added import
+
 interface PropertyCardProps {
   property: Property;
+  isEditable?: boolean;
+  onEdit?: (propertyId: string) => void;
+  onDelete?: (propertyId: string) => void;
 }
 
-const PropertyCard = ({ property }: PropertyCardProps) => {
+const PropertyCard = ({ property, isEditable, onEdit, onDelete }: PropertyCardProps) => {
   const { formatPrice } = useCurrency();
 
   const getFormattedDate = () => {
@@ -106,6 +111,22 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             </div>
           </div>
         </div>
+        {isEditable && (
+          <div className="p-4 flex justify-end gap-2 border-t border-estate-neutral-100">
+            <Button variant="outline" size="sm" onClick={(e) => {
+              e.preventDefault();
+              onEdit?.(property.id);
+            }}>
+              Modifier
+            </Button>
+            <Button variant="destructive" size="sm" onClick={(e) => {
+              e.preventDefault();
+              onDelete?.(property.id);
+            }}>
+              Supprimer
+            </Button>
+          </div>
+        )}
       </div>
     </Link>
   );
