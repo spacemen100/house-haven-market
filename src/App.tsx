@@ -12,7 +12,6 @@ import Sell from "./pages/Sell";
 import Account from "./pages/Account";
 import VerificationError from "./pages/VerificationError";
 import MovingServicesWrapper from "./pages/MovingServices"; // Import the new component
-import { LikeProvider } from './LikeContext';
 import { supabase } from "@/lib/api/supabaseClient";
 import { useEffect, useState } from "react";
 import { CurrencyProvider } from './CurrencyContext';
@@ -43,7 +42,6 @@ const App = () => {
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <LikeProvider>
           <CurrencyProvider>
             <BrowserRouter>
               <Routes>
@@ -61,7 +59,6 @@ const App = () => {
               </Routes>
             </BrowserRouter>
           </CurrencyProvider>
-          </LikeProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

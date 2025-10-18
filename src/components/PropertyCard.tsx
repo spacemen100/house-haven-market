@@ -1,84 +1,19 @@
 // src/components/PropertyCard.tsx
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { MapPin, Bed, Bath, Square, Calendar, Heart } from "lucide-react";
+import { MapPin, Bed, Bath, Square, Calendar } from "lucide-react";
 import { Property } from "@/types/property";
 import { Badge } from "@/components/ui/badge";
 import MissingImagePlaceholder from "@/components/ui/MissingImagePlaceholder"; // Added import
 import { useCurrency } from "@/CurrencyContext";
 import { format, parseISO } from "date-fns";
-import { supabase } from "@/integrations/supabase/client"; // Path alias updated
-import { getUserProfile, updateUserProfile } from "@/lib/profiles"; // Path alias updated
 
 interface PropertyCardProps {
   property: Property;
-  userLikedProperties?: string[];
 }
 
-const PropertyCard = ({ property, userLikedProperties }: PropertyCardProps) => {
+const PropertyCard = ({ property }: PropertyCardProps) => {
   const { formatPrice } = useCurrency();
-  const [isLiked, setIsLiked] = useState(false);
-  const [isLoadingLike, setIsLoadingLike] = useState(false);
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchUserAndLikedStatus = async () => {
-      try {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (user) {
-          setCurrentUserId(user.id);
-          if (userLikedProperties) {
-            setIsLiked(userLikedProperties.includes(property.id));
-          } else {
-            // Fallback to fetching profile if userLikedProperties is not provided
-            const profile = await getUserProfile(user.id);
-            if (profile && profile.liked_properties) {
-              setIsLiked(profile.liked_properties.includes(property.id));
-            }
-          }
-        } else {
-          // No user logged in, reset liked state
-          setCurrentUserId(null);
-          setIsLiked(false);
-        }
-      } catch (error) {
-        console.error("Error fetching user or liked status:", error);
-        // Ensure state is reset on error too
-        setCurrentUserId(null);
-        setIsLiked(false);
-      }
-    };
-
-    fetchUserAndLikedStatus();
-  }, [property.id, userLikedProperties]);
-
-  const handleLikeToggle = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-
-    if (isLoadingLike || !currentUserId) return;
-
-    setIsLoadingLike(true);
-    try {
-      const profile = await getUserProfile(currentUserId);
-      const liked_properties = profile?.liked_properties || [];
-      let updatedLikedProperties: string[];
-
-      if (isLiked) {
-        updatedLikedProperties = liked_properties.filter(id => id !== property.id);
-      } else {
-        updatedLikedProperties = [...liked_properties, property.id];
-      }
-
-      await updateUserProfile(currentUserId, { liked_properties: updatedLikedProperties });
-      setIsLiked(!isLiked);
-    } catch (error) {
-      console.error("Error toggling like status:", error);
-      // Optionally, show a toast notification to the user
-    } finally {
-      setIsLoadingLike(false);
-    }
-  };
 
   const getFormattedDate = () => {
     try {
@@ -112,25 +47,8 @@ const PropertyCard = ({ property, userLikedProperties }: PropertyCardProps) => {
           <Badge className="absolute top-3 left-3 bg-teal-500 hover:bg-teal-500">
             {property.listing_type === "sale" ? "À vendre" : "À louer"}
           </Badge>
-          <button
-            onClick={handleLikeToggle}
-            disabled={isLoadingLike}
-            className="absolute top-2 right-2 m-1 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 disabled:opacity-50 z-10"
-            aria-label={isLiked ? "Ne plus aimer" : "Aimer"}
-          >
-            <Heart
-              size={20}
-              className={`text-red-500 ${isLiked ? "fill-red-500" : "fill-none"}`}
-              stroke="red" // Keep consistent stroke color or adjust as needed
-            />
-          </button>
-          {property.featured && !currentUserId && ( // Hide featured badge if like button is shown for logged in users for spacing
+          {property.featured && (
             <Badge className="absolute top-3 right-3 bg-estate-800 hover:bg-estate-800">
-              En vedette
-            </Badge>
-          )}
-           {property.featured && currentUserId && ( // Show featured badge differently if user is logged in
-            <Badge className="absolute top-12 right-3 bg-estate-800 hover:bg-estate-800">
               En vedette
             </Badge>
           )}
