@@ -17,7 +17,7 @@ const MissingImagePlaceholder: React.FC<MissingImagePlaceholderProps> = ({ class
       // Preserving aspect ratio and ensuring the SVG scales nicely
       preserveAspectRatio="xMidYMid meet" 
     >
-      <title id="placeholderTitle">Placeholder for missing property image</title>
+      <title id="placeholderTitle">Espace réservé pour l'image manquante de la propriété</title>
       {/* Using a light gray fill, similar to bg-gray-200 */}
       <rect width="100%" height="100%" fill="#E5E7EB" /> 
       
@@ -31,7 +31,7 @@ const MissingImagePlaceholder: React.FC<MissingImagePlaceholderProps> = ({ class
         fontSize="20" // Base font size
         fill="#374151" // Dark gray text, similar to text-gray-700
       >
-        უძრავი ქონების სურათი
+        Image de la propriété
       </text>
       
       {/* Text element for the second line with emoji */}
@@ -44,7 +44,7 @@ const MissingImagePlaceholder: React.FC<MissingImagePlaceholderProps> = ({ class
         fontSize="20" // Base font size
         fill="#374151" // Dark gray text
       >
-        მიუწვდომელია 🏠
+        indisponible 🏠
       </text>
     </svg>
   );
