@@ -105,7 +105,7 @@ const PropertyDetail = () => {
       <main className="flex-grow">
         <PropertyHeader property={property} />
         <div className="container mx-auto px-4 py-8">
-          <PropertyGallery images={property.images} />
+          <PropertyGallery images={property.images} title={property.title} />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
             <div className="md:col-span-2 space-y-8">
@@ -127,13 +127,13 @@ const PropertyDetail = () => {
                   <CardTitle>Localisation</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p>{property.address}, {property.city}</p>
-                  {property.latitude && property.longitude && (
+                  <p>{property.address.street}, {property.address.district}, {property.address.city}</p>
+                  {property.address.coordinates.lat && property.address.coordinates.lng && (
                     <div className="mt-4 h-96 w-full">
                       <PropertyMap
-                        latitude={property.latitude}
-                        longitude={property.longitude}
-                        propertyId={property.id}
+                        lat={property.address.coordinates.lat}
+                        lng={property.address.coordinates.lng}
+                        address={`${property.address.street}, ${property.address.city}`}
                       />
                     </div>
                   )}
@@ -142,7 +142,7 @@ const PropertyDetail = () => {
             </div>
 
             <div className="md:col-span-1 space-y-8">
-              <AgentContact agentId={property.agent_id} />
+              <AgentContact property={property} />
             </div>
           </div>
         </div>

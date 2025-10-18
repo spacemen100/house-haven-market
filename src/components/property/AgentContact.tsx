@@ -12,17 +12,17 @@ const AgentContact = ({ property }: AgentContactProps) => {
     <>
       <div className="bg-white rounded-lg p-6 shadow border border-estate-neutral-100 mb-6">
         <Button className="w-full bg-teal-500 hover:bg-teal-600">
-          Schedule a Tour
+          Planifier une visite
         </Button>
         <Button variant="outline" className="w-full mt-3">
-          Request Info
+          Demander des informations
         </Button>
       </div>
       
       {property.agentName && (
         <div className="bg-white rounded-lg p-6 shadow border border-estate-neutral-100">
           <h3 className="text-xl font-semibold text-estate-800 mb-4">
-            Listed by
+            Annonce publiée par
           </h3>
           
           <div className="flex items-center gap-4 mb-4">
@@ -31,7 +31,7 @@ const AgentContact = ({ property }: AgentContactProps) => {
             </div>
             <div>
               <p className="font-medium text-lg">{property.agentName}</p>
-              <p className="text-estate-neutral-500">Real Estate Agent</p>
+              <p className="text-estate-neutral-500">Agent immobilier</p>
             </div>
           </div>
           

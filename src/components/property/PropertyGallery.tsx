@@ -1,15 +1,15 @@
 
-import { Property } from "@/types/property";
 import MissingImagePlaceholder from '@/components/ui/MissingImagePlaceholder';
 
 interface PropertyGalleryProps {
-  property: Property;
+  images?: string[];
+  title?: string;
 }
 
-const PropertyGallery = ({ property }: PropertyGalleryProps) => {
+const PropertyGallery = ({ images, title }: PropertyGalleryProps) => {
   return (
     <div className="mb-8">
-      {(!property.images || property.images.length === 0) ? (
+      {(!images || images.length === 0) ? (
         <div className="rounded-lg overflow-hidden"> {/* Optional: keep consistent styling wrapper */}
           <MissingImagePlaceholder className="w-full h-[500px] object-cover" />
         </div>
@@ -17,19 +17,19 @@ const PropertyGallery = ({ property }: PropertyGalleryProps) => {
         <>
           <div className="rounded-lg overflow-hidden">
             <img 
-              src={property.images[0]} 
-              alt={property.title}
+              src={images[0]} 
+              alt={title}
               className="w-full h-[500px] object-cover"
             />
           </div>
           
-          {property.images.length > 1 && (
+          {images.length > 1 && (
             <div className="grid grid-cols-4 gap-2 mt-2">
-              {property.images.slice(1).map((img, index) => (
+              {images.slice(1).map((img, index) => (
                 <div key={index} className="rounded-lg overflow-hidden">
                   <img 
                     src={img} 
-                    alt={`${property.title} ${index + 2}`}
+                    alt={`${title} ${index + 2}`}
                     className="w-full h-32 object-cover"
                   />
                 </div>
