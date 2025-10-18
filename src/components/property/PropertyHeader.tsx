@@ -115,8 +115,8 @@ const PropertyHeader = ({ property }: PropertyHeaderProps) => {
           </Badge>
           <span className="text-2xl font-bold text-estate-800 ml-auto">
             {property.listingType === "rent"
-              ? `${formatPrice(property.price, property.currency)}/mois`
-              : formatPrice(property.price, property.currency)}
+              ? `${formatPrice(property.price)}/mois`
+              : formatPrice(property.price)}
           </span>
         </div>
       </div>

@@ -154,8 +154,8 @@ const PropertyCard = ({ property, userLikedProperties }: PropertyCardProps) => {
           <div className="flex justify-between items-center mb-2">
             <p className="text-lg font-bold text-estate-800">
               {property.listing_type === "rent"
-                ? `${formatPrice(property.price, property.currency)}/month`
-                : formatPrice(property.price, property.currency)}
+                ? `${formatPrice(property.price)}/month`
+                : formatPrice(property.price)}
             </p>
             <div className="flex items-center text-sm text-estate-neutral-500">
               <Calendar size={14} className="mr-1" />

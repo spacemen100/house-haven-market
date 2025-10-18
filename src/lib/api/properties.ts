@@ -172,7 +172,7 @@ export const createProperty = async (input: CreatePropertyInput) => {
         title: input.title,
         description: input.description,
         price: input.price,
-        currency: input.currency || 'GEL',
+        currency: 'EUR',
         phone_number: input.phone_number,
         cadastral_code: input.cadastral_code,
         property_type: input.propertyType,

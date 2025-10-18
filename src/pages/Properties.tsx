@@ -12,7 +12,7 @@ import PropertyCard from "@/components/PropertyCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useQuery } from "@tanstack/react-query";
-import { useCurrency, Currency } from '@/CurrencyContext';
+import { useCurrency } from '@/CurrencyContext';
 
 import { supabase } from "@/lib/api/supabaseClient";
 import { getUserProfile } from "@/lib/profiles"; // Added import
@@ -653,7 +653,7 @@ const Properties = () => {
   const initialListingType = (queryParams.get("type") as ListingType) || "sale";
   const initialSearch = queryParams.get("search") || "";
 
-  const { currency, formatPrice } = useCurrency();
+  const { formatPrice } = useCurrency();
 
   // State for basic filters
   const [searchQuery, setSearchQuery] = useState(initialSearch);
