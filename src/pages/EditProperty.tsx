@@ -32,6 +32,62 @@ const EditProperty = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<Partial<CreatePropertyInput>>({});
 
+  // Map DB/domain values to form enums expected by Step 2
+  const mapConditionToForm = (value?: string) => {
+    switch ((value || '').toLowerCase()) {
+      case 'new':
+      case 'newly_renovated':
+        return 'newly_renovated';
+      case 'needs_renovation':
+      case 'not_renovated':
+        return 'not_renovated';
+      case 'white_frame':
+      case 'green_frame':
+      case 'black_frame':
+      case 'old_renovation':
+        return value as any;
+      case 'good':
+      default:
+        return 'old_renovation';
+    }
+  };
+
+  const mapStatusToForm = (value?: string) => {
+    switch ((value || '').toLowerCase()) {
+      case 'free':
+      case 'available':
+        return 'available';
+      case 'under_caution':
+      case 'pending':
+        return 'pending';
+      case 'under_construction':
+      case 'new_building_under_construction':
+        return 'new_building_under_construction';
+      case 'sold':
+      case 'old_building':
+        return value as any;
+      default:
+        return 'available';
+    }
+  };
+
+  const mapKitchenTypeToForm = (value?: string) => {
+    switch ((value || '').toLowerCase()) {
+      case 'isolated':
+      case 'outside':
+      case 'studio':
+        return value as any;
+      // try to map common values from previous domain
+      case 'closed':
+        return 'isolated';
+      case 'open':
+      case 'american':
+        return 'studio';
+      default:
+        return undefined;
+    }
+  };
+
   const { 
     data: fetchedProperty, 
     isLoading, 
@@ -54,8 +110,8 @@ const EditProperty = () => {
         cadastral_code: fetchedProperty.cadastralCode,
         propertyType: fetchedProperty.propertyType,
         listingType: fetchedProperty.listingType,
-        status: fetchedProperty.status,
-        condition: fetchedProperty.condition,
+        status: mapStatusToForm(fetchedProperty.status as any),
+        condition: mapConditionToForm(fetchedProperty.condition as any),
         plan: fetchedProperty.plan,
         address_street: fetchedProperty.address.street,
         address_city: fetchedProperty.address.city,
@@ -67,7 +123,7 @@ const EditProperty = () => {
         m2: fetchedProperty.m2,
         rooms: fetchedProperty.rooms,
         terrace_area: fetchedProperty.terraceArea,
-        kitchen_type: fetchedProperty.kitchenType,
+        kitchen_type: mapKitchenTypeToForm(fetchedProperty.kitchenType as any),
         ceiling_height: fetchedProperty.ceilingHeight,
         floor_level: fetchedProperty.floorLevel,
         total_floors: fetchedProperty.totalFloors,
@@ -254,6 +310,79 @@ const EditProperty = () => {
     );
   }
 
+  // Autosave helpers et handlers alternatifs
+  const normalizeToApi = (input: any): Partial<CreatePropertyInput> => {
+    if (!input) return {};
+    const out: any = { ...input };
+    out.propertyType = out.propertyType ?? out.property_type;
+    out.listingType = out.listingType ?? out.listing_type;
+    out.internet_tv = out.internet_tv ?? out.internetTV;
+    out.nearby_places = out.nearby_places ?? out.nearbyPlaces;
+    out.online_services = out.online_services ?? out.onlineServices;
+    out.has_elevator = out.has_elevator ?? out.hasElevator;
+    out.has_ventilation = out.has_ventilation ?? out.hasVentilation;
+    out.has_air_conditioning = out.has_air_conditioning ?? out.hasAirConditioning;
+    out.is_accessible = out.is_accessible ?? out.isAccessible;
+    out.terrace_area = out.terrace_area ?? out.terraceArea;
+    out.kitchen_type = out.kitchen_type ?? out.kitchenType;
+    out.ceiling_height = out.ceiling_height ?? out.ceilingHeight;
+    out.floor_level = out.floor_level ?? out.floorLevel;
+    out.total_floors = out.total_floors ?? out.totalFloors;
+    out.year_built = out.year_built ?? out.yearBuilt;
+    return out;
+  };
+  let autosaveTimer: any;
+  const triggerAutosave = (payload: Partial<CreatePropertyInput>) => {
+    if (!propertyId) return;
+    const normalized = normalizeToApi({ ...payload });
+    delete (normalized as any).images;
+    delete (normalized as any).existingImageUrls;
+    delete (normalized as any).removedImageUrls;
+    if (autosaveTimer) clearTimeout(autosaveTimer);
+    autosaveTimer = setTimeout(async () => {
+      try {
+        console.log('[Autosave] Saving partial update for', propertyId, normalized);
+        await updateProperty(propertyId!, normalized);
+      } catch (e) {
+        console.warn('[Autosave] Failed:', e);
+      }
+    }, 400);
+  };
+  const handleNextAutosave = (data: Partial<CreatePropertyInput> & { existingImageUrls?: string[], removedImageUrls?: string[] }) => {
+    setFormData(prev => {
+      const merged: Partial<CreatePropertyInput> = {
+        ...prev,
+        ...data,
+        images: (data as any)?.images ?? (prev as any)?.images,
+        existingImageUrls: data.existingImageUrls ?? (prev as any)?.existingImageUrls,
+        removedImageUrls: data.removedImageUrls ?? (prev as any)?.removedImageUrls,
+      };
+      triggerAutosave(merged);
+      return merged;
+    });
+    setCurrentStep(prev => prev + 1);
+  };
+  const handleBackAutosave = () => {
+    triggerAutosave(formData);
+    setCurrentStep(prev => prev - 1);
+  };
+  const handleFinalSubmitNormalized = async (data: Partial<CreatePropertyInput> & { existingImageUrls?: string[], removedImageUrls?: string[] }) => {
+    if (!propertyId) {
+      toast.error("Identifiant de l'annonce manquant.");
+      return;
+    }
+    const finalFormData: Partial<CreatePropertyInput> = {
+      ...formData,
+      ...data,
+      images: (data as any)?.images ?? (formData as any)?.images,
+      existingImageUrls: data.existingImageUrls ?? (formData as any)?.existingImageUrls,
+      removedImageUrls: data.removedImageUrls ?? (formData as any)?.removedImageUrls,
+    };
+    const normalized = normalizeToApi(finalFormData);
+    console.log('Final data to update:', normalized);
+    console.log('Submitting update for propertyId', propertyId);
+    updatePropertyMutation.mutate({ propertyId, input: normalized });
+  };
   return (
     <div>
       <Navbar />
@@ -284,40 +413,40 @@ const EditProperty = () => {
                     <PropertyTypeStep
                       key={`${formData.listingType}-${formData.propertyType}`}
                       initialData={formData}
-                      onNext={handleNext}
+                      onNext={handleNextAutosave}
                     />
                   )}
 
                   {currentStep === 2 && (
                     <AddPropertyStep1
                       initialData={formData}
-                      onBack={handleBack}
-                      onNext={handleNext}
+                      onBack={handleBackAutosave}
+                      onNext={handleNextAutosave}
                     />
                   )}
 
                   {currentStep === 3 && (
                     <AddPropertyStep2
                       initialData={formData}
-                      onBack={handleBack}
-                      onNext={handleNext}
+                      onBack={handleBackAutosave}
+                      onNext={handleNextAutosave}
                     />
                   )}
 
                   {currentStep === 4 && (
                     <AddPropertyStep3
                       initialData={formData}
-                      onBack={handleBack}
-                      onNext={handleNext}
+                      onBack={handleBackAutosave}
+                      onNext={handleNextAutosave}
                     />
                   )}
 
                   {currentStep === 5 && (
                     <AddPropertyStep4
                       initialData={formData}
-                      onBack={handleBack}
+                      onBack={handleBackAutosave}
                       isSubmitting={updatePropertyMutation.isPending}
-                      onNext={handleFinalSubmit}
+                      onNext={handleFinalSubmitNormalized}
                       submitLabel="Enregistrer les modifications"
                       submittingLabel="Enregistrement..."
                       requireImage={false}
@@ -330,6 +459,20 @@ const EditProperty = () => {
           </div>
         </section>
       </div>
+      {process.env.NODE_ENV === 'development' && (
+        <div className="fixed bottom-4 right-4 bg-yellow-100 p-4 rounded-lg shadow-lg z-50 max-w-md">
+          <h3 className="font-bold mb-2">Debug Info</h3>
+          <p>Current Step: {currentStep}</p>
+          <p>Form Data Keys: {Object.keys(formData || {}).join(', ')}</p>
+          <p>Property ID: {propertyId}</p>
+          <button
+            onClick={() => console.log('Form Data:', formData)}
+            className="bg-blue-500 text-white px-2 py-1 rounded text-sm mt-2"
+          >
+            Log Form Data
+          </button>
+        </div>
+      )}
       <Footer />
     </div>
   );

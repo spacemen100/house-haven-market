@@ -38,12 +38,14 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack, ini
       instagramHandle: initialData?.instagramHandle || '',
       facebookUrl: initialData?.facebookUrl || '',
       twitterHandle: initialData?.twitterHandle || '',
-      reference_number: initialData?.cadastral_code || '', // Assuming cadastral_code is used as reference_number
+      // Pré-remplit depuis reference_number si présent, sinon fallback sur cadastral_code
+      reference_number: (initialData as any)?.reference_number || initialData?.cadastral_code || '',
     }
   });
 
   useEffect(() => {
-    if (!initialData?.cadastral_code) {
+    // Génère une référence si rien n’est fourni au départ
+    if (!(initialData as any)?.reference_number && !initialData?.cadastral_code && !form.getValues('reference_number')) {
       const generateReferenceNumber = () => {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         let result = '';
@@ -60,6 +62,8 @@ const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack, ini
     const mappedData = {
       phone_number: values.phone_number,
       cadastral_code: values.reference_number, // Map back to cadastral_code
+      // Conserve aussi reference_number pour les étapes suivantes (préremplissage)
+      reference_number: values.reference_number,
       contactEmail: values.contactEmail,
       instagramHandle: values.instagramHandle,
       facebookUrl: values.facebookUrl,

@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/api/supabaseClient";
+﻿import { supabase } from "@/lib/api/supabaseClient";
 import { Property } from "@/types/property";
 import { toast } from "sonner";
 import { getUserProfile } from "@/lib/profiles"; // Added import
@@ -9,6 +9,7 @@ export interface CreatePropertyInput {
   price: number;
   phone_number?: string;
   cadastral_code?: string;
+  reference_number?: string;
   propertyType: 'house' | 'apartment' | 'land' | 'commercial';
   listingType: 'sale' | 'rent' | 'rent_by_day' | 'lease';
   status?: 'free' | 'under_caution' | 'under_construction';
@@ -17,6 +18,8 @@ export interface CreatePropertyInput {
   address_street?: string;
   address_city: string;
   address_district?: string;
+  address_state?: string;
+  address_zip?: string;
   lat?: number;
   lng?: number;
   beds: number;
@@ -163,11 +166,11 @@ const transformProperty = (property: any): Property => ({
 
 export const createProperty = async (input: CreatePropertyInput) => {
   try {
-    console.log('Creating property with data:', input); // Log pour vérifier les données avant l'insertion
+    console.log('Creating property with data:', input); // Log pour vÃ©rifier les donnÃ©es avant l'insertion
     const { data: { user }, error: userError } = await supabase.auth.getUser();
     if (userError || !user) throw new Error("User not authenticated");
 
-    console.log('Data being inserted into properties table:', input); // Log pour vérifier les données insérées dans la table properties
+    console.log('Data being inserted into properties table:', input); // Log pour vÃ©rifier les donnÃ©es insÃ©rÃ©es dans la table properties
     const { data: property, error: propertyError } = await supabase
       .from('properties')
       .insert({
@@ -177,31 +180,32 @@ export const createProperty = async (input: CreatePropertyInput) => {
         currency: 'EUR',
         phone_number: input.phone_number,
         cadastral_code: input.cadastral_code,
-        property_type: input.propertyType,
-        listing_type: input.listingType,
-        status: input.status,
-        condition: input.condition,
-        plan: input.plan,
-        address_street: input.address_street,
-        address_city: input.address_city,
-        address_district: input.address_district,
+        reference_number: (input as any).reference_number || (input as any).cadastral_code,
+        reference_number: (input as any).reference_number || (input as any).cadastral_code,
+        property_type: input.propertyType ?? (input as any).property_type,
+        
+        address_state: (input as any).address_state || (input as any).location_notes,
+        address_zip: (input as any).address_zip || (input as any).zip,
+        address_state: (input as any).address_state || (input as any).location_notes,
+        address_state: (input as any).address_state || (input as any).location_notes,
         lat: input.lat,
         lng: input.lng,
         beds: input.beds,
         baths: input.baths,
         m2: input.m2,
+        price_per_m2: input.price_per_m2,
         rooms: input.rooms,
-        terrace_area: input.terrace_area,
-        kitchen_type: input.kitchen_type,
-        ceiling_height: input.ceiling_height,
-        floor_level: input.floor_level,
-        total_floors: input.total_floors,
-        year_built: input.year_built,
+        terrace_area: input.terrace_area ?? (input as any).terraceArea,
+        kitchen_type: input.kitchen_type ?? (input as any).kitchenType,
+        ceiling_height: input.ceiling_height ?? (input as any).ceilingHeight,
+        floor_level: input.floor_level ?? (input as any).floorLevel,
+        total_floors: input.total_floors ?? (input as any).totalFloors,
+        year_built: input.year_built ?? (input as any).yearBuilt,
         featured: input.featured,
-        has_elevator: input.has_elevator,
-        has_ventilation: input.has_ventilation,
-        has_air_conditioning: input.has_air_conditioning,
-        is_accessible: input.is_accessible,
+        has_elevator: input.has_elevator ?? (input as any).hasElevator,
+        has_ventilation: input.has_ventilation ?? (input as any).hasVentilation,
+        has_air_conditioning: input.has_air_conditioning ?? (input as any).hasAirConditioning,
+        is_accessible: input.is_accessible ?? (input as any).isAccessible,
         has_gas: input.has_gas,
         has_loggia: input.has_loggia,
         building_material: input.building_material,
@@ -261,7 +265,7 @@ export const createProperty = async (input: CreatePropertyInput) => {
 
     if (propertyError) throw propertyError;
 
-    console.log('Property created:', property); // Log pour vérifier la propriété créée
+    console.log('Property created:', property); // Log pour vÃ©rifier la propriÃ©tÃ© crÃ©Ã©e
 
     if (input.images?.length) {
       const imagePromises = input.images.map(async (file) => {
@@ -316,11 +320,11 @@ export const createProperty = async (input: CreatePropertyInput) => {
 
     await Promise.all(relatedDataPromises);
 
-    toast.success("Annonce immobilière créée avec succès !");
+    toast.success("Annonce immobiliÃ¨re crÃ©Ã©e avec succÃ¨s !");
     return property;
   } catch (error) {
-    console.error("Erreur lors de la création de l'annonce:", error);
-    toast.error("Échec de la création de l'annonce immobilière. Veuillez réessayer.");
+    console.error("Erreur lors de la crÃ©ation de l'annonce:", error);
+    toast.error("Ã‰chec de la crÃ©ation de l'annonce immobiliÃ¨re. Veuillez rÃ©essayer.");
     throw error;
   }
 };
@@ -351,8 +355,8 @@ export const getProperties = async (type?: 'sale' | 'rent' | 'rent_by_day' | 'le
     if (error) throw error;
     return properties.map(transformProperty);
   } catch (error) {
-    console.error('Erreur lors de la récupération des propriétés:', error);
-    toast.error("Échec de la récupération des propriétés. Veuillez réessayer.");
+    console.error('Erreur lors de la rÃ©cupÃ©ration des propriÃ©tÃ©s:', error);
+    toast.error("Ã‰chec de la rÃ©cupÃ©ration des propriÃ©tÃ©s. Veuillez rÃ©essayer.");
     return [];
   }
 };
@@ -381,8 +385,8 @@ export const getFeaturedProperties = async (): Promise<Property[]> => {
     if (error) throw error;
     return properties.map(transformProperty);
   } catch (error) {
-    console.error('Erreur lors de la récupération des propriétés en vedette:', error);
-    toast.error("Échec de la récupération des propriétés en vedette. Veuillez réessayer.");
+    console.error('Erreur lors de la rÃ©cupÃ©ration des propriÃ©tÃ©s en vedette:', error);
+    toast.error("Ã‰chec de la rÃ©cupÃ©ration des propriÃ©tÃ©s en vedette. Veuillez rÃ©essayer.");
     return [];
   }
 };
@@ -411,8 +415,8 @@ export const getMyProperties = async (): Promise<Property[]> => {
     if (error) throw error;
     return properties.map(transformProperty);
   } catch (error) {
-    console.error('Erreur lors de la récupération des propriétés utilisateur:', error);
-    toast.error("Échec de la récupération de vos propriétés. Veuillez réessayer.");
+    console.error('Erreur lors de la rÃ©cupÃ©ration des propriÃ©tÃ©s utilisateur:', error);
+    toast.error("Ã‰chec de la rÃ©cupÃ©ration de vos propriÃ©tÃ©s. Veuillez rÃ©essayer.");
     return [];
   }
 };
@@ -445,21 +449,25 @@ export const deleteProperty = async (propertyId: string) => {
 
     if (error) throw error;
 
-    toast.success("Propriété supprimée avec succès");
+    toast.success("PropriÃ©tÃ© supprimÃ©e avec succÃ¨s");
+    console.log('=== UPDATE PROPERTY COMPLETED SUCCESSFULLY ===');
     return true;
   } catch (error) {
-    console.error('Erreur lors de la suppression de la propriété:', error);
-    toast.error("Échec de la suppression de la propriété");
+    console.error('Erreur lors de la suppression de la propriÃ©tÃ©:', error);
+    toast.error("Ã‰chec de la suppression de la propriÃ©tÃ©");
     return false;
   }
 };
 
 export const updateProperty = async (propertyId: string, input: Partial<CreatePropertyInput>) => {
   try {
+    console.log('=== UPDATE PROPERTY START ===');
+    console.log('Property ID:', propertyId);
+    console.log('Input data:', JSON.stringify(input, null, 2));
     const { data: { user }, error: userError } = await supabase.auth.getUser();
-    if (userError || !user) throw new Error("Utilisateur non authentifié");
+    if (userError || !user) throw new Error("Utilisateur non authentifiÃ©");
 
-    // 1) Vérifier la propriété et son propriétaire
+    // 1) VÃ©rifier la propriÃ©tÃ© et son propriÃ©taire
     const { data: existing, error: fetchErr } = await supabase
       .from('properties')
       .select('id, user_id')
@@ -467,16 +475,16 @@ export const updateProperty = async (propertyId: string, input: Partial<CreatePr
       .single();
 
     if (fetchErr || !existing) {
-      throw new Error('Annonce introuvable pour mise à jour.');
+      throw new Error('Annonce introuvable pour mise Ã  jour.');
     }
 
     const matchByUser = !!existing.user_id && existing.user_id === user.id;
     const isOrphan = !existing.user_id;
     if (!!existing.user_id && existing.user_id !== user.id) {
-      throw new Error("Vous ne pouvez pas modifier cette annonce (propriétaire différent).");
+      throw new Error("Vous ne pouvez pas modifier cette annonce (propriÃ©taire diffÃ©rent).");
     }
 
-    // 2) Construire et exécuter l'UPDATE
+    // 2) Construire et exÃ©cuter l'UPDATE
     let updateQuery = supabase
       .from('properties')
       .update({
@@ -485,19 +493,18 @@ export const updateProperty = async (propertyId: string, input: Partial<CreatePr
         price: input.price,
         phone_number: input.phone_number,
         cadastral_code: input.cadastral_code,
+        reference_number: (input as any).reference_number || (input as any).cadastral_code,
+        reference_number: (input as any).reference_number || (input as any).cadastral_code,
         property_type: input.propertyType,
-        listing_type: input.listingType,
-        status: input.status,
-        condition: input.condition,
-        plan: input.plan,
-        address_street: input.address_street,
-        address_city: input.address_city,
-        address_district: input.address_district,
+        
+        address_state: (input as any).address_state || (input as any).location_notes,
+        address_zip: (input as any).address_zip || (input as any).zip,
         lat: input.lat,
         lng: input.lng,
         beds: input.beds,
         baths: input.baths,
         m2: input.m2,
+        price_per_m2: input.price_per_m2,
         rooms: input.rooms,
         terrace_area: input.terrace_area,
         kitchen_type: input.kitchen_type,
@@ -506,10 +513,10 @@ export const updateProperty = async (propertyId: string, input: Partial<CreatePr
         total_floors: input.total_floors,
         year_built: input.year_built,
         featured: input.featured,
-        has_elevator: input.has_elevator,
-        has_ventilation: input.has_ventilation,
-        has_air_conditioning: input.has_air_conditioning,
-        is_accessible: input.is_accessible,
+        has_elevator: input.has_elevator ?? (input as any).hasElevator,
+        has_ventilation: input.has_ventilation ?? (input as any).hasVentilation,
+        has_air_conditioning: input.has_air_conditioning ?? (input as any).hasAirConditioning,
+        is_accessible: input.is_accessible ?? (input as any).isAccessible,
         has_gas: input.has_gas,
         has_loggia: input.has_loggia,
         building_material: input.building_material,
@@ -575,14 +582,15 @@ export const updateProperty = async (propertyId: string, input: Partial<CreatePr
     if (propertyError) throw propertyError;
 
     // Handle related tables (amenities, equipment, etc.)
+    console.log('Updating related tables...');
     const relatedTables = [
       { table: 'property_amenities', column: 'amenity', data: input.amenities },
       { table: 'property_equipment', column: 'equipment', data: input.equipment },
-      { table: 'property_internet_tv', column: 'option_name', data: input.internet_tv },
+      { table: 'property_internet_tv', column: 'option_name', data: input.internet_tv ?? (input as any).internetTV },
       { table: 'property_storage', column: 'storage_type', data: input.storage },
       { table: 'property_security', column: 'security_feature', data: input.security },
-      { table: 'property_nearby_places', column: 'place_name', data: input.nearby_places },
-      { table: 'property_online_services', column: 'service_name', data: input.online_services },
+      { table: 'property_nearby_places', column: 'place_name', data: input.nearby_places ?? (input as any).nearbyPlaces },
+      { table: 'property_online_services', column: 'service_name', data: input.online_services ?? (input as any).onlineServices },
     ];
 
     await Promise.all(relatedTables.map(async ({ table, column, data }) => {
@@ -593,6 +601,10 @@ export const updateProperty = async (propertyId: string, input: Partial<CreatePr
     }));
 
     // Handle image updates
+    console.log('Handling images...');
+    console.log('Removed images:', input.removedImageUrls);
+    console.log('Existing images:', input.existingImageUrls);
+    console.log('New images:', input.images);
     // 1. Delete removed images
     if (input.removedImageUrls && input.removedImageUrls.length > 0) {
       const deletePromises = input.removedImageUrls.map(async (imageUrl: string) => {
@@ -607,6 +619,7 @@ export const updateProperty = async (propertyId: string, input: Partial<CreatePr
 
     // 2. Upload des nouvelles images (si ce sont bien des fichiers)
     if (Array.isArray(input.images) && input.images.length > 0 && typeof (input.images as any)[0] !== 'string') {
+      console.log('Uploading new images...');
       const imageUploadPromises = (input.images as File[]).map(async (file) => {
         const fileExt = file.name.split('.').pop();
         const fileName = `${Math.random()}.${fileExt}`;
@@ -634,11 +647,11 @@ export const updateProperty = async (propertyId: string, input: Partial<CreatePr
 
     // 3. Existing images (in input.existingImageUrls) are already in the database and storage, so no action needed here.
 
-    toast.success("Annonce immobilière mise à jour avec succès !");
+    toast.success("Annonce immobiliÃ¨re mise Ã  jour avec succÃ¨s !");
     return true;
   } catch (error) {
-    console.error("Erreur lors de la mise à jour de l'annonce:", error);
-    toast.error("Échec de la mise à jour de l'annonce immobilière. Veuillez réessayer.");
+    console.error("Erreur lors de la mise Ã  jour de l'annonce:", error);
+    toast.error("Ã‰chec de la mise Ã  jour de l'annonce immobiliÃ¨re. Veuillez rÃ©essayer.");
     throw error;
   }
 };
@@ -686,8 +699,8 @@ export const getNewestProperties = async (): Promise<Property[]> => {
 
     return properties.map(transformProperty);
   } catch (error) {
-    console.error('Erreur lors de la récupération des dernières propriétés:', error);
-    toast.error("Échec de la récupération des dernières annonces. Veuillez réessayer.");
+    console.error('Erreur lors de la rÃ©cupÃ©ration des derniÃ¨res propriÃ©tÃ©s:', error);
+    toast.error("Ã‰chec de la rÃ©cupÃ©ration des derniÃ¨res annonces. Veuillez rÃ©essayer.");
     return [];
   }
 };
@@ -715,8 +728,8 @@ export const getPropertyById = async (id: string): Promise<Property | null> => {
 
     return transformProperty(property);
   } catch (error) {
-    console.error('Erreur lors de la récupération de la propriété par ID:', error);
-    toast.error("Échec de la récupération des détails de la propriété. Veuillez réessayer.");
+    console.error('Erreur lors de la rÃ©cupÃ©ration de la propriÃ©tÃ© par ID:', error);
+    toast.error("Ã‰chec de la rÃ©cupÃ©ration des dÃ©tails de la propriÃ©tÃ©. Veuillez rÃ©essayer.");
     return null;
   }
 };

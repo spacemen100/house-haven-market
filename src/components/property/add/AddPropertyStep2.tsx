@@ -76,6 +76,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialData }: AddPropertyStep2Props
         description: data.description,
         price: data.price,
         currency: "EUR",
+        price_per_m2: data.m2 ? Number((data.price / data.m2).toFixed(2)) : undefined,
         beds: data.beds,
         baths: data.baths,
         m2: data.m2,
