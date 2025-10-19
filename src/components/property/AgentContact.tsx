@@ -1,4 +1,4 @@
-
+﻿
 import { Property } from "@/types/property";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, User } from "lucide-react";
@@ -7,10 +7,10 @@ interface AgentContactProps {
   property: Property;
 }
 
-const AgentContact = ({ property }: AgentContactProps) => {
+export const AgentContact = ({ property }: AgentContactProps) => {
   return (
     <>
-      <div className="bg-white rounded-lg p-6 shadow border border-estate-neutral-100 mb-6">
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-estate-neutral-200 mb-6">
         <Button className="w-full bg-teal-500 hover:bg-teal-600">
           Planifier une visite
         </Button>
@@ -20,7 +20,7 @@ const AgentContact = ({ property }: AgentContactProps) => {
       </div>
       
       {property.agentName && (
-        <div className="bg-white rounded-lg p-6 shadow border border-estate-neutral-100">
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-estate-neutral-200">
           <h3 className="text-xl font-semibold text-estate-800 mb-4">
             Annonce publiée par
           </h3>
@@ -63,3 +63,4 @@ const AgentContact = ({ property }: AgentContactProps) => {
 };
 
 export default AgentContact;
+

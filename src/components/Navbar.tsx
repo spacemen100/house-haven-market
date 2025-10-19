@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, User, ChevronDown, Home, Key, Users, CalendarDays, LogIn, LogOut, UserPlus, PlusCircle, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -436,7 +436,7 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
-                  Vous avez déjà un compte?{' '}
+                  Vous avez déjà  un compte?{' '}
                   <button
                     type="button"
                     className="text-teal-600 hover:underline"
@@ -455,3 +455,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
+

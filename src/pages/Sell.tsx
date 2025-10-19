@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import PropertyTypeStep from "@/components/property/add/PropertyTypeStep";
@@ -150,7 +150,7 @@ const SellPage = () => {
       <h2 className="text-2xl font-bold text-center">{"Commencer"}</h2>
       <p className="text-center text-gray-600">
         {user
-          ? "Prêt à publier votre annonce ?"
+          ? "Prêt à  publier votre annonce ?"
           : "Connectez-vous ou créez un compte pour continuer."}
       </p>
 
@@ -399,7 +399,7 @@ const SellPage = () => {
                 </>
               ) : (
                 <>
-                  {"Vous avez déjà un compte ?"}{" "}
+                  {"Vous avez déjà  un compte ?"}{" "}
                   <button
                     type="button"
                     className="text-teal-600 hover:underline"
@@ -427,3 +427,5 @@ const Sell = () => {
 }
 
 export default Sell;
+
+

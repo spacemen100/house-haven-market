@@ -1,4 +1,4 @@
-import { Loader2 } from "lucide-react"; // Added Loader2 import
+﻿import { Loader2 } from "lucide-react"; // Added Loader2 import
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -84,11 +84,11 @@ const EditProperty = () => {
         instagramHandle: fetchedProperty.instagramHandle,
         facebookUrl: fetchedProperty.facebookUrl,
         twitterHandle: fetchedProperty.twitterHandle,
-        has_gas: fetchedProperty.has_gas,
-        has_loggia: fetchedProperty.has_loggia,
+        
+        
         building_material: fetchedProperty.building_material,
         furniture_type: fetchedProperty.furniture_type,
-        has_fireplace: fetchedProperty.has_fireplace,
+        
         storeroom_type: fetchedProperty.storeroom_type,
         heating_type: fetchedProperty.heating_type,
         hot_water_type: fetchedProperty.hot_water_type,
@@ -106,34 +106,34 @@ const EditProperty = () => {
         has_ventilation: fetchedProperty.hasVentilation,
         has_air_conditioning: fetchedProperty.hasAirConditioning,
         is_accessible: fetchedProperty.isAccessible,
-        has_gas: fetchedProperty.has_gas,
-        has_loggia: fetchedProperty.has_loggia,
-        has_fireplace: fetchedProperty.has_fireplace,
+        
+        
+        
         has_internet: fetchedProperty.internetTV?.includes("Internet") || false,
-        has_cable_tv: fetchedProperty.internetTV?.includes("Télévision par câble") || false,
+        has_cable_tv: fetchedProperty.internetTV?.includes("Télévision par cà¢ble") || false,
         has_satellite_tv: fetchedProperty.internetTV?.includes("Télévision par satellite") || false,
         has_phone_line: fetchedProperty.internetTV?.includes("Ligne téléphonique") || false,
         has_vent: fetchedProperty.amenities?.includes("Ventilation") || false,
         has_cinema: fetchedProperty.amenities?.includes("Home Cinéma") || false,
         has_dishwasher: fetchedProperty.equipment?.includes("Lave-vaisselle") || false,
-        has_gas_stove: fetchedProperty.equipment?.includes("Cuisinière à gaz") || false,
+        has_gas_stove: fetchedProperty.equipment?.includes("Cuisinière à  gaz") || false,
         has_electric_kettle: fetchedProperty.equipment?.includes("Bouilloire électrique") || false,
-        has_induction_oven: fetchedProperty.equipment?.includes("Four à induction") || false,
+        has_induction_oven: fetchedProperty.equipment?.includes("Four à  induction") || false,
         has_microwave: fetchedProperty.equipment?.includes("Micro-ondes") || false,
         has_electric_oven: fetchedProperty.equipment?.includes("Four électrique") || false,
         has_washing_machine: fetchedProperty.equipment?.includes("Lave-linge") || false,
         has_tv: fetchedProperty.equipment?.includes("Télévision") || false,
-        has_coffee_machine: fetchedProperty.equipment?.includes("Machine à café") || false,
+        has_coffee_machine: fetchedProperty.equipment?.includes("Machine à  café") || false,
         has_audio_system: fetchedProperty.equipment?.includes("Système audio") || false,
         has_heater: fetchedProperty.equipment?.includes("Chauffage") || false,
         has_hair_dryer: fetchedProperty.equipment?.includes("Sèche-cheveux") || false,
         has_refrigerator: fetchedProperty.equipment?.includes("Réfrigérateur") || false,
         has_vacuum_cleaner: fetchedProperty.equipment?.includes("Aspirateur") || false,
         has_dryer: fetchedProperty.equipment?.includes("Sèche-linge") || false,
-        has_iron: fetchedProperty.equipment?.includes("Fer à repasser") || false,
+        has_iron: fetchedProperty.equipment?.includes("Fer à  repasser") || false,
         has_co_detector: fetchedProperty.security?.includes("Détecteur de CO") || false,
         has_smoke_detector: fetchedProperty.security?.includes("Détecteur de fumée") || false,
-        has_evacuation_ladder: fetchedProperty.security?.includes("Échelle d'évacuation") || false,
+        has_evacuation_ladder: fetchedProperty.security?.includes("à‰chelle d'évacuation") || false,
         has_fire_fighting_system: fetchedProperty.security?.includes("Système anti-incendie") || false,
         has_perimeter_cameras: fetchedProperty.security?.includes("Caméras périmétriques") || false,
         has_alarm: fetchedProperty.security?.includes("Alarme") || false,
@@ -150,14 +150,14 @@ const EditProperty = () => {
         near_greenery: fetchedProperty.nearbyPlaces?.includes("Espaces verts") || false,
         near_park: fetchedProperty.nearbyPlaces?.includes("Parc") || false,
         near_shopping_centre: fetchedProperty.nearbyPlaces?.includes("Centre commercial") || false,
-        near_school: fetchedProperty.nearbyPlaces?.includes("École") || false,
+        near_school: fetchedProperty.nearbyPlaces?.includes("à‰cole") || false,
         near_old_district: fetchedProperty.nearbyPlaces?.includes("Vieux quartier") || false,
         allows_pets: fetchedProperty.allows_pets || false,
         allows_parties: fetchedProperty.allows_parties || false,
         allows_smoking: fetchedProperty.allows_smoking || false,
     });
     } else if (isError) {
-      toast.error("Impossible de charger l’annonce pour édition.");
+      toast.error("Impossible de charger lâ€™annonce pour édition.");
       console.error("Erreur lors du chargement de l'annonce:", error);
       navigate('/account'); // Redirect if property not found or error
     }
@@ -169,15 +169,15 @@ const EditProperty = () => {
     mutationFn: (data: { propertyId: string, input: Partial<CreatePropertyInput> }) =>
       updateProperty(data.propertyId, data.input),
     onSuccess: () => {
-      toast.success("Annonce immobilière mise à jour avec succès !");
+      toast.success("Annonce immobilière mise à  jour avec succès !");
       queryClient.invalidateQueries({ queryKey: ['my-properties'] });
       queryClient.invalidateQueries({ queryKey: ['property', propertyId] });
       navigate('/account');
     },
     onError: (err) => {
-      const message = err instanceof Error && err.message ? err.message : "Échec de la mise à jour de l'annonce immobilière.";
+      const message = err instanceof Error && err.message ? err.message : "à‰chec de la mise à  jour de l'annonce immobilière.";
       toast.error(message);
-      console.error("Erreur lors de la mise à jour de l'annonce:", err);
+      console.error("Erreur lors de la mise à  jour de l'annonce:", err);
     },
   });
 
@@ -198,7 +198,7 @@ const EditProperty = () => {
 
   const handleFinalSubmit = async (data: Partial<CreatePropertyInput> & { existingImageUrls?: string[], removedImageUrls?: string[] }) => {
     if (!propertyId) {
-      toast.error("Identifiant de l’annonce manquant.");
+      toast.error("Identifiant de lâ€™annonce manquant.");
       return;
     }
 
@@ -230,7 +230,7 @@ const EditProperty = () => {
       <div>
         <Navbar />
         <div className="container py-8 text-center">
-          <p>Annonce introuvable ou une erreur s’est produite.</p>
+          <p>Annonce introuvable ou une erreur sâ€™est produite.</p>
         </div>
         <Footer />
       </div>
@@ -247,7 +247,7 @@ const EditProperty = () => {
               {"Modifier l'annonce immobilière"}
             </h1>
             <p className="text-lg md:text-xl max-w-2xl mx-auto text-slate-200">
-              {"Mettez à jour les informations de votre annonce."}
+              {"Mettez à  jour les informations de votre annonce."}
             </p>
           </div>
         </section>
@@ -317,3 +317,6 @@ const EditProperty = () => {
 };
 
 export default EditProperty;
+
+
+

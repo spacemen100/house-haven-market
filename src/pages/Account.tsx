@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { getUserProfile } from "@/lib/profiles";
@@ -45,13 +45,13 @@ const Account = () => {
   const deletePropertyMutation = useMutation({
     mutationFn: deleteProperty,
     onSuccess: () => {
-      toast.success("Propriété supprimée avec succès");
+      toast.success("Propriéaéte;t&eacée; supprimée avec succès");
       queryClient.invalidateQueries({ queryKey: ['my-properties'] });
       setIsDeleteDialogOpen(false);
       setPropertyToDelete(null);
     },
     onError: (error) => {
-      toast.error("Échec de la suppression de la propriété");
+      toast.error("&Eacute;chec de la suppression de la éoéiété");
       console.error("Erreur lors de la suppression de la propriété:", error);
     },
   });
@@ -105,7 +105,7 @@ const Account = () => {
 
           <TabsContent value="published">
             <div className="py-4">
-              <h2 className="text-xl font-semibold mb-4">{"Mes annonces publiées"}</h2>
+              <h2 className="text-xl font-semibold mb-4">{"Mes annonces publiéacute;es"}</h2>
 
               {loadingMyProperties ? (
                 <div className="flex justify-center py-8">
@@ -146,9 +146,9 @@ const Account = () => {
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Êtes-vous absolument sûr ?</AlertDialogTitle>
+            <AlertDialogTitle>àŠtes-vous absolument sà»r ?</AlertDialogTitle>
             <AlertDialogDescription>
-              Cette action ne peut pas être annulée. Cela supprimera définitivement votre annonce immobilière de nos serveurs.
+              Cette action ne peut pas être énulée. Cela séprimera définitivement votre annonce immobilière de nos serveurs.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -162,3 +162,6 @@ const Account = () => {
 };
 
 export default Account;
+
+
+

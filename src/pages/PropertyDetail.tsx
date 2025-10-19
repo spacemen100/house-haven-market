@@ -1,151 +1,57 @@
-import { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import { getPropertyById } from "@/lib/api/properties";
+import { useQuery } from "@tanstack/react-query";
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import PropertyGallery from "@/components/property/PropertyGallery";
+
 import PropertyHeader from "@/components/property/PropertyHeader";
+import PropertyGallery from "@/components/property/PropertyGallery";
 import PropertySpecs from "@/components/property/PropertySpecs";
 import PropertyFeatures from "@/components/property/PropertyFeatures";
 import PropertyAdditionalFeatures from "@/components/property/PropertyAdditionalFeatures";
 import AgentContact from "@/components/property/AgentContact";
-import PropertyMap from "@/components/PropertyMap";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "sonner";
-import { Property } from "@/types/property";
 
-const PropertyDetail = () => {
-  const { id } = useParams();
-  const [property, setProperty] = useState<Property | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+import { getPropertyById } from "@/lib/api/properties";
 
-  useEffect(() => {
-    const fetchProperty = async () => {
-      if (!id) {
-        setError("ID de propriété manquant.");
-        setLoading(false);
-        return;
-      }
-      try {
-        const data = await getPropertyById(id);
-        if (data) {
-          setProperty(data);
-        } else {
-          setError("Propriété non trouvée.");
-        }
-      } catch (err) {
-        console.error("Erreur lors du chargement de la propriété:", err);
-        setError("Erreur lors du chargement de la propriété.");
-      } finally {
-        setLoading(false);
-      }
-    };
+const PropertyDetail: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
 
-    fetchProperty();
-  }, [id]);
-
-  if (loading) {
-    return (
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow container mx-auto px-4 py-8">
-          <Skeleton className="h-8 w-1/3 mb-4" />
-          <Skeleton className="h-64 w-full mb-8" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="md:col-span-2 space-y-8">
-              <Skeleton className="h-48 w-full" />
-              <Skeleton className="h-32 w-full" />
-              <Skeleton className="h-64 w-full" />
-            </div>
-            <div className="md:col-span-1 space-y-8">
-              <Skeleton className="h-48 w-full" />
-              <Skeleton className="h-32 w-full" />
-            </div>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow container mx-auto px-4 py-8 text-center">
-          <h1 className="text-3xl font-bold text-red-600 mb-4">Erreur</h1>
-          <p className="text-lg">{error}</p>
-          <p className="text-lg">Cette propriété n'existe pas ou a été supprimée.</p>
-          <a href="/properties" className="text-blue-600 hover:underline mt-4 block">Retour à la liste des propriétés</a>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (!property) {
-    return (
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow container mx-auto px-4 py-8 text-center">
-          <h1 className="text-3xl font-bold text-red-600 mb-4">Propriété non trouvée</h1>
-          <p className="text-lg">Cette propriété n'existe pas ou a été supprimée.</p>
-          <a href="/properties" className="text-blue-600 hover:underline mt-4 block">Retour à la liste des propriétés</a>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
+  const { data: property, isLoading, isError } = useQuery({
+    queryKey: ["property", id],
+    queryFn: () => getPropertyById(id!),
+    enabled: !!id,
+  });
 
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main className="flex-grow">
-        <PropertyHeader property={property} />
-        <div className="container mx-auto px-4 py-8">
-          <PropertyGallery images={property.images} title={property.title} />
+      <main className="flex-grow container mx-auto px-4 py-6">
+        {isLoading && (
+          <div className="text-center text-estate-neutral-600">Chargement du bien...</div>
+        )}
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-            <div className="md:col-span-2 space-y-8">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Description</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p>{property.description}</p>
-                </CardContent>
-              </Card>
+        {(isError || (!isLoading && !property)) && (
+          <div className="text-center text-red-600">Impossible de charger ce bien.</div>
+        )}
 
-              <PropertySpecs property={property} />
-              <PropertyFeatures property={property} />
-              <PropertyAdditionalFeatures property={property} />
+        {property && (
+          <>
+            <PropertyHeader property={property} />
+            <PropertyGallery images={property.images} title={property.title} />
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Localisation</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p>{property.address.street}, {property.address.district}, {property.address.city}</p>
-                  {property.address.coordinates.lat && property.address.coordinates.lng && (
-                    <div className="mt-4 h-96 w-full">
-                      <PropertyMap
-                        lat={property.address.coordinates.lat}
-                        lng={property.address.coordinates.lng}
-                        address={`${property.address.street}, ${property.address.city}`}
-                      />
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2">
+                <PropertySpecs property={property} />
+                <PropertyFeatures property={property} />
+                <PropertyAdditionalFeatures property={property} />
+              </div>
+              <div className="lg:col-span-1">
+                <AgentContact property={property} />
+              </div>
             </div>
-
-            <div className="md:col-span-1 space-y-8">
-              <AgentContact property={property} />
-            </div>
-          </div>
-        </div>
+          </>
+        )}
       </main>
       <Footer />
     </div>
@@ -153,3 +59,4 @@ const PropertyDetail = () => {
 };
 
 export default PropertyDetail;
+

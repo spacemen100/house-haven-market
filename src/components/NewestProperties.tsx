@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { Property } from "@/types/property";
+﻿import { useEffect, useState } from "react";
 import PropertyCard from "@/components/PropertyCard";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -13,20 +12,17 @@ const NewestProperties = () => {
   const [visiblePropertiesCount, setVisiblePropertiesCount] = useState(6);
 
   const { data: properties = [], isLoading, error } = useQuery({
-    queryKey: ['newest-properties'],
+    queryKey: ["newest-properties"],
     queryFn: getNewestProperties,
   });
 
-  // Debug logs
   useEffect(() => {}, [properties, isLoading, error]);
 
   return (
     <section className="py-12 bg-estate-neutral-50">
       <div className="container">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-estate-800">
-            Les nouveautés
-          </h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-estate-800">Les nouveautés</h2>
           <Button
             variant="link"
             className="text-estate-800 hover:no-underline p-0"
@@ -52,24 +48,20 @@ const NewestProperties = () => {
           </div>
         ) : error ? (
           <div className="text-center py-8">
-            <p className="text-red-500">Erreur: {error.message}</p>
+            <p className="text-red-500">Erreur: {String((error as any)?.message || error)}</p>
           </div>
         ) : properties.length > 0 ? (
           <>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {properties.slice(0, visiblePropertiesCount).map((property) => (
-                <PropertyCard
-                  key={property.id}
-                  property={property}
-                  // showListingType prop removed as it's not a valid prop for PropertyCard
-                />
+              {properties.slice(0, visiblePropertiesCount).map((property: any) => (
+                <PropertyCard key={property.id} property={property} />
               ))}
             </div>
             {visiblePropertiesCount < properties.length && (
               <div className="mt-8 text-center">
                 <Button
                   variant="outline"
-                  onClick={() => setVisiblePropertiesCount(prevCount => prevCount + 6)}
+                  onClick={() => setVisiblePropertiesCount((prevCount) => prevCount + 6)}
                 >
                   Voir plus
                 </Button>

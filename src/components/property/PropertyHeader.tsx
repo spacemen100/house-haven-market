@@ -1,4 +1,4 @@
-import { Property } from "@/types/property";
+﻿import { Property } from "@/types/property";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";

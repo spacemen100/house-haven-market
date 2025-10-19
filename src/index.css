@@ -36,7 +36,7 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-estate-neutral-50 text-foreground font-sans antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -44,7 +44,7 @@
   }
 
   .container {
-    @apply px-4 md:px-6 lg:px-8 mx-auto max-w-7xl;
+    @apply px-4 md:px-6 lg:px-8 mx-auto max-w-[1200px];
   }
   
   .section {
@@ -54,19 +54,27 @@
 
 @layer components {
   .property-card {
-    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1 relative z-20;
+    @apply transition-all duration-300 bg-white border border-estate-neutral-200 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 relative z-20;
   }
 
   .btn-primary {
-    @apply bg-teal-500 hover:bg-teal-600 text-white px-6 py-3 rounded-md font-medium transition-colors;
+    @apply bg-teal-500 hover:bg-teal-600 text-white px-6 py-3 rounded-lg font-medium transition-colors;
   }
   
   .btn-outline {
-    @apply border border-estate-800 hover:bg-estate-800 text-estate-800 hover:text-white px-6 py-3 rounded-md font-medium transition-colors;
+    @apply border border-estate-800 hover:bg-estate-800 text-estate-800 hover:text-white px-6 py-3 rounded-lg font-medium transition-colors;
   }
   
   .input-search {
-    @apply w-full py-3 px-4 rounded-md border border-estate-neutral-200 focus:border-estate-800 focus:ring-1 focus:ring-estate-800 outline-none placeholder:text-estate-neutral-400;
+    @apply w-full py-3 px-4 rounded-lg border border-estate-neutral-300 focus:border-estate-800 focus:ring-1 focus:ring-estate-800 outline-none placeholder:text-estate-neutral-400 bg-white;
+  }
+
+  .card {
+    @apply bg-white border border-estate-neutral-200 rounded-xl shadow-sm;
+  }
+
+  .pill {
+    @apply rounded-full px-3 py-1 text-sm font-medium;
   }
 
   /* Hide spin buttons on number inputs */

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Search, Filter, MapPin, SlidersHorizontal, X } from "lucide-react";
 import { toast } from "sonner";
@@ -443,7 +443,7 @@ export const createProperty = async (input: CreatePropertyInput) => {
     return property;
   } catch (error) {
     console.error('Error creating property:', error);
-    toast.error("Échec de la création de l'annonce immobilière. Veuillez réessayer.");
+    toast.error("à‰chec de la création de l'annonce immobilière. Veuillez réessayer.");
     throw error;
   }
 };
@@ -474,7 +474,7 @@ export const getProperties = async (type?: ListingType): Promise<Property[]> => 
     return properties.map(transformProperty);
   } catch (error) {
     console.error('Error fetching properties:', error);
-    toast.error("Échec de la récupération des propriétés. Veuillez réessayer.");
+    toast.error("à‰chec de la récupération des propriétés. Veuillez réessayer.");
     return [];
   }
 };
@@ -504,7 +504,7 @@ export const getFeaturedProperties = async (): Promise<Property[]> => {
     return properties.map(transformProperty);
   } catch (error) {
     console.error('Error fetching featured properties:', error);
-    toast.error("Échec de la récupération des propriétés en vedette. Veuillez réessayer.");
+    toast.error("à‰chec de la récupération des propriétés en vedette. Veuillez réessayer.");
     return [];
   }
 };
@@ -534,7 +534,7 @@ export const getMyProperties = async (): Promise<Property[]> => {
     return properties.map(transformProperty);
   } catch (error) {
     console.error('Error fetching user properties:', error);
-    toast.error("Échec de la récupération de vos propriétés. Veuillez réessayer.");
+    toast.error("à‰chec de la récupération de vos propriétés. Veuillez réessayer.");
     return [];
   }
 };
@@ -589,7 +589,7 @@ export const deleteProperty = async (propertyId: string) => {
     return true;
   } catch (error) {
     console.error('Error deleting property:', error);
-    toast.error("Échec de la suppression de la propriété");
+    toast.error("à‰chec de la suppression de la propriété");
     return false;
   }
 };
@@ -638,7 +638,7 @@ export const getNewestProperties = async (): Promise<Property[]> => {
     return properties.map(transformProperty);
   } catch (error) {
     console.error('Error fetching newest properties:', error);
-    toast.error("Échec de la récupération des dernières propriétés. Veuillez réessayer.");
+    toast.error("à‰chec de la récupération des dernières propriétés. Veuillez réessayer.");
     return [];
   }
 };
@@ -681,10 +681,10 @@ const Properties = () => {
 
   // Listing type buttons with translations
   const listingTypeButtons = [
-    { value: "sale", label: "À vendre" },
-    { value: "rent", label: "À louer" },
+    { value: "sale", label: "à€ vendre" },
+    { value: "rent", label: "à€ louer" },
     { value: "rent_by_day", label: "Location journalière" },
-    { value: "lease", label: "Bail à céder" }
+    { value: "lease", label: "Bail à  céder" }
   ];
 
   const handleListingTypeChange = (value: ListingType) => {
@@ -1159,7 +1159,7 @@ const Properties = () => {
       );
     }
 
-    // Appliquer le tri final avant de mettre à jour l'état
+    // Appliquer le tri final avant de mettre à  jour l'état
     const sortedProperties = sortProperties(filtered);
     setFilteredProperties(sortedProperties);
 
@@ -1322,7 +1322,7 @@ const Properties = () => {
 
   const heatingOptions = [
     { id: "central", label: "Central" },
-    { id: "electric", label: "Électrique" },
+    { id: "electric", label: "à‰lectrique" },
     { id: "gas", label: "Gaz" },
     { id: "wood", label: "Bois" },
   ];
@@ -1439,7 +1439,7 @@ const Properties = () => {
           checked={features.hasCableTV}
           onCheckedChange={() => handleFeatureChange("hasCableTV")}
         />
-        <label htmlFor={`${prefix}cable-tv`} className="text-sm">{"Télévision par câble"}</label>
+        <label htmlFor={`${prefix}cable-tv`} className="text-sm">{"Télévision par cà¢ble"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1495,7 +1495,7 @@ const Properties = () => {
           checked={features.hasGasStove}
           onCheckedChange={() => handleFeatureChange("hasGasStove")}
         />
-        <label htmlFor={`${prefix}gas-stove`} className="text-sm">{"Cuisinière à gaz"}</label>
+        <label htmlFor={`${prefix}gas-stove`} className="text-sm">{"Cuisinière à  gaz"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1519,7 +1519,7 @@ const Properties = () => {
           checked={features.hasInductionOven}
           onCheckedChange={() => handleFeatureChange("hasInductionOven")}
         />
-        <label htmlFor={`${prefix}induction-oven`} className="text-sm">{"Four à induction"}</label>
+        <label htmlFor={`${prefix}induction-oven`} className="text-sm">{"Four à  induction"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1543,7 +1543,7 @@ const Properties = () => {
           checked={features.hasCoffeeMachine}
           onCheckedChange={() => handleFeatureChange("hasCoffeeMachine")}
         />
-        <label htmlFor={`${prefix}coffee-machine`} className="text-sm">{"Machine à café"}</label>
+        <label htmlFor={`${prefix}coffee-machine`} className="text-sm">{"Machine à  café"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1615,7 +1615,7 @@ const Properties = () => {
           checked={features.hasIron}
           onCheckedChange={() => handleFeatureChange("hasIron")}
         />
-        <label htmlFor={`${prefix}iron`} className="text-sm">{"Fer à repasser"}</label>
+        <label htmlFor={`${prefix}iron`} className="text-sm">{"Fer à  repasser"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1639,7 +1639,7 @@ const Properties = () => {
           checked={features.hasEvacuationLadder}
           onCheckedChange={() => handleFeatureChange("hasEvacuationLadder")}
         />
-        <label htmlFor={`${prefix}evacuation-ladder`} className="text-sm">{"Échelle d'évacuation"}</label>
+        <label htmlFor={`${prefix}evacuation-ladder`} className="text-sm">{"à‰chelle d'évacuation"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1716,7 +1716,7 @@ const Properties = () => {
           checked={features.nearSchool}
           onCheckedChange={() => handleFeatureChange("nearSchool")}
         />
-        <label htmlFor={`${prefix}school`} className="text-sm">{"École"}</label>
+        <label htmlFor={`${prefix}school`} className="text-sm">{"à‰cole"}</label>
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -1938,7 +1938,7 @@ const Properties = () => {
                       onChange={(e) => setMinPrice(Number(e.target.value))}
                       className="w-24 border rounded px-2 py-1 text-sm"
                     />
-                    <span>€</span>
+                    <span>â‚¬</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <input
@@ -1947,16 +1947,16 @@ const Properties = () => {
                       onChange={(e) => setMaxPrice(Number(e.target.value))}
                       className="w-24 border rounded px-2 py-1 text-sm"
                     />
-                    <span>€</span>
+                    <span>â‚¬</span>
                   </div>
                 </div>
               </div>
 
               
 
-              {/* Surface (m²) */}
+              {/* Surface (mÂ²) */}
               <div className="space-y-3">
-                <h3 className="font-medium">{"Surface (m²)"}</h3>
+                <h3 className="font-medium">{"Surface (mÂ²)"}</h3>
                 <div className="px-2">
                   <Slider
                     value={[minM2, maxM2]}
@@ -1977,9 +1977,9 @@ const Properties = () => {
                       onBlur={handleM2Blur}
                       className="w-20 border rounded px-2 py-1 text-sm"
                     />
-                    <span className="text-sm">m²</span>
+                    <span className="text-sm">mÂ²</span>
                   </div>
-                  <span className="text-sm">{"à"}</span>
+                  <span className="text-sm">{"à "}</span>
                   <div className="flex items-center gap-1">
                     <input
                       type="text"
@@ -1988,7 +1988,7 @@ const Properties = () => {
                       onBlur={handleM2Blur}
                       className="w-20 border rounded px-2 py-1 text-sm"
                     />
-                    <span className="text-sm">m²</span>
+                    <span className="text-sm">mÂ²</span>
                   </div>
                 </div>
               </div>
@@ -2031,7 +2031,7 @@ const Properties = () => {
 
               {/* Property Condition */}
               <div className="space-y-3">
-                <h3 className="font-medium">{"État de la propriété"}</h3>
+                <h3 className="font-medium">{"à‰tat de la propriété"}</h3>
                 {renderConditionFilter("mobile-")}
               </div>
 
@@ -2043,7 +2043,7 @@ const Properties = () => {
 
               {/* Nearby */}
               <div className="space-y-3">
-                <h3 className="font-medium">{"À proximité"}</h3>
+                <h3 className="font-medium">{"à€ proximité"}</h3>
                 {renderNearbyFilter("mobile-")}
               </div>
 
@@ -2180,15 +2180,15 @@ const Properties = () => {
                     <input type="number" value={minPrice} onChange={(e) => setMinPrice(Number(e.target.value))} className="w-24 border rounded px-2 py-1" />
                     <span>-</span>
                     <input type="number" value={maxPrice} onChange={(e) => setMaxPrice(Number(e.target.value))} className="w-24 border rounded px-2 py-1" />
-                    <span>€</span>
+                    <span>â‚¬</span>
                   </div>
           </div>
 
           <hr />
 
-          {/* Surface (m²) */}
+          {/* Surface (mÂ²) */}
           <div className="space-y-3">
-            <h4 className="font-medium">{"Surface (m²)"}</h4>
+            <h4 className="font-medium">{"Surface (mÂ²)"}</h4>
             <div className="px-2">
               <Slider
                 value={[minM2, maxM2]}
@@ -2209,9 +2209,9 @@ const Properties = () => {
                   onBlur={handleM2Blur}
                   className="w-20 border rounded px-2 py-1 text-sm"
                 />
-                <span className="text-sm">m²</span>
+                <span className="text-sm">mÂ²</span>
               </div>
-              <span className="text-sm">{"à"}</span>
+              <span className="text-sm">{"à "}</span>
               <div className="flex items-center gap-1">
                 <input
                   type="text"
@@ -2220,7 +2220,7 @@ const Properties = () => {
                   onBlur={handleM2Blur}
                   className="w-20 border rounded px-2 py-1 text-sm"
                 />
-                <span className="text-sm">m²</span>
+                <span className="text-sm">mÂ²</span>
               </div>
             </div>
           </div>
@@ -2269,7 +2269,7 @@ const Properties = () => {
 
           {/* Property Condition */}
           <div className="space-y-3">
-            <h4 className="font-medium">{"État de la propriété"}</h4>
+            <h4 className="font-medium">{"à‰tat de la propriété"}</h4>
             {renderConditionFilter()}
           </div>
 
@@ -2285,7 +2285,7 @@ const Properties = () => {
 
           {/* Nearby */}
           <div className="space-y-3">
-            <h4 className="font-medium">{"À proximité"}</h4>
+            <h4 className="font-medium">{"à€ proximité"}</h4>
             {renderNearbyFilter()}
           </div>
 
@@ -2457,3 +2457,4 @@ const Properties = () => {
 };
 
 export default Properties;
+

@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Carousel,
   CarouselContent,
@@ -7,10 +10,15 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { MapPin, Euro } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
 
 const Hero = () => {
   const navigate = useNavigate();
+  const [city, setCity] = useState("");
+  const [type, setType] = useState<string>("all");
+  const [minPrice, setMinPrice] = useState<string>("");
+  const [maxPrice, setMaxPrice] = useState<string>("");
 
   const carouselImages = Array.from(
     { length: 14 },
@@ -34,8 +42,7 @@ const Hero = () => {
         <CarouselContent className="h-full">
           {carouselImages.map((src, index) => (
             <CarouselItem key={index} className="h-full">
-              {/* Ensure the CarouselItem itself and this immediate child div correctly propagate height */}
-              <div className="h-full"> 
+              <div className="h-full">
                 <img
                   src={src}
                   alt={`Image du carrousel ${index + 1}`}
@@ -45,26 +52,91 @@ const Hero = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <div className="absolute inset-0 bg-black opacity-30"></div> {/* Overlay */}
+        <div className="absolute inset-0 bg-black opacity-30"></div>
       </Carousel>
 
       <div className="container relative z-10">
         <div className="text-center text-white max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Trouvez la maison de vos rêves
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+            Trouvez votre bien idéal
           </h1>
           <p className="text-lg md:text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-            Nous vous aidons à trouver la maison de vos rêves. Parcourez notre catalogue de propriétés et trouvez celle qui vous convient le mieux.
+            Recherchez parmi les annonces de vente et de location dans votre ville.
           </p>
 
-          {/* Add Listing Button */}
-          <div className="max-w-md mx-auto">
+          <div className="mx-auto max-w-5xl">
+            <form
+              className="bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/60 p-3 md:p-4 flex flex-col md:flex-row gap-3 md:gap-2 items-stretch"
+              onSubmit={(e) => {
+                e.preventDefault();
+                const params = new URLSearchParams();
+                if (city) params.set("city", city);
+                if (type && type !== "all") params.set("type", type);
+                if (minPrice) params.set("minPrice", minPrice);
+                if (maxPrice) params.set("maxPrice", maxPrice);
+                navigate(`/properties?${params.toString()}`);
+              }}
+            >
+              <div className="flex-1 flex items-center gap-2 bg-white rounded-xl border border-estate-neutral-200 px-3">
+                <MapPin className="text-estate-neutral-500" size={18} />
+                <Input
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  placeholder="Ville, quartier..."
+                  className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                />
+              </div>
+              <div className="w-full md:w-48">
+                <Select value={type} onValueChange={setType}>
+                  <SelectTrigger className="w-full bg-white rounded-xl border-estate-neutral-200">
+                    <SelectValue placeholder="Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Tous les types</SelectItem>
+                    <SelectItem value="house">Maison</SelectItem>
+                    <SelectItem value="apartment">Appartement</SelectItem>
+                    <SelectItem value="land">Terrain</SelectItem>
+                    <SelectItem value="commercial">Commerce</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex-1 grid grid-cols-2 gap-2">
+                <div className="flex items-center gap-2 bg-white rounded-xl border border-estate-neutral-200 px-3">
+                  <Euro className="text-estate-neutral-500" size={18} />
+                  <Input
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(e.target.value.replace(/\D/g, ""))}
+                    placeholder="Prix min"
+                    className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                  />
+                </div>
+                <div className="flex items-center gap-2 bg-white rounded-xl border border-estate-neutral-200 px-3">
+                  <Euro className="text-estate-neutral-500" size={18} />
+                  <Input
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(e.target.value.replace(/\D/g, ""))}
+                    placeholder="Prix max"
+                    className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                  />
+                </div>
+              </div>
+              <Button type="submit" className="bg-teal-500 hover:bg-teal-600 rounded-xl px-6 md:px-8">
+                Rechercher
+              </Button>
+            </form>
+          </div>
+
+          <div className="max-w-md mx-auto mt-6">
             <Button
               onClick={() => navigate("/sell")}
-              className="bg-teal-500 hover:bg-teal-600 text-white px-8 py-6 text-lg md:text-xl rounded-lg font-bold w-full"
+              className="bg-white text-estate-800 hover:bg-estate-neutral-100 px-8 py-6 text-lg md:text-xl rounded-xl font-semibold w-full"
               size="lg"
             >
-              Publier une annonce
+              Déposer une annonce
             </Button>
           </div>
         </div>
@@ -74,3 +146,4 @@ const Hero = () => {
 };
 
 export default Hero;
+

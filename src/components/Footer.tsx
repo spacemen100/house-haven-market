@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-estate-800 text-white relative z-20">
+    <footer className="bg-estate-800 text-white relative z-20 border-t border-estate-700">
       <div className="container py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Company Info */}
@@ -45,7 +45,7 @@ const Footer = () => {
                 <Link to="/sell" className="text-estate-neutral-200 hover:text-teal-500">Vendre / Annoncer</Link>
               </li>
               <li>
-                <Link to="/properties?type=rent_by_day" className="text-estate-neutral-200 hover:text-teal-500">Location à la journée</Link>
+                <Link to="/properties?type=rent_by_day" className="text-estate-neutral-200 hover:text-teal-500">Location à  la journée</Link>
               </li>
             </ul>
           </div>
@@ -57,7 +57,7 @@ const Footer = () => {
 
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-estate-neutral-300 text-sm">
-            © 2025 Annonces Immobilières Région Lyonnaise. Tous droits réservés.
+            Â© 2025 Annonces Immobilières Région Lyonnaise. Tous droits réservés.
           </p>
           <div className="flex gap-6 mt-4 md:mt-0">
             <Link to="/privacy" className="text-estate-neutral-300 hover:text-teal-500 text-sm">
@@ -77,3 +77,7 @@ const Footer = () => {
 };
 
 export default Footer;
+
+
+
+
