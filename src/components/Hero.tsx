@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Autocomplete from "@/components/Autocomplete";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Carousel,
@@ -79,16 +80,22 @@ const Hero = () => {
             >
               <div className="flex-1 flex items-center gap-2 bg-white rounded-xl border border-estate-neutral-200 px-3">
                 <MapPin className="text-estate-neutral-500" size={18} />
-                <Input
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  placeholder="Ville, quartier..."
-                  className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                />
+                <div className="flex-1">
+                  <Autocomplete
+                    label=""
+                    placeholder="Ville, quartier..."
+                    value={city}
+                    onChange={setCity}
+                    onPlaceChanged={(place) => {
+                      const description = place?.formattedAddress || place?.formatted_address || place?.displayName || "";
+                      if (description) setCity(description);
+                    }}
+                  />
+                </div>
               </div>
               <div className="w-full md:w-48">
                 <Select value={type} onValueChange={setType}>
-                  <SelectTrigger className="w-full bg-white rounded-xl border-estate-neutral-200">
+                  <SelectTrigger className="w-full bg-white rounded-xl border-estate-neutral-200 text-estate-800">
                     <SelectValue placeholder="Type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -109,7 +116,7 @@ const Hero = () => {
                     value={minPrice}
                     onChange={(e) => setMinPrice(e.target.value.replace(/\D/g, ""))}
                     placeholder="Prix min"
-                    className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                    className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-estate-800 placeholder:text-estate-neutral-400"
                   />
                 </div>
                 <div className="flex items-center gap-2 bg-white rounded-xl border border-estate-neutral-200 px-3">
@@ -120,7 +127,7 @@ const Hero = () => {
                     value={maxPrice}
                     onChange={(e) => setMaxPrice(e.target.value.replace(/\D/g, ""))}
                     placeholder="Prix max"
-                    className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                    className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-estate-800 placeholder:text-estate-neutral-400"
                   />
                 </div>
               </div>
@@ -146,4 +153,3 @@ const Hero = () => {
 };
 
 export default Hero;
-

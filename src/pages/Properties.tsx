@@ -681,8 +681,8 @@ const Properties = () => {
 
   // Listing type buttons with translations
   const listingTypeButtons = [
-    { value: "sale", label: "à€ vendre" },
-    { value: "rent", label: "à€ louer" },
+    { value: "sale", label: "A vendre" },
+    { value: "rent", label: "A louer" },
     { value: "rent_by_day", label: "Location journalière" },
     { value: "lease", label: "Bail à  céder" }
   ];
@@ -2043,7 +2043,7 @@ const Properties = () => {
 
               {/* Nearby */}
               <div className="space-y-3">
-                <h3 className="font-medium">{"à€ proximité"}</h3>
+                <h3 className="font-medium">{"A proximité"}</h3>
                 {renderNearbyFilter("mobile-")}
               </div>
 
@@ -2285,7 +2285,7 @@ const Properties = () => {
 
           {/* Nearby */}
           <div className="space-y-3">
-            <h4 className="font-medium">{"à€ proximité"}</h4>
+            <h4 className="font-medium">{"A proximité"}</h4>
             {renderNearbyFilter()}
           </div>
 

@@ -62,7 +62,7 @@ const AddPropertyStep4 = ({
   const totalImages = existingImageUrls.length + newImageFiles.length;
 
   useEffect(() => {
-    const imgs = initialData.images as any;
+    const imgs = (initialData?.images as any) || null;
     if (imgs) {
       const urls = Array.isArray(imgs) ? imgs : typeof imgs === 'string' ? [imgs] : [];
       if (urls.length > 0) {
@@ -70,7 +70,7 @@ const AddPropertyStep4 = ({
         setPreviewUrls(urls as string[]);
       }
     }
-  }, [initialData.images]);
+  }, [initialData]);
 
   const form = useForm<AddressFormValues>({
     resolver: zodResolver(addressSchema),

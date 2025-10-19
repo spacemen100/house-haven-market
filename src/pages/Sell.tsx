@@ -123,11 +123,12 @@ const SellPage = () => {
     }
   };
 
-  const handleFinalSubmit = async () => {
+  const handleFinalSubmit = async (data?: Partial<CreatePropertyInput> & { existingImageUrls?: string[], removedImageUrls?: string[] }) => {
     try {
       setIsSubmitting(true);
       const finalData = {
         ...formData,
+        ...(data || {}),
         instagramHandle: formData.instagramHandle,
         facebookUrl: formData.facebookUrl,
         twitterHandle: formData.twitterHandle,
@@ -278,9 +279,9 @@ const SellPage = () => {
                   {step === 6 && (
                     <AddPropertyStep4
                       onBack={() => setStep(5)}
-                      formData={formData}
+                      initialData={formData}
                       isSubmitting={isSubmitting}
-                      onSubmit={handleFinalSubmit}
+                      onNext={(data) => handleFinalSubmit(data)}
                     />
                   )}
                 </CardContent>

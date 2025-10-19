@@ -1,11 +1,12 @@
 import React, { useRef, useEffect } from 'react';
+import { Loader } from '@googlemaps/js-api-loader';
 
 interface AutocompleteProps {
   onPlaceChanged: (place: any) => void;
   value: string;
   onChange: (value: string) => void;
-  placeholder: string;
-  label: string;
+  placeholder?: string;
+  label?: string;
 }
 
 const Autocomplete = ({ onPlaceChanged, value, onChange, placeholder, label }: AutocompleteProps) => {
@@ -13,32 +14,55 @@ const Autocomplete = ({ onPlaceChanged, value, onChange, placeholder, label }: A
   const autocompleteRef = useRef<any>(null);
 
   useEffect(() => {
-    if (inputRef.current) {
-      const autocomplete = new (window as any).google.maps.places.PlaceAutocompleteElement({
-        inputElement: inputRef.current,
-        componentRestrictions: { country: ["fr", "de", "es", "it", "gb"] },
+    let placeListener: any;
+    let autocomplete: any;
+    const init = async () => {
+      if (!inputRef.current) return;
+
+      if (!(window as any).google?.maps?.places) {
+        const loader = new Loader({
+          apiKey: "AIzaSyAjAs9O5AqVbaCZth-QDJm4KJfoq2ZzgUI",
+          version: "weekly",
+          libraries: ["places"],
+        });
+        await loader.load();
+      }
+
+      const google = (window as any).google;
+      autocomplete = new google.maps.places.Autocomplete(inputRef.current, {
         types: ["address"],
+        componentRestrictions: { country: ["fr", "be", "ch", "mc", "ad"] },
+        fields: ["formatted_address", "geometry", "address_components", "name"],
       });
 
-      autocomplete.addEventListener("gmp-placeselect", (event: any) => {
-        const { place } = event.detail;
+      placeListener = autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
         onPlaceChanged(place);
       });
 
       autocompleteRef.current = autocomplete;
-    }
+    };
+
+    init();
+
+    return () => {
+      if (placeListener) placeListener.remove();
+    };
   }, [onPlaceChanged]);
 
   return (
     <div>
-      <label htmlFor={label}>{label}</label>
+      {label ? (
+        <label htmlFor="address-autocomplete" className="sr-only">{label}</label>
+      ) : null}
       <input
+        id="address-autocomplete"
         ref={inputRef}
         type="text"
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        className="flex h-10 w-full rounded-md border border-estate-neutral-200 bg-white px-3 py-2 text-sm text-estate-800 placeholder:text-estate-neutral-400 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
       />
     </div>
   );

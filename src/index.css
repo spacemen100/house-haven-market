@@ -87,4 +87,9 @@
   input[type=number] {
     -moz-appearance: textfield;
   }
+
+  /* Ensure Google Places dropdown displays above overlays */
+  .pac-container {
+    z-index: 100000 !important;
+  }
 }
