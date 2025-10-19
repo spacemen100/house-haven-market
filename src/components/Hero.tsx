@@ -38,7 +38,7 @@ const Hero = () => {
               <div className="h-full"> 
                 <img
                   src={src}
-                  alt={`Carousel image ${index + 1}`}
+                  alt={`Image du carrousel ${index + 1}`}
                   className="w-full h-full object-cover"
                 />
               </div>

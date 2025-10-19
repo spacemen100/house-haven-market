@@ -218,7 +218,7 @@ const MovingServices: React.FC = () => {
                           <Input id="lastName" value={formData.lastName} onChange={(e) => handleInputChange('lastName', e.target.value)} />
                       </div>
                       <div className="space-y-2">
-                          <Label htmlFor="email">Email</Label>
+                          <Label htmlFor="email">E-mail</Label>
                           <Input id="email" type="email" value={formData.email} onChange={(e) => handleInputChange('email', e.target.value)} />
                       </div>
                       <div className="space-y-2">
@@ -231,7 +231,7 @@ const MovingServices: React.FC = () => {
                       </div>
                       <div className="space-y-2">
                           <Label htmlFor="volume">Volume (m³)</Label>
-                          <Input id="volume" type="number" value={formData.volume} onChange={(e) => handleInputChange('volume', e.target.value)} placeholder="e.g., 20" />
+                          <Input id="volume" type="number" value={formData.volume} onChange={(e) => handleInputChange('volume', e.target.value)} placeholder="ex. 20" />
                       </div>
                       <div className="space-y-2">
                           <Label htmlFor="formula">Formule</Label>

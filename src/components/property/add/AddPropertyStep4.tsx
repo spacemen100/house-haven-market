@@ -40,13 +40,17 @@ interface AddPropertyStep4Props {
   initialData: Partial<CreatePropertyInput>;
   isSubmitting: boolean;
   onNext: (data: Partial<CreatePropertyInput> & { existingImageUrls: string[], removedImageUrls: string[] }) => void;
+  submitLabel?: string;
+  submittingLabel?: string;
 }
 
 const AddPropertyStep4 = ({
   onBack,
   initialData,
   isSubmitting,
-  onNext
+  onNext,
+  submitLabel = "Publier l'annonce",
+  submittingLabel = "Publication..."
 }: AddPropertyStep4Props) => {
   const [newImageFiles, setNewImageFiles] = useState<File[]>([]);
   const [existingImageUrls, setExistingImageUrls] = useState<string[]>([]);
@@ -58,9 +62,13 @@ const AddPropertyStep4 = ({
   const totalImages = existingImageUrls.length + newImageFiles.length;
 
   useEffect(() => {
-    if (initialData.images && initialData.images.length > 0) {
-      setExistingImageUrls(initialData.images as string[]);
-      setPreviewUrls(initialData.images as string[]);
+    const imgs = initialData.images as any;
+    if (imgs) {
+      const urls = Array.isArray(imgs) ? imgs : typeof imgs === 'string' ? [imgs] : [];
+      if (urls.length > 0) {
+        setExistingImageUrls(urls as string[]);
+        setPreviewUrls(urls as string[]);
+      }
     }
   }, [initialData.images]);
 
@@ -287,10 +295,10 @@ const AddPropertyStep4 = ({
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> {"Publication..."}
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> {submittingLabel}
               </>
             ) : (
-              "Publier l'annonce"
+              submitLabel
             )}
           </Button>
         </div>

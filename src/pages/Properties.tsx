@@ -633,7 +633,7 @@ export const getNewestProperties = async (): Promise<Property[]> => {
 
     if (error) throw error;
 
-    console.log('Raw properties data:', properties);
+    // données brutes supprimées des logs en production
 
     return properties.map(transformProperty);
   } catch (error) {
@@ -832,7 +832,7 @@ const Properties = () => {
           setUserLikedProperties([]); // No user logged in
         }
       } catch (error) {
-        console.error("Error fetching user profile for liked properties:", error);
+        console.error("Erreur lors de la récupération du profil utilisateur pour les favoris:", error);
         setUserLikedProperties([]); // Error case
       }
     };

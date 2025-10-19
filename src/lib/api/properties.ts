@@ -319,7 +319,7 @@ export const createProperty = async (input: CreatePropertyInput) => {
     toast.success("Annonce immobilière créée avec succès !");
     return property;
   } catch (error) {
-    console.error('Error creating property:', error);
+    console.error("Erreur lors de la création de l'annonce:", error);
     toast.error("Échec de la création de l'annonce immobilière. Veuillez réessayer.");
     throw error;
   }
@@ -351,7 +351,7 @@ export const getProperties = async (type?: 'sale' | 'rent' | 'rent_by_day' | 'le
     if (error) throw error;
     return properties.map(transformProperty);
   } catch (error) {
-    console.error('Error fetching properties:', error);
+    console.error('Erreur lors de la récupération des propriétés:', error);
     toast.error("Échec de la récupération des propriétés. Veuillez réessayer.");
     return [];
   }
@@ -381,7 +381,7 @@ export const getFeaturedProperties = async (): Promise<Property[]> => {
     if (error) throw error;
     return properties.map(transformProperty);
   } catch (error) {
-    console.error('Error fetching featured properties:', error);
+    console.error('Erreur lors de la récupération des propriétés en vedette:', error);
     toast.error("Échec de la récupération des propriétés en vedette. Veuillez réessayer.");
     return [];
   }
@@ -411,7 +411,7 @@ export const getMyProperties = async (): Promise<Property[]> => {
     if (error) throw error;
     return properties.map(transformProperty);
   } catch (error) {
-    console.error('Error fetching user properties:', error);
+    console.error('Erreur lors de la récupération des propriétés utilisateur:', error);
     toast.error("Échec de la récupération de vos propriétés. Veuillez réessayer.");
     return [];
   }
@@ -448,7 +448,7 @@ export const deleteProperty = async (propertyId: string) => {
     toast.success("Propriété supprimée avec succès");
     return true;
   } catch (error) {
-    console.error('Error deleting property:', error);
+    console.error('Erreur lors de la suppression de la propriété:', error);
     toast.error("Échec de la suppression de la propriété");
     return false;
   }
@@ -457,9 +457,27 @@ export const deleteProperty = async (propertyId: string) => {
 export const updateProperty = async (propertyId: string, input: Partial<CreatePropertyInput>) => {
   try {
     const { data: { user }, error: userError } = await supabase.auth.getUser();
-    if (userError || !user) throw new Error("User not authenticated");
+    if (userError || !user) throw new Error("Utilisateur non authentifié");
 
-    const { error: propertyError } = await supabase
+    // 1) Vérifier la propriété et son propriétaire
+    const { data: existing, error: fetchErr } = await supabase
+      .from('properties')
+      .select('id, user_id')
+      .eq('id', propertyId)
+      .single();
+
+    if (fetchErr || !existing) {
+      throw new Error('Annonce introuvable pour mise à jour.');
+    }
+
+    const matchByUser = !!existing.user_id && existing.user_id === user.id;
+    const isOrphan = !existing.user_id;
+    if (!!existing.user_id && existing.user_id !== user.id) {
+      throw new Error("Vous ne pouvez pas modifier cette annonce (propriétaire différent).");
+    }
+
+    // 2) Construire et exécuter l'UPDATE
+    let updateQuery = supabase
       .from('properties')
       .update({
         title: input.title,
@@ -544,10 +562,16 @@ export const updateProperty = async (propertyId: string, input: Partial<CreatePr
         allows_parties: input.allows_parties,
         allows_smoking: input.allows_smoking,
         parking_type: input.parking_type,
+        user_id: isOrphan ? user.id : existing.user_id,
+        updated_at: new Date().toISOString(),
       })
-      .eq('id', propertyId)
-      .eq('user_id', user.id);
+      .eq('id', propertyId);
 
+    if (matchByUser) {
+      updateQuery = updateQuery.eq('user_id', user.id);
+    }
+
+    const { error: propertyError } = await updateQuery;
     if (propertyError) throw propertyError;
 
     // Handle related tables (amenities, equipment, etc.)
@@ -581,9 +605,9 @@ export const updateProperty = async (propertyId: string, input: Partial<CreatePr
       await Promise.all(deletePromises);
     }
 
-    // 2. Upload new images
-    if (input.images && input.images.length > 0) {
-      const imageUploadPromises = input.images.map(async (file) => {
+    // 2. Upload des nouvelles images (si ce sont bien des fichiers)
+    if (Array.isArray(input.images) && input.images.length > 0 && typeof (input.images as any)[0] !== 'string') {
+      const imageUploadPromises = (input.images as File[]).map(async (file) => {
         const fileExt = file.name.split('.').pop();
         const fileName = `${Math.random()}.${fileExt}`;
         const filePath = `${propertyId}/${fileName}`;
@@ -613,7 +637,7 @@ export const updateProperty = async (propertyId: string, input: Partial<CreatePr
     toast.success("Annonce immobilière mise à jour avec succès !");
     return true;
   } catch (error) {
-    console.error('Error updating property:', error);
+    console.error("Erreur lors de la mise à jour de l'annonce:", error);
     toast.error("Échec de la mise à jour de l'annonce immobilière. Veuillez réessayer.");
     throw error;
   }
@@ -662,8 +686,8 @@ export const getNewestProperties = async (): Promise<Property[]> => {
 
     return properties.map(transformProperty);
   } catch (error) {
-    console.error('Error fetching newest properties:', error);
-    toast.error("Failed to fetch newest properties. Please try again.");
+    console.error('Erreur lors de la récupération des dernières propriétés:', error);
+    toast.error("Échec de la récupération des dernières annonces. Veuillez réessayer.");
     return [];
   }
 };
@@ -691,7 +715,7 @@ export const getPropertyById = async (id: string): Promise<Property | null> => {
 
     return transformProperty(property);
   } catch (error) {
-    console.error('Error fetching property by ID:', error);
+    console.error('Erreur lors de la récupération de la propriété par ID:', error);
     toast.error("Échec de la récupération des détails de la propriété. Veuillez réessayer.");
     return null;
   }

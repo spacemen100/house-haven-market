@@ -7,8 +7,6 @@ interface StepsIndicatorProps {
 }
 
 const StepsIndicator = ({ currentStep, steps }: StepsIndicatorProps) => {
-  console.log('Rendering StepsIndicator with currentStep:', currentStep, 'and steps:', steps); // Ajoutez un log pour vérifier les props
-
   return (
     <div className="flex justify-between items-center max-w-3xl mx-auto">
       {steps.map((step, index) => (

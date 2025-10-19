@@ -6,21 +6,22 @@ import { Button } from "@/components/ui/button";
 const categories = [
   {
     title: "Acheter une maison",
-    description: "Find your place with an immersive photo experience and the most listings, including things you won't find anywhere else.",
+    description: "Trouvez votre chez‑vous avec une expérience photo immersive et le plus grand choix d’annonces, y compris des biens introuvables ailleurs.",
     icon: <Home size={24} className="text-teal-500" />,
     link: "/properties?type=sale",
     image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=2946&ixlib=rb-4.0.3"
   },
   {
     title: "Louer une maison",
-    description: "We're creating a seamless online experience – from shopping on the largest rental network, to applying, to paying rent.",
+    description: "Nous offrons une expérience en ligne fluide — de la recherche sur le plus grand réseau de locations jusqu’à la candidature et au paiement du loyer.",
     icon: <Building size={24} className="text-teal-500" />,
     link: "/properties?type=rent",
     image: "https://images.unsplash.com/photo-1594484208019-b7d33c577659?auto=format&fit=crop&q=80&w=2970&ixlib=rb-4.0.3"
   },
   {
-    title: "Sell Your Property",
-          description: "Quel que soit le chemin que vous empruntez pour vendre votre maison, nous pouvons vous aider à naviguer vers une vente réussie.",    icon: <MapPin size={24} className="text-teal-500" />,
+    title: "Vendre votre bien",
+    description: "Quel que soit le chemin que vous empruntez pour vendre, nous vous aidons à concrétiser votre vente avec succès.",
+    icon: <MapPin size={24} className="text-teal-500" />,
     link: "/sell",
     image: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&q=80&w=2960&ixlib=rb-4.0.3"
   }
@@ -32,10 +33,10 @@ const CategorySection = () => {
       <div className="container">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-estate-800 mb-4">
-            How Can We Help You?
+            Comment pouvons‑nous vous aider ?
           </h2>
           <p className="text-lg text-estate-neutral-700 max-w-3xl mx-auto">
-            We provide a complete service for the sale, purchase, or rental of real estate.
+            Nous proposons un service complet pour la vente, l’achat et la location de biens immobiliers.
           </p>
         </div>
 
@@ -60,7 +61,7 @@ const CategorySection = () => {
                 <p className="text-estate-neutral-600 mb-4">{category.description}</p>
                 <Link to={category.link}>
                   <Button variant="outline" className="flex items-center gap-2 border-estate-800 text-estate-800 hover:bg-estate-800 hover:text-white">
-                    <span>Learn More</span>
+                    <span>En savoir plus</span>
                     <ArrowRight size={16} />
                   </Button>
                 </Link>

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import MissingImagePlaceholder from "@/components/ui/MissingImagePlaceholder"; // Added import
 import { useCurrency } from "@/CurrencyContext";
 import { format, parseISO } from "date-fns";
+import { fr } from "date-fns/locale";
 
 import { Button } from "@/components/ui/button"; // Added import
 
@@ -23,10 +24,10 @@ const PropertyCard = ({ property, isEditable, onEdit, onDelete }: PropertyCardPr
   const getFormattedDate = () => {
     try {
       if (typeof property.created_at === 'string') {
-        return format(parseISO(property.created_at), 'MMM d, yyyy');
+        return format(parseISO(property.created_at), 'd MMM yyyy', { locale: fr });
       }
       if (property.created_at instanceof Date) {
-        return format(property.created_at, 'MMM d, yyyy');
+        return format(property.created_at, 'd MMM yyyy', { locale: fr });
       }
       return "Date non disponible";
     } catch (error) {
@@ -77,7 +78,7 @@ const PropertyCard = ({ property, isEditable, onEdit, onDelete }: PropertyCardPr
           <div className="flex justify-between items-center mb-2">
             <p className="text-lg font-bold text-estate-800">
               {property.listing_type === "rent"
-                ? `${formatPrice(property.price)}/month`
+                ? `${formatPrice(property.price)}/mois`
                 : formatPrice(property.price)}
             </p>
             <div className="flex items-center text-sm text-estate-neutral-500">
@@ -115,12 +116,14 @@ const PropertyCard = ({ property, isEditable, onEdit, onDelete }: PropertyCardPr
           <div className="p-4 flex justify-end gap-2 border-t border-estate-neutral-100">
             <Button variant="outline" size="sm" onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               onEdit?.(property.id);
             }}>
               Modifier
             </Button>
             <Button variant="destructive" size="sm" onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               onDelete?.(property.id);
             }}>
               Supprimer

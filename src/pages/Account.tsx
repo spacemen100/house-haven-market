@@ -52,7 +52,7 @@ const Account = () => {
     },
     onError: (error) => {
       toast.error("Échec de la suppression de la propriété");
-      console.error("Error deleting property:", error);
+      console.error("Erreur lors de la suppression de la propriété:", error);
     },
   });
 

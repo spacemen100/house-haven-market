@@ -12,25 +12,13 @@ const NewestProperties = () => {
   const navigate = useNavigate();
   const [visiblePropertiesCount, setVisiblePropertiesCount] = useState(6);
 
-  console.log("Initializing NewestProperties component");
-
   const { data: properties = [], isLoading, error } = useQuery({
     queryKey: ['newest-properties'],
     queryFn: getNewestProperties,
   });
 
   // Debug logs
-  useEffect(() => {
-    console.log("Query state:", { isLoading, error });
-    console.log("Properties data received:", properties);
-    if (properties.length > 0) {
-      console.log("First property details:", {
-        beds: properties[0]?.beds,
-        baths: properties[0]?.baths,
-        m2: properties[0]?.m2 // Changé de sqft à m2
-      });
-    }
-  }, [properties, isLoading, error]);
+  useEffect(() => {}, [properties, isLoading, error]);
 
   return (
     <section className="py-12 bg-estate-neutral-50">

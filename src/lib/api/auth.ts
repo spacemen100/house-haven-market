@@ -19,7 +19,7 @@ export const signInWithEmail = async (email: string, password: string) => {
     toast.success("Connexion réussie");
     return true;
   } catch (error) {
-    console.error("Error signing in:", error);
+    console.error("Erreur lors de la connexion:", error);
     return false;
   }
 };
@@ -76,7 +76,7 @@ export const signUpWithEmail = async (
     toast.success("Inscription réussie ! Vérifiez votre email pour confirmer votre compte.");
     return true;
   } catch (error) {
-    console.error("Error signing up:", error);
+    console.error("Erreur lors de l'inscription:", error);
     
     let errorMessage = "Échec de l'inscription";
     if (error instanceof Error) {
@@ -103,7 +103,7 @@ export const signOut = async () => {
     toast.success("Déconnexion réussie");
     return true;
   } catch (error) {
-    console.error("Error signing out:", error);
+    console.error("Erreur lors de la déconnexion:", error);
     return false;
   }
 };
@@ -118,7 +118,7 @@ export const getCurrentUser = async () => {
     if (error) throw error;
     return user;
   } catch (error) {
-    console.error("Error retrieving user:", error);
+    console.error("Erreur lors de la récupération de l'utilisateur:", error);
     return null;
   }
 };
@@ -152,7 +152,7 @@ export const getCompleteUserProfile = async () => {
       }
     };
   } catch (error) {
-    console.error("Error fetching user profile:", error);
+    console.error("Erreur lors de la récupération du profil utilisateur:", error);
     return null;
   }
 };
@@ -169,7 +169,7 @@ export const updateUserProfile = async (profileData: {
 }) => {
   try {
     const user = await getCurrentUser();
-    if (!user) throw new Error("User not authenticated");
+    if (!user) throw new Error("Utilisateur non authentifié");
 
     const { error } = await supabase
       .from('profiles')
@@ -184,7 +184,7 @@ export const updateUserProfile = async (profileData: {
     toast.success("Profil mis à jour avec succès");
     return true;
   } catch (error) {
-    console.error("Error updating profile:", error);
+    console.error("Erreur lors de la mise à jour du profil:", error);
     toast.error("Échec de la mise à jour du profil");
     return false;
   }

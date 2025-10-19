@@ -26,7 +26,7 @@ const EditProperty = () => {
     { number: 2, label: "Informations de base" },
     { number: 3, label: "Caractéristiques" },
     { number: 4, label: "Localisation" },
-    { number: 5, label: "Publier" }
+    { number: 5, label: "Enregistrer" }
   ];
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -39,7 +39,6 @@ const EditProperty = () => {
   });
 
   useEffect(() => {
-    console.log('Fetched property:', fetchedProperty);
     if (fetchedProperty) {
       // Transform fetchedProperty to match CreatePropertyInput structure for formData
       setFormData({
@@ -80,7 +79,7 @@ const EditProperty = () => {
         isAccessible: fetchedProperty.isAccessible,
         nearby_places: fetchedProperty.nearbyPlaces,
         online_services: fetchedProperty.onlineServices,
-        images: fetchedProperty.images, // Keep as URLs for existing images
+        images: Array.isArray(fetchedProperty.images) ? fetchedProperty.images : (fetchedProperty.images ? [fetchedProperty.images as any] : []),
         contactEmail: fetchedProperty.contactEmail,
         instagramHandle: fetchedProperty.instagramHandle,
         facebookUrl: fetchedProperty.facebookUrl,
@@ -158,15 +157,13 @@ const EditProperty = () => {
         allows_smoking: fetchedProperty.allows_smoking || false,
     });
     } else if (isError) {
-      toast.error("Failed to load property for editing.");
-      console.error("Error fetching property:", error);
+      toast.error("Impossible de charger l’annonce pour édition.");
+      console.error("Erreur lors du chargement de l'annonce:", error);
       navigate('/account'); // Redirect if property not found or error
     }
   }, [fetchedProperty, isError, error, navigate]);
 
-  useEffect(() => {
-    console.log('Form data after mapping:', formData);
-  }, [formData]);
+  useEffect(() => {}, [formData]);
 
   const updatePropertyMutation = useMutation({
     mutationFn: (data: { propertyId: string, input: Partial<CreatePropertyInput> }) =>
@@ -178,8 +175,9 @@ const EditProperty = () => {
       navigate('/account');
     },
     onError: (err) => {
-      toast.error("Échec de la mise à jour de l'annonce immobilière.");
-      console.error("Error updating property:", err);
+      const message = err instanceof Error && err.message ? err.message : "Échec de la mise à jour de l'annonce immobilière.";
+      toast.error(message);
+      console.error("Erreur lors de la mise à jour de l'annonce:", err);
     },
   });
 
@@ -200,7 +198,7 @@ const EditProperty = () => {
 
   const handleFinalSubmit = async (data: Partial<CreatePropertyInput> & { existingImageUrls?: string[], removedImageUrls?: string[] }) => {
     if (!propertyId) {
-      toast.error("Property ID is missing.");
+      toast.error("Identifiant de l’annonce manquant.");
       return;
     }
 
@@ -232,7 +230,7 @@ const EditProperty = () => {
       <div>
         <Navbar />
         <div className="container py-8 text-center">
-          <p>Property not found or an error occurred.</p>
+          <p>Annonce introuvable ou une erreur s’est produite.</p>
         </div>
         <Footer />
       </div>
@@ -265,8 +263,9 @@ const EditProperty = () => {
             <div className="max-w-3xl mx-auto">
               <Card className="shadow-md">
                 <CardContent className="p-6 md:p-8">
-                  {currentStep === 1 && (
+                  {currentStep === 1 && formData.listingType && formData.propertyType && (
                     <PropertyTypeStep
+                      key={`${formData.listingType}-${formData.propertyType}`}
                       initialData={formData}
                       onNext={handleNext}
                     />
@@ -302,6 +301,8 @@ const EditProperty = () => {
                       onBack={handleBack}
                       isSubmitting={updatePropertyMutation.isPending}
                       onNext={handleFinalSubmit}
+                      submitLabel="Enregistrer les modifications"
+                      submittingLabel="Enregistrement..."
                     />
                   )}
                 </CardContent>

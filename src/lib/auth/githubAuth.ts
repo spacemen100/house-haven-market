@@ -16,7 +16,7 @@ export const initiateGitHubLogin = () => {
     window.location.href = GITHUB_AUTH_URL;
   } catch (error) {
     toast.error("Échec de l'initialisation de la connexion GitHub");
-    console.error("GitHub login initiation error:", error);
+    console.error("Erreur lors de l'initialisation de la connexion GitHub:", error);
     throw error;
   }
 };
@@ -37,13 +37,13 @@ export const handleGitHubCallback = async (code: string): Promise<{email: string
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`Erreur HTTP ! statut: ${response.status}`);
     }
 
     const userData = await response.json();
     
     if (!userData?.email) {
-      throw new Error('No email returned from GitHub');
+      throw new Error("Aucun e-mail renvoyé par GitHub");
     }
 
     return {
@@ -53,7 +53,7 @@ export const handleGitHubCallback = async (code: string): Promise<{email: string
     };
   } catch (error) {
     toast.error("L'authentification GitHub a échoué");
-    console.error("GitHub callback error:", error);
+    console.error("Erreur de rappel GitHub:", error);
     return null;
   }
 };
