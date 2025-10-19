@@ -37,28 +37,39 @@ type AddressFormValues = z.infer<typeof addressSchema>;
 
 interface AddPropertyStep4Props {
   onBack: () => void;
-  formData: Partial<CreatePropertyInput>;
+  initialData: Partial<CreatePropertyInput>;
   isSubmitting: boolean;
-  onSubmit: () => void;
+  onNext: (data: Partial<CreatePropertyInput> & { existingImageUrls: string[], removedImageUrls: string[] }) => void;
 }
 
 const AddPropertyStep4 = ({
   onBack,
-  formData,
+  initialData,
   isSubmitting,
-  onSubmit
+  onNext
 }: AddPropertyStep4Props) => {
-  const [images, setImages] = useState<File[]>([]);
+  const [newImageFiles, setNewImageFiles] = useState<File[]>([]);
+  const [existingImageUrls, setExistingImageUrls] = useState<string[]>([]);
+  const [removedImageUrls, setRemovedImageUrls] = useState<string[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [previewDialogOpen, setPreviewDialogOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
 
+  const totalImages = existingImageUrls.length + newImageFiles.length;
+
+  useEffect(() => {
+    if (initialData.images && initialData.images.length > 0) {
+      setExistingImageUrls(initialData.images as string[]);
+      setPreviewUrls(initialData.images as string[]);
+    }
+  }, [initialData.images]);
+
   const form = useForm<AddressFormValues>({
     resolver: zodResolver(addressSchema),
     defaultValues: {
-      address: formData.address_street ? `${formData.address_street}, ${formData.address_district}, ${formData.address_city}` : "",
-      lat: formData.lat || 45.764043,
-      lng: formData.lng || 4.835659,
+      address: initialData.address_street ? `${initialData.address_street}, ${initialData.address_district}, ${initialData.address_city}` : "",
+      lat: initialData.lat || 45.764043,
+      lng: initialData.lng || 4.835659,
     },
   });
 
@@ -85,7 +96,7 @@ const AddPropertyStep4 = ({
         }
       });
       form.setValue("address", `${address.street}, ${address.district}, ${address.city}`);
-      Object.assign(formData, {
+      Object.assign(initialData, {
         address_street: address.street,
         address_city: address.city,
         address_district: address.district,
@@ -107,7 +118,7 @@ const AddPropertyStep4 = ({
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
 
-      if (images.length + filesArray.length > MAX_IMAGES) {
+      if (existingImageUrls.length + newImageFiles.length + filesArray.length > MAX_IMAGES) {
         toast.error(`Vous ne pouvez pas télécharger plus de ${MAX_IMAGES} images.`);
         return;
       }
@@ -119,26 +130,31 @@ const AddPropertyStep4 = ({
         const error = validateFile(file);
         if (error) {
           toast.error(error);
-        } else {
+        }
+        else {
           validFiles.push(file);
           validPreviewUrls.push(URL.createObjectURL(file));
         }
       });
 
-      setImages([...images, ...validFiles]);
-      setPreviewUrls([...previewUrls, ...validPreviewUrls]);
+      setNewImageFiles(prevFiles => [...prevFiles, ...validFiles]);
+      setPreviewUrls(prevUrls => [...prevUrls, ...validPreviewUrls]);
     }
   };
 
   const removeImage = (index: number) => {
-    URL.revokeObjectURL(previewUrls[index]);
-    const newPreviewUrls = [...previewUrls];
-    newPreviewUrls.splice(index, 1);
-    setPreviewUrls(newPreviewUrls);
+    const allImages = [...existingImageUrls, ...newImageFiles];
+    const removedItem = allImages[index];
 
-    const newImages = [...images];
-    newImages.splice(index, 1);
-    setImages(newImages);
+    if (typeof removedItem === 'string') { // It's an existing image URL
+      setRemovedImageUrls(prev => [...prev, removedItem]);
+      setExistingImageUrls(prev => prev.filter(url => url !== removedItem));
+    } else { // It's a new File object
+      URL.revokeObjectURL(previewUrls[index]);
+      setNewImageFiles(prev => prev.filter(file => file !== removedItem));
+    }
+
+    setPreviewUrls(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleLocationSelect = (lat: number, lng: number) => {
@@ -147,13 +163,17 @@ const AddPropertyStep4 = ({
   };
 
   const handleSubmit = (data: AddressFormValues) => {
-    Object.assign(formData, {
-      images,
+    const updatedData = {
       lat: data.lat,
-      lng: data.lng
-    });
-
-    onSubmit();
+      lng: data.lng,
+      address_street: initialData.address_street,
+      address_city: initialData.address_city,
+      address_district: initialData.address_district,
+      images: newImageFiles, // Only new files are passed here
+      existingImageUrls: existingImageUrls, // Pass existing URLs to keep
+      removedImageUrls: removedImageUrls, // Pass URLs to remove
+    };
+    onNext(updatedData);
   };
 
   return (
@@ -200,7 +220,7 @@ const AddPropertyStep4 = ({
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-medium">{"Photos de la propriété"}</h3>
               <span className="text-sm text-muted-foreground">
-                {images.length}/{MAX_IMAGES} {"images"}
+                {totalImages}/{MAX_IMAGES} {"images"}
               </span>
             </div>
 
@@ -211,7 +231,7 @@ const AddPropertyStep4 = ({
                   variant="outline"
                   className="w-full"
                   onClick={() => document.getElementById('images')?.click()}
-                  disabled={images.length >= MAX_IMAGES}
+                  disabled={totalImages >= MAX_IMAGES}
                 >
                   <Images className="mr-2 h-4 w-4" />
                   {"Ajouter des photos"}
@@ -223,7 +243,7 @@ const AddPropertyStep4 = ({
                   multiple
                   className="hidden"
                   onChange={handleImageChange}
-                  disabled={images.length >= MAX_IMAGES}
+                  disabled={totalImages >= MAX_IMAGES}
                 />
               </div>
 
@@ -263,7 +283,7 @@ const AddPropertyStep4 = ({
           </Button>
           <Button
             type="submit"
-            disabled={isSubmitting || images.length === 0}
+            disabled={isSubmitting || totalImages === 0}
           >
             {isSubmitting ? (
               <>

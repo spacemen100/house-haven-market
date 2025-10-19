@@ -42,31 +42,30 @@ type FormValues = z.infer<typeof formSchema>;
 interface AddPropertyStep2Props {
   onBack: () => void;
   onNext: (data: FormValues & { currency: string }) => void;
-  initialValues?: Partial<FormValues>;
+  initialData?: Partial<CreatePropertyInput>;
 }
 
-const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Props) => {
+const AddPropertyStep2 = ({ onBack, onNext, initialData }: AddPropertyStep2Props) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      price: 0,
-      beds: 0,
-      baths: 0,
-      m2: 0,
-      yearBuilt: new Date().getFullYear(),
-      cadastral_code: "",
-      condition: "newly_renovated",
-      status: "available",
-      kitchen_type: undefined,
-      ceiling_height: undefined,
-      terrace_area: undefined,
-      floor_level: undefined,
-      total_floors: undefined,
-      featured: false,
-      rooms: 0,
-      ...initialValues,
+      title: initialData?.title || "",
+      description: initialData?.description || "",
+      price: initialData?.price || 0,
+      beds: initialData?.beds || 0,
+      baths: initialData?.baths || 0,
+      m2: initialData?.m2 || 0,
+      yearBuilt: initialData?.yearBuilt || new Date().getFullYear(),
+      cadastral_code: initialData?.cadastralCode || "",
+      condition: initialData?.condition || "newly_renovated",
+      status: initialData?.status || "available",
+      kitchen_type: initialData?.kitchen_type || undefined,
+      ceiling_height: initialData?.ceiling_height || undefined,
+      terrace_area: initialData?.terrace_area || undefined,
+      floor_level: initialData?.floor_level || undefined,
+      total_floors: initialData?.total_floors || undefined,
+      featured: initialData?.featured || false,
+      rooms: initialData?.rooms || 0,
     },
   });
 
@@ -81,7 +80,7 @@ const AddPropertyStep2 = ({ onBack, onNext, initialValues }: AddPropertyStep2Pro
         beds: data.beds,
         baths: data.baths,
         m2: data.m2,
-        year_built: data.yearBuilt,
+        year_built: data.yearBuilt, // Map to year_built
         cadastral_code: data.cadastral_code,
         condition: data.condition,
         status: data.status,

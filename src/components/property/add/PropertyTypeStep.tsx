@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormControl, FormMessage, FormLabel } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { CreatePropertyInput } from "@/lib/api/properties";
 
 const formSchema = z.object({
   listing_type: z.enum(["sale", "rent", "rent_by_day", "lease"], {
@@ -17,14 +18,31 @@ const formSchema = z.object({
 });
 
 interface PropertyTypeStepProps {
-  onNext: (data: z.infer<typeof formSchema>) => void;
+  onNext: (data: Partial<CreatePropertyInput>) => void;
   onBack?: () => void;
+  initialData?: Partial<CreatePropertyInput>;
 }
 
-const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) => {
+const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack, initialData }) => {
+  console.log('PropertyTypeStep - initialData:', initialData);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      listing_type: initialData?.listingType,
+      property_type: initialData?.propertyType,
+    },
   });
+  console.log('PropertyTypeStep - form defaultValues:', form.getValues());
+
+  useEffect(() => {
+    if (initialData) {
+      console.log('PropertyTypeStep - resetting form with initialData:', initialData);
+      form.reset({
+        listing_type: initialData.listingType,
+        property_type: initialData.propertyType,
+      });
+    }
+  }, [initialData, form]);
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     const mappedData = {
@@ -54,7 +72,7 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    value={field.value || ''}
                     className="grid grid-cols-1 md:grid-cols-2 gap-4"
                   >
                     <div>
@@ -109,7 +127,7 @@ const PropertyTypeStep: React.FC<PropertyTypeStepProps> = ({ onNext, onBack }) =
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    value={field.value || ''}
                     className="grid grid-cols-1 md:grid-cols-2 gap-4"
                   >
                     <div>

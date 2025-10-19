@@ -200,7 +200,7 @@ const Navbar = () => {
           <Button asChild className="bg-teal-500 hover:bg-teal-600 flex items-center gap-2">
             <Link to="/sell">
               <PlusCircle size={18} />
-              Ajouter une Annonce
+              Publier une annonce
             </Link>
           </Button>
         </div>
@@ -320,7 +320,7 @@ const Navbar = () => {
               <Button asChild className="bg-teal-500 hover:bg-teal-600 flex items-center gap-2 justify-center">
                 <Link to="/sell" onClick={() => setIsMenuOpen(false)}>
                   <PlusCircle size={18} />
-                  Ajouter une Annonce
+                  Publier une annonce
                 </Link>
               </Button>
             </div>

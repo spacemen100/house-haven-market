@@ -85,6 +85,10 @@ const rules = [
   { id: "allows_smoking", label: "Fumeurs autorisés" },
 ];
 
+import { CreatePropertyInput } from "@/lib/api/properties";
+
+const internetTvOptions = ["Internet", "Télévision par câble", "Télévision par satellite", "Ligne téléphonique"];
+
 const formSchema = z.object({
   // Amenities
   has_elevator: z.boolean().default(false),
@@ -166,126 +170,105 @@ type FormValues = z.infer<typeof formSchema>;
 
 interface AddPropertyStep3Props {
   onBack: () => void;
-  onNext: (data: FormValues) => void;
+  onNext: (data: Partial<CreatePropertyInput>) => void;
+  initialData?: Partial<CreatePropertyInput>;
 }
 
-const AddPropertyStep3 = ({ onBack, onNext }: AddPropertyStep3Props) => {
+const AddPropertyStep3 = ({ onBack, onNext, initialData }: AddPropertyStep3Props) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      has_elevator: false,
-      has_ventilation: false,
-      has_air_conditioning: false,
-      is_accessible: false,
-      has_gas: false,
-      has_loggia: false,
-      has_fireplace: false,
-      has_internet: false,
-      has_cable_tv: false,
-      has_satellite_tv: false,
-      has_phone_line: false,
-      has_vent: false,
-      has_cinema: false,
-      has_dishwasher: false,
-      has_gas_stove: false,
-      has_electric_kettle: false,
-      has_coffee_machine: false,
-      has_audio_system: false,
-      has_heater: false,
-      has_hair_dryer: false,
-      has_refrigerator: false,
-      has_vacuum_cleaner: false,
-      has_dryer: false,
-      has_iron: false,
-      has_co_detector: false,
-      has_smoke_detector: false,
-      has_evacuation_ladder: false,
-      has_fire_fighting_system: false,
-      has_perimeter_cameras: false,
-      has_alarm: false,
-      has_live_protection: false,
-      has_locked_entrance: false,
-      has_locked_yard: false,
-      has_induction_oven: false,
-      has_microwave: false,
-      has_electric_oven: false,
-      has_washing_machine: false,
-      has_tv: false,
-      near_bus_stop: false,
-      near_bank: false,
-      near_subway: false,
-      near_supermarket: false,
-      near_kindergarten: false,
-      near_city_center: false,
-      near_pharmacy: false,
-      near_greenery: false,
-      near_park: false,
-      near_shopping_centre: false,
-      near_school: false,
-      near_old_district: false,
-      allows_pets: false,
-      allows_parties: false,
-      allows_smoking: false,
-      building_material: undefined,
-      furniture_type: undefined,
-      storeroom_type: undefined,
+      has_elevator: initialData?.has_elevator || initialData?.hasElevator || false,
+      has_ventilation: initialData?.has_ventilation || initialData?.hasVentilation || false,
+      has_air_conditioning: initialData?.has_air_conditioning || initialData?.hasAirConditioning || false,
+      is_accessible: initialData?.is_accessible || initialData?.isAccessible || false,
+      has_gas: initialData?.has_gas || false,
+      has_loggia: initialData?.has_loggia || false,
+      has_fireplace: initialData?.has_fireplace || false,
+      has_internet: initialData?.has_internet || false,
+      has_cable_tv: initialData?.has_cable_tv || false,
+      has_satellite_tv: initialData?.has_satellite_tv || false,
+      has_phone_line: initialData?.has_phone_line || false,
+      has_vent: initialData?.has_vent || false,
+      has_cinema: initialData?.has_cinema || false,
+      has_dishwasher: initialData?.has_dishwasher || false,
+      has_gas_stove: initialData?.has_gas_stove || false,
+      has_electric_kettle: initialData?.has_electric_kettle || false,
+      has_induction_oven: initialData?.has_induction_oven || false,
+      has_microwave: initialData?.has_microwave || false,
+      has_electric_oven: initialData?.has_electric_oven || false,
+      has_washing_machine: initialData?.has_washing_machine || false,
+      has_tv: initialData?.has_tv || false,
+      has_coffee_machine: initialData?.has_coffee_machine || false,
+      has_audio_system: initialData?.has_audio_system || false,
+      has_heater: initialData?.has_heater || false,
+      has_hair_dryer: initialData?.has_hair_dryer || false,
+      has_refrigerator: initialData?.has_refrigerator || false,
+      has_vacuum_cleaner: initialData?.has_vacuum_cleaner || false,
+      has_dryer: initialData?.has_dryer || false,
+      has_iron: initialData?.has_iron || false,
+      has_co_detector: initialData?.has_co_detector || false,
+      has_smoke_detector: initialData?.has_smoke_detector || false,
+      has_evacuation_ladder: initialData?.has_evacuation_ladder || false,
+      has_fire_fighting_system: initialData?.has_fire_fighting_system || false,
+      has_perimeter_cameras: initialData?.has_perimeter_cameras || false,
+      has_alarm: initialData?.has_alarm || false,
+      has_live_protection: initialData?.has_live_protection || false,
+      has_locked_entrance: initialData?.has_locked_entrance || false,
+      has_locked_yard: initialData?.has_locked_yard || false,
+      near_bus_stop: initialData?.near_bus_stop || false,
+      near_bank: initialData?.near_bank || false,
+      near_subway: initialData?.near_subway || false,
+      near_supermarket: initialData?.near_supermarket || false,
+      near_kindergarten: initialData?.near_kindergarten || false,
+      near_city_center: initialData?.near_city_center || false,
+      near_pharmacy: initialData?.near_pharmacy || false,
+      near_greenery: initialData?.near_greenery || false,
+      near_park: initialData?.near_park || false,
+      near_shopping_centre: initialData?.near_shopping_centre || false,
+      near_school: initialData?.near_school || false,
+      near_old_district: initialData?.near_old_district || false,
+      allows_pets: initialData?.allows_pets || false,
+      allows_parties: initialData?.allows_parties || false,
+      allows_smoking: initialData?.allows_smoking || false,
+      heating_type: initialData?.heating_type || undefined,
+      hot_water_type: initialData?.hot_water_type || undefined,
+      parking_type: initialData?.parking_type || undefined,
+      building_material: initialData?.building_material || undefined,
+      furniture_type: initialData?.furniture_type || undefined,
+      storeroom_type: initialData?.storeroom_type || undefined,
     },
   });
 
   const onSubmit = (data: FormValues) => {
+    const amenitiesData = amenities
+      .filter(item => data[item.id as keyof FormValues] && !internetTvOptions.includes(item.label))
+      .map(item => item.label);
+
+    const equipmentData = [
+      ...kitchenAppliances.filter(item => data[item.id as keyof FormValues]).map(item => item.label),
+      ...otherAppliances.filter(item => data[item.id as keyof FormValues]).map(item => item.label)
+    ];
+
+    const securityData = securityFeatures
+      .filter(item => data[item.id as keyof FormValues])
+      .map(item => item.label);
+
+    const nearbyPlacesData = nearbyFacilities
+      .filter(item => data[item.id as keyof FormValues])
+      .map(item => item.label);
+
+    const internetTvData = amenities
+        .filter(item => data[item.id as keyof FormValues] && internetTvOptions.includes(item.label))
+        .map(item => item.label);
+
     const mappedData = {
-      has_elevator: data.has_elevator,
-      has_ventilation: data.has_ventilation,
-      has_air_conditioning: data.has_air_conditioning,
-      is_accessible: data.is_accessible,
-      has_gas: data.has_gas,
-      has_loggia: data.has_loggia,
-      has_fireplace: data.has_fireplace,
-      has_internet: data.has_internet,
-      has_cable_tv: data.has_cable_tv,
-      has_satellite_tv: data.has_satellite_tv,
-      has_phone_line: data.has_phone_line,
-      has_vent: data.has_vent,
-      has_cinema: data.has_cinema,
-      has_dishwasher: data.has_dishwasher,
-      has_coffee_machine: data.has_coffee_machine,
-      has_audio_system: data.has_audio_system,
-      has_heater: data.has_heater,
-      has_hair_dryer: data.has_hair_dryer,
-      has_refrigerator: data.has_refrigerator,
-      has_vacuum_cleaner: data.has_vacuum_cleaner,
-      has_dryer: data.has_dryer,
-      has_iron: data.has_iron,
-      has_co_detector: data.has_co_detector,
-      has_smoke_detector: data.has_smoke_detector,
-      has_evacuation_ladder: data.has_evacuation_ladder,
-      has_fire_fighting_system: data.has_fire_fighting_system,
-      has_perimeter_cameras: data.has_perimeter_cameras,
-      has_alarm: data.has_alarm,
-      has_live_protection: data.has_live_protection,
-      has_locked_entrance: data.has_locked_entrance,
-      has_locked_yard: data.has_locked_yard,
-      near_bus_stop: data.near_bus_stop,
-      near_bank: data.near_bank,
-      near_subway: data.near_subway,
-      near_supermarket: data.near_supermarket,
-      near_kindergarten: data.near_kindergarten,
-      near_city_center: data.near_city_center,
-      near_pharmacy: data.near_pharmacy,
-      near_greenery: data.near_greenery,
-      near_park: data.near_park,
-      near_shopping_centre: data.near_shopping_centre,
-      near_school: data.near_school,
-      near_old_district: data.near_old_district,
-      allows_pets: data.allows_pets,
-      allows_parties: data.allows_parties,
-      allows_smoking: data.allows_smoking,
-      heating_type: data.heating_type,
-      hot_water_type: data.hot_water_type,
-      parking_type: data.parking_type,
-      building_material: data.building_material,
-      furniture_type: data.furniture_type,
-      storeroom_type: data.storeroom_type,
+      ...data,
+      amenities: amenitiesData,
+      equipment: equipmentData,
+      security: securityData,
+      nearby_places: nearbyPlacesData,
+      internet_tv: internetTvData,
     };
     onNext(mappedData);
   };

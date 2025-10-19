@@ -17,6 +17,8 @@ import { supabase } from "@/lib/api/supabaseClient";
 import { useEffect, useState } from "react";
 import { CurrencyProvider } from './CurrencyContext';
 
+import { Wrapper } from "@googlemaps/react-wrapper";
+
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -38,6 +40,8 @@ const App = () => {
     return () => subscription.unsubscribe();
   }, []);
 
+  const apiKey = "AIzaSyAjAs9O5AqVbaCZth-QDJm4KJfoq2ZzgUI"; // Replace with your actual API key
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
@@ -56,7 +60,11 @@ const App = () => {
                   element={<Account />}
                 />
                 <Route path="/verification-error" element={<VerificationError />} />
-                <Route path="/edit-property/:propertyId" element={<EditProperty />} />
+                <Route path="/edit-property/:propertyId" element={
+                  <Wrapper apiKey={apiKey} libraries={["places"]}>
+                    <EditProperty />
+                  </Wrapper>
+                } />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>

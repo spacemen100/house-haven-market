@@ -64,7 +64,7 @@ const Hero = () => {
               className="bg-teal-500 hover:bg-teal-600 text-white px-8 py-6 text-lg md:text-xl rounded-lg font-bold w-full"
               size="lg"
             >
-              Ajouter une annonce
+              Publier une annonce
             </Button>
           </div>
         </div>

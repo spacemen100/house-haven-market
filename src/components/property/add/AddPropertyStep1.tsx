@@ -26,38 +26,40 @@ const propertyStep1Schema = z.object({
 interface AddPropertyStep1Props {
   onNext: (data: Partial<CreatePropertyInput>) => void;
   onBack?: () => void;
+  initialData?: Partial<CreatePropertyInput>;
 }
 
-const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack }) => {
+const AddPropertyStep1: React.FC<AddPropertyStep1Props> = ({ onNext, onBack, initialData }) => {
   const form = useForm<z.infer<typeof propertyStep1Schema>>({
     resolver: zodResolver(propertyStep1Schema),
     defaultValues: {
-      phone_number: '',
-      contactEmail: '',
-      instagramHandle: '',
-      facebookUrl: '',
-      twitterHandle: '',
-      reference_number: '',
+      phone_number: initialData?.phone_number || '',
+      contactEmail: initialData?.contactEmail || '',
+      instagramHandle: initialData?.instagramHandle || '',
+      facebookUrl: initialData?.facebookUrl || '',
+      twitterHandle: initialData?.twitterHandle || '',
+      reference_number: initialData?.cadastral_code || '', // Assuming cadastral_code is used as reference_number
     }
   });
 
   useEffect(() => {
-    const generateReferenceNumber = () => {
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
-      for (let i = 0; i < 7; i++) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
-      }
-      return result;
-    };
-
-    form.setValue('reference_number', generateReferenceNumber());
-  }, [form]);
+    if (!initialData?.cadastral_code) {
+      const generateReferenceNumber = () => {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for (let i = 0; i < 7; i++) {
+          result += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        return result;
+      };
+      form.setValue('reference_number', generateReferenceNumber());
+    }
+  }, [form, initialData]);
 
   const onSubmit = (values: z.infer<typeof propertyStep1Schema>) => {
     const mappedData = {
       phone_number: values.phone_number,
-      reference_number: values.reference_number,
+      cadastral_code: values.reference_number, // Map back to cadastral_code
       contactEmail: values.contactEmail,
       instagramHandle: values.instagramHandle,
       facebookUrl: values.facebookUrl,
