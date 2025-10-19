@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { toast } from "sonner";
 import LocationMap from "./LocationMap";
 import { Textarea } from "@/components/ui/textarea";
+import Autocomplete from "@/components/Autocomplete";
 import { Form, FormLabel } from "@/components/ui/form";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -53,6 +54,8 @@ const AddPropertyStep4 = ({
   const [previewDialogOpen, setPreviewDialogOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [locationNotes, setLocationNotes] = useState<string>((initialData as any).address_state || "");
+  const [isDragging, setIsDragging] = useState(false);
+  const [showLongPressHint, setShowLongPressHint] = useState(true);
 
   const totalImages = existingImageUrls.length + newImageFiles.length;
 
@@ -108,7 +111,7 @@ const AddPropertyStep4 = ({
       return "Type de fichier non pris en charge.";
     }
     if (file.size > MAX_FILE_SIZE) {
-      return "La taille du fichier dépasse la limite de 5 Mo.";
+      return "La taille du fichier dÃ©passe la limite de 5 Mo.";
     }
     return null;
   };
@@ -117,7 +120,7 @@ const AddPropertyStep4 = ({
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
       if (existingImageUrls.length + newImageFiles.length + filesArray.length > MAX_IMAGES) {
-        toast.error(`Vous ne pouvez pas télécharger plus de ${MAX_IMAGES} images.`);
+        toast.error(`Vous ne pouvez pas tÃ©lÃ©charger plus de ${MAX_IMAGES} images.`);
         return;
       }
       const validFiles: File[] = [];
@@ -174,17 +177,61 @@ const AddPropertyStep4 = ({
         <div className="mb-8 text-center">
           <h2 className="text-2xl font-bold">{"Localisation et Photos"}</h2>
           <p className="text-muted-foreground mt-2">
-            {"Dernière étape ! Ajoutez la localisation de votre propriété et quelques photos."}
+            {"DerniÃ¨re Ã©tape ! Ajoutez la localisation de votre propriÃ©tÃ© et quelques photos."}
           </p>
         </div>
 
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium mb-4">{"Localisation de la propriété"}</h3>
+            <h3 className="text-lg font-medium mb-4">{"Localisation de la propriÃ©tÃ©"}</h3>
 
             <div className="mb-6">
               <FormLabel>{"Localisation sur la carte"}</FormLabel>
-              <LocationMap initialLat={form.getValues("lat")} initialLng={form.getValues("lng")} onLocationSelect={handleLocationSelect} />
+              <div className="relative">
+                <LocationMap
+                  initialLat={form.getValues("lat")}
+                  initialLng={form.getValues("lng")}
+                  onLocationSelect={handleLocationSelect}
+                  onReverseGeocode={(info) => {
+                    if (info?.address) {
+                      const a = info.address as any;
+                      form.setValue('address', a.formatted || [a.street, a.district, a.city].filter(Boolean).join(', '));
+                      Object.assign(initialData, {
+                        address_street: a.street,
+                        address_city: a.city,
+                        address_district: a.district,
+                        address_state: (initialData as any).address_state || locationNotes,
+                        address_zip: a.zip,
+                      });
+                    }
+                  }}
+                  onDragStateChange={(d) => setIsDragging(d)}
+                  onLongPress={() => setShowLongPressHint(false)}
+                />
+                {isDragging && (
+                  <div className="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded z-10">
+                    {form.watch('address') || 'Déplacement...'}
+                  </div>
+                )}
+                {showLongPressHint && (
+                  <div className="absolute bottom-2 left-2 bg-white/90 text-estate-800 text-xs px-2 py-1 rounded shadow z-10">
+                    Astuce mobile: appui long pour déplacer le marqueur
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="mt-4">
+              <Autocomplete
+                label={"Adresse"}
+                placeholder={"Entrez l'adresse de la propriÃ©tÃ©"}
+                value={form.watch("address") || ""}
+                onChange={(value) => form.setValue("address", value)}
+                onPlaceChanged={(place) => {
+                  const description = place?.formatted_address || place?.formattedAddress || place?.displayName || "";
+                  if (description) form.setValue("address", description);
+                  handlePlaceSelect(place);
+                }}
+              />
             </div>
 
             <div className="mt-4">
@@ -192,7 +239,7 @@ const AddPropertyStep4 = ({
               <Textarea
                 value={locationNotes}
                 onChange={(e) => setLocationNotes(e.target.value)}
-                placeholder={"Notes sur la localisation (repères, accès, etc.)"}
+                placeholder={"Notes sur la localisation (repÃ¨res, accÃ¨s, etc.)"}
                 className="min-h-24"
               />
             </div>
@@ -200,7 +247,7 @@ const AddPropertyStep4 = ({
 
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-medium">{"Photos de la propriété"}</h3>
+              <h3 className="text-lg font-medium">{"Photos de la propriÃ©tÃ©"}</h3>
               <span className="text-sm text-muted-foreground">{totalImages}/{MAX_IMAGES} {"images"}</span>
             </div>
 
@@ -216,9 +263,9 @@ const AddPropertyStep4 = ({
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
                   {previewUrls.map((url, index) => (
                     <div key={index} className="relative group aspect-square">
-                      <img src={url} alt={`Photo de la propriété ${index + 1}`} className="h-full w-full object-cover rounded-md cursor-pointer" onClick={() => { setPreviewImage(url); setPreviewDialogOpen(true); }} />
+                      <img src={url} alt={`Photo de la propriÃ©tÃ© ${index + 1}`} className="h-full w-full object-cover rounded-md cursor-pointer" onClick={() => { setPreviewImage(url); setPreviewDialogOpen(true); }} />
                       <Button type="button" variant="destructive" size="sm" className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => removeImage(index)}>
-                        ✕
+                        âœ•
                       </Button>
                     </div>
                   ))}
@@ -244,10 +291,10 @@ const AddPropertyStep4 = ({
         <Dialog open={previewDialogOpen} onOpenChange={setPreviewDialogOpen}>
           <DialogContent className="sm:max-w-xl">
             <DialogHeader>
-              <DialogTitle>{"Aperçu de l'image"}</DialogTitle>
+              <DialogTitle>{"AperÃ§u de l'image"}</DialogTitle>
             </DialogHeader>
             <div className="flex justify-center">
-              <img src={previewImage} alt={"Aperçu de l'image"} className="max-h-[70vh] object-contain" />
+              <img src={previewImage} alt={"AperÃ§u de l'image"} className="max-h-[70vh] object-contain" />
             </div>
           </DialogContent>
         </Dialog>
