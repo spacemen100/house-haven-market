@@ -1,4 +1,4 @@
-﻿import { Loader2 } from "lucide-react"; // Added Loader2 import
+import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -32,7 +32,12 @@ const EditProperty = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<Partial<CreatePropertyInput>>({});
 
-  const { data: fetchedProperty, isLoading, isError, error } = useQuery({
+  const { 
+    data: fetchedProperty, 
+    isLoading, 
+    isError, 
+    error 
+  } = useQuery({
     queryKey: ['property', propertyId],
     queryFn: () => getPropertyById(propertyId!),
     enabled: !!propertyId,
@@ -79,12 +84,13 @@ const EditProperty = () => {
         isAccessible: fetchedProperty.isAccessible,
         nearby_places: fetchedProperty.nearbyPlaces,
         online_services: fetchedProperty.onlineServices,
-        images: Array.isArray(fetchedProperty.images) ? fetchedProperty.images : (fetchedProperty.images ? [fetchedProperty.images as any] : []),
+        images: Array.isArray(fetchedProperty.images) 
+          ? fetchedProperty.images 
+          : (fetchedProperty.images ? [fetchedProperty.images as any] : []),
         contactEmail: fetchedProperty.contactEmail,
         instagramHandle: fetchedProperty.instagramHandle,
         facebookUrl: fetchedProperty.facebookUrl,
         twitterHandle: fetchedProperty.twitterHandle,
-        
         
         building_material: fetchedProperty.building_material,
         furniture_type: fetchedProperty.furniture_type,
@@ -94,52 +100,54 @@ const EditProperty = () => {
         hot_water_type: fetchedProperty.hot_water_type,
         parking_type: fetchedProperty.parking_type,
         
-        // Ajouter les champs manquants pour les étapes du formulaire
-        // Pour AddPropertyStep1
+        // Champs pour les étapes du formulaire
         reference_number: fetchedProperty.cadastralCode,
-        
-        // Pour AddPropertyStep2
         yearBuilt: fetchedProperty.yearBuilt,
         
-        // Pour AddPropertyStep3 - mapping des booléens
+        // Mapping des booléens pour les caractéristiques
         has_elevator: fetchedProperty.hasElevator,
         has_ventilation: fetchedProperty.hasVentilation,
         has_air_conditioning: fetchedProperty.hasAirConditioning,
         is_accessible: fetchedProperty.isAccessible,
         
-        
-        
+        // Services internet et TV
         has_internet: fetchedProperty.internetTV?.includes("Internet") || false,
-        has_cable_tv: fetchedProperty.internetTV?.includes("Télévision par cà¢ble") || false,
+        has_cable_tv: fetchedProperty.internetTV?.includes("Télévision par câble") || false,
         has_satellite_tv: fetchedProperty.internetTV?.includes("Télévision par satellite") || false,
         has_phone_line: fetchedProperty.internetTV?.includes("Ligne téléphonique") || false,
+        
+        // Équipements et commodités
         has_vent: fetchedProperty.amenities?.includes("Ventilation") || false,
         has_cinema: fetchedProperty.amenities?.includes("Home Cinéma") || false,
         has_dishwasher: fetchedProperty.equipment?.includes("Lave-vaisselle") || false,
-        has_gas_stove: fetchedProperty.equipment?.includes("Cuisinière à  gaz") || false,
+        has_gas_stove: fetchedProperty.equipment?.includes("Cuisinière à gaz") || false,
         has_electric_kettle: fetchedProperty.equipment?.includes("Bouilloire électrique") || false,
-        has_induction_oven: fetchedProperty.equipment?.includes("Four à  induction") || false,
+        has_induction_oven: fetchedProperty.equipment?.includes("Four à induction") || false,
         has_microwave: fetchedProperty.equipment?.includes("Micro-ondes") || false,
         has_electric_oven: fetchedProperty.equipment?.includes("Four électrique") || false,
         has_washing_machine: fetchedProperty.equipment?.includes("Lave-linge") || false,
         has_tv: fetchedProperty.equipment?.includes("Télévision") || false,
-        has_coffee_machine: fetchedProperty.equipment?.includes("Machine à  café") || false,
+        has_coffee_machine: fetchedProperty.equipment?.includes("Machine à café") || false,
         has_audio_system: fetchedProperty.equipment?.includes("Système audio") || false,
         has_heater: fetchedProperty.equipment?.includes("Chauffage") || false,
         has_hair_dryer: fetchedProperty.equipment?.includes("Sèche-cheveux") || false,
         has_refrigerator: fetchedProperty.equipment?.includes("Réfrigérateur") || false,
         has_vacuum_cleaner: fetchedProperty.equipment?.includes("Aspirateur") || false,
         has_dryer: fetchedProperty.equipment?.includes("Sèche-linge") || false,
-        has_iron: fetchedProperty.equipment?.includes("Fer à  repasser") || false,
+        has_iron: fetchedProperty.equipment?.includes("Fer à repasser") || false,
+        
+        // Sécurité
         has_co_detector: fetchedProperty.security?.includes("Détecteur de CO") || false,
         has_smoke_detector: fetchedProperty.security?.includes("Détecteur de fumée") || false,
-        has_evacuation_ladder: fetchedProperty.security?.includes("à‰chelle d'évacuation") || false,
+        has_evacuation_ladder: fetchedProperty.security?.includes("Échelle d'évacuation") || false,
         has_fire_fighting_system: fetchedProperty.security?.includes("Système anti-incendie") || false,
         has_perimeter_cameras: fetchedProperty.security?.includes("Caméras périmétriques") || false,
         has_alarm: fetchedProperty.security?.includes("Alarme") || false,
         has_live_protection: fetchedProperty.security?.includes("Protection en direct") || false,
         has_locked_entrance: fetchedProperty.security?.includes("Entrée sécurisée") || false,
         has_locked_yard: fetchedProperty.security?.includes("Cour sécurisée") || false,
+        
+        // Lieux à proximité
         near_bus_stop: fetchedProperty.nearbyPlaces?.includes("Arrêt de bus") || false,
         near_bank: fetchedProperty.nearbyPlaces?.includes("Banque") || false,
         near_subway: fetchedProperty.nearbyPlaces?.includes("Métro") || false,
@@ -150,34 +158,36 @@ const EditProperty = () => {
         near_greenery: fetchedProperty.nearbyPlaces?.includes("Espaces verts") || false,
         near_park: fetchedProperty.nearbyPlaces?.includes("Parc") || false,
         near_shopping_centre: fetchedProperty.nearbyPlaces?.includes("Centre commercial") || false,
-        near_school: fetchedProperty.nearbyPlaces?.includes("à‰cole") || false,
+        near_school: fetchedProperty.nearbyPlaces?.includes("École") || false,
         near_old_district: fetchedProperty.nearbyPlaces?.includes("Vieux quartier") || false,
+        
+        // Règles
         allows_pets: fetchedProperty.allows_pets || false,
         allows_parties: fetchedProperty.allows_parties || false,
         allows_smoking: fetchedProperty.allows_smoking || false,
-    });
+      });
     } else if (isError) {
-      toast.error("Impossible de charger lâ€™annonce pour édition.");
+      toast.error("Impossible de charger l'annonce pour édition.");
       console.error("Erreur lors du chargement de l'annonce:", error);
-      navigate('/account'); // Redirect if property not found or error
+      navigate('/account'); // Redirection si propriété non trouvée ou erreur
     }
   }, [fetchedProperty, isError, error, navigate]);
-
-  useEffect(() => {}, [formData]);
 
   const updatePropertyMutation = useMutation({
     mutationFn: (data: { propertyId: string, input: Partial<CreatePropertyInput> }) =>
       updateProperty(data.propertyId, data.input),
     onSuccess: () => {
-      toast.success("Annonce immobilière mise à  jour avec succès !");
+      toast.success("Annonce immobilière mise à jour avec succès !");
       queryClient.invalidateQueries({ queryKey: ['my-properties'] });
       queryClient.invalidateQueries({ queryKey: ['property', propertyId] });
       navigate('/account');
     },
     onError: (err) => {
-      const message = err instanceof Error && err.message ? err.message : "à‰chec de la mise à  jour de l'annonce immobilière.";
+      const message = err instanceof Error && err.message 
+        ? err.message 
+        : "Échec de la mise à jour de l'annonce immobilière.";
       toast.error(message);
-      console.error("Erreur lors de la mise à  jour de l'annonce:", err);
+      console.error("Erreur lors de la mise à jour de l'annonce:", err);
     },
   });
 
@@ -185,7 +195,7 @@ const EditProperty = () => {
     setFormData(prev => ({
       ...prev,
       ...data,
-      images: data.images || prev.images, // Preserve existing images if not updated in this step
+      images: data.images || prev.images, // Préserve les images existantes si non mises à jour
       existingImageUrls: data.existingImageUrls || prev.existingImageUrls,
       removedImageUrls: data.removedImageUrls || prev.removedImageUrls,
     }));
@@ -198,7 +208,7 @@ const EditProperty = () => {
 
   const handleFinalSubmit = async (data: Partial<CreatePropertyInput> & { existingImageUrls?: string[], removedImageUrls?: string[] }) => {
     if (!propertyId) {
-      toast.error("Identifiant de lâ€™annonce manquant.");
+      toast.error("Identifiant de l'annonce manquant.");
       return;
     }
 
@@ -207,6 +217,7 @@ const EditProperty = () => {
       ...data,
     };
 
+    console.log('Submitting update for propertyId', propertyId, finalFormData);
     updatePropertyMutation.mutate({ propertyId, input: finalFormData });
   };
 
@@ -230,7 +241,13 @@ const EditProperty = () => {
       <div>
         <Navbar />
         <div className="container py-8 text-center">
-          <p>Annonce introuvable ou une erreur sâ€™est produite.</p>
+          <p>Annonce introuvable ou une erreur s'est produite.</p>
+          <Button 
+            onClick={() => navigate('/account')} 
+            className="mt-4"
+          >
+            Retour au compte
+          </Button>
         </div>
         <Footer />
       </div>
@@ -244,10 +261,10 @@ const EditProperty = () => {
         <section className="relative py-16 bg-estate-800">
           <div className="container text-center text-white">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif mb-4">
-              {"Modifier l'annonce immobilière"}
+              Modifier l'annonce immobilière
             </h1>
             <p className="text-lg md:text-xl max-w-2xl mx-auto text-slate-200">
-              {"Mettez à  jour les informations de votre annonce."}
+              Mettez à jour les informations de votre annonce.
             </p>
           </div>
         </section>
@@ -263,7 +280,7 @@ const EditProperty = () => {
             <div className="max-w-3xl mx-auto">
               <Card className="shadow-md">
                 <CardContent className="p-6 md:p-8">
-                  {currentStep === 1 && formData.listingType && formData.propertyType && (
+                  {currentStep === 1 && (
                     <PropertyTypeStep
                       key={`${formData.listingType}-${formData.propertyType}`}
                       initialData={formData}
@@ -303,6 +320,8 @@ const EditProperty = () => {
                       onNext={handleFinalSubmit}
                       submitLabel="Enregistrer les modifications"
                       submittingLabel="Enregistrement..."
+                      requireImage={false}
+                      requireAddress={false}
                     />
                   )}
                 </CardContent>
@@ -317,6 +336,3 @@ const EditProperty = () => {
 };
 
 export default EditProperty;
-
-
-

@@ -42,6 +42,8 @@ interface AddPropertyStep4Props {
   onNext: (data: Partial<CreatePropertyInput> & { existingImageUrls: string[], removedImageUrls: string[] }) => void;
   submitLabel?: string;
   submittingLabel?: string;
+  requireImage?: boolean;
+  requireAddress?: boolean;
 }
 
 const AddPropertyStep4 = ({
@@ -51,6 +53,9 @@ const AddPropertyStep4 = ({
   onNext,
   submitLabel = "Publier l'annonce",
   submittingLabel = "Publication..."
+  ,
+  requireImage = true,
+  requireAddress = true
 }: AddPropertyStep4Props) => {
   const [newImageFiles, setNewImageFiles] = useState<File[]>([]);
   const [existingImageUrls, setExistingImageUrls] = useState<string[]>([]);
@@ -73,7 +78,11 @@ const AddPropertyStep4 = ({
   }, [initialData]);
 
   const form = useForm<AddressFormValues>({
-    resolver: zodResolver(addressSchema),
+    resolver: zodResolver(
+      requireAddress
+        ? addressSchema
+        : z.object({ address: z.string().optional(), lat: z.number(), lng: z.number() })
+    ),
     defaultValues: {
       address: initialData.address_street ? `${initialData.address_street}, ${initialData.address_district}, ${initialData.address_city}` : "",
       lat: initialData.lat || 45.764043,
@@ -291,7 +300,7 @@ const AddPropertyStep4 = ({
           </Button>
           <Button
             type="submit"
-            disabled={isSubmitting || totalImages === 0}
+            disabled={isSubmitting || (requireImage && totalImages === 0)}
           >
             {isSubmitting ? (
               <>
